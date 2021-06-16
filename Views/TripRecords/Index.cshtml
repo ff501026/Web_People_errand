@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>公出紀錄</h2>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#search">查詢</a>
+    </li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade show active" id="search">
+        <fieldset>
+            <form>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1" class="form-label mt-4">人員：</label>
+                    <input type="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="請輸入姓名(員工ID)">
+                    <label for="exampleInputPassword1" class="form-label mt-4">日期：</label>
+                    <input type="date" id="dateSearch" placeholder="請輸入電話">
+                    <button type="submit" class="badge bg-primary" style="margin-left:5px">查詢</button>
+                </div>
+                <fieldset class="form-group">
+                    <legend class="mt-4">紀錄狀態</legend>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                            一般
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+                            作廢
+                        </label>
+                    </div>
+                </fieldset><br />
+            </form>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">姓名(員工ID)</th>
+                        <th scope="col">外出時間</th>
+                        <th scope="col">返回時間</th>
+                        <th scope="col">外勤打卡</th>
+                        <th scope="col">事由</th>
+                        <th scope="col">地點</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="table-active">
+                        <th scope="row">#</th>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+
+    <div class="tab-pane fade" id="add">
+        <fieldset>
+            <legend class="mt-4">Switches</legend>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
+                <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+            </div>
+        </fieldset>
+    </div>
+</div>

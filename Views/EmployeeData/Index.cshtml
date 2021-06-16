@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="main-content">
+    <section class="section">
+        <h1 class="section-header">
+            <div>員工管理</div>
+        </h1>
+
+
+        <form class="form-inline mr-auto">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <i class="bi-person"></i> 姓名(ID)：<input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                </div>
+                <div class="col-lg-5 col-md-5 col-12">
+                    <i class="bi-calendar"></i> 日期：<input class="form-control" type="date" placeholder="Search" aria-label="Search">
+                </div>
+                <div class="col-lg-1 col-md-1 col-12">
+                    <div class="search-element">
+                        <button class="btn" type="submit"><i class="bi-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+        <div class="section-body" style="margin-top:25px">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>員工資料</h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>員工姓名(ID)</th>
+                                        <th>電話</th>
+                                        <th>E-mail</th>
+                                        <th>驗證碼</th>
+                                        <th>編輯</th>
+                                        <th>清除設備ID</th>
+                                        <th>停用/恢復</th>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
+                                            <div class="badge badge-danger">未驗證</div>
+                                        </td>
+                                        <td>0912-345678</td>
+                                        <td>daMingWang@gmail.com</td>
+                                        <td>12345</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
+                                            <div class="badge badge-success">已驗證</div>
+                                        </td>
+                                        <td>0912-345678</td>
+                                        <td>daMingWang@gmail.com</td>
+                                        <td>12345</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</div>
