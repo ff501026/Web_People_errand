@@ -28,6 +28,8 @@ namespace AttendanceManagement
                         "~/Scripts/style.js",
                         "~/Scripts/summernote-lite.js",
                         "~/Scripts/tooltip.js",
+                        "~/Scripts/jquery.min.js",
+                        "~/Scripts/scripts.js",
                         "~/Scripts/bootstrap.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

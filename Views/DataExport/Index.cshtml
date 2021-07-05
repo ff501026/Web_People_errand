@@ -1,22 +1,115 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "資料匯出";
 }
 
-<h2>資料匯出</h2>
+<div class="main-content">
+    <section class="section">
+        <h1 class="section-header">
+            <div>資料匯出</div>
+        </h1>
 
-<div class="form-group">
-    <label for="exampleSelect1" class="form-label mt-4">人員：</label>
-    <select class="form-select" id="exampleSelect1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-    </select>
-    <label for="exampleInputPassword1" class="form-label mt-4">開始日期：</label>
-    <input type="date" id="dateSearch">
-    <label for="exampleInputPassword1" class="form-label mt-4">結束日期：</label>
-    <input type="date" id="dateSearch">
-    <button type="submit" class="badge bg-primary" style="margin-left:5px">匯出</button>
+
+        <form class="form-inline mr-auto" method="post" action="DataExport">
+            <div class="row">
+                <div class="col-lg-auto col-md-6 col-12">
+                    <i class="bi-person"></i> 姓名(ID)：
+                    <select class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <option>請選擇員工姓名(ID)</option>
+                        <option>王大明</option>
+                    </select>
+                </div>
+                <div class="col-lg-auto col-md-5 col-12">
+                    <i class="bi-calendar"></i> 日期：<input class="form-control" type="date" placeholder="Search" aria-label="Search">&nbsp;至&nbsp;<input class="form-control" type="date" placeholder="Search" aria-label="Search">
+                </div>
+                <div class="col-lg-auto col-md-1 col-12">
+                    <div class="search-element">
+                        <button class="btn btn-outline-primary" type="submit">預覽</button>
+                    </div>
+                </div>
+                <div class="col-lg-auto col-md-1 col-12">
+                    <div class="search-element">
+                        <input class="btn btn-success" type="button" onClick="saveToExcel( 'ExportFile' );" value="匯出檔案">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <table id="ExportFile"></table>
+
+        <div class="section-body" style="margin-top:25px">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>資料預覽</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>編號</th>
+                                        <th>姓名(ID)</th>
+                                        <th>部門</th>
+                                        <th>職稱</th>
+                                        <th>電話</th>
+                                        <th>打卡上班時間</th>
+                                        <th>打卡下班時間</th>
+                                    </tr>
+                                    <!--
+                                       <tr>
+                                           <td>1</td>
+                                           <td>Irwansyah Saputra</td>
+                                           <td>2017-01-09</td>
+                                           <td><div class="badge badge-success">Active</div></td>
+                                           <td><a href="#" class="btn btn-action btn-secondary">Detail</a></td>
+                                       </tr>
+                                       <tr>
+                                           <td>2</td>
+                                           <td>Hasan Basri</td>
+                                           <td>2017-01-09</td>
+                                           <td><div class="badge badge-success">Active</div></td>
+                                           <td><a href="#" class="btn btn-action btn-secondary">Detail</a></td>
+                                       </tr>
+                                       <tr>
+                                           <td>3</td>
+                                           <td>Kusnadi</td>
+                                           <td>2017-01-11</td>
+                                           <td><div class="badge badge-danger">Not Active</div></td>
+                                           <td><a href="#" class="btn btn-action btn-secondary">Detail</a></td>
+                                       </tr>
+                                       <tr>
+                                           <td>4</td>
+                                           <td>Rizal Fakhri</td>
+                                           <td>2017-01-11</td>
+                                           <td><div class="badge badge-success">Active</div></td>
+                                           <td><a href="#" class="btn btn-action btn-secondary">Detail</a></td>
+                                       </tr>
+                                    -->
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

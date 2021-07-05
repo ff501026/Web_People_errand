@@ -1,4 +1,10 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+﻿/* Start - checkbox inside select option*/
+
+/* End - checkbox inside select option*/
+
+
+
+document.addEventListener("DOMContentLoaded", function (event) {
 
     const showNavbar = (toggleId, navId, bodyId, headerId) =>{
     const toggle = document.getElementById(toggleId),

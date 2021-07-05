@@ -1,157 +1,195 @@
 ﻿
-@{
-    ViewBag.Title = "Index";
-}
+@{ ViewBag.Title = "系統設定"; }
 
-    <div class="main-content">
-        <section class="section">
-            <h1 class="section-header">
-                <div>系統設定</div>
-            </h1>
-            <div class="section-body">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-lg-12">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>WiFi設定</h4>
+<div class="main-content">
+    <section class="section">
+        <h1 class="section-header">
+            <div>系統設定</div>
+        </h1>
+
+        <div class="row mt-4">
+            <div class="col-12 col-sm-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Tab <code>.nav-pills</code></h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-pills" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="contact-tab3" data-toggle="tab" href="#contact3" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                cillum dolore eu fugiat nulla pariatur.
                             </div>
-                            <div class="card-body">
-                                <form class="form-inline mr-auto">
-                                    <div class="row">
-                                        <div class="col-lg-auto col-md-6 col-12">
-                                            WiFi1：<input class="form-control" type="text" placeholder="請輸入WiFi" aria-label="Search">
-                                        </div>
-                                        <div class="col-lg-auto col-md-5 col-12">
-                                            WiFi2：<input class="form-control" type="text" placeholder="請輸入WiFi" aria-label="Search">
-                                        </div>
-                                        <div class="col-lg-auto col-md-1 col-12">
-                                            <button class="btn btn-primary" type="submit">修改</button>
-                                        </div>
-                                    </div>
-                                </form>
-
+                            <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
+                                Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui.
+                            </div>
+                            <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab3">
+                                Vestibulum imperdiet odio sed neque ultricies, ut dapibus mi maximus. Proin ligula massa, gravida in lacinia efficitur, hendrerit eget mauris. Pellentesque fermentum, sem interdum molestie finibus, nulla diam varius leo, nec varius lectus elit id dolor.
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <div class="col-12 col-sm-12 col-lg-12">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>變更後台登入密碼</h4>
-                            </div>
 
-                            <div class="card-body">
-                                <form class="form-inline mr-auto">
-                                    <div class="row">
-                                        <div class="col-lg-auto col-md-10 col-12">
-                                            新後台登入密碼：<input class="form-control" type="text" placeholder="請輸入新密碼" aria-label="Search">
-                                        </div>
-                                        <div class="col-lg-auto col-md-2 col-12">
-                                            <button class="btn btn-primary" type="submit">修改</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-lg-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4>WiFi設定</h4>
                         </div>
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-lg-12">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>手機打卡記錄設定</h4>
-                            </div>
-
-                            <div class="card-body">
-
-                                <form class="form-inline mr-auto">
-                                    <div class="row">
-                                        <div class="col-lg-auto col-md-3 col-3" style="margin-top:10px">
-                                            可查詢當月：
-                                        </div>
-                                        <div class="col-lg-auto col-md-2 col-12" style="margin-top:10px">
-                                            <label class="switch">
-                                                <input type="checkbox" id="togBtn">
-                                                <div class="slider round">
-                                                    <span class="on">是</span>
-                                                    <span class="off">否</span>
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <div class="col-lg-auto col-md-5 col-12">
-                                            可查詢天數：<input class="form-control" type="text" placeholder="若設定為0則不限制天數" aria-label="Search">
-                                        </div>
-                                        <div class="col-lg-auto col-md-1 col-12">
-                                            <button class="btn btn-primary" type="submit">修改</button>
-                                        </div>
+                        <div class="card-body">
+                            <form class="form-inline mr-auto">
+                                <div class="row">
+                                    <div class="col-lg-auto col-md-6 col-12">
+                                        WiFi1：<input class="form-control" type="text" placeholder="請輸入WiFi" aria-label="Search">
                                     </div>
-                                </form>
-
-                            </div>
+                                    <div class="col-lg-auto col-md-5 col-12">
+                                        WiFi2：<input class="form-control" type="text" placeholder="請輸入WiFi" aria-label="Search">
+                                    </div>
+                                    <div class="col-lg-auto col-md-1 col-12">
+                                        <button class="btn btn-primary" type="submit">修改</button>
+                                    </div>
+                                </div>
+                            </form>
 
                         </div>
                     </div>
+                </div>
 
+                <div class="col-12 col-sm-12 col-lg-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4>變更後台登入密碼</h4>
+                        </div>
 
-                    <div class="col-12 col-sm-12 col-lg-12">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>上下班時間設定</h4>
-                            </div>
-                            <div class="card-body">
-
-                                <form class="form-inline mr-auto">
-                                    <div class="row">
-                                        <div class="col-lg-auto col-md-6 col-12">
-                                            上班時間：<input class="form-control" type="time" placeholder="" aria-label="Search">
-                                        </div>
-                                        <div class="col-lg-auto col-md-5 col-12">
-                                            下班時間：<input class="form-control" type="time" placeholder="" aria-label="Search">
-                                        </div>
-                                        <div class="col-lg-auto col-md-1 col-12">
-                                            <button class="btn btn-primary" type="submit">修改</button>
-                                        </div>
+                        <div class="card-body">
+                            <form class="form-inline mr-auto">
+                                <div class="row">
+                                    <div class="col-lg-auto col-md-10 col-12">
+                                        新後台登入密碼：<input class="form-control" type="text" placeholder="請輸入新密碼" aria-label="Search">
                                     </div>
-                                </form>
-
-                            </div>
+                                    <div class="col-lg-auto col-md-2 col-12">
+                                        <button class="btn btn-primary" type="submit">修改</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-12 col-sm-12 col-lg-12">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>下上班逾時打卡設定</h4>
-                            </div>
+                <div class="col-12 col-sm-12 col-lg-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4>手機打卡記錄設定</h4>
+                        </div>
 
-                            <div class="card-body">
+                        <div class="card-body">
 
-                                <form class="form-inline mr-auto">
-                                    <div class="row">
-                                        <div class="col-lg-auto col-md-3 col-3">
-                                            上下班逾時禁止打卡：
-                                        </div>
-                                        <div class="col-lg-auto col-md-2 col-12">
-                                            <label class="switch">
-                                                <input type="checkbox" id="togBtn">
-                                                <div class="slider round">
-                                                    <span class="on">是</span>
-                                                    <span class="off">否</span>
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <div class="col-lg-auto col-md-5 col-12" style="color: grey;">
-                                            *若開啟，上下班30分後打卡，需要後台許可app顯示該筆紀錄。
-                                        </div>
-                                        <div class="col-lg-auto col-md-1 col-12">
-                                            <button class="btn btn-primary" type="submit">修改</button>
-                                        </div>
+                            <form class="form-inline mr-auto">
+                                <div class="row">
+                                    <div class="col-lg-auto col-md-3 col-3" style="margin-top:10px">
+                                        可查詢當月：
                                     </div>
-                                </form>
+                                    <div class="col-lg-auto col-md-2 col-12" style="margin-top:10px">
+                                        <label class="switch">
+                                            <input type="checkbox" id="togBtn">是
+                                            <div class="slider round">
+                                                <span class="on">是</span>
+                                                <span class="off">否</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-auto col-md-5 col-12">
+                                        可查詢天數：<input class="form-control" type="text" placeholder="若設定為0則不限制天數" aria-label="Search">
+                                    </div>
+                                    <div class="col-lg-auto col-md-1 col-12">
+                                        <button class="btn btn-primary" type="submit">修改</button>
+                                    </div>
+                                </div>
+                            </form>
 
-                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-sm-12 col-lg-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4>上下班時間設定</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <form class="form-inline mr-auto">
+                                <div class="row">
+                                    <div class="col-lg-auto col-md-6 col-12">
+                                        上班時間：<input class="form-control" type="time" placeholder="" aria-label="Search">
+                                    </div>
+                                    <div class="col-lg-auto col-md-5 col-12">
+                                        下班時間：<input class="form-control" type="time" placeholder="" aria-label="Search">
+                                    </div>
+                                    <div class="col-lg-auto col-md-1 col-12">
+                                        <button class="btn btn-primary" type="submit">修改</button>
+                                    </div>
+                                </div>
+                            </form>
 
                         </div>
                     </div>
+                </div>
 
-        </section>
-    </div>
+                <div class="col-12 col-sm-12 col-lg-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4>下上班逾時打卡設定</h4>
+                        </div>
+
+                        <div class="card-body">
+
+                            <form class="form-inline mr-auto">
+                                <div class="row">
+                                    <div class="col-lg-auto col-md-3 col-3">
+                                        上下班逾時禁止打卡：
+                                    </div>
+                                    <div class="col-lg-auto col-md-2 col-12">
+                                        <label class="switch">
+                                            <input type="checkbox" id="togBtn">
+                                            <div class="slider round">
+                                                <span class="on">是</span>
+                                                <span class="off">否</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-auto col-md-5 col-12" style="color: grey;">
+                                        *若開啟，上下班30分後打卡，需要後台許可app顯示該筆紀錄。
+                                    </div>
+                                    <div class="col-lg-auto col-md-1 col-12">
+                                        <button class="btn btn-primary" type="submit">修改</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

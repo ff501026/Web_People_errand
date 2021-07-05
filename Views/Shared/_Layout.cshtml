@@ -24,11 +24,12 @@
                 <div>
                     <a href="" class="nav_logo"><span class="nav_logo-name" style="margin-left:30px ">人事差勤打卡系統</span> </a>
                     <div class="nav_list">
-                        <a href="@Url.Action("Index")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"> <i class='bi-clock'></i> <span class="nav_name">打卡紀錄</span> </a>
-                        <a href="@Url.Action("TripRecords")" class="nav_link  @(Context.Request.Path == "/AttendanceManagement/TripRecords" ? "active" : "")"> <i class='bi-briefcase'></i> <span class="nav_name">公出管理</span> </a>
-                        <a href="@Url.Action("EmployeeData")" class="nav_link @(Context.Request.Path == "/AttendanceManagement/EmployeeData" ? "active" : "")"> <i class='bi-person-square'></i> <span class="nav_name">員工管理</span> </a>
-                        <a href="@Url.Action("Setting")" class="nav_link @(Context.Request.Path == "/AttendanceManagement/Setting" ? "active" : "")"> <i class='bi-gear-fill'></i> <span class="nav_name">系統設定</span> </a>
-                        <a href="@Url.Action("DataExport")" class="nav_link @(Context.Request.Path == "/AttendanceManagement/DataExport" ? "active" : "")"> <i class='bi-file-earmark-arrow-down-fill'></i> <span class="nav_name">資料匯出</span> </a>
+                        <a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"> <i class='bi-clock'></i> <span class="nav_name">打卡紀錄</span> </a>
+                        <a href="@Url.Action("Index","EmployeeData")" class="nav_link @(Context.Request.Path == "/EmployeeData" ? "active" : "")"> <i class='bi-person-square'></i> <span class="nav_name">員工管理</span> </a>
+                        <a href="@Url.Action("Index","TripRecords")" class="nav_link  @(Context.Request.Path == "/TripRecords" ? "active" : "")"> <i class='bi-briefcase'></i> <span class="nav_name">公出管理</span> </a>
+                        <a href="@Url.Action("Index","LeaveRecords")" class="nav_link  @(Context.Request.Path == "/LeaveRecords" ? "active" : "")"> <i class='bi-calendar2-x'></i> <span class="nav_name">請假管理</span> </a>
+                        <a href="@Url.Action("Index","Setting")" class="nav_link @(Context.Request.Path == "/Setting" ? "active" : "")"> <i class='bi-gear-fill'></i> <span class="nav_name">系統設定</span> </a>
+                        <a href="@Url.Action("Index","DataExport")" class="nav_link @(Context.Request.Path == "/DataExport" ? "active" : "")"> <i class='bi-file-earmark-arrow-down-fill'></i> <span class="nav_name">資料匯出</span> </a>
                     </div>
                 </div> <a href="#" class="nav_link"> <i class='bi-power'></i> <span class="nav_name">登出</span> </a>
             </nav>
@@ -45,5 +46,6 @@
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     </body>
 </html>

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "員工管理";
 }
 
 <div class="main-content">
@@ -9,16 +9,91 @@
             <div>員工管理</div>
         </h1>
 
+        <div class="section-body" style="margin-top:25px">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>待審核-員工帳號</h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>公司ID</th>
+                                        <th>員工姓名</th>
+                                        <th>E-mail</th>
+                                        <th>驗證碼(phone code)</th>
+                                        <th>申請時間</th>
+                                        <th>審核</th>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
+                                        </td>
+                                        <td>0912-345678</td>
+                                        <td>daMingWang@gmail.com</td>
+                                        <td>12345</td>
+                                        <td>2021-07-03 13:05:59</td>
+                                        <td>
+                                            <a href="@Url.Action("Check","EmployeeData")" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
+                                        </td>
+                                    </tr>
+                                    @*
+                                    <tr>
+                                        <td>
+                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
+                                        </td>
+                                        <td>0912-345678</td>
+                                        <td>daMingWang@gmail.com</td>
+                                        <td>12345</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
+                                        </td>
+                                    </tr>
+                                    *@
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <form class="form-inline mr-auto">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <i class="bi-person"></i> 姓名(ID)：<input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                <div class="col-lg-auto col-md-6 col-12">
+                    <i class="bi-sliders"></i> 部門：
+                    <select class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <option>請選擇部門</option>
+                        <option></option>
+                    </select>
                 </div>
-                <div class="col-lg-5 col-md-5 col-12">
-                    <i class="bi-calendar"></i> 日期：<input class="form-control" type="date" placeholder="Search" aria-label="Search">
+                <div class="col-lg-auto col-md-6 col-12">
+                    <i class="bi-filter-left"></i> 職稱：
+                    <select class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <option>請選擇職稱</option>
+                        <option></option>
+                    </select>
                 </div>
-                <div class="col-lg-1 col-md-1 col-12">
+                <div class="col-lg-auto col-md-6 col-12">
+                    <i class="bi-person"></i> 姓名：
+                    <select class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <option>請選擇姓名</option>
+                        <option></option>
+                    </select>
+                </div>
+                <div class="col-lg-auto col-md-1 col-12">
                     <div class="search-element">
                         <button class="btn" type="submit"><i class="bi-search"></i></button>
                     </div>
@@ -38,20 +113,33 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tr>
-                                        <th>員工姓名(ID)</th>
+                                        <th>員工姓名</th>
                                         <th>電話</th>
+                                        <th>部門</th>
+                                        <th>職稱</th>
                                         <th>E-mail</th>
-                                        <th>驗證碼</th>
+                                        <th>驗證碼(phone code)</th>
                                         <th>編輯</th>
-                                        <th>清除設備ID</th>
-                                        <th>停用/恢復</th>
                                     </tr>
 
 
                                     <tr>
                                         <td>
                                             <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-                                            <div class="badge badge-danger">未驗證</div>
+                                        </td>
+                                        <td>0912-345678</td>
+                                        <td>human resources</td>
+                                        <td>manager</td>
+                                        <td>daMingWang@gmail.com</td>
+                                        <td>12345</td>
+                                        <td>
+                                            <a href="@Url.Action("Edit","EmployeeData")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                        </td>
+                                    </tr>
+                                    @*
+                                    <tr>
+                                        <td>
+                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
                                         </td>
                                         <td>0912-345678</td>
                                         <td>daMingWang@gmail.com</td>
@@ -66,26 +154,7 @@
                                             <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-                                            <div class="badge badge-success">已驗證</div>
-                                        </td>
-                                        <td>0912-345678</td>
-                                        <td>daMingWang@gmail.com</td>
-                                        <td>12345</td>
-                                        <td>
-                                            <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
-                                        </td>
-                                    </tr>
-
+                                    *@
 
                                 </table>
                             </div>

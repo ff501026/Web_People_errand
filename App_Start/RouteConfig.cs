@@ -16,7 +16,7 @@ namespace AttendanceManagement
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "AttendanceManagement", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "PunchRecords", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

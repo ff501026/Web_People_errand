@@ -13,5 +13,14 @@ namespace AttendanceManagement.Controllers
         {
             return View();
         }
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
+        public ActionResult Check()
+        {
+            return View();
+        }
     }
 }

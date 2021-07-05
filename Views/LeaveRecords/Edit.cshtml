@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "修改請假申請";
+}
+
+<div class="main-content">
+    <section class="section">
+        <h1 class="section-header">
+            <div>修改請假申請</div>
+        </h1>
+
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row" style="margin-bottom:20px">
+                                <div class="col-lg-auto col-md-6 col-12">
+                                    <label for="#">申請人：</label>
+                                    <a href="#">王大明</a>
+                                </div>
+                                <div class="col-lg-auto col-md-6 col-12">
+                                    <label for="#">核准人：</label>
+                                    <a href="#">王大明</a>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 20px ; margin-bottom:20px">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <label for="#">假別</label>
+                                    <select class="form-control" disabled="disabled">
+                                        <option>請選擇假別</option>
+                                        <option>#</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <label for="#">事由</label>
+                                    <input id="#" type="email" class="form-control" name="#" tabindex="1" placeholder="請輸入事由" required autofocus disabled="disabled">
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-bottom:20px">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <label for="#">開始時間</label>
+                                    <input id="#" type="datetime-local" class="form-control" name="#" disabled="disabled">
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <label for="#">結束時間</label>
+                                    <input id="#" type="datetime-local" class="form-control" name="#" disabled="disabled">
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-bottom:20px">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <label for="#">審核結果</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
+                                    <label class="btn btn-success" for="option1">核准</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" checked>
+                                    <label class="btn btn-danger" for="option2">拒絕</label>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-bottom:20px">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <label for="#">備註</label>
+                                    <textarea name="#" class="form-control"> </textarea>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center flex-row bd-highlight">
+                                <div class="p-2 flex-fill bd-highlight">
+                                    <button class="btn btn-success" type="submit">更新</button>
+                                </div>
+                                <div class="p-2 flex-fill bd-highlight">
+                                    <button class="btn btn-primary" onclick="javascript:window.history.go(-1);" type="submit"><i class="bi-box-arrow-in-left"></i>返回</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
