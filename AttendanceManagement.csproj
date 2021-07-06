@@ -319,6 +319,9 @@
     <Content Include="Views\LeaveRecords\Index.cshtml" />
     <Content Include="Views\LeaveRecords\Edit.cshtml" />
     <Content Include="Views\LeaveRecords\Check.cshtml" />
+    <Content Include="Views\Shared\_Layout - 複製.cshtml" />
+    <Content Include="Views\TripRecords\Edit.cshtml" />
+    <Content Include="Views\TripRecords\Check.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

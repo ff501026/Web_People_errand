@@ -1,12 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "公出紀錄";
+    ViewData["Title"] = "公出管理";
 }
 
 <div class="main-content">
     <section class="section">
         <h1 class="section-header">
-            <div>公出紀錄</div>
+            <div>公出管理</div>
         </h1>
+
+
+        <div class="section-body" style="margin-top:25px">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>待審核-公出申請</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>編號</th>
+                                            <th>批示狀態</th>
+                                            <th>申請人</th>
+                                            <th>起始時間</th>
+                                            <th>結束時間</th>
+                                            <th>公出地點</th>
+                                            <th>申請時間</th>
+                                            <th>審核</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><div class="badge badge-warning">尚未審核</div></td>
+                                            <td>王大明</td>
+                                            <td>2021-07-24 9:00</td>
+                                            <td>2021-07-26 16:00</td>
+                                            <td>卓越路2號</td>
+                                            <td>2021-07-06 10:00</td>
+                                            <td><a href="@Url.Action("Check","TripRecords")" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
             <div class="row">
@@ -42,37 +86,23 @@
                                         <th>申請人</th>
                                         <th>起始時間</th>
                                         <th>結束時間</th>
-                                        <th>公出地點</th>               
+                                        <th>公出地點</th>
                                         <th>申請時間</th>
-                                        <th>審核</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
-                                @*
                                 <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.TripRecordsId)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Review)</td>
-                                            <td>
-                                                <a href="#">
-                                                    <!--
-                                                    <img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">
-                                                    -->
-                                                    @Html.DisplayFor(modelItem => item.HashAccount)
-                                                </a>
-                                            </td>
-                                            <td>@Html.DisplayFor(modelItem => item.StartDate) 至 @Html.DisplayFor(modelItem => item.EndDate)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Location)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Reason)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.CreatedTime)</td>
-                                            <td>
-                                                <a asp-action="Edit" asp-route-id="@item.TripRecordsId" class="btn btn-primary btn-action"><i class="bi-pencil-square"></i></a>
-                                            </td>
-                                        </tr>
-                                    }
+                                    <tr>
+                                        <td>1</td>
+                                        <td><div class="badge badge-success">審核通過</td>
+                                        <td>王小明</td>
+                                        <td>2021-06-28 10:00</td>
+                                        <td>2021-06-28 17:30</td>
+                                        <td>民族一路90號</td>
+                                        <td>2021-06-20- 16:37</td>
+                                        <td><a href="@Url.Action("Edit","TripRecords")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
+                                    </tr>
                                 </tbody>
-                                *@
                             </table>
                             <div class="card-footer text-right">
                                 <nav class="d-inline-block">

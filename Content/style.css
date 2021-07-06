@@ -191,9 +191,11 @@ a {
         width: calc(var(--nav-width) + 156px)
     }
 
+
     .body-pd {
         padding-left: calc(var(--nav-width) + 188px)
     }
+
 }
 
 .sidebar-user-picture {
@@ -205,6 +207,7 @@ a {
 	width: 50px;
 	border-radius: 50%;
 }
+
 /*End-header-sidebar*/
 
 /*Start - checkbox inside select option*/
