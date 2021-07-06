@@ -247,6 +247,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttendanceManagementController.cs" />
     <Compile Include="Controllers\DataExportController.cs" />
     <Compile Include="Controllers\EmployeeDataController.cs" />
@@ -319,9 +320,10 @@
     <Content Include="Views\LeaveRecords\Index.cshtml" />
     <Content Include="Views\LeaveRecords\Edit.cshtml" />
     <Content Include="Views\LeaveRecords\Check.cshtml" />
-    <Content Include="Views\Shared\_Layout - 複製.cshtml" />
     <Content Include="Views\TripRecords\Edit.cshtml" />
     <Content Include="Views\TripRecords\Check.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
