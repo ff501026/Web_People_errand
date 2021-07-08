@@ -36,7 +36,7 @@ namespace AttendanceManagement.Models
             
             //計算總共有幾筆上下班紀錄
             var length = 0;
-            foreach (var ever in employee_workRecord)
+            foreach (var num in employee_workRecord)
             {
                 length++;
             }

@@ -1,7 +1,23 @@
 ﻿
 @{
     ViewBag.Title = "員工管理";
+
+    //待審核資料
+    var review_companyid = ViewBag.reivew_companyid;//公司ID
+    var review_name = ViewBag.reivew_name;//員工名稱
+    var review_email = ViewBag.reivew_eamil;//員工電子郵件
+    var review_phonecode = ViewBag.reivew_phonecode;//員工驗證碼(phone_code)
+    var review_createdtime = ViewBag.reivew_createdtime;//申請時間
+
+    //已審核資料
+    var Name = ViewBag.Name;//員工名稱
+    var Phone = ViewBag.Phone;//員工電話
+    var Department = ViewBag.Department;//員工部門
+    var Jobtitle = ViewBag.Jobtitle;//員工職稱
+    var Email = ViewBag.Email;//員工電子郵件
+    var Phonecode = ViewBag.Phone_code;//員工驗證碼(phone_code)
 }
+
 
 <div class="main-content">
     <section class="section">
@@ -28,8 +44,23 @@
                                         <th>審核</th>
                                     </tr>
 
+                                    @for (int i = 0; i < review_companyid.Length; i++)
+                                    {
+                                <tr>
+                                    <td>@review_companyid[i]</td>
+                                    <td>
+                                        <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@review_name[i]</a>
+                                    </td>
+                                    <td>@review_email[i]</td>
+                                    <td>@review_phonecode[i]</td>
+                                    <td>@review_createdtime[i]</td>
+                                    <td>
+                                        <a href="@Url.Action("Check","EmployeeData")" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
+                                    </td>
+                                </tr>
+                                    }
 
-                                    <tr>
+                                    @*<tr>
                                         <td>
                                             <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
                                         </td>
@@ -40,25 +71,25 @@
                                         <td>
                                             <a href="@Url.Action("Check","EmployeeData")" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
                                         </td>
-                                    </tr>
+                                    </tr>*@
                                     @*
-                                    <tr>
-                                        <td>
-                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-                                        </td>
-                                        <td>0912-345678</td>
-                                        <td>daMingWang@gmail.com</td>
-                                        <td>12345</td>
-                                        <td>
-                                            <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
-                                        </td>
-                                    </tr>
+        <tr>
+            <td>
+                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
+            </td>
+            <td>0912-345678</td>
+            <td>daMingWang@gmail.com</td>
+            <td>12345</td>
+            <td>
+                <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+            </td>
+            <td>
+                <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
+            </td>
+            <td>
+                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
+            </td>
+        </tr>
                                     *@
 
                                 </table>
@@ -122,8 +153,23 @@
                                         <th>編輯</th>
                                     </tr>
 
-
-                                    <tr>
+                                    @for (int i = 0; i < Name.Length; i++)
+                                    {
+                                <tr>
+                                    <td>
+                                        <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@Name[i]</a>
+                                    </td>
+                                    <td>@Phone[i]</td>
+                                    <td>@Department[i]</td>
+                                    <td>@Jobtitle[i]</td>
+                                    <td>@Email[i]</td>
+                                    <td>@Phonecode[i]</td>
+                                    <td>
+                                        <a href="@Url.Action("Edit","EmployeeData")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                    </td>
+                                </tr>
+                                    }
+                                    @*<tr>
                                         <td>
                                             <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
                                         </td>
@@ -135,25 +181,25 @@
                                         <td>
                                             <a href="@Url.Action("Edit","EmployeeData")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
                                         </td>
-                                    </tr>
+                                    </tr>*@
                                     @*
-                                    <tr>
-                                        <td>
-                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-                                        </td>
-                                        <td>0912-345678</td>
-                                        <td>daMingWang@gmail.com</td>
-                                        <td>12345</td>
-                                        <td>
-                                            <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
-                                        </td>
-                                    </tr>
+        <tr>
+            <td>
+                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
+            </td>
+            <td>0912-345678</td>
+            <td>daMingWang@gmail.com</td>
+            <td>12345</td>
+            <td>
+                <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+            </td>
+            <td>
+                <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
+            </td>
+            <td>
+                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
+            </td>
+        </tr>
                                     *@
 
                                 </table>
