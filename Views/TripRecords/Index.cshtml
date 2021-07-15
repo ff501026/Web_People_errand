@@ -1,5 +1,11 @@
 ﻿@{
     ViewData["Title"] = "公出管理";
+    var Name = ViewBag.name;//員工名稱
+    var StartDate = ViewBag.startdate;//開始時間
+    var EndDate = ViewBag.enddate;//結束時間
+    var Location = ViewBag.location;//地點
+    var Reason = ViewBag.reason;//備註(事由)
+    var CreatedTime = ViewBag.createtime;//申請時間
 }
 
 <div class="main-content">
@@ -32,7 +38,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @for (int i = 0; i < Name.Length; i++)
+                                        {
                                         <tr>
+                                            <td>1</td>
+                                            <td><div class="badge badge-warning">尚未審核</div></td>
+                                            <td>@Name[i]</td>
+                                            <td>@StartDate[i]</td>
+                                            <td>@EndDate[i]</td>
+                                            <td>@Location[i]</td>
+                                            <td>@CreatedTime[i]</td>
+                                            <td><a href="@Url.Action("Check","TripRecords")" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a></td>
+                                        </tr>
+                                        }
+                                        @*<tr>
                                             <td>1</td>
                                             <td><div class="badge badge-warning">尚未審核</div></td>
                                             <td>王大明</td>
@@ -41,7 +60,7 @@
                                             <td>卓越路2號</td>
                                             <td>2021-07-06 10:00</td>
                                             <td><a href="@Url.Action("Check","TripRecords")" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a></td>
-                                        </tr>
+                                        </tr>*@
                                     </tbody>
                                 </table>
                             </div>
