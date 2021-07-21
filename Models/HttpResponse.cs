@@ -16,7 +16,11 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyPassEmployee = "Companies/Pass_Employee/";//查看公司審核通過之員工資料api
         public static readonly string CompanyDepartment = "EmployeeDepartmentTypes";//查看公司部門資料api
         public static readonly string CompanyJobtitle = "EmployeeJobtitleTypes";//查看公司職稱資料api
-        public static readonly string CompanyReviewTripRecord = "Companies/Review_TripRecord/";//查看公司職稱資料api
+        public static readonly string CompanyReviewTripRecord = "Companies/Review_TripRecord/";//查看公司待審核公差資料api
+        public static readonly string CompanyPassTripRecord = "Companies/Pass_TripRecord/";//查看公司已審核公差資料api
+        public static readonly string CompanyReviewLeaveRecord = "Companies/Review_LeaveRecord/";//查看公司待審核請假資料api
+        public static readonly string CompanyPassLeaveRecord = "Companies/Pass_LeaveRecord/";//查看公司已審核請假資料api
+
         public static readonly string CompanyHash = "4D7F9C66F7D796DB03284D632B5A8F";//公司
 
         public static string GetResponse { get; set; } //存取API回傳的內容

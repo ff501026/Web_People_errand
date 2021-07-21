@@ -7,40 +7,40 @@ using System.Web;
 
 namespace AttendanceManagement.Models
 {
-    class ReviewTripRecordModel : HttpResponse
+    class ReviewLeaveRecordModel : HttpResponse
     {
-        public static async Task<List<TripRecord>> Get_ReviewTripRecord(string company_hash)
+        public static async Task<List<LeaveRecord>> Get_ReviewLeaveRecord(string company_hash)
         {
             //連上WebAPI
-            response = await client.GetAsync(url + CompanyReviewTripRecord + company_hash);
+            response = await client.GetAsync(url + CompanyReviewLeaveRecord + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
-            List<TripRecord> review_triprecord = JsonConvert.DeserializeObject<List<TripRecord>>(GetResponse);
+            List<LeaveRecord> review_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
 
-            return review_triprecord;
+            return review_leaverecord;
         }
     }
-    class PassTripRecordModel : HttpResponse
+    class PassLeaveRecordModel : HttpResponse
     {
-        public static async Task<List<TripRecord>> Get_PassTripRecord(string company_hash)
+        public static async Task<List<LeaveRecord>> Get_PassLeaveRecord(string company_hash)
         {
             //連上WebAPI
-            response = await client.GetAsync(url + CompanyPassTripRecord + company_hash);
+            response = await client.GetAsync(url + CompanyPassLeaveRecord + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
-            List<TripRecord> pass_triprecord = JsonConvert.DeserializeObject<List<TripRecord>>(GetResponse);
+            List<LeaveRecord> pass_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
 
-            return pass_triprecord;
+            return pass_leaverecord;
         }
     }
-    public class TripRecord 
+    public class LeaveRecord
     {
         public string Name { get; set; }//員工姓名
+        public string LeaveType { get; set; }//假別
         public DateTime StartDate { get; set; }//開始時間
         public DateTime EndDate { get; set; }//結束時間
-        public string Location { get; set; }//地點
         public string Reason { get; set; }//備註(事由)
         public bool? Review { get; set; }//審核狀態
         public DateTime CreatedTime { get; set; }//申請時間

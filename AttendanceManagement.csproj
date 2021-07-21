@@ -259,7 +259,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\HttpResponse.cs" />
-    <Compile Include="Models\ReviewEmployeeModel.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
+    <Compile Include="Models\LeaveRecordModel.cs" />
     <Compile Include="Models\StaffModel.cs" />
     <Compile Include="Models\TripRecordModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

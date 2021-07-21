@@ -1,10 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "打卡紀錄";
-    var num= ViewBag.num;
-    var name = ViewBag.name;
-    var worktime = ViewBag.worktime;
-    var resttime = ViewBag.resttime;
+    List<AttendanceManagement.Models.Work_Record> work_record = ViewBag.workrecord;
 }
 
 <div class="main-content">
@@ -45,15 +42,15 @@
                                         <th>下班時間</th>
                                         <th>是否遲到</th>
                                     </tr>
-                                    @for(int i = 0;i<num.Length; i++)
+                                    @foreach (var record in work_record)
                                     {
                                         <tr>
-                                            <td>@num[i]</td>
+                                            <td>@record.Num</td>
                                             <td>
-                                                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@name[i]</a>
+                                                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@record.Name</a>
                                             </td>
-                                            <td>@worktime[i]</td>
-                                            <td>@resttime[i]</td>
+                                            <td>@record.WorkTime</td>
+                                            <td>@record.RestTime</td>
                                             <td><div class="badge badge-success">準時</div></td>
                                         </tr>
                                     }

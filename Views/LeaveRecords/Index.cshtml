@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewBag.Title = "請假紀錄";
+    List<AttendanceManagement.Models.LeaveRecord> reivewleaveRecords = ViewBag.review_leaverecord;
+    List<AttendanceManagement.Models.LeaveRecord> passleaveRecords = ViewBag.pass_leaverecord;
 }
 
 <div class="main-content">
@@ -28,8 +30,22 @@
                                         <th>審核</th>
                                     </tr>
 
-
-                                    <tr>
+                                    @foreach (var reivew_leaverecord in reivewleaveRecords) 
+                                    {
+                                        <tr>
+                                        <td>
+                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@reivew_leaverecord.Name</a>
+                                        </td>
+                                        <td>@reivew_leaverecord.LeaveType</td>
+                                        <td>@reivew_leaverecord.StartDate</td>
+                                        <td>@reivew_leaverecord.EndDate</td>
+                                        <td>@reivew_leaverecord.CreatedTime</td>
+                                        <td>
+                                            <a href="@Url.Action("Check","LeaveRecords")" class="btn btn-success btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
+                                        </td>
+                                    </tr>
+                                    }
+                                    @*<tr>
                                         <td>
                                             <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
                                         </td>
@@ -40,7 +56,7 @@
                                         <td>
                                             <a href="@Url.Action("Check","LeaveRecords")" class="btn btn-success btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
                                         </td>
-                                    </tr>
+                                    </tr>*@
                                     @*
                                     <tr>
                                         <td>
@@ -111,8 +127,35 @@
                                         <th></th>
                                     </tr>
 
-
-                                    <tr>
+                                     @foreach (var pass_leaverecord in passleaveRecords) 
+                                    {
+                                <tr>
+                                    <td>
+                                        <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_leaverecord.Name</a>
+                                    </td>
+                                    <td>@pass_leaverecord.LeaveType</td>
+                                    <td>@pass_leaverecord.StartDate</td>
+                                    <td>@pass_leaverecord.EndDate</td>
+                                    <td>@pass_leaverecord.CreatedTime</td>
+                                    @if (pass_leaverecord.Review==true)
+                                    {
+                                        <td>
+                                            <div class="badge badge-success">核准</div>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>                 
+                                            <div class="badge badge-danger">拒絕</div> 
+                                        </td>
+                                    }
+                                    <td>
+                                        <a href="@Url.Action("Edit","LeaveRecords")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                        <button class="btn btn-danger btn-action" type="submit"><i class="bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                    }
+                                    <!--<tr>
                                         <td>
                                             <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
                                         </td>
@@ -120,16 +163,16 @@
                                         <td>2021-06-28 9:00</td>
                                         <td>2021-06-28 18:00</td>
                                         <td>2021-06-26 16:00</td>
-                                        <td><div class="badge badge-success">核准</div>
+                                        <td><div class="badge badge-success">核准</div>-->
                                         @*
                                             <div class="badge badge-danger">拒絕</div>
                                         *@
-                                        </td>
+                                        <!--</td>
                                         <td>
                                             <a href="@Url.Action("Edit","LeaveRecords")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
                                             <button class="btn btn-danger btn-action" type="submit"><i class="bi-trash"></i></button>
                                         </td>
-                                    </tr>
+                                    </tr>-->
                                     @*
                                     <tr>
                                         <td>
