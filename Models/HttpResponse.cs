@@ -20,6 +20,7 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyPassTripRecord = "Companies/Pass_TripRecord/";//查看公司已審核公差資料api
         public static readonly string CompanyReviewLeaveRecord = "Companies/Review_LeaveRecord/";//查看公司待審核請假資料api
         public static readonly string CompanyPassLeaveRecord = "Companies/Pass_LeaveRecord/";//查看公司已審核請假資料api
+        public static readonly string EmployeeSetInformation = "EmployeeInformations/set_information";//(POST)賦予審核通過的員工部門及職稱API
 
         public static readonly string CompanyHash = "4D7F9C66F7D796DB03284D632B5A8F";//公司
 

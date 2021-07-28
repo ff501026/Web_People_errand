@@ -59,10 +59,12 @@ namespace AttendanceManagement.Models
     }
     public class Department 
     {
+        public int DepartmentID { get; set; }//編號
         public string Name { get; set; }//部門名稱
     }
     public class JobTitle
     {
+        public int JobTitleID { get; set; }//編號
         public string Name { get; set; }//職稱
     }
 }

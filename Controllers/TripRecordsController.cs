@@ -18,7 +18,7 @@ namespace AttendanceManagement.Controllers
             //輸入公司代碼取得待審核公出申請紀錄
             List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(company_hash);
             //輸入公司代碼取得已審核公出申請紀錄
-            List<TripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(company_hash);
+            List<PassTripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(company_hash);
 
             ViewBag.review_triprecord = review_triprecord;//待審核公出申請紀錄
             ViewBag.pass_triprecord = pass_triprecord;//待審核公出申請紀錄

@@ -2,9 +2,11 @@
 @{ 
     ViewBag.Title = "系統設定";
 
-    List<AttendanceManagement.Models.Department> departments = ViewBag.department;
-    List<AttendanceManagement.Models.JobTitle> jobTitles = ViewBag.jobtitle;
-    }
+    List<AttendanceManagement.Models.Department> departments = ViewBag.departments;
+    List<AttendanceManagement.Models.JobTitle> jobTitles = ViewBag.jobtitles;
+
+
+}
 
 <div class="main-content">
     <section class="section">
@@ -169,16 +171,21 @@
                         </div>
 
                         <div class="card-body">
-                            <form class="form-inline mr-auto">
+                            @using (Html.BeginForm("ChangeCompanyPassword","Setting",FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                              
+                                
                                 <div class="row">
                                     <div class="col-lg-auto col-md-10 col-12">
-                                        新後台登入密碼：<input class="form-control" type="text" placeholder="請輸入新密碼" aria-label="Search">
+                                        新後台登入密碼：
+                                        <input id="NewPassword" name="NewPassword" class="form-control" type="text" placeholder="請輸入新密碼" aria-label="Search">
                                     </div>
                                     <div class="col-lg-auto col-md-2 col-12">
                                         <button class="btn btn-primary" type="submit">修改</button>
                                     </div>
                                 </div>
-                            </form>
+                            }
                         </div>
                     </div>
                 </div>

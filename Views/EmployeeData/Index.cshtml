@@ -1,11 +1,13 @@
 ﻿
 @{
     ViewBag.Title = "員工管理";
-
+    List<AttendanceManagement.Models.Department> departments = ViewBag.department;//部門
+    List<AttendanceManagement.Models.JobTitle> jobTitles = ViewBag.jobtitle;//職稱
     List<AttendanceManagement.Models.ReviewEmployee> reviewEmployees = ViewBag.review_employee; //待審核資料
-    List<AttendanceManagement.Models.PassEmployee> passEmployees = ViewBag.pass_employee; //已審核資料
-
+    List<AttendanceManagement.Models.PassEmployee> passEmployees = ViewBag.pass_employee; //已審核資料(會變動的資料，有可能是全部也可能是篩選後)
+    List<AttendanceManagement.Models.PassEmployee> all_passEmployees = ViewBag.all_passemployee; //全部的已審核資料(不會變動)
 }
+
 
 
 <div class="main-content">
@@ -42,43 +44,10 @@
                                             <td>@reviewData.PhoneCode</td>
                                             <td>@reviewData.CreatedTime</td>
                                             <td>
-                                                <a href="@Url.Action("Check","EmployeeData")" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
+                                                <a href="/EmployeeData/Check?id=@reviewData.HashAccount" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
                                             </td>
                                         </tr>
                                     }
-
-                                    @*<tr>
-            <td>
-                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-            </td>
-            <td>0912-345678</td>
-            <td>daMingWang@gmail.com</td>
-            <td>12345</td>
-            <td>2021-07-03 13:05:59</td>
-            <td>
-                <a href="@Url.Action("Check","EmployeeData")" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
-            </td>
-        </tr>*@
-                                    @*
-        <tr>
-            <td>
-                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-            </td>
-            <td>0912-345678</td>
-            <td>daMingWang@gmail.com</td>
-            <td>12345</td>
-            <td>
-                <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-            </td>
-            <td>
-                <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
-            </td>
-            <td>
-                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
-            </td>
-        </tr>
-                                    *@
-
                                 </table>
                             </div>
                         </div>
@@ -87,38 +56,49 @@
             </div>
         </div>
 
-
-        <form class="form-inline mr-auto">
-            <div class="row">
-                <div class="col-lg-auto col-md-6 col-12">
-                    <i class="bi-sliders"></i> 部門：
-                    <select class="form-control" type="text" placeholder="Search" aria-label="Search">
-                        <option>請選擇部門</option>
-                        <option></option>
-                    </select>
-                </div>
-                <div class="col-lg-auto col-md-6 col-12">
-                    <i class="bi-filter-left"></i> 職稱：
-                    <select class="form-control" type="text" placeholder="Search" aria-label="Search">
-                        <option>請選擇職稱</option>
-                        <option></option>
-                    </select>
-                </div>
-                <div class="col-lg-auto col-md-6 col-12">
-                    <i class="bi-person"></i> 姓名：
-                    <select class="form-control" type="text" placeholder="Search" aria-label="Search">
-                        <option>請選擇姓名</option>
-                        <option></option>
-                    </select>
-                </div>
-                <div class="col-lg-auto col-md-1 col-12">
-                    <div class="search-element">
-                        <button class="btn" type="submit"><i class="bi-search"></i></button>
+        @using (Html.BeginForm("SearchEmployee", "EmployeeData", FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
+            <form class="form-inline mr-auto">
+                <div class="row">
+                    <div class="col-lg-auto col-md-6 col-12">
+                        <i class="bi-sliders"></i> 部門：
+                        <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                            <option>請選擇部門</option>
+                            @foreach (var department in departments)
+                            {
+                                <option>@department.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-auto col-md-6 col-12">
+                        <i class="bi-filter-left"></i> 職稱：
+                        <select id="jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                            <option>請選擇職稱</option>
+                            @foreach (var jobtitle in jobTitles)
+                            {
+                                <option>@jobtitle.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-auto col-md-6 col-12">
+                        <i class="bi-person"></i> 姓名：
+                        <select id="employee_name" name="employee_name" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                            <option>請選擇姓名</option>
+                            @foreach (var passEmployee in all_passEmployees)
+                            {
+                                <option>@passEmployee.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-lg-auto col-md-1 col-12">
+                        <div class="search-element">
+                            <button class="btn" id="button" name="button" value="search" type="submit"><i class="bi-search"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
-
+            </form>
+        }
 
         <div class="section-body" style="margin-top:25px">
             <div class="row">
@@ -142,53 +122,20 @@
 
                                     @foreach (var pass_employee in passEmployees)
                                     {
-                                <tr>
-                                    <td>
-                                        <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
-                                    </td>
-                                    <td>@pass_employee.Phone</td>
-                                    <td>@pass_employee.Department</td>
-                                    <td>@pass_employee.JobTitle</td>
-                                    <td>@pass_employee.Email</td>
-                                    <td>@pass_employee.PhoneCode</td>
-                                    <td>
-                                        <a href="@Url.Action("Edit","EmployeeData")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                    </td>
-                                </tr>
+                                        <tr>
+                                            <td>
+                                                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
+                                            </td>
+                                            <td>@pass_employee.Phone</td>
+                                            <td>@pass_employee.Department</td>
+                                            <td>@pass_employee.JobTitle</td>
+                                            <td>@pass_employee.Email</td>
+                                            <td>@pass_employee.PhoneCode</td>
+                                            <td>
+                                                <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                            </td>
+                                        </tr>
                                     }
-                                    @*<tr>
-                                        <td>
-                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-                                        </td>
-                                        <td>0912-345678</td>
-                                        <td>human resources</td>
-                                        <td>manager</td>
-                                        <td>daMingWang@gmail.com</td>
-                                        <td>12345</td>
-                                        <td>
-                                            <a href="@Url.Action("Edit","EmployeeData")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                        </td>
-                                    </tr>*@
-                                    @*
-        <tr>
-            <td>
-                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-            </td>
-            <td>0912-345678</td>
-            <td>daMingWang@gmail.com</td>
-            <td>12345</td>
-            <td>
-                <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-            </td>
-            <td>
-                <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
-            </td>
-            <td>
-                <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
-            </td>
-        </tr>
-                                    *@
-
                                 </table>
                             </div>
                         </div>
@@ -198,11 +145,15 @@
                                     <li class="page-item disabled">
                                         <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
                                     </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#" id="page" name="page" value=1>1 <span class="sr-only">(current)</span></a>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" id="page" name="page" value=2>2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" id="page" name="page" value=3>3</a>
+                                    </li>
                                     <li class="page-item">
                                         <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
                                     </li>
@@ -213,7 +164,5 @@
                 </div>
             </div>
         </div>
-
-
     </section>
 </div>

@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "公出管理";
     List<AttendanceManagement.Models.TripRecord> reviewTripRecords = ViewBag.review_triprecord;//待審核公出資料
-    List<AttendanceManagement.Models.TripRecord> passTripRecords = ViewBag.pass_triprecord;//已審核公出資料
+    List<AttendanceManagement.Models.PassTripRecord> passTripRecords = ViewBag.pass_triprecord;//已審核公出資料
     int review_num = 0;//待審核公出資料編號
     int pass_num = 0;//已審核公出資料編號
 }
@@ -117,11 +117,11 @@
                                             <td>@pass_num</td>
                                             @if (pass_triprecord.Review == true)
                                             {
-                                                <td><div class="badge badge-success">核准</td>
+                                                <td><div class="badge badge-success">核准</div></td>
                                             }
                                             else
                                             {
-                                                <td><div class="badge badge-danger">拒絕</td>
+                                                <td><div class="badge badge-danger">拒絕</div></td>
                                             }
                                             <td>@pass_triprecord.Name</td>
                                             <td>@pass_triprecord.StartDate</td>

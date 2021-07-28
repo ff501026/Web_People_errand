@@ -3,34 +3,39 @@
     ViewBag.Title = "修改員工資料";
     List<AttendanceManagement.Models.Department> departments = ViewBag.department;//部門
     List<AttendanceManagement.Models.JobTitle> jobTitles = ViewBag.jobtitle;//職稱
-    List<AttendanceManagement.Models.PassEmployee> passEmployees = ViewBag.pass_employee; //待審核資料
+    List<AttendanceManagement.Models.ReviewEmployee> reviewEmployees = ViewBag.review_employee; //待審核資料
     int num = ViewBag.Num;
 }
 
 
 <div class="main-content">
     <section class="section">
+        <div class="d-flex justify-content-end flex-row bd-highlight">
+            <div class="p-2 flex-fill bd-highlight">
+                <button class="btn btn-primary" onclick="javascript:window.history.go(-1);" type="submit"><i class="bi-box-arrow-in-left"></i>返回</button>
+            </div>
+        </div>
         <h1 class="section-header">
-            <div>修改員工資料</div>
+            <div>審核員工帳號</div>
         </h1>
 
-        @*<div class="d-flex bd-highlight mb-3">
-            <div class="p-2 bd-highlight">
+        <!--<div class="d-flex bd-highlight mb-3">-->
+            @*<div class="p-2 bd-highlight">
                 <div class="p-2 flex-fill bd-highlight">
                     <div class="search-element">
                         <button class="btn btn-warning" type="submit"><i class="bi-trash-fill"></i>清除設備ID</button>
                     </div>
                 </div>
-            </div>
-            <div class="p-2 bd-highlight">
+            </div>*@
+            <!--<div class="p-2 bd-highlight">
                 <div class="p-lg-2 flex-fill bd-highlight">
                     <div class="search-element">
-                        <button class="btn btn-danger" type="submit"><i class="bi-power"></i>停用/恢復</button>
+                        <button class="btn btn-primary" onclick="javascript:window.history.go(-1);" type="submit"><i class="bi-box-arrow-in-left"></i>返回</button>
                     </div>
                 </div>
             </div>
-        </div>*@
-        @using (Html.BeginForm("EditEmployee", "EmployeeData", FormMethod.Post))
+        </div>-->
+        @using (Html.BeginForm("SetEmployeeInformation", "EmployeeData", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
@@ -42,22 +47,22 @@
                                 <div class="row" style="margin-bottom:20px">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="#">員工姓名</label>
-                                        <input id="#" value=@passEmployees[num].Name  type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入員工姓名" required autofocus>
+                                        <input id="#" value=@reviewEmployees[num].Name readonly="readonly" type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入員工姓名" required autofocus>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
-                                        <label for="#">電話</label>
-                                        <input id="#" value=@passEmployees[num].Phone type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入公司ID" required autofocus>
+                                        <label for="#">公司ID</label>
+                                        <input id="#" value=@reviewEmployees[num].CompanyId readonly="readonly" type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入公司ID" required autofocus>
                                     </div>
                                 </div>
 
                                 <div class="row" style="margin-bottom:20px">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="#">驗證碼(phone code)</label>
-                                        <input id="phonecode" name="phonecode" value=@passEmployees[num].PhoneCode  type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入驗證碼" required autofocus>
+                                        <input id="phonecode" name="phonecode" value=@reviewEmployees[num].PhoneCode readonly="readonly" type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入驗證碼" required autofocus>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="#">Email</label>
-                                        <input id="#" value=@passEmployees[num].Email type="email" class="form-control" name="#" tabindex="1" placeholder="請輸入Email帳號" required autofocus>
+                                        <input id="#" value=@reviewEmployees[num].Email readonly="readonly" type="email" class="form-control" name="#" tabindex="1" placeholder="請輸入Email帳號" required autofocus>
                                     </div>
                                 </div>
 
@@ -86,10 +91,10 @@
 
                                 <div class="d-flex justify-content-center flex-row bd-highlight">
                                     <div class="p-2 flex-fill bd-highlight">
-                                        <button class="btn btn-success" id="Button" name="Button" type="submit" value="RenewButton">更新</button>
+                                        <button class="btn btn-success" id="Button" name="Button" type="submit" value="SaveButton">核准</button>
                                     </div>
                                     <div class="p-2 flex-fill bd-highlight">
-                                        <button class="btn btn-primary" id="Button" name="Button" value="BackButton" onclick="javascript:window.history.go(-1);" type="submit"><i class="bi-box-arrow-in-left"></i>返回</button>
+                                        <button class="btn btn-danger" id="Button" name="Button" value="RejectButton" type="submit">拒絕</button>
                                     </div>
                                 </div>
                             </div>
@@ -97,6 +102,6 @@
                     </div>
                 </div>
             </div>
-         }
+        }
     </section>
 </div>
