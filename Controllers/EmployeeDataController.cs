@@ -111,14 +111,39 @@ namespace AttendanceManagement.Controllers
                 return Content("<script>alert('審核失敗！如有問題請連繫後台');history.go(-1);</script>");
         }
         [HttpPost]//員工管理修改頁面，修改按鈕
-        public async Task<ActionResult> EditEmployee(string Button, string phonecode, string department, string jobtitle)
+        public async Task<ActionResult> EditEmployee(string Button, string name, string phone, string email, string phonecode, string department, string jobtitle)
         {
-            if(Button.Equals("RenewButton"))
-                return Content("<script>alert('目前不能用ㄏㄏ');history.go(-1);</script>");
+            List<Department> departments = await DepartmentModel.Get_DepartmentAsync(company_hash);//輸入公司代碼取得部門資料
+            List<JobTitle> jobtitles = await JobtitleModel.Get_JobtitleAsync(company_hash);//輸入公司代碼取得職稱資料
+            int departmentIndex = departments.FindIndex(item => item.Name.Equals(department));//部門索引值
+            int jobtitleIndex = jobtitles.FindIndex(item => item.Name.Equals(jobtitle));//職稱索引值
+
+            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);//已審核資料
+            int num = passEmployees.FindIndex(item => item.PhoneCode.Equals(phonecode));//員工索引值
+
+            bool result = false;
+
+            if (Button.Equals("RenewButton"))
+            {
+                if (departmentIndex == -1 || jobtitleIndex == -1)
+                {
+                    return Content("<script>alert('更新失敗，請確認是否有賦予職稱及部門！');history.go(-1);</script>");
+                }
+
+                result = await PassEmployeeModel.RenewEmployees(passEmployees[num].HashAccount,name,phone,email, departments[departmentIndex].DepartmentID, jobtitles[jobtitleIndex].JobTitleID);//(PUT)更新員工資料
+
+                if (result)
+                {
+                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[num].Email, "差勤打卡資料更新通知", "<h1>差勤打卡資料更新</h1><p>請至差勤打卡APP個人資料確認更新內容，如有問題請連繫後台。</p>");
+                    return Redirect("/EmployeeData/Index");
+                }
+                else
+                    return Content("<script>alert('更新失敗！如有問題請連繫後台');history.go(-1);</script>");
+            }
             return Redirect("/EmployeeData/Index");
         }
-        [HttpGet]
-        public async Task<ActionResult> SearchEmployee(string department, string jobtitle, string employee_name)//已審核員工資料篩選
+        [HttpGet]//已審核員工資料篩選
+        public async Task<ActionResult> SearchEmployee(string department, string jobtitle, string employee_name)
         {
             //輸入公司代碼取得待審核資料
             List<ReviewEmployee> reviewEmployees = await ReviewEmployeeModel.ReviewEmployees(company_hash);

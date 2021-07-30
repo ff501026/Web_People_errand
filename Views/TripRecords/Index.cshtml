@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "公出管理";
     List<AttendanceManagement.Models.TripRecord> reviewTripRecords = ViewBag.review_triprecord;//待審核公出資料
-    List<AttendanceManagement.Models.PassTripRecord> passTripRecords = ViewBag.pass_triprecord;//已審核公出資料
+    List<AttendanceManagement.Models.TripRecord> passTripRecords = ViewBag.pass_triprecord;//已審核公出資料
     int review_num = 0;//待審核公出資料編號
     int pass_num = 0;//已審核公出資料編號
 }
@@ -39,16 +39,16 @@
                                         @foreach (var review_triprecord in reviewTripRecords)
                                         {
                                             review_num++;
-                                        <tr>
-                                            <td>@review_num</td>
-                                            <td><div class="badge badge-warning">尚未審核</div></td>
-                                            <td>@review_triprecord.Name</td>
-                                            <td>@review_triprecord.StartDate</td>
-                                            <td>@review_triprecord.EndDate</td>
-                                            <td>@review_triprecord.Location</td>
-                                            <td>@review_triprecord.CreatedTime</td>
-                                            <td><a href="@Url.Action("Check","TripRecords")" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a></td>
-                                        </tr>
+                                            <tr>
+                                                <td>@review_num</td>
+                                                <td><div class="badge badge-warning">尚未審核</div></td>
+                                                <td>@review_triprecord.Name</td>
+                                                <td>@review_triprecord.StartDate</td>
+                                                <td>@review_triprecord.EndDate</td>
+                                                <td>@review_triprecord.Location</td>
+                                                <td>@review_triprecord.CreatedTime</td>
+                                                <td><a href="/TripRecords/Check?id=@review_triprecord.TripRecordId" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a></td>
+                                            </tr>
                                         }
                                         @*<tr>
                                             <td>1</td>
@@ -69,101 +69,104 @@
             </div>
         </div>
 
+        @using (Html.BeginForm("SearchTripRecord", "TripRecords", FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
+            <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
+                    </div>
 
-        <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <i class="bi-person"></i> 姓名(ID)：<input class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
-                </div>
+                    <div class="col-lg-5 col-md-5 col-12">
+                        <i class="bi-calendar"></i> 日期：<input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search">
+                    </div>
 
-                <div class="col-lg-5 col-md-5 col-12">
-                    <i class="bi-calendar"></i> 日期：<input class="form-control" type="date" placeholder="Search" aria-label="Search">
-                </div>
-
-                <div class="col-lg-1 col-md-1 col-12">
-                    <div class="search-element">
-                        <button class="btn" type="submit"><i class="bi-search"></i></button>
+                    <div class="col-lg-1 col-md-1 col-12">
+                        <div class="search-element">
+                            <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        }
 
-        <div class="row" style="margin-top:25px">
-            <div class="col-lg-12 col-md-12 col-12 col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>公出申請紀錄</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>編號</th>
-                                        <th>批示狀態</th>
-                                        <th>申請人</th>
-                                        <th>起始時間</th>
-                                        <th>結束時間</th>
-                                        <th>公出地點</th>
-                                        <th>申請時間</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var pass_triprecord in passTripRecords)
-                                    {
-                                        pass_num++;
+            <div class="row" style="margin-top:25px">
+                <div class="col-lg-12 col-md-12 col-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>公出申請紀錄</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
                                         <tr>
-                                            <td>@pass_num</td>
-                                            @if (pass_triprecord.Review == true)
-                                            {
-                                                <td><div class="badge badge-success">核准</div></td>
-                                            }
-                                            else
-                                            {
-                                                <td><div class="badge badge-danger">拒絕</div></td>
-                                            }
-                                            <td>@pass_triprecord.Name</td>
-                                            <td>@pass_triprecord.StartDate</td>
-                                            <td>@pass_triprecord.EndDate</td>
-                                            <td>@pass_triprecord.Location</td>
-                                            <td>@pass_triprecord.CreatedTime</td>
-                                            <td><a href="@Url.Action("Edit","TripRecords")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
+                                            <th>編號</th>
+                                            <th>批示狀態</th>
+                                            <th>申請人</th>
+                                            <th>起始時間</th>
+                                            <th>結束時間</th>
+                                            <th>公出地點</th>
+                                            <th>申請時間</th>
+                                            <th></th>
                                         </tr>
-                                    }
-                                    @*<tr>
-                                        <td>1</td>
-                                        <td><div class="badge badge-success">審核通過</td>
-                                        <td>王小明</td>
-                                        <td>2021-06-28 10:00</td>
-                                        <td>2021-06-28 17:30</td>
-                                        <td>民族一路90號</td>
-                                        <td>2021-06-20- 16:37</td>
-                                        <td><a href="@Url.Action("Edit","TripRecords")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
-                                    </tr>*@
-                                </tbody>
-                            </table>
-                            <div class="card-footer text-right">
-                                <nav class="d-inline-block">
-                                    <ul class="pagination mb-0">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">2</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var pass_triprecord in passTripRecords)
+                                        {
+                                            pass_num++;
+                                            <tr>
+                                                <td>@pass_num</td>
+                                                @if (pass_triprecord.Review == true)
+                                                {
+                                                    <td><div class="badge badge-success">核准</div></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><div class="badge badge-danger">拒絕</div></td>
+                                                }
+                                                <td>@pass_triprecord.Name</td>
+                                                <td>@pass_triprecord.StartDate</td>
+                                                <td>@pass_triprecord.EndDate</td>
+                                                <td>@pass_triprecord.Location</td>
+                                                <td>@pass_triprecord.CreatedTime</td>
+                                                <td><a href="/TripRecords/Edit?id=@pass_triprecord.TripRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
+                                            </tr>
+                                        }
+                                        @*<tr>
+                                            <td>1</td>
+                                            <td><div class="badge badge-success">審核通過</td>
+                                            <td>王小明</td>
+                                            <td>2021-06-28 10:00</td>
+                                            <td>2021-06-28 17:30</td>
+                                            <td>民族一路90號</td>
+                                            <td>2021-06-20- 16:37</td>
+                                            <td><a href="@Url.Action("Edit","TripRecords")" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
+                                        </tr>*@
+                                    </tbody>
+                                </table>
+                                <div class="card-footer text-right">
+                                    <nav class="d-inline-block">
+                                        <ul class="pagination mb-0">
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                            </li>
+                                            <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">2</a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 </div>

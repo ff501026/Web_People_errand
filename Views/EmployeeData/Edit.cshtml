@@ -33,7 +33,6 @@
         @using (Html.BeginForm("EditEmployee", "EmployeeData", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            @Html.Hidden("id", passEmployees[num].HashAccount)
             <div class="section-body">
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">
@@ -42,11 +41,11 @@
                                 <div class="row" style="margin-bottom:20px">
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="#">員工姓名</label>
-                                        <input id="#" value=@passEmployees[num].Name type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入員工姓名" required autofocus>
+                                        <input id="name" name="name" value=@passEmployees[num].Name type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入員工姓名" required autofocus>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="#">電話</label>
-                                        <input id="#" value=@passEmployees[num].Phone type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入電話" required autofocus>
+                                        <input id="phone" name="phone" value=@passEmployees[num].Phone type="text" class="form-control" name="#" tabindex="1" placeholder="請輸入電話" required autofocus>
                                     </div>
                                 </div>
 
@@ -57,7 +56,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="#">Email</label>
-                                        <input id="#" value=@passEmployees[num].Email type="email" class="form-control" name="#" tabindex="1" placeholder="請輸入Email帳號" required autofocus>
+                                        <input id="email" name="email" value=@passEmployees[num].Email type="email" class="form-control" name="#" tabindex="1" placeholder="請輸入Email帳號" required autofocus>
                                     </div>
                                 </div>
 
@@ -68,7 +67,14 @@
                                             <option>請選擇職稱</option>
                                             @foreach (var jobtitle in jobTitles)
                                             {
-                                                <option>@jobtitle.Name</option>
+                                                if (jobtitle.Name.Equals(passEmployees[num].JobTitle))
+                                                {
+                                                    <option selected>@jobtitle.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option>@jobtitle.Name</option>
+                                                }   
                                             }
                                         </select>
                                     </div>
@@ -78,7 +84,15 @@
                                             <option>請選擇部門</option>
                                             @foreach (var department in departments)
                                             {
-                                                <option>@department.Name</option>
+                                                if (department.Name.Equals(passEmployees[num].Department))
+                                                {
+                                                    <option selected>@department.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option>@department.Name</option>
+                                                }
+
                                             }
                                         </select>
                                     </div>

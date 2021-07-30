@@ -17,12 +17,18 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyPassEmployee = "Companies/Pass_Employee/";//查看公司審核通過之員工資料api
         public static readonly string CompanyDepartment = "EmployeeDepartmentTypes";//查看公司部門資料api
         public static readonly string CompanyJobtitle = "EmployeeJobtitleTypes";//查看公司職稱資料api
+        public static readonly string CompanyLeaveType = "EmployeeLeaveTypes";//查看公司請假資料api
         public static readonly string CompanyReviewTripRecord = "Companies/Review_TripRecord/";//查看公司待審核公差資料api
         public static readonly string CompanyPassTripRecord = "Companies/Pass_TripRecord/";//查看公司已審核公差資料api
         public static readonly string CompanyReviewLeaveRecord = "Companies/Review_LeaveRecord/";//查看公司待審核請假資料api
         public static readonly string CompanyPassLeaveRecord = "Companies/Pass_LeaveRecord/";//查看公司已審核請假資料api
-        public static readonly string EmployeeSetInformation = "EmployeeInformations/set_information";//(POST)賦予審核通過的員工部門及職稱API
+        public static readonly string EmployeeSetInformation = "EmployeeInformations/set_information";//(PUT)賦予審核通過的員工部門及職稱API
         public static readonly string EmployeeRejectInformation = "EmployeeInformations/DeleteInformation/";//(Delete)拒絕審核員工帳號
+        public static readonly string EmployeeEditInformation = "EmployeeInformations/edit_information";//(PUT)編輯員工資料
+        public static readonly string EmployeeReviewTripRecord = "EmployeeTripRecords/review_tripRecord";//(PUT)審核公差API
+        public static readonly string EmployeeEditTripRecord = "EmployeeTripRecords/update_tripRecord";//(PUT)編輯公差API
+        public static readonly string EmployeeReviewLeaveRecord = "EmployeeLeaveRecords/review_leaveRecord";//(PUT)審核請假API
+        public static readonly string EmployeeEditLeaveRecord = "EmployeeLeaveRecords​/update_leaveRecord";//(PUT)編輯請假API
 
         public static readonly string CompanyHash = "4D7F9C66F7D796DB03284D632B5A8F";//公司
 
@@ -32,7 +38,7 @@ namespace AttendanceManagement.Models
             {
                 MailMessage mail = new MailMessage();
                 //前面是發信email後面是顯示的名稱
-                mail.From = new MailAddress("C108118221@nkust.edu.tw", "差勤打卡後台通知");
+                mail.From = new MailAddress("C108118221@nkust.edu.tw", "差勤打卡");
 
                 //收信者email
                 mail.To.Add(to_email);
