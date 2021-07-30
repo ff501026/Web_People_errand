@@ -37,6 +37,7 @@ namespace AttendanceManagement.Models
     }
     public class LeaveRecord
     {
+        public int LeaveRecordId { get; set; }//請假編號
         public string HashAccount { get; set; }//員工編號
         public string Name { get; set; }//員工姓名
         public string LeaveType { get; set; }//假別

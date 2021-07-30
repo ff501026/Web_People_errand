@@ -20,25 +20,24 @@
         </h1>
 
         <!--<div class="d-flex bd-highlight mb-3">-->
-            @*<div class="p-2 bd-highlight">
-                <div class="p-2 flex-fill bd-highlight">
-                    <div class="search-element">
-                        <button class="btn btn-warning" type="submit"><i class="bi-trash-fill"></i>清除設備ID</button>
-                    </div>
-                </div>
-            </div>*@
-            <!--<div class="p-2 bd-highlight">
-                <div class="p-lg-2 flex-fill bd-highlight">
-                    <div class="search-element">
-                        <button class="btn btn-primary" onclick="javascript:window.history.go(-1);" type="submit"><i class="bi-box-arrow-in-left"></i>返回</button>
-                    </div>
+        @*<div class="p-2 bd-highlight">
+            <div class="p-2 flex-fill bd-highlight">
+                <div class="search-element">
+                    <button class="btn btn-warning" type="submit"><i class="bi-trash-fill"></i>清除設備ID</button>
                 </div>
             </div>
-        </div>-->
+        </div>*@
+        <!--<div class="p-2 bd-highlight">
+            <div class="p-lg-2 flex-fill bd-highlight">
+                <div class="search-element">
+                    <button class="btn btn-primary" onclick="javascript:window.history.go(-1);" type="submit"><i class="bi-box-arrow-in-left"></i>返回</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
         @using (Html.BeginForm("SetEmployeeInformation", "EmployeeData", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-
             <div class="section-body">
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Web;
 
 namespace AttendanceManagement.Models
@@ -21,9 +22,57 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyReviewLeaveRecord = "Companies/Review_LeaveRecord/";//查看公司待審核請假資料api
         public static readonly string CompanyPassLeaveRecord = "Companies/Pass_LeaveRecord/";//查看公司已審核請假資料api
         public static readonly string EmployeeSetInformation = "EmployeeInformations/set_information";//(POST)賦予審核通過的員工部門及職稱API
+        public static readonly string EmployeeRejectInformation = "EmployeeInformations/DeleteInformation/";//(Delete)拒絕審核員工帳號
 
         public static readonly string CompanyHash = "4D7F9C66F7D796DB03284D632B5A8F";//公司
 
+        public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                //前面是發信email後面是顯示的名稱
+                mail.From = new MailAddress("C108118221@nkust.edu.tw", "差勤打卡後台通知");
+
+                //收信者email
+                mail.To.Add(to_email);
+
+                //設定優先權
+                mail.Priority = MailPriority.Normal;
+
+                //標題
+                mail.Subject = email_subject;
+
+                //內容
+                mail.Body = email_body;
+
+                //內容使用html
+                mail.IsBodyHtml = true;
+
+                //設定gmail的smtp (這是google的)
+                SmtpClient MySmtp = new SmtpClient("smtp.gmail.com", 587);
+
+                //您在gmail的帳號密碼
+                MySmtp.Credentials = new System.Net.NetworkCredential("like3yy@gmail.com", "nkust.edu.tw");
+
+                //開啟ssl
+                MySmtp.EnableSsl = true;
+
+                //發送郵件
+                MySmtp.Send(mail);
+
+                //放掉宣告出來的MySmtp
+                MySmtp = null;
+
+                //放掉宣告出來的mail
+                mail.Dispose();
+                Console.WriteLine("成功發送EMAIL通知!");
+            }
+            catch (Exception) 
+            {
+                Console.WriteLine("發送EMAIL通知失敗!");
+            }
+        }
         public static string GetResponse { get; set; } //存取API回傳的內容
 
     }

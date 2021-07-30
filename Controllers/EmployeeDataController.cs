@@ -72,34 +72,43 @@ namespace AttendanceManagement.Controllers
         [HttpPost]//員工管理審核頁面，審核按鈕
         public async Task<ActionResult> SetEmployeeInformation(string Button, string phonecode, string department, string jobtitle)
         {
+            List<Department> departments = await DepartmentModel.Get_DepartmentAsync(company_hash);//輸入公司代碼取得部門資料
+            List<JobTitle> jobtitles = await JobtitleModel.Get_JobtitleAsync(company_hash);//輸入公司代碼取得職稱資料
+            int departmentIndex = departments.FindIndex(item => item.Name.Equals(department));//部門索引值
+            int jobtitleIndex = jobtitles.FindIndex(item => item.Name.Equals(jobtitle));//職稱索引值
+
+            List<ReviewEmployee> reviewEmployees = await ReviewEmployeeModel.ReviewEmployees(company_hash);//待審核資料
+            int num = reviewEmployees.FindIndex(item => item.PhoneCode.Equals(phonecode));//員工索引值
+
+            string hashaccount = reviewEmployees[num].HashAccount;
+            bool result = false;
+
             if (Button.Equals("SaveButton"))
             {
-                List<Department> departments = await DepartmentModel.Get_DepartmentAsync(company_hash);//輸入公司代碼取得部門資料
-                List<JobTitle> jobtitles = await JobtitleModel.Get_JobtitleAsync(company_hash);//輸入公司代碼取得職稱資料
-                int departmentIndex = departments.FindIndex(item => item.Name.Equals(department));//部門索引值
-                int jobtitleIndex = jobtitles.FindIndex(item => item.Name.Equals(jobtitle));//職稱索引值
-
-                List<ReviewEmployee> reviewEmployees = await ReviewEmployeeModel.ReviewEmployees(company_hash);//待審核資料
-                int num = reviewEmployees.FindIndex(item => item.PhoneCode.Equals(phonecode));//員工索引值
-
-                string hashaccount = reviewEmployees[num].HashAccount;
-
                 if (departmentIndex == -1 || jobtitleIndex == -1)
                 {
                     return Content("<script>alert('審核失敗，請確認是否有賦予職稱及部門！');history.go(-1);</script>");
                 }
 
-                bool result = await SetEmployeeModel.SetEmployees(hashaccount, departments[departmentIndex].DepartmentID, jobtitles[jobtitleIndex].JobTitleID);//PUT部門及職稱
+                result = await SetEmployeeModel.SetEmployees(hashaccount, departments[departmentIndex].DepartmentID, jobtitles[jobtitleIndex].JobTitleID);//PUT部門及職稱
 
                 if (result)
                 {
-                    SetEmployeeModel.sendGmail(reviewEmployees[num].Email, "成功");
+                    AttendanceManagement.Models.HttpResponse.sendGmail(reviewEmployees[num].Email, "差勤打卡帳號審核通知","<h1>差勤打卡帳號審核成功</h1><p>請至差勤打卡APP重新進行登入，如有問題請連繫後台。</p>");
                     return Redirect("/EmployeeData/Index");
                 }
                 else
                     return Content("<script>alert('審核失敗！如有問題請連繫後台');history.go(-1);</script>");
             }
-            return Redirect("/EmployeeData/Index");
+            result = await SetEmployeeModel.RejectEmployees(hashaccount);//Delete員工
+
+            if (result)
+            {
+                AttendanceManagement.Models.HttpResponse.sendGmail(reviewEmployees[num].Email, "差勤打卡帳號審核通知", "<h1>差勤打卡帳號審核失敗</h1><p>如有問題請連繫後台。</p>");
+                return Redirect("/EmployeeData/Index");
+            }
+            else
+                return Content("<script>alert('審核失敗！如有問題請連繫後台');history.go(-1);</script>");
         }
         [HttpPost]//員工管理修改頁面，修改按鈕
         public async Task<ActionResult> EditEmployee(string Button, string phonecode, string department, string jobtitle)
@@ -109,7 +118,7 @@ namespace AttendanceManagement.Controllers
             return Redirect("/EmployeeData/Index");
         }
         [HttpGet]
-        public async Task<ActionResult> SearchEmployee(string department, string jobtitle, string employee_name)//搜尋
+        public async Task<ActionResult> SearchEmployee(string department, string jobtitle, string employee_name)//已審核員工資料篩選
         {
             //輸入公司代碼取得待審核資料
             List<ReviewEmployee> reviewEmployees = await ReviewEmployeeModel.ReviewEmployees(company_hash);

@@ -37,6 +37,7 @@ namespace AttendanceManagement.Models
     }
     public class TripRecord 
     {
+        public int TripRecordId { get; set; }//公差編號
         public string HashAccount { get; set; }//員工編號
         public string Name { get; set; }//員工姓名
         public DateTime StartDate { get; set; }//開始時間
@@ -48,6 +49,7 @@ namespace AttendanceManagement.Models
     }
     public class PassTripRecord
     {
+        public int TripRecordId { get; set; }//公差編號
         public string HashAccount { get; set; }//員工編號
         public string Name { get; set; }//員工姓名
         public DateTime StartDate { get; set; }//開始時間
