@@ -11,7 +11,7 @@
         <h1 class="section-header">
             <div>修改請假申請</div>
         </h1>
-        @using (Html.BeginForm("EditLeaveRecord", "LeaveRecords", new { id = leaveRecords[num].LeaveRecordId }, FormMethod.Post))
+        @using (Html.BeginForm("EditLeaveRecord", "LeaveRecords", new {num=num, id = leaveRecords[num].LeaveRecordId }, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             <div class="section-body">

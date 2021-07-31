@@ -10,7 +10,7 @@
         <h1 class="section-header">
             <div>修改公出申請</div>
         </h1>
-        @using (Html.BeginForm("EditTripRecord", "TripRecords", new { id = tripRecords[num].TripRecordId }, FormMethod.Post))
+        @using (Html.BeginForm("EditTripRecord", "TripRecords", new { num=num,id = tripRecords[num].TripRecordId }, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             <div class="section-body">

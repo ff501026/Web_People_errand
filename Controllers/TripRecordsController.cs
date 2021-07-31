@@ -49,12 +49,11 @@ namespace AttendanceManagement.Controllers
         }
 
         [HttpPost]//公差審核頁面，審核按鈕
-        public async Task<ActionResult> ReviewTripRecord(int id,string Button)
+        public async Task<ActionResult> ReviewTripRecord(int num,int id,string Button)
         {
 
             //輸入公司代碼取得待審核公出申請紀錄
             List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(company_hash);
-            int num = review_triprecord.FindIndex(item => item.TripRecordId == id); ;//員工索引值，用來找出員工編號
             string hashaccount = review_triprecord[num].HashAccount;//員工編號
 
             //輸入公司代碼取得已審核員工資料
@@ -112,13 +111,13 @@ namespace AttendanceManagement.Controllers
 
             return View("Index");
         }
-        [HttpPost]//員工管理修改頁面，修改按鈕
-        public async Task<ActionResult> EditTripRecord(int id, string Button, bool? review, DateTime startdate,DateTime enddate, string location,string reason)
+        [HttpPost]//公出管理改頁面，修改按鈕
+        public async Task<ActionResult> EditTripRecord(int num,int id, string Button, bool? review, DateTime startdate,DateTime enddate, string location,string reason)
         {
 
             //輸入公司代碼取得已審核公出申請紀錄
             List<TripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(company_hash);
-            int num = pass_triprecord.FindIndex(item => item.TripRecordId == id); ;//員工索引值，用來找出員工編號
+
             string hashaccount = pass_triprecord[num].HashAccount;//員工編號
 
             //輸入公司代碼取得已審核員工資料
@@ -133,7 +132,7 @@ namespace AttendanceManagement.Controllers
 
                 if (result)
                 {
-                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[num].Email, "差勤打卡公差紀錄變更通知", "<h1>您的公差紀錄已變更</h1><p>請至差勤打卡APP公差紀錄確認變更內容，如有問題請連繫後台。</p>");
+                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[Index].Email, "差勤打卡公差紀錄變更通知", "<h1>您的公差紀錄已變更</h1><p>請至差勤打卡APP公差紀錄確認變更內容，如有問題請連繫後台。</p>");
                     return Redirect("/TripRecords/Index");
                 }
                 else

@@ -14,7 +14,7 @@
             <div>修改員工資料</div>
         </h1>
 
-        @using (Html.BeginForm("EnabledEmployee", "EmployeeData", new { id = passEmployees[num].HashAccount },FormMethod.Post))
+        @using (Html.BeginForm("EnabledEmployee", "EmployeeData", new {num=num, id = passEmployees[num].HashAccount },FormMethod.Post))
         {
     <div class="d-flex bd-highlight mb-3">
         @if (passEmployees[num].Enabled == true)
@@ -48,7 +48,7 @@
         </div>*@
     </div>
         }
-            @using (Html.BeginForm("EditEmployee", "EmployeeData", new { id = passEmployees[num].HashAccount }, FormMethod.Post))
+            @using (Html.BeginForm("EditEmployee", "EmployeeData", new {num=num, id = passEmployees[num].HashAccount }, FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 <div class="section-body">

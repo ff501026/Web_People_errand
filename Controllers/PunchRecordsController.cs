@@ -32,8 +32,6 @@ namespace AttendanceManagement.Controllers
             //放入篩選後的已審核資料
             List<Work_Record> search_work_Records = new List<Work_Record>();
 
-            int num = all_work_Records.FindIndex(item => item.Name.Equals(employee_name));//員工索引值
-
             if (date.Equals(null) && employee_name.Equals(""))//沒有輸入篩選條件就按搜尋，顯示全部資料
                 return Redirect("/PunchRecords/Index");
             else if (!date.Equals(null) && !employee_name.Equals(""))//兩個篩選條件都輸入

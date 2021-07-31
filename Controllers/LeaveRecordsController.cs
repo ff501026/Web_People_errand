@@ -52,12 +52,11 @@ namespace AttendanceManagement.Controllers
             return View("Check");
         }
         [HttpPost]//公差審核頁面，審核按鈕
-        public async Task<ActionResult> ReviewLeaveRecord(int id, string Button)
+        public async Task<ActionResult> ReviewLeaveRecord(int num,int id, string Button)
         {
 
             //輸入公司代碼取得待審核公出申請紀錄
             List<LeaveRecord> review_leaverecord = await ReviewLeaveRecordModel.Get_ReviewLeaveRecord(company_hash);
-            int num = review_leaverecord.FindIndex(item => item.LeaveRecordId == id); ;//員工索引值，用來找出員工編號
             string hashaccount = review_leaverecord[num].HashAccount;//員工編號
 
             //輸入公司代碼取得已審核員工資料
@@ -93,12 +92,11 @@ namespace AttendanceManagement.Controllers
 
         }
         [HttpPost]//公差修改頁面，修改按鈕
-        public async Task<ActionResult> EditLeaveRecord(int id,string Button, bool? review)
+        public async Task<ActionResult> EditLeaveRecord(int num,int id,string Button, bool? review)
         {
 
             //輸入公司代碼取得已審核請假申請紀錄
             List<LeaveRecord> pass_leaverecord = await PassLeaveRecordModel.Get_PassLeaveRecord(company_hash);
-            int num = pass_leaverecord.FindIndex(item => item.LeaveRecordId == id); ;//員工索引值，用來找出員工編號
             string hashaccount = pass_leaverecord[num].HashAccount;//員工編號
 
             //輸入公司代碼取得已審核員工資料
@@ -113,7 +111,7 @@ namespace AttendanceManagement.Controllers
 
                 if (result)
                 {
-                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[num].Email, "差勤打卡請假紀錄變更通知", "<h1>您的請假狀態已變更</h1><p>請至差勤打卡APP公差紀錄確認變更內容，如有問題請連繫後台。</p>");
+                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[Index].Email, "差勤打卡請假紀錄變更通知", "<h1>您的請假狀態已變更</h1><p>請至差勤打卡APP公差紀錄確認變更內容，如有問題請連繫後台。</p>");
                     return Redirect("/LeaveRecords/Index");
                 }
                 else

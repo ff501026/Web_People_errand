@@ -70,7 +70,7 @@ namespace AttendanceManagement.Controllers
         }
 
         [HttpPost]//員工管理審核頁面，審核按鈕
-        public async Task<ActionResult> SetEmployeeInformation(string id,string Button, string phonecode, string department, string jobtitle)
+        public async Task<ActionResult> SetEmployeeInformation(int num,string id,string Button, string phonecode, string department, string jobtitle)
         {
             List<Department> departments = await DepartmentModel.Get_DepartmentAsync(company_hash);//輸入公司代碼取得部門資料
             List<JobTitle> jobtitles = await JobtitleModel.Get_JobtitleAsync(company_hash);//輸入公司代碼取得職稱資料
@@ -78,7 +78,6 @@ namespace AttendanceManagement.Controllers
             int jobtitleIndex = jobtitles.FindIndex(item => item.Name.Equals(jobtitle));//職稱索引值
 
             List<ReviewEmployee> reviewEmployees = await ReviewEmployeeModel.ReviewEmployees(company_hash);//待審核資料
-            int num = reviewEmployees.FindIndex(item => item.HashAccount.Equals(id));//員工索引值
 
             bool result = false;
 
@@ -110,7 +109,7 @@ namespace AttendanceManagement.Controllers
                 return Content("<script>alert('審核失敗！如有問題請連繫後台');history.go(-1);</script>");
         }
         [HttpPost]//員工管理修改頁面，修改按鈕
-        public async Task<ActionResult> EditEmployee(string Button, string id, string name, string phone, string email, string phonecode, string department, string jobtitle)
+        public async Task<ActionResult> EditEmployee(int num,string Button, string id, string name, string phone, string email, string phonecode, string department, string jobtitle)
         {
             List<Department> departments = await DepartmentModel.Get_DepartmentAsync(company_hash);//輸入公司代碼取得部門資料
             List<JobTitle> jobtitles = await JobtitleModel.Get_JobtitleAsync(company_hash);//輸入公司代碼取得職稱資料
@@ -118,7 +117,6 @@ namespace AttendanceManagement.Controllers
             int jobtitleIndex = jobtitles.FindIndex(item => item.Name.Equals(jobtitle));//職稱索引值
 
             List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);//已審核資料
-            int num = passEmployees.FindIndex(item => item.HashAccount.Equals(id));//員工索引值
 
             bool result = false;
 
@@ -142,10 +140,9 @@ namespace AttendanceManagement.Controllers
             return Redirect("/EmployeeData/Index");
         }
         [HttpPost]//員工管理修改頁面，停用或恢復按鈕
-        public async Task<ActionResult> EnabledEmployee(string id, bool Enabled)
+        public async Task<ActionResult> EnabledEmployee(int num,string id, bool Enabled)
         {
             List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);//已審核資料
-            int num = passEmployees.FindIndex(item => item.HashAccount.Equals(id));//員工索引值
 
             bool result = false;
             result = await PassEmployeeModel.EnabledEmployees(id,(bool)Enabled);//(PUT)更新員工資料
