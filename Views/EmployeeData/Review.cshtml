@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>-->
-        @using (Html.BeginForm("SetEmployeeInformation", "EmployeeData", FormMethod.Post))
+        @using (Html.BeginForm("SetEmployeeInformation", "EmployeeData",new { id=reviewEmployees[num].HashAccount}, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             <div class="section-body">
