@@ -115,25 +115,36 @@
                                         <th>部門</th>
                                         <th>職稱</th>
                                         <th>E-mail</th>
-                                        <th>驗證碼(phone code)</th>
+                                        <th>狀態</th>
                                         <th>編輯</th>
                                     </tr>
 
                                     @foreach (var pass_employee in passEmployees)
                                     {
-                                        <tr>
-                                            <td>
-                                                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
-                                            </td>
-                                            <td>@pass_employee.Phone</td>
-                                            <td>@pass_employee.Department</td>
-                                            <td>@pass_employee.JobTitle</td>
-                                            <td>@pass_employee.Email</td>
-                                            <td>@pass_employee.PhoneCode</td>
-                                            <td>
-                                                <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                            </td>
-                                        </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
+                                    </td>
+                                    <td>@pass_employee.Phone</td>
+                                    <td>@pass_employee.Department</td>
+                                    <td>@pass_employee.JobTitle</td>
+                                    <td>@pass_employee.Email</td>
+                                    @if (pass_employee.Enabled == true)
+                                    {
+                                        <td>
+                                            <div class="badge badge-success">使用中</div>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <div class="badge badge-danger">停用</div>
+                                        </td>
+                                    }
+                                    <td>
+                                        <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                    </td>
+                                </tr>
                                     }
                                 </table>
                             </div>

@@ -25,6 +25,7 @@ namespace AttendanceManagement.Models
         public static readonly string EmployeeSetInformation = "EmployeeInformations/set_information";//(PUT)賦予審核通過的員工部門及職稱API
         public static readonly string EmployeeRejectInformation = "EmployeeInformations/DeleteInformation/";//(Delete)拒絕審核員工帳號
         public static readonly string EmployeeEditInformation = "EmployeeInformations/edit_information";//(PUT)編輯員工資料
+        public static readonly string EmployeeEnabled = "Employees/enabled_employee";//(PUT)停用或恢復員工帳號
         public static readonly string EmployeeReviewTripRecord = "EmployeeTripRecords/review_tripRecord";//(PUT)審核公差API
         public static readonly string EmployeeEditTripRecord = "EmployeeTripRecords/update_tripRecord";//(PUT)編輯公差API
         public static readonly string EmployeeReviewLeaveRecord = "EmployeeLeaveRecords/review_leaveRecord";//(PUT)審核請假API

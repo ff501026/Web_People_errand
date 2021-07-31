@@ -142,7 +142,28 @@ namespace AttendanceManagement.Controllers
             }
             return Redirect("/EmployeeData/Index");
         }
-        [HttpGet]//已審核員工資料篩選
+        [HttpPost]//員工管理修改頁面，停用或恢復按鈕
+        public async Task<ActionResult> EnabledEmployee(string id, bool Enabled)
+        {
+            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);//已審核資料
+            int num = passEmployees.FindIndex(item => item.HashAccount.Equals(id));//員工索引值
+
+            bool result = false;
+            result = await PassEmployeeModel.EnabledEmployees(id,(bool)Enabled);//(PUT)更新員工資料
+
+            if (result)
+            {
+                if (Enabled)
+                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[num].Email, "差勤打卡帳號狀態更新通知", "<h1>您的差勤打卡帳號已恢復使用權限</h1><p>請至差勤打卡APP確認，如有問題請連繫後台。</p>");
+
+                else
+                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[num].Email, "差勤打卡帳號狀態更新通知", "<h1>您的差勤打卡帳號已遭停用</h1><p>如有問題請連繫後台。</p>");
+                return Redirect("/EmployeeData/Index");
+            }
+            else
+                return Content("<script>alert('狀態更新失敗！如有問題請連繫後台');history.go(-1);</script>");
+        }
+            [HttpGet]//已審核員工資料篩選
         public async Task<ActionResult> SearchEmployee(string department, string jobtitle, string employee_name)
         {
             //輸入公司代碼取得待審核資料

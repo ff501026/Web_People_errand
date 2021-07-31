@@ -37,6 +37,33 @@ namespace AttendanceManagement.Models
 
             return pass_employee;
         }
+        public static async Task<bool> EnabledEmployees(string hashaccount,bool enabled)//賦予職稱及部門
+        {
+            List<EnabledEmployee> enabledEmployees = new List<EnabledEmployee>();
+            EnabledEmployee enabledEmployee = new EnabledEmployee()//要寫進LIST的資料
+            {
+                hashAccount = hashaccount,//員工編碼
+                Enabled = enabled//使用狀態
+            };
+            enabledEmployees.Add(enabledEmployee);
+
+            try
+            {
+                string jsonData = JsonConvert.SerializeObject(enabledEmployees);//序列化成JSON
+                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                response = await client.PutAsync(url + EmployeeEnabled, content);
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return false;
+        }
         public static async Task<bool> RenewEmployees(string hashaccount,string name,string phone,string email,int departmentID,int jobtitleID)//更新員工資料
         {
             List<EditEmployee> EditEmployees = new List<EditEmployee>();
@@ -182,6 +209,7 @@ namespace AttendanceManagement.Models
         public string Email { get; set; }//員工電子郵件
         public string PhoneCode { get; set; }//員工驗證碼(phone_code)
         public DateTime CreatedTime { get; set; }//申請時間
+        public bool? Enabled { get; set; }//審核狀態
     }//未審核員工資料
     public class PassEmployee
     {
@@ -192,12 +220,18 @@ namespace AttendanceManagement.Models
         public string JobTitle { get; set; }//員工職稱
         public string Email { get; set; }//員工電子郵件
         public string PhoneCode { get; set; }//員工驗證碼(phone_code)
+        public bool? Enabled { get; set; }//使用狀態
     }//已審核員工資料
     public class SetEmployee
     {
         public string hashAccount { get; set; }//員工編號
         public int departmentId { get; set; }//員工部門
         public int jobtitleId { get; set; }//員工職稱
+    }//賦予職稱及部門
+    public class EnabledEmployee
+    {
+        public string hashAccount { get; set; }//員工編號
+        public bool Enabled { get; set; }//使用狀態
     }//賦予職稱及部門
     public class EditEmployee
     {
@@ -207,6 +241,5 @@ namespace AttendanceManagement.Models
         public string Email { get; set; }//員工電子郵件
         public int DepartmentId { get; set; }//員工部門代號
         public int JobTitleId { get; set; }//員工職稱代號
-        
     }//已審核員工資料編輯
 }
