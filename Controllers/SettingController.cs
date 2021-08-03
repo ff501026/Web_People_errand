@@ -30,10 +30,17 @@ namespace AttendanceManagement.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangeCompanyPassword(string NewPassword)
+        public async Task<ActionResult> ChangeCompanyPassword(string NewPassword, string NewPassword2)
         {
-            Response.Write(NewPassword);
-            return View("index");
+            if (NewPassword.Equals(NewPassword2)) {
+            bool result = await CompanyManagerPasswordModel.EditCompanyManagerPassword(company_hash, NewPassword);
+                if (result)
+                    return Content($"<script>alert('更新成功！');history.go(-1);</script>");
+                else
+                    return Content($"<script>alert('更新失敗！如有問題請連繫後台!{NewPassword}');history.go(-1);</script>"); 
+            }
+            else
+                return Content($"<script>alert('密碼輸入錯誤！請重新再試！');history.go(-1);</script>");
         }
         [HttpPost]
         public async Task<ActionResult> UpdateCompanyTime(TimeSpan? WorkTime, TimeSpan? RestTime) 
@@ -42,7 +49,7 @@ namespace AttendanceManagement.Controllers
             if (result)
                 return Content($"<script>alert('更新成功！');history.go(-1);</script>");
             else
-                return Content($"<script>alert('更新失敗！如有問題請連繫後台!{WorkTime}{RestTime}');history.go(-1);</script>");
+                return Content($"<script>alert('更新失敗！請確認上下班時間是否均有填寫，如有問題請連繫後台!');history.go(-1);</script>");
         }
 
         [HttpPost]
@@ -81,10 +88,9 @@ namespace AttendanceManagement.Controllers
                 return Redirect("/Setting/Index");
         }
 
-        private int id=3;
 
         [HttpPost]
-        public async Task<ActionResult> EditDepartment(string department_name, string Button)
+        public async Task<ActionResult> EditDepartment(int id,string department_name, string Button)
         {
             bool result = false;
             if (Button.Equals("EditButton"))
@@ -95,7 +101,7 @@ namespace AttendanceManagement.Controllers
                     return Redirect("/Setting/Index");
                 }
                 else
-                    return Content($"<script>alert('編輯失敗！如有問題請連繫後台!{id}');history.go(-1);</script>");
+                    return Content($"<script>alert('編輯失敗！如有問題請連繫後台!{department_name}');history.go(-1);</script>");
             }
             else
                 return Redirect("/Setting/Index");
@@ -104,7 +110,7 @@ namespace AttendanceManagement.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> EditJobtitle( string jobtitle_name, string Button)
+        public async Task<ActionResult> EditJobtitle( int id,string jobtitle_name, string Button)
         {
             bool result = false;
             if (Button.Equals("EditButton"))

@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var name = AttendanceManagement.Models.HttpResponse.CompanyName;
+ }
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -13,8 +16,8 @@
     <header class="header" id="header">
         <div class="header_toggle" id="header-toggle"> <img class="nav_logo3" src="~/Content/images/差勤打卡LOGO2.png"><span class="nav_logo-name">&nbsp;Punch.</span> </div>
         <div class="sidebar-user-picture">
-            &nbsp;<img alt="使用者圖片" src="~/Content/images/user2.png">
-            <div class="user-name">Ujang Maman</div>
+            @*&nbsp;<img alt="使用者圖片" src="~/Content/images/user2.png">*@
+            <div class="user-name">@name</div>
             <div class="user-role">
                 Administrator
             </div>
@@ -26,13 +29,13 @@
                 @*<a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"><img class="nav_logo2" src="~/Content/images/差勤打卡LOGO2.png"><span class="nav_logo-name">人事差勤打卡系統</span> </a>*@
                 <div class="nav_list">
                     <a href="@Url.Action("Index","EmployeeData")" class="nav_link @(Context.Request.Path == "/EmployeeData" ? "active" : "")"> <img class="nav_logo2" src="~/Content/images/user.png"> <span class="nav_name">員工管理</span> </a>
-                    <a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"> <img class="nav_logo2" src="~/Content/images/close (1).png"><span class="nav_name">打卡紀錄</span> </a>
+                    <a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"> <img class="nav_logo2" src="~/Content/images/clock.png"><span class="nav_name">打卡紀錄</span> </a>
                     <a href="@Url.Action("Index","TripRecords")" class="nav_link  @(Context.Request.Path == "/TripRecords" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/portfolio.png"> <span class="nav_name">公出管理</span> </a>
-                    <a href="@Url.Action("Index","LeaveRecords")" class="nav_link  @(Context.Request.Path == "/LeaveRecords" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/close (1).png"> <span class="nav_name">請假管理</span> </a>
+                    <a href="@Url.Action("Index","LeaveRecords")" class="nav_link  @(Context.Request.Path == "/LeaveRecords" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/contact-form.png"> <span class="nav_name">請假管理</span> </a>
                     <a href="@Url.Action("Index","DataExport")" class="nav_link @(Context.Request.Path == "/DataExport" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/pie-chart.png"> <span class="nav_name">資料匯出</span> </a>
                     <a href="@Url.Action("Index","Setting")" class="nav_link @(Context.Request.Path == "/Setting" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/settings (1).png"> <span class="nav_name">系統設定</span> </a>
-
                 </div>
+                <a href="@Url.Action("Index","Account")" class="nav_link @(Context.Request.Path == "/Account" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/turn-off.png"> <span class="nav_name">登出</span> </a>
             </div> <a href="#" class="nav_link"> <i class='bi-power'></i> <span class="nav_name">登出</span> </a>
         </nav>
     </div>

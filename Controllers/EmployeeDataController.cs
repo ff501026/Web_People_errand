@@ -88,7 +88,7 @@ namespace AttendanceManagement.Controllers
                     return Content("<script>alert('審核失敗，請確認是否有賦予職稱及部門！');history.go(-1);</script>");
                 }
 
-                result = await SetEmployeeModel.SetEmployees(id, departments[departmentIndex].DepartmentID, jobtitles[jobtitleIndex].JobTitleID);//PUT部門及職稱
+                result = await SetEmployeeModel.SetEmployees(id, departments[departmentIndex].DepartmentId, jobtitles[jobtitleIndex].JobTitleId);//PUT部門及職稱
 
                 if (result)
                 {
@@ -127,7 +127,7 @@ namespace AttendanceManagement.Controllers
                     return Content("<script>alert('更新失敗，請確認是否有賦予職稱及部門！');history.go(-1);</script>");
                 }
 
-                result = await PassEmployeeModel.RenewEmployees(id,name,phone,email, departments[departmentIndex].DepartmentID, jobtitles[jobtitleIndex].JobTitleID);//(PUT)更新員工資料
+                result = await PassEmployeeModel.RenewEmployees(id,name,phone,email, departments[departmentIndex].DepartmentId, jobtitles[jobtitleIndex].JobTitleId);//(PUT)更新員工資料
 
                 if (result)
                 {

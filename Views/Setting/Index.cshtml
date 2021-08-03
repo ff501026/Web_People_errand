@@ -67,10 +67,10 @@
                                                         @department.Name
                                                     </div>
                                                     <div class="p-2">
-                                                        <button type="submit" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2.@department.DepartmentID" id="id" name="id" value="@department.DepartmentID"><i class="bi-pencil-square"></i></button>
+                                                        <button type="submit" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId"><i class="bi-pencil-square"></i></button>
                                                     </div>
                                                     <div class="p-2">
-                                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3.@department.DepartmentID" id="id" name="id" value="@department.DepartmentID" onclick="ShowValue()"><i class="bi-trash-fill"></i></button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId" onclick="ShowValue()"><i class="bi-trash-fill"></i></button>
                                                     </div>
                                                 </div>
                                             }
@@ -98,10 +98,10 @@
                                                         @jobtitle.Name
                                                     </div>
                                                     <div class="p-2">
-                                                        <button type="submit" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal5" id="id" name="id" value="@jobtitle.JobTitleID"><i class="bi-pencil-square"></i></button>
+                                                        <button type="submit" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal5.@jobtitle.JobTitleId" id="id" name="id" value="@jobtitle.JobTitleId"><i class="bi-pencil-square"></i></button>
                                                     </div>
                                                     <div class="p-2">
-                                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal6" id="id" name="id" value="@jobtitle.JobTitleID"><i class="bi-trash-fill"></i></button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal6.@jobtitle.JobTitleId" id="id" name="id" value="@jobtitle.JobTitleId"><i class="bi-trash-fill"></i></button>
                                                     </div>
                                                 </div>
                                             }
@@ -181,15 +181,19 @@
                                 @Html.AntiForgeryToken()
 
 
-                                <div class="row">
-                                    <div class="col-lg-auto col-md-10 col-12">
-                                        新後台登入密碼：
-                                        <input id="NewPassword" name="NewPassword" class="form-control" type="text" placeholder="請輸入新密碼" aria-label="Search">
-                                    </div>
-                                    <div class="col-lg-auto col-md-2 col-12">
-                                        <button class="btn btn-primary" type="submit">修改</button>
-                                    </div>
+                            <div class="row">
+                                <div class="col-lg-auto col-md-10 col-12">
+                                    新後台登入密碼：
+                                    <input id="NewPassword" name="NewPassword" class="form-control" type="password" placeholder="請輸入新密碼" aria-label="Search">
                                 </div>
+                                <div class="col-lg-auto col-md-10 col-12">
+                                    確認密碼：
+                                    <input id="NewPassword2" name="NewPassword2" class="form-control" type="password" placeholder="請輸入新密碼" aria-label="Search">
+                                </div>
+                                <div class="col-lg-auto col-md-2 col-12">
+                                    <button class="btn btn-primary" type="submit">修改</button>
+                                </div>
+                            </div>
                             }
                         </div>
                     </div>
@@ -327,7 +331,7 @@
 
 @foreach (var department in departments)
 {
-    <div class="modal fade" id="exampleModal2.@department.DepartmentID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal2.@department.DepartmentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -337,7 +341,7 @@
                     </button>
                 </div>
 
-                @using (Html.BeginForm("EditDepartment", "Setting", FormMethod.Post))
+                @using (Html.BeginForm("EditDepartment", "Setting",new { id=department.DepartmentId}, FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     <div class="modal-body">
@@ -357,7 +361,7 @@
 }
 @foreach (var department in departments)
 {
-    <div class="modal fade" id="exampleModal3.@department.DepartmentID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal3.@department.DepartmentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -366,7 +370,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                @using (Html.BeginForm("DeleteDepartment", "Setting", FormMethod.Post))
+                @using (Html.BeginForm("DeleteDepartment", "Setting", new { id = department.DepartmentId }, FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     <div class="modal-body">
@@ -410,7 +414,7 @@
 
     @foreach (var jobtitle in jobTitles)
     {
-        <div class="modal fade" id="exampleModal5.@jobtitle.JobTitleID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal5.@jobtitle.JobTitleId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -420,7 +424,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        @using (Html.BeginForm("EditJobtitle", "Setting", FormMethod.Post))
+                        @using (Html.BeginForm("EditJobtitle", "Setting", new { id = jobtitle.JobTitleId }, FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
                             <div class="form-group">
@@ -439,7 +443,7 @@
     }
     @foreach (var jobtitle in jobTitles)
     {
-        <div class="modal fade" id="exampleModal6.@jobtitle.JobTitleID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal6.@jobtitle.JobTitleId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -449,7 +453,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        @using (Html.BeginForm("DeleteJobtitle", "Setting", FormMethod.Post))
+                        @using (Html.BeginForm("DeleteJobtitle", "Setting", new { id = jobtitle.JobTitleId }, FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
                             <div class="modal-footer">
@@ -507,7 +511,7 @@
             modal.find('.modal-body input').val(recipient)
         })
 
-        var itemA = '<%=@foreach (var department in departments) { @department.DepartmentID} %>'
+        var itemA = '<%=@foreach (var department in departments) { @department.DepartmentId} %>'
 
         $('#exampleModal2.itemA).on('bs.modal', function(event) {
                 var button = $(event.relatedTarget)
@@ -533,7 +537,7 @@
             modal.find('.modal-body input').val(recipient)
         })
 
-        var itemB = '<%=@foreach (var jobtitle in jobTitles) { @jobtitle.JobTitleID} %>'
+        var itemB = '<%=@foreach (var jobtitle in jobTitles) { @jobtitle.JobTitleId} %>'
 
         $('#exampleModal5.itemB').on('bs.modal', function (event) {
         var button = $(event.relatedTarget)

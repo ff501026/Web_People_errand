@@ -98,7 +98,7 @@ namespace AttendanceManagement.Models
             List<Department> editDepartments = new List<Department>();
             Department editDepartment = new Department
             {
-                DepartmentID = id,
+                DepartmentId = id,
                 Name = name
             };
             editDepartments.Add(editDepartment);
@@ -161,7 +161,7 @@ namespace AttendanceManagement.Models
             List<JobTitle> editjobTitles = new List<JobTitle>();
             JobTitle editJobtitle = new JobTitle
             {
-                JobTitleID = id,
+                JobTitleId = id,
                 Name = name
             };
             editjobTitles.Add(editJobtitle);
@@ -187,7 +187,6 @@ namespace AttendanceManagement.Models
 
 
     }//職稱資料
-
     class CompanyTimeModel : HttpResponse 
     {
         public static async Task<Company_Time> GetCompany_Times(string company_hash) 
@@ -207,18 +206,53 @@ namespace AttendanceManagement.Models
         }
         public static async Task<bool> Edit_CompanyTime(string company_hash,TimeSpan? WorkTime,TimeSpan? RestTime)
         {
-            List<Update_Company_Time> company_Times = new List<Update_Company_Time>();
-            Update_Company_Time company_Time = new Update_Company_Time()
+            TimeSpan worktime = (TimeSpan)WorkTime;
+            TimeSpan resttime = (TimeSpan)RestTime;
+            response = await client.GetAsync(url + CompanyEditTime + "companyhash="+company_hash+"&worktime=" + worktime.ToString("hh") + "%3A" + worktime.ToString("mm") + "&resttime=" + resttime.ToString("hh") + "%3A" + resttime.ToString("mm"));
+            if (response.StatusCode.ToString().Equals("OK"))
             {
-                CompanyHash = company_hash,
-                WorkTime = WorkTime,
-                RestTime = RestTime
+                return true;
+            }
+
+            return false;
+        }
+    }
+    class CompanyManagerPasswordModel:HttpResponse
+    {
+        public static async Task<bool> Login(string code, string manager_password) 
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyLogin + "code="+code+"&password="+manager_password);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            bool login = JsonConvert.DeserializeObject<bool>(GetResponse);
+            if (login) 
+            {
+                //連上WebAPI
+                response = await client.GetAsync(url + CompanyGetCompanyHash + "code=" + code + "&password=" + manager_password);
+                //取得API回傳的打卡紀錄內容
+                GetResponse = await response.Content.ReadAsStringAsync();
+                List<CompanyLogin> company = JsonConvert.DeserializeObject<List<CompanyLogin>>(GetResponse);
+                CompanyHash = company[0].CompanyHash;
+                CompanyName = company[0].Name;
+                return true;
+            }
+            return false;
+        }
+        public static async Task<bool>EditCompanyManagerPassword(string companyhash,string manager_password)
+        {
+            List<CompanyManagerPassword> managerPasswords = new List<CompanyManagerPassword>();
+            CompanyManagerPassword managerPassword = new CompanyManagerPassword
+            {
+                CompanyHash = companyhash,
+                ManagerPassword = manager_password
             };
-            company_Times.Add(company_Time);
-            string jsonData = JsonConvert.SerializeObject(company_Times);//序列化成JSON
+            managerPasswords.Add(managerPassword);
+            string jsonData = JsonConvert.SerializeObject(managerPasswords);//序列化成JSON
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            response = await client.PutAsync(url + CompanyEditTime, content);
+            response = await client.PutAsync(url + CompanyEditManagerPassword, content);
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -235,7 +269,7 @@ namespace AttendanceManagement.Models
     }//打卡
     public class Department 
     {
-        public int DepartmentID { get; set; }//編號
+        public int DepartmentId { get; set; }//編號
         public string Name { get; set; }//部門名稱
     }//部門
     public class Company_Time 
@@ -251,11 +285,21 @@ namespace AttendanceManagement.Models
     }
     public class JobTitle
     {
-        public int JobTitleID { get; set; }//編號
+        public int JobTitleId { get; set; }//編號
         public string Name { get; set; }//職稱
     }//職稱
     public class Add
     {
         public string Name { get; set; }//名稱
+    }
+    public class CompanyLogin 
+    {
+        public string CompanyHash { get; set; }
+        public string Name { get; set; }
+    }
+    public class CompanyManagerPassword
+    {
+        public string CompanyHash { get; set; }
+        public string ManagerPassword { get; set; }
     }
 }

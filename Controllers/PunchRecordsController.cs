@@ -20,7 +20,7 @@ namespace AttendanceManagement.Controllers
 
             ViewBag.workrecord = work_record;//打卡紀錄
 
-            return View();
+            return View("Index");
         }
 
         [HttpGet]//打卡資料篩選
