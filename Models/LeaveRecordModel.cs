@@ -84,33 +84,27 @@ namespace AttendanceManagement.Models
 
         public static async Task<bool> ReviewLeaveRecord(int id, bool review)//賦予職稱及部門
         {
-            List<ReviewLeaveRecord> reviewLeaveRecord = new List<ReviewLeaveRecord>();
+            List<ReviewLeaveRecord> reviewLeaveRecords = new List<ReviewLeaveRecord>();
             ReviewLeaveRecord reviewLeave = new ReviewLeaveRecord()//要寫進LIST的資料
             {
                 LeaveRecordsId = id,
                 Review = review
             };
-            reviewLeaveRecord.Add(reviewLeave);
+            reviewLeaveRecords.Add(reviewLeave);
 
-            try
-            {
-                string jsonData = JsonConvert.SerializeObject(reviewLeaveRecord);//序列化成JSON
-                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            string jsonData = JsonConvert.SerializeObject(reviewLeaveRecords);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                response = await client.PutAsync(url + EmployeeReviewLeaveRecord, content);
-                if (response.StatusCode.ToString().Equals("OK"))
-                {
-                    return true;
-                }
-            }
-            catch (Exception)
+            response = await client.PutAsync(url + EmployeeReviewLeaveRecord, content);
+            if (response.StatusCode.ToString().Equals("OK"))
             {
-                return false;
+                return true;
             }
+
             return false;
         }
 
-    }//假別
+    }
     class LeaveTypeModel : HttpResponse
     {
         public static async Task<List<LeaveType>> Get_LeaveType(string company_hash)
@@ -126,7 +120,7 @@ namespace AttendanceManagement.Models
         }
 
 
-    }//職稱資料
+    }//假別
     public class LeaveType
     {
         public int LeaveTypeID { get; set; }//編號

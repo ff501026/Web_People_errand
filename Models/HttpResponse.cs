@@ -12,6 +12,8 @@ namespace AttendanceManagement.Models
         public static HttpClient client = new HttpClient();
         public static HttpResponseMessage response = new HttpResponseMessage();
         public static readonly string url = "http://163.18.110.100/api/"; //主機的URL
+        public static readonly string CompanyGetTime = "Companies/Get_WorkTime_RestTime/"; //查看公司上下班時間
+        public static readonly string CompanyEditTime = "Companies/Update_WorkTime_RestTime"; //(PUT)編輯公司上下班時間
         public static readonly string CompanyGetWorkRecord = "Companies/GetWorkRecord/"; //查看公司員工打卡紀錄api
         public static readonly string CompanyReviewEmployee = "Companies/Review_Employee/"; //查看公司待審核之員工帳號資料api
         public static readonly string CompanyPassEmployee = "Companies/Pass_Employee/";//查看公司審核通過之員工資料api
@@ -30,6 +32,12 @@ namespace AttendanceManagement.Models
         public static readonly string EmployeeEditTripRecord = "EmployeeTripRecords/update_tripRecord";//(PUT)編輯公差API
         public static readonly string EmployeeReviewLeaveRecord = "EmployeeLeaveRecords/review_leaveRecord";//(PUT)審核請假API
         public static readonly string EmployeeEditLeaveRecord = "EmployeeLeaveRecords​/update_leaveRecord";//(PUT)編輯請假API
+        public static readonly string CompanyAddDepartment = "EmployeeDepartmentTypes/add_department";//(POST)新增部門API
+        public static readonly string CompanyEditDepartment = "EmployeeDepartmentTypes​/UpdateDepartment";//(PUT)編輯部門名稱API
+        public static readonly string CompanyDeleteDepartment = "EmployeeDepartmentTypes/DeleteDepartment/";//(Delete)刪除部門
+        public static readonly string CompanyAddJobtitle = "EmployeeJobtitleTypes/add_jobtitle";//(POST)新增職稱API
+        public static readonly string CompanyEditJobtitle = "EmployeeJobtitleTypes​/UpdateJobtitle";//(PUT)編輯職稱API
+        public static readonly string CompanyDeleteJobtitle = "EmployeeJobtitleTypes/DeleteJobtitle/";//(Delete)刪除職稱
 
         public static readonly string CompanyHash = "4D7F9C66F7D796DB03284D632B5A8F";//公司
 

@@ -38,7 +38,7 @@ namespace AttendanceManagement.Models
         }
         public static async Task<bool> RenewTripRecord(int id, DateTime startdate, DateTime enddate, string location, string reason, bool review)//更新公差資料
         {
-            List<EditTripRecord> EditTripRecords = new List<EditTripRecord>();
+            List<EditTripRecord> editTripRecords = new List<EditTripRecord>();
             EditTripRecord editTripRecord = new EditTripRecord()//要寫進LIST的資料
             {
                 TripRecordsId = id,//員工編碼
@@ -48,23 +48,17 @@ namespace AttendanceManagement.Models
                 Reason = reason,//備註(事由)
                 Review = review//審核狀態
             };
-            EditTripRecords.Add(editTripRecord);
+            editTripRecords.Add(editTripRecord);
 
-            try
-            {
-                string jsonData = JsonConvert.SerializeObject(EditTripRecords);//序列化成JSON
-                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            string jsonData = JsonConvert.SerializeObject(editTripRecords);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                response = await client.PutAsync(url + EmployeeEditTripRecord, content);
-                if (response.StatusCode.ToString().Equals("OK"))
-                {
-                    return true;
-                }
-            }
-            catch (Exception)
+            response = await client.PutAsync(url + EmployeeEditTripRecord, content);
+            if (response.StatusCode.ToString().Equals("OK"))
             {
-                return false;
+                return true;
             }
+
             return false;
         }
         public static async Task<List<TripRecord>> Search_TripRecord2(string company_hash, DateTime? date, string name)//兩條件篩選
@@ -113,31 +107,25 @@ namespace AttendanceManagement.Models
     class Review_TripRecordModel : HttpResponse
     {
 
-        public static async Task<bool> ReviewTripRecord(int id, bool review)//賦予職稱及部門
+        public static async Task<bool> ReviewTripRecord(int id, bool review)//審核公差
         {
-            List<ReviewTripRecord> reviewTripRecord = new List<ReviewTripRecord>();
-            ReviewTripRecord reviewTrip = new ReviewTripRecord()//要寫進LIST的資料
+            List<ReviewTripRecord> reviewTripRecords = new List<ReviewTripRecord>();
+            ReviewTripRecord reviewTrip = new ReviewTripRecord()//要寫進Json的資料
             {
                 TripRecordsId = id,
                 Review = review
             };
-            reviewTripRecord.Add(reviewTrip);
+            reviewTripRecords.Add(reviewTrip);
 
-            try
-            {
-                string jsonData = JsonConvert.SerializeObject(reviewTripRecord);//序列化成JSON
-                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            string jsonData = JsonConvert.SerializeObject(reviewTripRecords);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                response = await client.PutAsync(url + EmployeeReviewTripRecord, content);
-                if (response.StatusCode.ToString().Equals("OK"))
-                {
-                    return true;
-                }
-            }
-            catch (Exception)
+            response = await client.PutAsync(url + EmployeeReviewTripRecord, content);
+            if (response.StatusCode.ToString().Equals("OK"))
             {
-                return false;
+                return true;
             }
+            
             return false;
         }
        

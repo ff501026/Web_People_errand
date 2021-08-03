@@ -24,7 +24,7 @@ namespace AttendanceManagement.Models
             return review_employee;
         }
     } //顯示未審核員工資料
-    class PassEmployeeModel : HttpResponse 
+    class PassEmployeeModel : HttpResponse //已審核員工資料
     {
         public static async Task<List<PassEmployee>> PassEmployees(string company_hash)
         {
@@ -37,7 +37,7 @@ namespace AttendanceManagement.Models
 
             return pass_employee;
         }
-        public static async Task<bool> EnabledEmployees(string hashaccount,bool enabled)//賦予職稱及部門
+        public static async Task<bool> EnabledEmployees(string hashaccount,bool enabled)//停用或恢復員工帳號
         {
             List<EnabledEmployee> enabledEmployees = new List<EnabledEmployee>();
             EnabledEmployee enabledEmployee = new EnabledEmployee()//要寫進LIST的資料
@@ -46,28 +46,20 @@ namespace AttendanceManagement.Models
                 Enabled = enabled//使用狀態
             };
             enabledEmployees.Add(enabledEmployee);
+            string jsonData = JsonConvert.SerializeObject(enabledEmployees);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            try
+            response = await client.PutAsync(url + EmployeeEnabled, content);
+            if (response.StatusCode.ToString().Equals("OK"))
             {
-                string jsonData = JsonConvert.SerializeObject(enabledEmployees);//序列化成JSON
-                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-                response = await client.PutAsync(url + EmployeeEnabled, content);
-                if (response.StatusCode.ToString().Equals("OK"))
-                {
-                    return true;
-                }
-            }
-            catch (Exception)
-            {
-                return false;
+                return true;
             }
             return false;
         }
         public static async Task<bool> RenewEmployees(string hashaccount,string name,string phone,string email,int departmentID,int jobtitleID)//更新員工資料
         {
-            List<EditEmployee> EditEmployees = new List<EditEmployee>();
-            EditEmployee editEmployee = new EditEmployee()//要寫進LIST的資料
+            List<EditEmployee> editEmployees = new List<EditEmployee>();
+            EditEmployee editEmployee = new EditEmployee()//要寫進Json的資料
             {
                 HashAccount = hashaccount,//員工編碼
                 Name = name,
@@ -76,29 +68,23 @@ namespace AttendanceManagement.Models
                 DepartmentId = departmentID,//部門ID
                 JobTitleId = jobtitleID//職稱ID
             };
-            EditEmployees.Add(editEmployee);
+            editEmployees.Add(editEmployee);
 
-            try
-            {
-                string jsonData = JsonConvert.SerializeObject(EditEmployees);//序列化成JSON
-                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            string jsonData = JsonConvert.SerializeObject(editEmployees);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                response = await client.PutAsync(url + EmployeeEditInformation, content);
-                if (response.StatusCode.ToString().Equals("OK"))
-                {
-                    return true;
-                }
-            }
-            catch (Exception)
+            response = await client.PutAsync(url + EmployeeEditInformation, content);
+            if (response.StatusCode.ToString().Equals("OK"))
             {
-                return false;
+                return true;
             }
+
             return false;
         }
-        public static async Task<List<PassEmployee>> SearchEmployees3(string company_hash,string department,string jobtitle ,string name)
+        public static async Task<List<PassEmployee>> SearchEmployees3(string company_hash,string department,string jobtitle ,string name)//三條件篩選
         {
             //輸入公司代碼取得已審核資料
-            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);
+            List<PassEmployee> passEmployees = await PassEmployees(company_hash);
             List<PassEmployee> searchEmployee = new List<PassEmployee>();
             for(int index = 0;index < passEmployees.Count; index++) 
             {
@@ -108,10 +94,10 @@ namespace AttendanceManagement.Models
            
             return searchEmployee;
         }//三條件篩選
-        public static async Task<List<PassEmployee>> SearchEmployees2(string company_hash, string department, string jobtitle, string name)
+        public static async Task<List<PassEmployee>> SearchEmployees2(string company_hash, string department, string jobtitle, string name)//兩條件篩選
         {
             //輸入公司代碼取得已審核資料
-            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);
+            List<PassEmployee> passEmployees = await PassEmployees(company_hash);
             List<PassEmployee> searchEmployee = new List<PassEmployee>();
             for (int index = 0; index < passEmployees.Count; index++)
             {
@@ -125,10 +111,10 @@ namespace AttendanceManagement.Models
 
             return searchEmployee;
         }//兩條件篩選
-        public static async Task<List<PassEmployee>> SearchEmployees1(string company_hash, string department, string jobtitle, string name)
+        public static async Task<List<PassEmployee>> SearchEmployees1(string company_hash, string department, string jobtitle, string name)//一條件篩選
         {
             //輸入公司代碼取得已審核資料
-            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);
+            List<PassEmployee> passEmployees = await PassEmployees(company_hash);
             List<PassEmployee> searchEmployee = new List<PassEmployee>();
             for (int index = 0; index < passEmployees.Count; index++)
             {
@@ -153,7 +139,7 @@ namespace AttendanceManagement.Models
             return search;
         }
     }//顯示已審核員工資料
-    class SetEmployeeModel : HttpResponse 
+    class SetEmployeeModel : HttpResponse //審核員工帳號
     {
         
         public static async Task<bool> SetEmployees(string hashaccount ,int departmentID ,int jobtitleID)//賦予職稱及部門
@@ -167,37 +153,26 @@ namespace AttendanceManagement.Models
             };
             setEmployees.Add(setEmployee);
 
-            try
-            {
-                string jsonData = JsonConvert.SerializeObject(setEmployees);//序列化成JSON
-                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            string jsonData = JsonConvert.SerializeObject(setEmployees);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                response = await client.PutAsync(url + EmployeeSetInformation, content);
-                if (response.StatusCode.ToString().Equals("OK"))
-                {
-                    return true;
-                }
-            }
-            catch (Exception)
+            response = await client.PutAsync(url + EmployeeSetInformation, content);
+            if (response.StatusCode.ToString().Equals("OK"))
             {
-                return false;
+                return true;
             }
+
             return false;
         }
         public static async Task<bool> RejectEmployees(string hashaccount)//拒絕核准
         {
-            try
+
+            response = await client.DeleteAsync(url + EmployeeRejectInformation + hashaccount);
+            if (response.StatusCode.ToString().Equals("OK"))
             {
-                response = await client.DeleteAsync(url + EmployeeRejectInformation + hashaccount);
-                if (response.StatusCode.ToString().Equals("OK"))
-                {
-                    return true;
-                }
+                return true;
             }
-            catch (Exception)
-            {
-                return false;
-            }
+
             return false;
         }
     }//審核員工帳號

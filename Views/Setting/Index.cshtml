@@ -1,12 +1,13 @@
 ﻿
-@{ 
+@{
     ViewBag.Title = "系統設定";
 
     List<AttendanceManagement.Models.Department> departments = ViewBag.departments;
     List<AttendanceManagement.Models.JobTitle> jobTitles = ViewBag.jobtitles;
-
+    AttendanceManagement.Models.Company_Time company_Times = ViewBag.company_time;
 
 }
+
 
 <div class="main-content">
     <section class="section">
@@ -57,17 +58,20 @@
                                                 </div>
                                             </div>
 
-                                            <div class="d-flex">
-                                                <div class="mr-auto p-2">
-                                                    業務部
+                                            @foreach (var department in departments)
+                                            {
+                                                <div class="d-flex">
+                                                    <div class="mr-auto p-2">
+                                                        @department.Name
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <button type="submit" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2" id="id" name="id" value="@department.DepartmentID" ><i class="bi-pencil-square"></i></button>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3" id="id" name="id" value="@department.DepartmentID" onclick="ShowValue()"><i class="bi-trash-fill"></i></button>
+                                                    </div>
                                                 </div>
-                                                <div class="p-2">
-                                                    <button type="button" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2"><i class="bi-pencil-square"></i></button>
-                                                </div>
-                                                <div class="p-2">
-                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3"><i class="bi-trash-fill"></i></button>
-                                                </div>
-                                            </div>
+                                            }
 
 
 
@@ -85,19 +89,20 @@
                                                 </div>
                                             </div>
 
-                                            <div class="d-flex">
-                                                <div class="mr-auto p-2">
-                                                    經理
-                                                </div>
-                                                <div class="p-2">
-                                                    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal5"><i class="bi-pencil-square"></i></button>
-                                                </div>
-                                                <div class="p-2">
-                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal6"><i class="bi-trash-fill"></i></button>
-                                                </div>
-                                            </div>
-
-
+                                                @foreach (var jobtitle in jobTitles)
+                                                {
+                                                    <div class="d-flex">
+                                                        <div class="mr-auto p-2">
+                                                            @jobtitle.Name
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <button type="submit" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal5" id="id" name="id" value="@jobtitle.JobTitleID"><i class="bi-pencil-square"></i></button>
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal6" id="id" name="id" value="@jobtitle.JobTitleID"><i class="bi-trash-fill"></i></button>
+                                                        </div>
+                                                    </div>
+                                                }
                                         </div>
 
                                         <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4" style="width:100%; color: black;">
@@ -123,7 +128,7 @@
                                                             <button class="btn btn-outline-primary btn-sm" type="submit"><i class="bi-pencil-square"></i></button>
                                                         </div>
                                                         <div class="p-2">
-                                                            <button class="btn btn-danger btn-sm"" type="submit"><i class="bi-trash-fill"></i></button>
+                                                            <button class="btn btn-danger btn-sm" " type="submit"><i class="bi-trash-fill"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -171,11 +176,11 @@
                         </div>
 
                         <div class="card-body">
-                            @using (Html.BeginForm("ChangeCompanyPassword","Setting",FormMethod.Post))
-                            {
+                            @using (Html.BeginForm("ChangeCompanyPassword", "Setting", FormMethod.Post))
+{
                                 @Html.AntiForgeryToken()
-                              
-                                
+
+
                                 <div class="row">
                                     <div class="col-lg-auto col-md-10 col-12">
                                         新後台登入密碼：
@@ -185,7 +190,7 @@
                                         <button class="btn btn-primary" type="submit">修改</button>
                                     </div>
                                 </div>
-                            }
+}
                         </div>
                     </div>
                 </div>
@@ -234,22 +239,22 @@
                             <h4>上下班時間設定</h4>
                         </div>
                         <div class="card-body">
-
-                            <form class="form-inline mr-auto">
-                                <div class="row">
-                                    <div class="col-lg-auto col-md-6 col-12">
-                                        上班時間：<input class="form-control" type="time" placeholder="" aria-label="Search">
+                            @using (Html.BeginForm("UpdateCompanyTime", "Setting", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="col-lg-auto col-md-6 col-12">
+                                            上班時間：<input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" aria-label="Search" value="@company_Times.WorkTime">
+                                        </div>
+                                        <div class="col-lg-auto col-md-5 col-12">
+                                            下班時間：<input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" aria-label="Search" value="@company_Times.RestTime">
+                                        </div>
+                                        <div class="col-lg-auto col-md-1 col-12">
+                                            <button class="btn btn-primary" type="submit">修改</button>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-auto col-md-5 col-12">
-                                        下班時間：<input class="form-control" type="time" placeholder="" aria-label="Search">
-                                    </div>
-                                    <div class="col-lg-auto col-md-1 col-12">
-                                        <button class="btn btn-primary" type="submit">修改</button>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
+                            }
+                            </div>
                     </div>
                 </div>
 
@@ -303,23 +308,24 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
-
-            <div class="modal-body">
-                <form>
+            @using (Html.BeginForm("AddDepartment", "Setting", FormMethod.Post))
+{
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">部門名稱：</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <input type="text" class="form-control" id="department_name" name="department_name">
                     </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                    <button type="button" class="btn btn-success">新增</button>
+                    <div class="modal-footer">
+                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        <button id="Button" name="Button" value="AddButton" type="submit" class="btn btn-success">新增</button>
+                    </div>
                 </div>
-            </div>
+}
         </div>
     </div>
 </div>
+
 
 
 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -332,19 +338,20 @@
                 </button>
             </div>
 
-
-            <div class="modal-body">
-                <form>
+            @using (Html.BeginForm("EditDepartment", "Setting",FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">更改部門名稱：</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <input type="text" id="department_name" name="department_name" class="form-control">
                     </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                    <button type="button" class="btn btn-success">更新</button>
+                    <div class="modal-footer">
+                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success">更新</button>
+                    </div>
                 </div>
-            </div>
+}
         </div>
     </div>
 </div>
@@ -359,22 +366,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
-
-            <div class="modal-body">
-                <form>
-                    @*
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">半徑(公尺)：</label>
-                        
+            @using (Html.BeginForm("DeleteDepartment", "Setting" ,FormMethod.Post))
+{
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="modal-footer">
+                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger">刪除</button>
                     </div>
-                    *@
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-danger">刪除</button>
                 </div>
-            </div>
+}
         </div>
     </div>
 </div>
@@ -389,19 +390,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
-
             <div class="modal-body">
-                <form>
+                @using (Html.BeginForm("AddJobtitle", "Setting", FormMethod.Post))
+{
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">職稱：</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <input type="text" class="form-control" id="jobtitle_name" name="jobtitle_name">
                     </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                    <button type="button" class="btn btn-success">新增</button>
-                </div>
+                    <div class="modal-footer">
+                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        <button id="Button" name="Button" value="AddButton" type="submit" class="btn btn-success">新增</button>
+                    </div>
+}
             </div>
         </div>
     </div>
@@ -417,19 +418,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
-
             <div class="modal-body">
-                <form>
+                @using (Html.BeginForm("EditJobtitle", "Setting", FormMethod.Post))
+{
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">更改職稱名稱：</label>
-                        <input type="text" class="form-control" id="recipient-name">
+                        <input type="text" class="form-control" id="jobtitle_name" name="jobtitle_name">
                     </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                    <button type="button" class="btn btn-success">更新</button>
-                </div>
+                    <div class="modal-footer">
+                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success">更新</button>
+                    </div>
+}
             </div>
         </div>
     </div>
@@ -445,21 +446,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
-
             <div class="modal-body">
-                <form>
-                    @*
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">半徑(公尺)：</label>
-                            <input type="text" class="form-control" id="message-text">
-                        </div>
-                    *@
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-danger">刪除</button>
-                </div>
+                @using (Html.BeginForm("DeleteJobtitle", "Setting", FormMethod.Post))
+{
+                    @Html.AntiForgeryToken()
+                    <div class="modal-footer">
+                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger">刪除</button>
+                    </div>
+}
             </div>
         </div>
     </div>
@@ -476,7 +471,7 @@
                 </button>
             </div>
 
-            
+
             <div class="modal-body">
                 <form>
                     <div class="form-group">
@@ -484,10 +479,10 @@
                         <input type="text" class="form-control" id="recipient-name">
                     </div>
                     @*
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">半徑(公尺)：</label>
-                        <input type="text" class="form-control" id="message-text">
-                    </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">半徑(公尺)：</label>
+                            <input type="text" class="form-control" id="message-text">
+                        </div>
                     *@
                 </form>
                 <div class="modal-footer">
@@ -520,7 +515,7 @@
 
     $('#exampleModal3').on('bs.modal', function (event) {
         var button = $(event.relatedTarget)
-        var recipient = button.data('whatever') 
+        var recipient = button.data('whatever')
         var modal = $(this)
         modal.find('.modal-title').text('New message to ' + recipient)
         modal.find('.modal-body input').val(recipient)
@@ -535,8 +530,8 @@
     })
 
     $('#exampleModal5').on('bs.modal', function (event) {
-        var button = $(event.relatedTarget) 
-        var recipient = button.data('whatever') 
+        var button = $(event.relatedTarget)
+        var recipient = button.data('whatever')
         var modal = $(this)
         modal.find('.modal-title').text('New message to ' + recipient)
         modal.find('.modal-body input').val(recipient)
@@ -544,15 +539,15 @@
 
     $('#exampleModal6').on('bs.modal', function (event) {
         var button = $(event.relatedTarget)
-        var recipient = button.data('whatever') 
+        var recipient = button.data('whatever')
         var modal = $(this)
         modal.find('.modal-title').text('New message to ' + recipient)
         modal.find('.modal-body input').val(recipient)
     })
 
     $('#exampleModal7').on('bs.modal', function (event) {
-        var button = $(event.relatedTarget) 
-        var recipient = button.data('whatever') 
+        var button = $(event.relatedTarget)
+        var recipient = button.data('whatever')
         var modal = $(this)
         modal.find('.modal-title').text('New message to ' + recipient)
         modal.find('.modal-body input').val(recipient)
