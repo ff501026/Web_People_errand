@@ -28,9 +28,11 @@
                                         <li class="nav-item">
                                             <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">職稱設定</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact4" role="tab" aria-controls="contact" aria-selected="false">出勤時間設定</a>
-                                        </li>
+                                        @*
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact4" role="tab" aria-controls="contact" aria-selected="false">出勤時間設定</a>
+                                            </li>
+                                        *@
                                         <li class="nav-item">
                                             <a class="nav-link" id="GPS-tab4" data-toggle="tab" href="#GPS4" role="tab" aria-controls="GPS" aria-selected="false">打卡定位位置設定</a>
                                         </li>
@@ -65,10 +67,10 @@
                                                         @department.Name
                                                     </div>
                                                     <div class="p-2">
-                                                        <button type="submit" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2" id="id" name="id" value="@department.DepartmentID" ><i class="bi-pencil-square"></i></button>
+                                                        <button type="submit" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2.@department.DepartmentID" id="id" name="id" value="@department.DepartmentID"><i class="bi-pencil-square"></i></button>
                                                     </div>
                                                     <div class="p-2">
-                                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3" id="id" name="id" value="@department.DepartmentID" onclick="ShowValue()"><i class="bi-trash-fill"></i></button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3.@department.DepartmentID" id="id" name="id" value="@department.DepartmentID" onclick="ShowValue()"><i class="bi-trash-fill"></i></button>
                                                     </div>
                                                 </div>
                                             }
@@ -89,63 +91,61 @@
                                                 </div>
                                             </div>
 
-                                                @foreach (var jobtitle in jobTitles)
-                                                {
-                                                    <div class="d-flex">
-                                                        <div class="mr-auto p-2">
-                                                            @jobtitle.Name
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <button type="submit" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal5" id="id" name="id" value="@jobtitle.JobTitleID"><i class="bi-pencil-square"></i></button>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal6" id="id" name="id" value="@jobtitle.JobTitleID"><i class="bi-trash-fill"></i></button>
-                                                        </div>
+                                            @foreach (var jobtitle in jobTitles)
+                                            {
+                                                <div class="d-flex">
+                                                    <div class="mr-auto p-2">
+                                                        @jobtitle.Name
                                                     </div>
-                                                }
-                                        </div>
-
-                                        <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4" style="width:100%; color: black;">
-
-                                            <div class="d-flex">
-                                                <div class="mr-auto p-2">
-                                                    業務部
-                                                </div>
-                                                <div class="p-2">
-                                                    <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                        <i class="bi-caret-down-fill"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div class="collapse" id="collapseExample">
-                                                <div class="card card-body">
-                                                    <div class="d-flex">
-                                                        <div class="mr-auto p-2">
-                                                            經理
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <button class="btn btn-outline-primary btn-sm" type="submit"><i class="bi-pencil-square"></i></button>
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <button class="btn btn-danger btn-sm" " type="submit"><i class="bi-trash-fill"></i></button>
-                                                        </div>
+                                                    <div class="p-2">
+                                                        <button type="submit" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal5" id="id" name="id" value="@jobtitle.JobTitleID"><i class="bi-pencil-square"></i></button>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal6" id="id" name="id" value="@jobtitle.JobTitleID"><i class="bi-trash-fill"></i></button>
                                                     </div>
                                                 </div>
-                                            </div>
-
+                                            }
                                         </div>
+                                        @*
+                                            <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4" style="width:100%; color: black;">
 
+                                                <div class="d-flex">
+                                                    <div class="mr-auto p-2">
+                                                        業務部
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                            <i class="bi-caret-down-fill"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="collapse" id="collapseExample">
+                                                    <div class="card card-body">
+                                                        <div class="d-flex">
+                                                            <div class="mr-auto p-2">
+                                                                經理
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <button class="btn btn-outline-primary btn-sm" type="submit"><i class="bi-pencil-square"></i></button>
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <button class="btn btn-danger btn-sm" " type="submit"><i class="bi-trash-fill"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        *@
                                         <div class="tab-pane fade" id="GPS4" role="tabpanel" aria-labelledby="GPS-tab4" style="width:100%; color: black;">
 
                                             <div class="d-flex">
-                                                <div>
-                                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3679.346532716414!2d120.32772841496272!3d22.752517585090402!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e0e3b27ca4ed3%3A0x57d4d4e1c0370700!2zODEx6auY6ZuE5biC5qWg5qKT5Y2A5Y2T6LaK6LevMuiZnw!5e0!3m2!1szh-TW!2stw!4v1625475820133!5m2!1szh-TW!2stw" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                                                </div>
+                                                <div class="mr-auto p-2">公司簡介</div>
                                             </div>
                                             <div class="d-flex justify-content-end">
                                                 <div class="mr-auto p-2">
-                                                    定位半徑(m)：150 m
+                                                    公司地址：大學路1號
                                                 </div>
                                                 <div class="p-2">
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal7"><i class="bi-pencil-square"></i></button>
@@ -177,7 +177,7 @@
 
                         <div class="card-body">
                             @using (Html.BeginForm("ChangeCompanyPassword", "Setting", FormMethod.Post))
-{
+                            {
                                 @Html.AntiForgeryToken()
 
 
@@ -190,49 +190,48 @@
                                         <button class="btn btn-primary" type="submit">修改</button>
                                     </div>
                                 </div>
-}
+                            }
                         </div>
                     </div>
                 </div>
 
+                @*
+                    <div class="col-12 col-sm-12 col-lg-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h4>手機打卡記錄設定</h4>
+                            </div>
 
-                <div class="col-12 col-sm-12 col-lg-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h4>手機打卡記錄設定</h4>
+                            <div class="card-body">
+
+                                <form class="form-inline mr-auto">
+                                    <div class="row">
+                                        <div class="col-lg-auto col-md-3 col-3" style="margin-top:10px">
+                                            可查詢當月：
+                                        </div>
+                                        <div class="col-lg-auto col-md-2 col-12" style="margin-top:10px">
+                                            <label class="switch">
+                                                <input type="checkbox" id="togBtn">是
+                                                <div class="slider round">
+                                                    <span class="on">是</span>
+                                                    <span class="off">否</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-auto col-md-5 col-12">
+                                            可查詢天數：<input class="form-control" type="text" placeholder="若設定為0則不限制天數" aria-label="Search">
+                                        </div>
+                                        <div class="col-lg-auto col-md-1 col-12">
+                                            <button class="btn btn-primary" type="submit">修改</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
                         </div>
-
-                        <div class="card-body">
-
-                            <form class="form-inline mr-auto">
-                                <div class="row">
-                                    <div class="col-lg-auto col-md-3 col-3" style="margin-top:10px">
-                                        可查詢當月：
-                                    </div>
-                                    <div class="col-lg-auto col-md-2 col-12" style="margin-top:10px">
-                                        <label class="switch">
-                                            <input type="checkbox" id="togBtn">是
-                                            <div class="slider round">
-                                                <span class="on">是</span>
-                                                <span class="off">否</span>
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="col-lg-auto col-md-5 col-12">
-                                        可查詢天數：<input class="form-control" type="text" placeholder="若設定為0則不限制天數" aria-label="Search">
-                                    </div>
-                                    <div class="col-lg-auto col-md-1 col-12">
-                                        <button class="btn btn-primary" type="submit">修改</button>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-
                     </div>
-                </div>
-
-
+                *@
                 <div class="col-12 col-sm-12 col-lg-12">
                     <div class="card card-primary">
                         <div class="card-header">
@@ -242,57 +241,56 @@
                             @using (Html.BeginForm("UpdateCompanyTime", "Setting", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
-                                    <div class="row">
-                                        <div class="col-lg-auto col-md-6 col-12">
-                                            上班時間：<input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" aria-label="Search" value="@company_Times.WorkTime">
-                                        </div>
-                                        <div class="col-lg-auto col-md-5 col-12">
-                                            下班時間：<input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" aria-label="Search" value="@company_Times.RestTime">
-                                        </div>
-                                        <div class="col-lg-auto col-md-1 col-12">
-                                            <button class="btn btn-primary" type="submit">修改</button>
-                                        </div>
-                                    </div>
-                            }
-                            </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-12 col-lg-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h4>下上班逾時打卡設定</h4>
-                        </div>
-
-                        <div class="card-body">
-
-                            <form class="form-inline mr-auto">
                                 <div class="row">
-                                    <div class="col-lg-auto col-md-3 col-3">
-                                        上下班逾時禁止打卡：
+                                    <div class="col-lg-auto col-md-6 col-12">
+                                        上班時間：<input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" aria-label="Search" value="@company_Times.WorkTime">
                                     </div>
-                                    <div class="col-lg-auto col-md-2 col-12">
-                                        <label class="switch">
-                                            <input type="checkbox" id="togBtn">
-                                            <div class="slider round">
-                                                <span class="on">是</span>
-                                                <span class="off">否</span>
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="col-lg-auto col-md-5 col-12" style="color: grey;">
-                                        *若開啟，上下班30分後打卡，需要後台許可app顯示該筆紀錄。
+                                    <div class="col-lg-auto col-md-5 col-12">
+                                        下班時間：<input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" aria-label="Search" value="@company_Times.RestTime">
                                     </div>
                                     <div class="col-lg-auto col-md-1 col-12">
                                         <button class="btn btn-primary" type="submit">修改</button>
                                     </div>
                                 </div>
-                            </form>
-
+                            }
                         </div>
-
                     </div>
                 </div>
+                @*
+                    <div class="col-12 col-sm-12 col-lg-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h4>下上班逾時打卡設定</h4>
+                            </div>
+
+                            <div class="card-body">
+
+                                <form class="form-inline mr-auto">
+                                    <div class="row">
+                                        <div class="col-lg-auto col-md-3 col-3">
+                                            上下班逾時禁止打卡：
+                                        </div>
+                                        <div class="col-lg-auto col-md-2 col-12">
+                                            <label class="switch">
+                                                <input type="checkbox" id="togBtn">
+                                                <div class="slider round">
+                                                    <span class="on">是</span>
+                                                    <span class="off">否</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-auto col-md-5 col-12" style="color: grey;">
+                                            *若開啟，上下班30分後打卡，需要後台許可app顯示該筆紀錄。
+                                        </div>
+                                        <div class="col-lg-auto col-md-1 col-12">
+                                            <button class="btn btn-primary" type="submit">修改</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                *@
             </div>
         </div>
     </section>
@@ -309,7 +307,7 @@
                 </button>
             </div>
             @using (Html.BeginForm("AddDepartment", "Setting", FormMethod.Post))
-{
+            {
                 @Html.AntiForgeryToken()
                 <div class="modal-body">
                     <div class="form-group">
@@ -321,235 +319,243 @@
                         <button id="Button" name="Button" value="AddButton" type="submit" class="btn btn-success">新增</button>
                     </div>
                 </div>
-}
+            }
         </div>
     </div>
 </div>
 
 
-
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">部門名稱修改</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            @using (Html.BeginForm("EditDepartment", "Setting",FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">更改部門名稱：</label>
-                        <input type="text" id="department_name" name="department_name" class="form-control">
-                    </div>
-                    <div class="modal-footer">
-                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                        <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success">更新</button>
-                    </div>
+@foreach (var department in departments)
+{
+    <div class="modal fade" id="exampleModal2.@department.DepartmentID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">部門名稱修改</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-}
-        </div>
-    </div>
-</div>
 
-
-<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">確定要刪除此部門名稱?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            @using (Html.BeginForm("DeleteDepartment", "Setting" ,FormMethod.Post))
-{
-                @Html.AntiForgeryToken()
-                <div class="modal-body">
-                    <div class="modal-footer">
-                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                        <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger">刪除</button>
-                    </div>
-                </div>
-}
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">新增職稱</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("AddJobtitle", "Setting", FormMethod.Post))
-{
+                @using (Html.BeginForm("EditDepartment", "Setting", FormMethod.Post))
+                {
                     @Html.AntiForgeryToken()
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">職稱：</label>
-                        <input type="text" class="form-control" id="jobtitle_name" name="jobtitle_name">
-                    </div>
-                    <div class="modal-footer">
-                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                        <button id="Button" name="Button" value="AddButton" type="submit" class="btn btn-success">新增</button>
-                    </div>
-}
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">更改職稱名稱</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("EditJobtitle", "Setting", FormMethod.Post))
-{
-                    @Html.AntiForgeryToken()
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">更改職稱名稱：</label>
-                        <input type="text" class="form-control" id="jobtitle_name" name="jobtitle_name">
-                    </div>
-                    <div class="modal-footer">
-                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                        <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success">更新</button>
-                    </div>
-}
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="exampleModal6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">確定要刪除此職稱?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("DeleteJobtitle", "Setting", FormMethod.Post))
-{
-                    @Html.AntiForgeryToken()
-                    <div class="modal-footer">
-                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                        <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger">刪除</button>
-                    </div>
-}
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">打卡定位半徑設定</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">半徑(公尺)：</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    @*
+                    <div class="modal-body">
                         <div class="form-group">
-                            <label for="message-text" class="col-form-label">半徑(公尺)：</label>
-                            <input type="text" class="form-control" id="message-text">
+                            <label for="recipient-name" class="col-form-label">更改部門名稱：</label>
+                            <input type="text" id="department_name" name="department_name" class="form-control" value="@department.Name">
                         </div>
-                    *@
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                    <button type="button" class="btn btn-success">更新</button>
+                        <div class="modal-footer">
+                            <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                            <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success">更新</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+@foreach (var department in departments)
+{
+    <div class="modal fade" id="exampleModal3.@department.DepartmentID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">確定要刪除此部門名稱?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("DeleteDepartment", "Setting", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="modal-footer">
+                            <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger">刪除</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+    <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">新增職稱</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("AddJobtitle", "Setting", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">職稱：</label>
+                            <input type="text" class="form-control" id="jobtitle_name" name="jobtitle_name">
+                        </div>
+                        <div class="modal-footer">
+                            <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                            <button id="Button" name="Button" value="AddButton" type="submit" class="btn btn-success">新增</button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    $('#exampleModal1').on('bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+    @foreach (var jobtitle in jobTitles)
+    {
+        <div class="modal fade" id="exampleModal5.@jobtitle.JobTitleID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">更改職稱名稱</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("EditJobtitle", "Setting", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">更改職稱名稱：</label>
+                                <input type="text" class="form-control" id="jobtitle_name" name="jobtitle_name" value="@jobtitle.Name">
+                            </div>
+                            <div class="modal-footer">
+                                <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success">更新</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @foreach (var jobtitle in jobTitles)
+    {
+        <div class="modal fade" id="exampleModal6.@jobtitle.JobTitleID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">確定要刪除此職稱?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("DeleteJobtitle", "Setting", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="modal-footer">
+                                <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger">刪除</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
-    $('#exampleModal2').on('bs.modal', function (event) {
+    <div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">打卡定位位置設定</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">公司地址：</label>
+                            <input type="text" class="form-control" id="recipient-name" value="#">
+                        </div>
+                        @*
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">半徑(公尺)：</label>
+                                <input type="text" class="form-control" id="message-text">
+                            </div>
+                        *@
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        <button type="submit" class="btn btn-success">更新</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#exampleModal1').on('bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
+
+        var itemA = '<%=@foreach (var department in departments) { @department.DepartmentID} %>'
+
+        $('#exampleModal2.itemA).on('bs.modal', function(event) {
+                var button = $(event.relatedTarget)
+            var recipient = button.data('whatever')
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
+
+        $('#exampleModal3.itemA').on('bs.modal', function (event) {
         var button = $(event.relatedTarget)
-        var recipient = button.data('whatever')
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+            var recipient = button.data('whatever')
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
 
-    $('#exampleModal3').on('bs.modal', function (event) {
+        $('#exampleModal4').on('bs.modal', function (event) {
         var button = $(event.relatedTarget)
-        var recipient = button.data('whatever')
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+            var recipient = button.data('whatever')
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
 
-    $('#exampleModal4').on('bs.modal', function (event) {
-        var button = $(event.relatedTarget)
-        var recipient = button.data('whatever')
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+        var itemB = '<%=@foreach (var jobtitle in jobTitles) { @jobtitle.JobTitleID} %>'
 
-    $('#exampleModal5').on('bs.modal', function (event) {
+        $('#exampleModal5.itemB').on('bs.modal', function (event) {
         var button = $(event.relatedTarget)
-        var recipient = button.data('whatever')
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+            var recipient = button.data('whatever')
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
 
-    $('#exampleModal6').on('bs.modal', function (event) {
+        $('#exampleModal6.itemB').on('bs.modal', function (event) {
         var button = $(event.relatedTarget)
-        var recipient = button.data('whatever')
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
+            var recipient = button.data('whatever')
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
 
-    $('#exampleModal7').on('bs.modal', function (event) {
+        $('#exampleModal7').on('bs.modal', function (event) {
         var button = $(event.relatedTarget)
-        var recipient = button.data('whatever')
-        var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
-        modal.find('.modal-body input').val(recipient)
-    })
-</script>
+            var recipient = button.data('whatever')
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
+    </script>

@@ -9,43 +9,45 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-    <body id="body-pd">
-        <header class="header" id="header">
-            <div class="header_toggle"> <i class='bi-list' id="header-toggle"></i> </div>
-            <div class="sidebar-user-picture">
-                <img alt="使用者圖片" src="~/Content/employee.png">
+<body id="body-pd">
+    <header class="header" id="header">
+        <div class="header_toggle" id="header-toggle"> <img class="nav_logo3" src="~/Content/images/差勤打卡LOGO2.png"><span class="nav_logo-name">&nbsp;Punch.</span> </div>
+        <div class="sidebar-user-picture">
+            &nbsp;<img alt="使用者圖片" src="~/Content/images/user2.png">
+            <div class="user-name">Ujang Maman</div>
+            <div class="user-role">
+                Administrator
             </div>
+        </div>
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
             <div>
-                <span class="nav_admin-name">使用者名稱</span>
-            </div>
-        </header>
-        <div class="l-navbar" id="nav-bar">
-            <nav class="nav">
-                <div>
-                    <a href="" class="nav_logo"><span class="nav_logo-name" style="margin-left:30px ">人事差勤打卡系統</span> </a>
-                    <div class="nav_list">
-                        <a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"> <i class='bi-clock'></i> <span class="nav_name">打卡紀錄</span> </a>
-                        <a href="@Url.Action("Index","EmployeeData")" class="nav_link @(Context.Request.Path == "/EmployeeData" ? "active" : "")"> <i class='bi-person-square'></i> <span class="nav_name">員工管理</span> </a>
-                        <a href="@Url.Action("Index","TripRecords")" class="nav_link  @(Context.Request.Path == "/TripRecords" ? "active" : "")"> <i class='bi-briefcase'></i> <span class="nav_name">公出管理</span> </a>
-                        <a href="@Url.Action("Index","LeaveRecords")" class="nav_link  @(Context.Request.Path == "/LeaveRecords" ? "active" : "")"> <i class='bi-calendar2-x'></i> <span class="nav_name">請假管理</span> </a>
-                        <a href="@Url.Action("Index","Setting")" class="nav_link @(Context.Request.Path == "/Setting" ? "active" : "")"> <i class='bi-gear-fill'></i> <span class="nav_name">系統設定</span> </a>
-                        <a href="@Url.Action("Index","DataExport")" class="nav_link @(Context.Request.Path == "/DataExport" ? "active" : "")"> <i class='bi-file-earmark-arrow-down-fill'></i> <span class="nav_name">資料匯出</span> </a>
-                    </div>
-                </div> <a href="#" class="nav_link"> <i class='bi-power'></i> <span class="nav_name">登出</span> </a>
-            </nav>
-        </div>
+                @*<a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"><img class="nav_logo2" src="~/Content/images/差勤打卡LOGO2.png"><span class="nav_logo-name">人事差勤打卡系統</span> </a>*@
+                <div class="nav_list">
+                    <a href="@Url.Action("Index","EmployeeData")" class="nav_link @(Context.Request.Path == "/EmployeeData" ? "active" : "")"> <img class="nav_logo2" src="~/Content/images/user.png"> <span class="nav_name">員工管理</span> </a>
+                    <a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"> <img class="nav_logo2" src="~/Content/images/close (1).png"><span class="nav_name">打卡紀錄</span> </a>
+                    <a href="@Url.Action("Index","TripRecords")" class="nav_link  @(Context.Request.Path == "/TripRecords" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/portfolio.png"> <span class="nav_name">公出管理</span> </a>
+                    <a href="@Url.Action("Index","LeaveRecords")" class="nav_link  @(Context.Request.Path == "/LeaveRecords" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/close (1).png"> <span class="nav_name">請假管理</span> </a>
+                    <a href="@Url.Action("Index","DataExport")" class="nav_link @(Context.Request.Path == "/DataExport" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/pie-chart.png"> <span class="nav_name">資料匯出</span> </a>
+                    <a href="@Url.Action("Index","Setting")" class="nav_link @(Context.Request.Path == "/Setting" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/settings (1).png"> <span class="nav_name">系統設定</span> </a>
 
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - 人事差勤系統</p>
-            </footer>
-        </div>
+                </div>
+            </div> <a href="#" class="nav_link"> <i class='bi-power'></i> <span class="nav_name">登出</span> </a>
+        </nav>
+    </div>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    </body>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 人事差勤系統</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</body>
 </html>
