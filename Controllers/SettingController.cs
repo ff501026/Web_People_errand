@@ -19,11 +19,15 @@ namespace AttendanceManagement.Controllers
             List<Department> department = await DepartmentModel.Get_DepartmentAsync(company_hash);
             //輸入公司代碼取得職稱資料
             List<JobTitle> jobtitle = await JobtitleModel.Get_JobtitleAsync(company_hash);
+            //輸入公司代碼取得地址
+            List<CompanyAddress> companyAddresses = await CompanyAddressModel.Get_CompanyAddress(company_hash);
+            //取得公司上下班時間
             Company_Time company_Times = await CompanyTimeModel.GetCompany_Times(company_hash);
 
             ViewBag.departments = department;//部門名稱
             ViewBag.jobtitles = jobtitle;//職稱
             ViewBag.company_time = company_Times;
+            ViewBag.company_address = companyAddresses;
 
             return View();
         }
@@ -42,6 +46,7 @@ namespace AttendanceManagement.Controllers
             else
                 return Content($"<script>alert('密碼輸入錯誤！請重新再試！');history.go(-1);</script>");
         }
+        
         [HttpPost]
         public async Task<ActionResult> UpdateCompanyTime(TimeSpan? WorkTime, TimeSpan? RestTime) 
         {
@@ -58,7 +63,7 @@ namespace AttendanceManagement.Controllers
             bool result = false;
             if (Button.Equals("AddButton"))
             {
-                result = await DepartmentModel.Add_Department(department_name);
+                result = await DepartmentModel.Add_Department(company_hash,department_name);
                 if (result)
                 {
                     return Redirect("Index");
@@ -76,7 +81,7 @@ namespace AttendanceManagement.Controllers
             bool result = false;
             if (Button.Equals("AddButton"))
             {
-                result = await JobtitleModel.Add_Jobtitle(jobtitle_name);
+                result = await JobtitleModel.Add_Jobtitle(company_hash,jobtitle_name);
                 if (result)
                 {
                     return Redirect("Index");

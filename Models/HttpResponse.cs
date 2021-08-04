@@ -13,6 +13,8 @@ namespace AttendanceManagement.Models
         public static HttpResponseMessage response = new HttpResponseMessage();
         public static readonly string url = "http://163.18.110.100/api/"; //主機的URL
         public static readonly string CompanyGetCompanyHash = "Companies/Get_CompanyHash?"; //取得公司編號
+        public static readonly string CompanyGetCompanyAddress = "Companies/Get_CompanyAddress?company_hash="; //取得公司地址
+        public static readonly string CompanyEditCompanyAddress = "Companies/Update_CompanyAddress"; //(Put)修改公司地址
         public static readonly string CompanyLogin = "Companies/Login_Company?"; //管理員登入
         public static readonly string CompanyGetTime = "Companies/Get_WorkTime_RestTime/"; //查看公司上下班時間
         public static readonly string CompanyEditTime = "Companies/Update_WorkTime_RestTime?"; //(PUT)編輯公司上下班時間
@@ -20,8 +22,8 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyGetWorkRecord = "Companies/GetWorkRecord/"; //查看公司員工打卡紀錄api
         public static readonly string CompanyReviewEmployee = "Companies/Review_Employee/"; //查看公司待審核之員工帳號資料api
         public static readonly string CompanyPassEmployee = "Companies/Pass_Employee/";//查看公司審核通過之員工資料api
-        public static readonly string CompanyDepartment = "EmployeeDepartmentTypes";//查看公司部門資料api
-        public static readonly string CompanyJobtitle = "EmployeeJobtitleTypes";//查看公司職稱資料api
+        public static readonly string CompanyDepartment = "EmployeeDepartmentTypes/";//查看公司部門資料api
+        public static readonly string CompanyJobtitle = "EmployeeJobtitleTypes/";//查看公司職稱資料api
         public static readonly string CompanyLeaveType = "EmployeeLeaveTypes";//查看公司請假資料api
         public static readonly string CompanyReviewTripRecord = "Companies/Review_TripRecord/";//查看公司待審核公差資料api
         public static readonly string CompanyPassTripRecord = "Companies/Pass_TripRecord/";//查看公司已審核公差資料api

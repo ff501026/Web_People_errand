@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using AttendanceManagement.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,16 +58,16 @@ namespace AttendanceManagement.Models
                 Name = work_Records[index].Name,//員工姓名
                 WorkTime = work_Records[index].WorkTime,//上班紀錄
                 RestTime = work_Records[index].RestTime//下班紀錄
-             };
+            };
             return search;
         }
-    }//打卡資料
+    }//打卡資料方法
     class DepartmentModel : HttpResponse
     {
         public static async Task<List<Department>> Get_DepartmentAsync(string company_hash)
         {
             //連上WebAPI
-            response = await client.GetAsync(url + CompanyDepartment);
+            response = await client.GetAsync(url + CompanyDepartment + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
@@ -74,18 +76,19 @@ namespace AttendanceManagement.Models
             return departments;
         }
 
-        public static async Task<bool> Add_Department(string name)
+        public static async Task<bool> Add_Department(string company_hash,string name)
         {
             List<Add> addDepartments = new List<Add>();
             Add addDepartment = new Add
             {
-                Name = name
+                Name = name,
+                CompanyHash = company_hash
             };
             addDepartments.Add(addDepartment);
             string jsonData = JsonConvert.SerializeObject(addDepartments);//序列化成JSON
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            response = await client.PostAsync(url+CompanyAddDepartment, content);
+            response = await client.PostAsync(url + CompanyAddDepartment, content);
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -93,7 +96,7 @@ namespace AttendanceManagement.Models
             return false;
         }
 
-        public static async Task<bool> Edit_Department(int id,string name)
+        public static async Task<bool> Edit_Department(int id, string name)
         {
             List<Department> editDepartments = new List<Department>();
             Department editDepartment = new Department
@@ -122,27 +125,28 @@ namespace AttendanceManagement.Models
             }
             return false;
         }
-    }//部門資料
+    }//部門資料方法
     class JobtitleModel : HttpResponse
     {
         public static async Task<List<JobTitle>> Get_JobtitleAsync(string company_hash)
         {
             //連上WebAPI
-            response = await client.GetAsync(url + CompanyJobtitle);
+            response = await client.GetAsync(url + CompanyJobtitle + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
             List<JobTitle> jobTitles = JsonConvert.DeserializeObject<List<JobTitle>>(GetResponse);
-            
+
             return jobTitles;
         }
 
-        public static async Task<bool> Add_Jobtitle(string name)
+        public static async Task<bool> Add_Jobtitle(string company_hash,string name)
         {
             List<Add> addJobtitles = new List<Add>();
             Add addJobtitle = new Add
             {
-                Name = name
+                Name = name,
+                CompanyHash = company_hash
             };
             addJobtitles.Add(addJobtitle);
             string jsonData = JsonConvert.SerializeObject(addJobtitles);//序列化成JSON
@@ -186,13 +190,13 @@ namespace AttendanceManagement.Models
         }
 
 
-    }//職稱資料
-    class CompanyTimeModel : HttpResponse 
+    }//職稱資料方法
+    class CompanyTimeModel : HttpResponse
     {
-        public static async Task<Company_Time> GetCompany_Times(string company_hash) 
+        public static async Task<Company_Time> GetCompany_Times(string company_hash)
         {
             //連上WebAPI
-            response = await client.GetAsync(url + CompanyGetTime+company_hash);
+            response = await client.GetAsync(url + CompanyGetTime + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
@@ -204,11 +208,11 @@ namespace AttendanceManagement.Models
             };
             return company_Times;
         }
-        public static async Task<bool> Edit_CompanyTime(string company_hash,TimeSpan? WorkTime,TimeSpan? RestTime)
+        public static async Task<bool> Edit_CompanyTime(string company_hash, TimeSpan? WorkTime, TimeSpan? RestTime)
         {
             TimeSpan worktime = (TimeSpan)WorkTime;
             TimeSpan resttime = (TimeSpan)RestTime;
-            response = await client.GetAsync(url + CompanyEditTime + "companyhash="+company_hash+"&worktime=" + worktime.ToString("hh") + "%3A" + worktime.ToString("mm") + "&resttime=" + resttime.ToString("hh") + "%3A" + resttime.ToString("mm"));
+            response = await client.GetAsync(url + CompanyEditTime + "companyhash=" + company_hash + "&worktime=" + worktime.ToString("hh") + "%3A" + worktime.ToString("mm") + "&resttime=" + resttime.ToString("hh") + "%3A" + resttime.ToString("mm"));
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -216,18 +220,18 @@ namespace AttendanceManagement.Models
 
             return false;
         }
-    }
-    class CompanyManagerPasswordModel:HttpResponse
+    }//公司上下班時間方法
+    class CompanyManagerPasswordModel : HttpResponse
     {
-        public static async Task<bool> Login(string code, string manager_password) 
+        public static async Task<bool> Login(string code, string manager_password)
         {
             //連上WebAPI
-            response = await client.GetAsync(url + CompanyLogin + "code="+code+"&password="+manager_password);
+            response = await client.GetAsync(url + CompanyLogin + "code=" + code + "&password=" + manager_password);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
             bool login = JsonConvert.DeserializeObject<bool>(GetResponse);
-            if (login) 
+            if (login)
             {
                 //連上WebAPI
                 response = await client.GetAsync(url + CompanyGetCompanyHash + "code=" + code + "&password=" + manager_password);
@@ -240,7 +244,7 @@ namespace AttendanceManagement.Models
             }
             return false;
         }
-        public static async Task<bool>EditCompanyManagerPassword(string companyhash,string manager_password)
+        public static async Task<bool> EditCompanyManagerPassword(string companyhash, string manager_password)
         {
             List<CompanyManagerPassword> managerPasswords = new List<CompanyManagerPassword>();
             CompanyManagerPassword managerPassword = new CompanyManagerPassword
@@ -259,7 +263,28 @@ namespace AttendanceManagement.Models
             }
             return false;
         }
-    }
+    }//公司登入方法包刮變更密碼
+    class CompanyAddressModel : HttpResponse
+    {
+        public static async Task<List<CompanyAddress>> Get_CompanyAddress(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetCompanyAddress + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<CompanyAddress> companyAddresses = JsonConvert.DeserializeObject<List<CompanyAddress>>(GetResponse);
+
+            return companyAddresses;
+        }
+    }//公司地址方法
+    public class CompanyAddress
+    {
+        public string CompanyHash { get; set; }
+        public string Address { get; set; }
+        public double? CoordinateX { get; set; }
+        public double? CoordinateY { get; set; }
+    }//公司地址
     public class Work_Record
     {
         public int Num { get; set; }//編號
@@ -267,22 +292,22 @@ namespace AttendanceManagement.Models
         public DateTime WorkTime { get; set; }//上班紀錄
         public DateTime RestTime { get; set; }//下班紀錄
     }//打卡
-    public class Department 
+    public class Department
     {
         public int DepartmentId { get; set; }//編號
         public string Name { get; set; }//部門名稱
     }//部門
-    public class Company_Time 
+    public class Company_Time
     {
         public TimeSpan? WorkTime { get; set; }
         public TimeSpan? RestTime { get; set; }
-    }
+    }//公司上下班時間
     public class Update_Company_Time
     {
         public string CompanyHash { get; set; }
         public TimeSpan? WorkTime { get; set; }
         public TimeSpan? RestTime { get; set; }
-    }
+    }//變更公司上下班時間
     public class JobTitle
     {
         public int JobTitleId { get; set; }//編號
@@ -291,15 +316,17 @@ namespace AttendanceManagement.Models
     public class Add
     {
         public string Name { get; set; }//名稱
-    }
-    public class CompanyLogin 
+        public string CompanyHash { get; set; }//公司編號
+    }//新增部門或職稱
+    public class CompanyLogin
     {
         public string CompanyHash { get; set; }
         public string Name { get; set; }
-    }
-    public class CompanyManagerPassword
+    }//公司登入
+    public class CompanyManagerPassword//公司密碼
     {
         public string CompanyHash { get; set; }
         public string ManagerPassword { get; set; }
     }
 }
+    
