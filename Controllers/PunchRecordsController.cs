@@ -33,6 +33,8 @@ namespace AttendanceManagement.Controllers
 
             //放入篩選後的已審核資料
             List<Work_Record> search_work_Records = new List<Work_Record>();
+            //取得公司上下班時間
+            Company_Time company_Times = await CompanyTimeModel.GetCompany_Times(company_hash);
 
             if (date.Equals(null) && employee_name.Equals(""))//沒有輸入篩選條件就按搜尋，顯示全部資料
                 return Redirect("/PunchRecords/Index");
@@ -41,7 +43,7 @@ namespace AttendanceManagement.Controllers
             else search_work_Records = await StaffModel.Search_WorkRecord1(company_hash, date, employee_name);//只輸入一個篩選條件
 
             ViewBag.workrecord = search_work_Records;//篩選後打卡紀錄
-
+            ViewBag.company_time = company_Times;
             return View("Index");
         }
     }
