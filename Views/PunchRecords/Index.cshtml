@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "打卡紀錄";
     List<AttendanceManagement.Models.Work_Record> work_record = ViewBag.workrecord;
+    AttendanceManagement.Models.Company_Time company_Times = ViewBag.company_time;
 }
 
 <div class="main-content">
@@ -48,15 +49,33 @@
                                         </tr>
                                         @foreach (var record in work_record)
                                         {
-                                            <tr>
-                                                <td>@record.Num</td>
-                                                <td>
-                                                    <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@record.Name</a>
-                                                </td>
-                                                <td>@record.WorkTime</td>
-                                                <td>@record.RestTime</td>
+                                    <tr>
+                                        <td>@record.Num</td>
+                                        <td>
+                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@record.Name</a>
+                                        </td>
+                                        <td>@record.WorkTime</td>
+                                        <td>@record.RestTime</td>
+                                        @if (company_Times.WorkTime != null)
+                                        {
+                                            TimeSpan worktime = (TimeSpan)company_Times.WorkTime;
+                                            if (record.WorkTime.Hour < worktime.Hours)
+                                            {
                                                 <td><div class="badge badge-success">準時</div></td>
-                                            </tr>
+                                            }
+                                            else if (record.WorkTime.Hour == worktime.Hours)
+                                            {
+                                                if (record.WorkTime.Minute <= worktime.Minutes)
+                                                {
+                                                    <td><div class="badge badge-success">準時</div></td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td><div class="badge badge-danger">遲到</div></td>
+                                            }
+                                        }
+                                    </tr>
                                         }
                                         @*<tr>
                                             <td>1</td>

@@ -17,9 +17,11 @@ namespace AttendanceManagement.Controllers
 
             //輸入公司代碼取得打卡紀錄
             List<Work_Record> work_record = await StaffModel.Get_WorkRecordAsync(company_hash);
+            //取得公司上下班時間
+            Company_Time company_Times = await CompanyTimeModel.GetCompany_Times(company_hash);
 
             ViewBag.workrecord = work_record;//打卡紀錄
-
+            ViewBag.company_time = company_Times;
             return View("Index");
         }
 
