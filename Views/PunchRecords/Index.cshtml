@@ -7,22 +7,28 @@
 
 <div class="main-content">
     <section class="section">
-        <h1 class="section-header">
-            <div>打卡紀錄</div>
-        </h1>
+        <h3 class="page_name">
+            打卡紀錄
+        </h3>
         @using (Html.BeginForm("SearchWorkRecord", "PunchRecords", FormMethod.Get))
         {
             @Html.AntiForgeryToken()
             <form class="form-inline mr-auto">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <label class="form-inline">
+                            姓名(ID)：
+                            <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        </label>
                     </div>
-                    <div class="col-lg-5 col-md-5 col-12">
-                        <i class="bi-calendar"></i> 日期：<input id="date" name="date"  class="form-control" type="date" placeholder="Search" aria-label="Search">
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <label class="form-inline">
+                            日期：
+                            <input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search">
+                        </label>
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
-                        <div class="search-element">
+                        <div>
                             <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
                         </div>
                     </div>
@@ -52,7 +58,7 @@
                                     <tr>
                                         <td>@record.Num</td>
                                         <td>
-                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@record.Name</a>
+                                            <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@record.Name</a>
                                         </td>
                                         <td>@record.WorkTime</td>
                                         <td>@record.RestTime</td>
@@ -61,13 +67,13 @@
                                             TimeSpan worktime = (TimeSpan)company_Times.WorkTime;
                                             if (record.WorkTime.Hour < worktime.Hours)
                                             {
-                                                <td><div class="badge badge-success">準時</div></td>
+                                                <td><div class="badge badge-info">準時</div></td>
                                             }
                                             else if (record.WorkTime.Hour == worktime.Hours)
                                             {
                                                 if (record.WorkTime.Minute <= worktime.Minutes)
                                                 {
-                                                    <td><div class="badge badge-success">準時</div></td>
+                                                    <td><div class="badge badge-info">準時</div></td>
                                                 }
                                             }
                                             else
