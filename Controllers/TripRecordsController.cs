@@ -10,15 +10,17 @@ namespace AttendanceManagement.Controllers
 {
     public class TripRecordsController : Controller
     {
-        private string company_hash = Models.HttpResponse.CompanyHash;
         // GET: TripRecords
         public async Task<ActionResult> Index()
         {
-
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             //輸入公司代碼取得待審核公出申請紀錄
-            List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(company_hash);
+            List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(Session["company_hash"].ToString());
             //輸入公司代碼取得已審核公出申請紀錄
-            List<TripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(company_hash);
+            List<TripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(Session["company_hash"].ToString());
 
             ViewBag.review_triprecord = review_triprecord;//待審核公出申請紀錄
             ViewBag.pass_triprecord = pass_triprecord;//待審核公出申請紀錄
@@ -28,8 +30,12 @@ namespace AttendanceManagement.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             //輸入公司代碼取得已審核公出申請紀錄
-            List<TripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(company_hash);
+            List<TripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(Session["company_hash"].ToString());
             int num = pass_triprecord.FindIndex(item => item.TripRecordId == id);//員工索引值
 
             ViewBag.pass_tripRecord = pass_triprecord;//待審核資料
@@ -39,8 +45,12 @@ namespace AttendanceManagement.Controllers
 
         public async Task<ActionResult> Check(int id)//員工管理審核頁面
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             //輸入公司代碼取得待審核公出申請紀錄
-            List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(company_hash);
+            List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(Session["company_hash"].ToString());
             int num = review_triprecord.FindIndex(item => item.TripRecordId==id);//員工索引值
 
             ViewBag.review_tripRecord = review_triprecord;//待審核資料
@@ -53,11 +63,11 @@ namespace AttendanceManagement.Controllers
         {
 
             //輸入公司代碼取得待審核公出申請紀錄
-            List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(company_hash);
+            List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(Session["company_hash"].ToString());
             string hashaccount = review_triprecord[num].HashAccount;//員工編號
 
             //輸入公司代碼取得已審核員工資料
-            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);
+            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(Session["company_hash"].ToString());
             int Index = passEmployees.FindIndex(item => item.HashAccount.Equals(hashaccount)); ;//員工索引值，用來找出員工EMAIL
 
             bool result = false;
@@ -69,7 +79,7 @@ namespace AttendanceManagement.Controllers
                 if (result)
                 {
                     AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[Index].Email, "差勤打卡公差審核通知", "<h1>差勤打卡公差審核成功</h1><p>請至差勤打卡APP公差紀錄進行確認，如有問題請連繫後台。</p>");
-                    return Redirect("/TripRecords/Index");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content("<script>alert('審核失敗！如有問題請連繫後台');history.go(-1);</script>");
@@ -81,7 +91,7 @@ namespace AttendanceManagement.Controllers
                 if (result)
                 {
                     AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[Index].Email, "差勤打卡公差審核通知", "<h1>差勤打卡公差審核失敗</h1><p>請至差勤打卡APP公差紀錄進行確認，如有問題請連繫後台。</p>");
-                    return Redirect("/TripRecords/Index");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content("<script>alert('審核失敗！如有問題請連繫後台');history.go(-1);</script>");
@@ -92,19 +102,22 @@ namespace AttendanceManagement.Controllers
         [HttpGet]//公差紀錄篩選
         public async Task<ActionResult> SearchTripRecord(string employee_name,DateTime? date)
         {
-
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             //輸入公司代碼取得待審核公出申請紀錄
-            List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(company_hash);
+            List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(Session["company_hash"].ToString());
             //輸入公司代碼取得已審核公出申請紀錄
-            List<TripRecord> all_pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(company_hash);
+            List<TripRecord> all_pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(Session["company_hash"].ToString());
             //放入篩選後的已審核資料
             List<TripRecord> search_triprecord = new List<TripRecord>();
 
             if (date.Equals(null) && employee_name.Equals(""))//沒有輸入篩選條件就按搜尋，顯示全部資料
-                return Redirect("/TripRecords/Index");
+                return RedirectToAction("index");
             else if (!date.Equals(null) && !employee_name.Equals(""))//兩個篩選條件都輸入
-                search_triprecord = await PassTripRecordModel.Search_TripRecord2(company_hash, date, employee_name);
-            else search_triprecord = await PassTripRecordModel.Search_TripRecord1(company_hash, date, employee_name);//只輸入一個篩選條件
+                search_triprecord = await PassTripRecordModel.Search_TripRecord2(Session["company_hash"].ToString(), date, employee_name);
+            else search_triprecord = await PassTripRecordModel.Search_TripRecord1(Session["company_hash"].ToString(), date, employee_name);//只輸入一個篩選條件
 
             ViewBag.review_triprecord = review_triprecord;//待審核公出申請紀錄
             ViewBag.pass_triprecord = search_triprecord;//待審核公出申請紀錄
@@ -116,12 +129,12 @@ namespace AttendanceManagement.Controllers
         {
 
             //輸入公司代碼取得已審核公出申請紀錄
-            List<TripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(company_hash);
+            List<TripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(Session["company_hash"].ToString());
 
             string hashaccount = pass_triprecord[num].HashAccount;//員工編號
 
             //輸入公司代碼取得已審核員工資料
-            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);
+            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(Session["company_hash"].ToString());
             int Index = passEmployees.FindIndex(item => item.HashAccount.Equals(hashaccount)); ;//員工索引值，用來找出員工EMAIL
             bool result = false;
 
@@ -133,13 +146,13 @@ namespace AttendanceManagement.Controllers
                 if (result)
                 {
                     AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[Index].Email, "差勤打卡公差紀錄變更通知", "<h1>您的公差紀錄已變更</h1><p>請至差勤打卡APP公差紀錄確認變更內容，如有問題請連繫後台。</p>");
-                    return Redirect("/TripRecords/Index");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content("<script>alert('更新失敗！如有問題請連繫後台');history.go(-1);</script>");
             }
             //string url = "/TripRecords/Index?id=" + id + "&startdate=" + startdate + "&enddate=" + enddate + "location=" + location + "reason=" + reason;
-            return Redirect("/TripRecords/Index");
+            return RedirectToAction("index");
         }
     }
 }

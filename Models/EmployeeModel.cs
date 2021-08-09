@@ -134,7 +134,8 @@ namespace AttendanceManagement.Models
                 Department = passEmployee[index].Department,//員工部門
                 JobTitle = passEmployee[index].JobTitle,//員工職稱
                 Email = passEmployee[index].Email, //員工電子郵件
-                PhoneCode = passEmployee[index].PhoneCode//員工驗證碼(phone_code)
+                PhoneCode = passEmployee[index].PhoneCode,//員工驗證碼(phone_code)
+                Enabled = passEmployee[index].Enabled
             };
             return search;
         }

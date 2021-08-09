@@ -11,6 +11,7 @@ namespace AttendanceManagement.Controllers
         // GET: AttendanceManagement
         public ActionResult Index()
         {
+            
             return View();
         }
 

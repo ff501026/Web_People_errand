@@ -10,19 +10,21 @@ namespace AttendanceManagement.Controllers
 {
     public class SettingController : Controller
     {
-         private string company_hash = Models.HttpResponse.CompanyHash;
         // GET: Setting
         public async Task<ActionResult> Index()
         {
-
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             //輸入公司代碼取得部門資料
-            List<Department> department = await DepartmentModel.Get_DepartmentAsync(company_hash);
+            List<Department> department = await DepartmentModel.Get_DepartmentAsync(Session["company_hash"].ToString());
             //輸入公司代碼取得職稱資料
-            List<JobTitle> jobtitle = await JobtitleModel.Get_JobtitleAsync(company_hash);
+            List<JobTitle> jobtitle = await JobtitleModel.Get_JobtitleAsync(Session["company_hash"].ToString());
             //輸入公司代碼取得地址
-            List<CompanyAddress> companyAddresses = await CompanyAddressModel.Get_CompanyAddress(company_hash);
+            List<CompanyAddress> companyAddresses = await CompanyAddressModel.Get_CompanyAddress(Session["company_hash"].ToString());
             //取得公司上下班時間
-            Company_Time company_Times = await CompanyTimeModel.GetCompany_Times(company_hash);
+            Company_Time company_Times = await CompanyTimeModel.GetCompany_Times(Session["company_hash"].ToString());
 
             ViewBag.departments = department;//部門名稱
             ViewBag.jobtitles = jobtitle;//職稱
@@ -37,7 +39,7 @@ namespace AttendanceManagement.Controllers
         public async Task<ActionResult> ChangeCompanyPassword(string NewPassword, string NewPassword2)
         {
             if (NewPassword.Equals(NewPassword2)) {
-            bool result = await CompanyManagerPasswordModel.EditCompanyManagerPassword(company_hash, NewPassword);
+            bool result = await CompanyManagerPasswordModel.EditCompanyManagerPassword(Session["company_hash"].ToString(), NewPassword);
                 if (result)
                     return Content($"<script>alert('更新成功！');history.go(-1);</script>");
                 else
@@ -50,7 +52,7 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateCompanyTime(TimeSpan? WorkTime, TimeSpan? RestTime) 
         {
-            bool result = await CompanyTimeModel.Edit_CompanyTime(company_hash,WorkTime, RestTime);
+            bool result = await CompanyTimeModel.Edit_CompanyTime(Session["company_hash"].ToString(), WorkTime, RestTime);
             if (result)
                 return Content($"<script>alert('更新成功！');history.go(-1);</script>");
             else
@@ -63,16 +65,16 @@ namespace AttendanceManagement.Controllers
             bool result = false;
             if (Button.Equals("AddButton"))
             {
-                result = await DepartmentModel.Add_Department(company_hash,department_name);
+                result = await DepartmentModel.Add_Department(Session["company_hash"].ToString(), department_name);
                 if (result)
                 {
-                    return Redirect("Index");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content($"<script>alert('新增失敗！如有問題請連繫後台!');history.go(-1);</script>");
             }
             else
-                return Redirect("/Setting/Index");
+                return RedirectToAction("index");
         }
 
         [HttpPost]
@@ -81,16 +83,16 @@ namespace AttendanceManagement.Controllers
             bool result = false;
             if (Button.Equals("AddButton"))
             {
-                result = await JobtitleModel.Add_Jobtitle(company_hash,jobtitle_name);
+                result = await JobtitleModel.Add_Jobtitle(Session["company_hash"].ToString(), jobtitle_name);
                 if (result)
                 {
-                    return Redirect("Index");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content($"<script>alert('新增失敗！如有問題請連繫後台!');history.go(-1);</script>");
             }
             else
-                return Redirect("/Setting/Index");
+                return RedirectToAction("index");
         }
 
 
@@ -103,13 +105,13 @@ namespace AttendanceManagement.Controllers
                 result = await DepartmentModel.Edit_Department(id,department_name);
                 if (result)
                 {
-                    return Redirect("/Setting/Index");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content($"<script>alert('編輯失敗！如有問題請連繫後台!{department_name}');history.go(-1);</script>");
             }
             else
-                return Redirect("/Setting/Index");
+                return RedirectToAction("index");
         }
        
 
@@ -123,13 +125,13 @@ namespace AttendanceManagement.Controllers
                 result = await JobtitleModel.Edit_Jobtitle(id, jobtitle_name);
                 if (result)
                 {
-                    return Redirect("/Setting/Index");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content($"<script>alert('編輯失敗！如有問題請連繫後台!');history.go(-1);</script>");
             }
             else
-                return Redirect("/Setting/Index");
+                return RedirectToAction("index");
         }
         [HttpPost]
         public async Task<ActionResult> DeleteJobtitle(int id,string Button)
@@ -140,13 +142,13 @@ namespace AttendanceManagement.Controllers
                 result = await JobtitleModel.Delete_Jobtitle(id);
                 if (result)
                 {
-                    return Redirect("/Setting/Index");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content($"<script>alert('刪除失敗！如有問題請連繫後台!');history.go(-1);</script>");
             }
             else
-                return Redirect("/Setting/Index");
+                return RedirectToAction("index");
         }
         [HttpPost]
         public async Task<ActionResult> DeleteDepartment(int id, string Button)
@@ -157,13 +159,13 @@ namespace AttendanceManagement.Controllers
                 result = await DepartmentModel.Delete_Department(id);
                 if (result)
                 {
-                    return Redirect("/Setting/Index");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content($"<script>alert('刪除失敗！如有問題請連繫後台!');history.go(-1);</script>");
             }
             else
-                return Redirect("/Setting/Index");
+                return RedirectToAction("index");
         }
     }
 }

@@ -3,6 +3,8 @@
     ViewBag.Title = "打卡紀錄";
     List<AttendanceManagement.Models.Work_Record> work_record = ViewBag.workrecord;
     AttendanceManagement.Models.Company_Time company_Times = ViewBag.company_time;
+    int num = ViewBag.Num;//打卡記錄總共有幾筆
+    int number = 0;//編號
 }
 
 <div class="main-content">
@@ -47,25 +49,26 @@
                                             <th>下班時間</th>
                                             <th>是否遲到</th>
                                         </tr>
-                                        @foreach (var record in work_record)
+                                        @for(int i = num-1;i>=0;i--)
                                         {
+                                            number++;
                                     <tr>
-                                        <td>@record.Num</td>
+                                        <td>@number</td>
                                         <td>
-                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@record.Name</a>
+                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
                                         </td>
-                                        <td>@record.WorkTime</td>
-                                        <td>@record.RestTime</td>
+                                        <td>@work_record[i].WorkTime</td>
+                                        <td>@work_record[i].RestTime</td>
                                         @if (company_Times.WorkTime != null)
                                         {
                                             TimeSpan worktime = (TimeSpan)company_Times.WorkTime;
-                                            if (record.WorkTime.Hour < worktime.Hours)
+                                            if (@work_record[i].WorkTime.Hour < worktime.Hours)
                                             {
                                                 <td><div class="badge badge-success">準時</div></td>
                                             }
-                                            else if (record.WorkTime.Hour == worktime.Hours)
+                                            else if (@work_record[i].WorkTime.Hour == worktime.Hours)
                                             {
-                                                if (record.WorkTime.Minute <= worktime.Minutes)
+                                                if (@work_record[i].WorkTime.Minute <= worktime.Minutes)
                                                 {
                                                     <td><div class="badge badge-success">準時</div></td>
                                                 }

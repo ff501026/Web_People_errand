@@ -223,7 +223,7 @@ namespace AttendanceManagement.Models
     }//公司上下班時間方法
     class CompanyManagerPasswordModel : HttpResponse
     {
-        public static async Task<bool> Login(string code, string manager_password)
+        public static async Task<CompanyLogin> Login(string code, string manager_password)
         {
             //連上WebAPI
             response = await client.GetAsync(url + CompanyLogin + "code=" + code + "&password=" + manager_password);
@@ -231,18 +231,25 @@ namespace AttendanceManagement.Models
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
             bool login = JsonConvert.DeserializeObject<bool>(GetResponse);
+
+            List<CompanyLogin> company = new List<CompanyLogin>();
+            CompanyLogin company_data = new Models.CompanyLogin();
+            company.Add(company_data);
+
+            company[0].enabled = false;
+
             if (login)
             {
                 //連上WebAPI
                 response = await client.GetAsync(url + CompanyGetCompanyHash + "code=" + code + "&password=" + manager_password);
                 //取得API回傳的打卡紀錄內容
                 GetResponse = await response.Content.ReadAsStringAsync();
-                List<CompanyLogin> company = JsonConvert.DeserializeObject<List<CompanyLogin>>(GetResponse);
-                CompanyHash = company[0].CompanyHash;
-                CompanyName = company[0].Name;
-                return true;
+                company = JsonConvert.DeserializeObject<List<CompanyLogin>>(GetResponse);
+                
+                company[0].enabled = true;
+                return company[0];
             }
-            return false;
+            return company[0];
         }
         public static async Task<bool> EditCompanyManagerPassword(string companyhash, string manager_password)
         {
@@ -322,6 +329,7 @@ namespace AttendanceManagement.Models
     {
         public string CompanyHash { get; set; }
         public string Name { get; set; }
+        public bool enabled { get; set; }
     }//公司登入
     public class CompanyManagerPassword//公司密碼
     {
