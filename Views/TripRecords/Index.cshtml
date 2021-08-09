@@ -41,7 +41,7 @@
                                             review_num++;
                                             <tr>
                                                 <td>@review_num</td>
-                                                <td><div class="badge badge-warning">尚未審核</div></td>
+                                                <td><div class="badge badge-warning">待審核</div></td>
                                                 <td>@review_triprecord.Name</td>
                                                 <td>@review_triprecord.StartDate</td>
                                                 <td>@review_triprecord.EndDate</td>
@@ -120,11 +120,11 @@
                                                 <td>@pass_num</td>
                                                 @if (pass_triprecord.Review == true)
                                                 {
-                                                    <td><div class="badge badge-success">核准</div></td>
+                                                    <td><div class="badge badge-info">審核通過</div></td>
                                                 }
                                                 else
                                                 {
-                                                    <td><div class="badge badge-danger">拒絕</div></td>
+                                                    <td><div class="badge badge-danger">審核拒絕</div></td>
                                                 }
                                                 <td>@pass_triprecord.Name</td>
                                                 <td>@pass_triprecord.StartDate</td>
@@ -168,5 +168,5 @@
                     </div>
                 </div>
             </div>
-        </section>
+    </section>
 </div>
