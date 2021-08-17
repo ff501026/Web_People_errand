@@ -98,11 +98,11 @@ a {
 .nav_logo3 { /*¾ÉÄý¦CLOGO*/
     width: 40px;
     height: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .newlogo { /*¾ÉÄý¦CLOGO*/
-    margin-top: 1.5%
+    margin-top: 2.2%
 }
 
 .nav_logo2 {
@@ -133,6 +133,7 @@ a {
     color: var(--first-color);
     font-weight: 700;
     font-size: 40px;
+    font-family: Agency FB
 }
 
 .nav_logo-name2 {
@@ -177,7 +178,7 @@ a {
 }
 
 .active {
-    color: var(--first-color);
+    color: #68a3fc;
 }
 
     .active::before {
@@ -186,7 +187,7 @@ a {
         left: 0;
         width: 2px;
         height: 32px;
-        background-color: var(--white-color)
+        background-color: #68a3fc
     }
 
 .height-100 {
@@ -1057,6 +1058,126 @@ body.sidebar-gone .main-content {
 /*end section*/
 
 /*card*/
+.cardA {
+    /*-webkit-box-shadow: 0 0 40px rgba(0,0,0,.05);*/
+    background-color: #fff;
+    border-radius: 3px;
+    border-width: 1.5px;
+    border-color: #bdbdbd;
+    position: relative;
+    padding: 10px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+    .cardA.card-progress:after {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255,255,255,.5);
+        background-image: url('../img/spinner.svg');
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 1;
+    }
+
+    .cardA.card-progress .card-progress-dismiss {
+        position: absolute;
+        top: 65%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        color: #fff !important;
+        padding: 5px 13px;
+    }
+
+    .cardA.card-primary { /*popup modal¥~®Ø*/
+        border: 1.5px solid #d9d9d9;
+    }
+
+
+    .cardA .card-header,
+    .cardA .card-footer,
+    .cardA .card-body {
+        background-color: transparent;
+    }
+
+    .cardA .card-body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .cardA .card-footer.card-footer-grey {
+        background-color: #fbfbfb;
+    }
+
+    .cardA .card-header {
+        border-bottom-color: #f9f9f9;
+        line-height: 30px;
+        -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+        width: 100%;
+    }
+
+        .cardA .card-header .btn {
+            padding: 2px 15px;
+            font-size: 12px;
+            border-radius: 30px;
+        }
+
+        .cardA .card-header .form-control {
+            height: 30px;
+            font-size: 12px;
+        }
+
+            .cardA .card-header .form-control + .input-group-btn .btn {
+                border-radius: 0 3px 3px 0;
+                margin-top: -3px;
+            }
+
+        .cardA .card-header .float-right .btn-group .btn {
+            border-radius: 30px !important;
+            padding-left: 13px !important;
+            padding-right: 13px !important;
+        }
+
+        .cardA .card-header h4 {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 2px 0 -2px 0;
+            font-family: 'Montserrat';
+            line-height: 30px;
+        }
+
+        .cardA .card-header p {
+            font-size: 35px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin: 2px 0 30px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 30px;
+            color: dimgray;
+        }
+
+        .cardA .card-header h4 a.unstyled {
+            font-size: 14px;
+        }
+
+    .cardA .card-footer {
+        background-color: transparent;
+        border: none;
+        padding-top: 0;
+    }
+
 .card2 {
     -webkit-box-shadow: 0 0 40px rgba(0,0,0,.05);
     box-shadow: 0 0 40px rgba(0,0,0,.05);
@@ -2397,7 +2518,7 @@ table tr:hover .table-links {
 
 /* pagination */
 .page-item .page-link {
-    color: #FFF;
+    color: #68a3fc; /*­¶½XÃC¦â*/
 }
 
 .page-item.active .page-link {
