@@ -2,6 +2,10 @@
     ViewData["Title"] = "公出管理";
     List<AttendanceManagement.Models.TripRecord> reviewTripRecords = ViewBag.review_triprecord;//待審核公出資料
     List<AttendanceManagement.Models.TripRecord> passTripRecords = ViewBag.pass_triprecord;//已審核公出資料
+    List<AttendanceManagement.Models.Trip2Record> Trip2Records = ViewBag.trip2record;//公出資料2
+    List<AttendanceManagement.Models.DetailTrip2Record> DetailTrip2Records = ViewBag.detailtrip2record;//公出資料2
+
+   
     int review_num = 0;//待審核公出資料編號
     int pass_num = 0;//已審核公出資料編號
 }
@@ -113,11 +117,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var pass_triprecord in passTripRecords)
+                                    @foreach (var trip2record in Trip2Records)
                                     {
-                                        pass_num++;
-                                        <tr data-toggle="modal" data-target="#exampleModal2.@pass_triprecord.TripRecordId" id="id" name="id" value="@pass_triprecord.TripRecordId">
-                                            <td>@pass_num</td>
+                                        <tr data-toggle="modal" data-target="#exampleModal2.@trip2record.GroupId" id="id" name="id" value="@trip2record.GroupId">
+                                            <td>@trip2record.Num</td>
 
                                             @*
                                             @if (pass_triprecord.Review == true)
@@ -130,9 +133,9 @@
                                             }
                                             *@
 
-                                            <td><a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_triprecord.Name</td>
-                                            <td>@pass_triprecord.StartDate</td>
-                                            <td>@pass_triprecord.EndDate</td>
+                                            <td><a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@trip2record.Name</td>
+                                            <td>@trip2record.StartTime</td>
+                                            <td>@trip2record.EndTime</td>
 
                                             @*
                                             <td>@pass_triprecord.Location</td>
@@ -169,102 +172,157 @@
 </div>
 
 
-@foreach (var pass_triprecord in passTripRecords)
+@foreach (var trip2record in Trip2Records)
 {
-    <div class="modal fade bd-example-modal-lg" id="exampleModal2.@pass_triprecord.TripRecordId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="exampleModal2.@trip2record.GroupId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：@pass_triprecord.Name</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：@trip2record.Name</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <hr size="10" color="#d9d9d9" align="center" width="95%">
-
                 <div class="modal-body">
-                    <div class="cardA card-primary"  style="margin-top:-18px">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="badge badge-danger">出勤</div>
-                                <div class="row" style="margin-top:10px">
-                                    <div class="col-12 col-lg-6">
-                                        打卡時間
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        地點
-                                    </div>
-                                </div>
+                    @foreach (var detailtrip2record in DetailTrip2Records)
+                    {
+                        if (trip2record.GroupId == @detailtrip2record.GroupId)
+                        {
+                            <div class="cardA card-primary" style="margin-top:-18px">
                                 <div class="row">
-                                    <div class="col-8 col-sm-6">
-                                        <input type="text" class="form-control" id="pass_triprecord_StartDate" name="pass_triprecord_StartDate" value="@pass_triprecord.StartDate">
-                                    </div>
-                                    <div class="col-4 col-sm-6">
-                                        <input type="text" class="form-control" id="pass_triprecord_Location" name="pass_triprecord_Location" value="@pass_triprecord.Location">
+                                    <div class="col-12">
+                                        @switch (detailtrip2record.Trip2Type)
+                                        {
+                                            case 1:
+                                                <div class="badge badge-danger">出勤</div>
+                                                break;
+
+                                            case 2:
+                                                <div class="badge badge-info">到站</div>
+                                                break;
+
+                                            case 3:
+                                                <div class="badge badge-warning">結束</div>
+                                                break;
+                                        }
+                                        <div class="row" style="margin-top:10px">
+                                            <div class="col-12 col-lg-6">
+                                                打卡時間
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                地點
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-8 col-sm-6">
+                                                <input type="text" class="form-control" id="trip2record_StartDate" name="trip2record_StartDate" value="@detailtrip2record.CreatedTime" readonly="readonly">
+                                            </div>
+                                            @{string location = AttendanceManagement.Models.GoogleMapApiModel.latLngToChineseAddress(detailtrip2record.CoordinateX,detailtrip2record.CoordinateY); }
+                                            <div class="col-4 col-sm-6">
+                                                <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@location" readonly="readonly">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        }
+                        @*<div class="cardA card-primary" style="margin-top:-18px">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="badge badge-danger">出勤</div>
+                        <div class="row" style="margin-top:10px">
+                            <div class="col-12 col-lg-6">
+                                打卡時間
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                地點
+                            </div>
                         </div>
-                    </div>
-                    <div class="cardA card-primary">
                         <div class="row">
-                            <div class="col-12">
-                                <div class="badge badge-info">到站</div>
-                                <div class="row" style="margin-top:10px">
-                                    <div class="col-12 col-lg-6">
-                                        打卡時間
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        地點
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-8 col-sm-6">
-                                        <input type="text" class="form-control" id="pass_triprecord_StartDate" name="pass_triprecord_StartDate" value="@pass_triprecord.StartDate">
-                                    </div>
-                                    <div class="col-4 col-sm-6">
-                                        <input type="text" class="form-control" id="pass_triprecord_Location" name="pass_triprecord_Location" value="@pass_triprecord.Location">
-                                    </div>
-                                </div>
+                            <div class="col-8 col-sm-6">
+                                <input type="text" class="form-control" id="pass_triprecord_StartDate" name="pass_triprecord_StartDate" value="@trip2record.StartTime">
                             </div>
-                        </div>
-                    </div>
-
-                        <div class="cardA card-primary">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="badge badge-warning">結束</div>
-                                    <div class="row" style="margin-top:10px">
-                                        <div class="col-12 col-lg-6">
-                                            打卡時間
-                                        </div>
-                                        <div class="col-12 col-lg-6">
-                                            地點
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-8 col-sm-6">
-                                            <input type="text" class="form-control" id="pass_triprecord_EndDate" name="pass_triprecord_EndDate" value="@pass_triprecord.EndDate">
-                                        </div>
-                                        <div class="col-4 col-sm-6">
-                                            <input type="text" class="form-control" id="pass_triprecord_Location" name="pass_triprecord_Location" value="@pass_triprecord.Location">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-4 col-sm-6">
+                                <input type="text" class="form-control" id="pass_triprecord_Location" name="pass_triprecord_Location" value="@trip2record.EndTime">
                             </div>
-                        </div>
-                        <div class="modal-footer">
-
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="cardA card-primary">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="badge badge-info">到站</div>
+                        <div class="row" style="margin-top:10px">
+                            <div class="col-12 col-lg-6">
+                                打卡時間
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                地點
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8 col-sm-6">
+                                <input type="text" class="form-control" id="trip2record_StartTime" name="trip2record_StartTime" value="@trip2record.StartTime">
+                            </div>
+                            <div class="col-4 col-sm-6">
+                                <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@trip2record.EndTime">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cardA card-primary">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="badge badge-warning">結束</div>
+                        <div class="row" style="margin-top:10px">
+                            <div class="col-12 col-lg-6">
+                                打卡時間
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                地點
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8 col-sm-6">
+                                <input type="text" class="form-control" id="pass_triprecord_EndDate" name="pass_triprecord_EndDate" value="@trip2record.EndTime">
+                            </div>
+                            <div class="col-4 col-sm-6">
+                                <input type="text" class="form-control" id="pass_triprecord_Location" name="pass_triprecord_Location" value="@trip2record.StartTime">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+                    }
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 }
 
 
-<script>
+@*<script>
         var itemA = '<%=@foreach (var pass_triprecord in passTripRecords) { @pass_triprecord.TripRecordId} %>'
+
+        $('#exampleModal2.itemA).on('bs.modal', function(event) {
+                var button = $(event.relatedTarget)
+            var recipient = button.data('whatever')
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
+
+</script>*@
+<script>
+        var itemA = '<%=@foreach (var trip2record in Trip2Records) { @trip2record.GroupId} %>'
 
         $('#exampleModal2.itemA).on('bs.modal', function(event) {
                 var button = $(event.relatedTarget)

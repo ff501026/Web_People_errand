@@ -258,6 +258,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GoogleMapApiModel.cs" />
     <Compile Include="Models\HttpResponse.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\LeaveRecordModel.cs" />

@@ -284,6 +284,30 @@ namespace AttendanceManagement.Models
 
             return companyAddresses;
         }
+        public static async Task<bool> EditCompanyAddress(string companyhash, string address)
+        {
+            string addressjson =GoogleMapApiModel.ConvertAddressToJsonString(address);
+            double[] latLng = GoogleMapApiModel.ChineseAddressToLatLng(addressjson);
+
+            List<CompanyAddress> companyAddresses = new List<CompanyAddress>();
+            CompanyAddress companyAddress = new CompanyAddress
+            {
+                CompanyHash = companyhash,
+                Address = address,
+                CoordinateX = latLng[0],
+                CoordinateY = latLng[1]
+            };
+            companyAddresses.Add(companyAddress);
+            string jsonData = JsonConvert.SerializeObject(companyAddresses);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyEditCompanyAddress, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
     }//公司地址方法
     public class CompanyAddress
     {

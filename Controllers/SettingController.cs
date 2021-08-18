@@ -41,20 +41,36 @@ namespace AttendanceManagement.Controllers
             if (NewPassword.Equals(NewPassword2)) {
             bool result = await CompanyManagerPasswordModel.EditCompanyManagerPassword(Session["company_hash"].ToString(), NewPassword);
                 if (result)
-                    return Content($"<script>alert('更新成功！');history.go(-1);</script>");
+                    return Content($"<script>alert('更新成功！');window.location='index';</script>");
                 else
                     return Content($"<script>alert('更新失敗！如有問題請連繫後台!{NewPassword}');history.go(-1);</script>"); 
             }
             else
                 return Content($"<script>alert('密碼輸入錯誤！請重新再試！');history.go(-1);</script>");
         }
-        
+
+        [HttpPost]
+        public async Task<ActionResult> EditAddress(string address) 
+        {
+            if (!address.Equals(""))
+            {
+                bool result = await CompanyAddressModel.EditCompanyAddress(Session["company_hash"].ToString(), address);
+                if (result)
+                    return Content($"<script>alert('更新成功！');window.location='index';</script>");
+                else
+                    return Content($"<script>alert('更新失敗！如有問題請連繫後台!{address}');history.go(-1);</script>");
+            }
+            else
+                return Content($"<script>alert('密碼輸入錯誤！請重新再試！');history.go(-1);</script>");
+
+        }
+
         [HttpPost]
         public async Task<ActionResult> UpdateCompanyTime(TimeSpan? WorkTime, TimeSpan? RestTime) 
         {
             bool result = await CompanyTimeModel.Edit_CompanyTime(Session["company_hash"].ToString(), WorkTime, RestTime);
             if (result)
-                return Content($"<script>alert('更新成功！');history.go(-1);</script>");
+                return Content($"<script>alert('更新成功！');window.location='index';</script>");
             else
                 return Content($"<script>alert('更新失敗！請確認上下班時間是否均有填寫，如有問題請連繫後台!');history.go(-1);</script>");
         }

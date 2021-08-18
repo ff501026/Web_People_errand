@@ -21,9 +21,15 @@ namespace AttendanceManagement.Controllers
             List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(Session["company_hash"].ToString());
             //輸入公司代碼取得已審核公出申請紀錄
             List<TripRecord> pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(Session["company_hash"].ToString());
+            //輸入公司代碼取得公出2申請紀錄
+            List<Trip2Record> trip2record = await Trip2RecordModel.Get_Trip2Record(Session["company_hash"].ToString());
+            //輸入公司代碼取得詳細公出2申請紀錄
+            List<DetailTrip2Record> detailtrip2record = await Trip2RecordModel.Detail_Trip2Record(Session["company_hash"].ToString());
 
             ViewBag.review_triprecord = review_triprecord;//待審核公出申請紀錄
-            ViewBag.pass_triprecord = pass_triprecord;//待審核公出申請紀錄
+            ViewBag.pass_triprecord = pass_triprecord;//已審核公出申請紀錄
+            ViewBag.trip2record = trip2record;//公出紀錄2
+            ViewBag.detailtrip2record = detailtrip2record;//詳細公出紀錄2
 
             return View();
         }
@@ -110,17 +116,34 @@ namespace AttendanceManagement.Controllers
             List<TripRecord> review_triprecord = await ReviewTripRecordModel.Get_ReviewTripRecord(Session["company_hash"].ToString());
             //輸入公司代碼取得已審核公出申請紀錄
             List<TripRecord> all_pass_triprecord = await PassTripRecordModel.Get_PassTripRecord(Session["company_hash"].ToString());
+            //輸入公司代碼取得公出2申請紀錄
+            List<Trip2Record> trip2record = await Trip2RecordModel.Get_Trip2Record(Session["company_hash"].ToString());
+            //輸入公司代碼取得詳細公出2申請紀錄
+            List<DetailTrip2Record> detailtrip2record = await Trip2RecordModel.Detail_Trip2Record(Session["company_hash"].ToString());
+
+
+            //公出記錄第二版的篩選
             //放入篩選後的已審核資料
-            List<TripRecord> search_triprecord = new List<TripRecord>();
-
+            List<Trip2Record> search_trip2record = new List<Trip2Record>();
             if (date.Equals(null) && employee_name.Equals(""))//沒有輸入篩選條件就按搜尋，顯示全部資料
-                return RedirectToAction("index");
+                 return RedirectToAction("index");
             else if (!date.Equals(null) && !employee_name.Equals(""))//兩個篩選條件都輸入
-                search_triprecord = await PassTripRecordModel.Search_TripRecord2(Session["company_hash"].ToString(), date, employee_name);
-            else search_triprecord = await PassTripRecordModel.Search_TripRecord1(Session["company_hash"].ToString(), date, employee_name);//只輸入一個篩選條件
+                 search_trip2record = await Trip2RecordModel.Search_Trip2Record2(Session["company_hash"].ToString(), date, employee_name);
+            else search_trip2record = await Trip2RecordModel.Search_Trip2Record1(Session["company_hash"].ToString(), date, employee_name);//只輸入一個篩選條件
+            
+            //公出紀錄第一版的篩選
+            ////放入篩選後的已審核資料
+            //List<TripRecord> search_triprecord = new List<TripRecord>();
+            //if (date.Equals(null) && employee_name.Equals(""))//沒有輸入篩選條件就按搜尋，顯示全部資料
+            //    return RedirectToAction("index");
+            //else if (!date.Equals(null) && !employee_name.Equals(""))//兩個篩選條件都輸入
+            //    search_triprecord = await PassTripRecordModel.Search_TripRecord2(Session["company_hash"].ToString(), date, employee_name);
+            //else search_triprecord = await PassTripRecordModel.Search_TripRecord1(Session["company_hash"].ToString(), date, employee_name);//只輸入一個篩選條件
 
-            ViewBag.review_triprecord = review_triprecord;//待審核公出申請紀錄
-            ViewBag.pass_triprecord = search_triprecord;//待審核公出申請紀錄
+             ViewBag.review_triprecord = review_triprecord;//待審核公出申請紀錄
+            //ViewBag.pass_triprecord = search_triprecord;//待審核公出申請紀錄//公出記錄第一版的篩選
+            ViewBag.trip2record = search_trip2record;//待審核公出申請紀錄
+            ViewBag.detailtrip2record = detailtrip2record;//詳細公出紀錄2
 
             return View("Index");
         }
