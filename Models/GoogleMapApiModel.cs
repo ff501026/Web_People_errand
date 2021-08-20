@@ -15,41 +15,45 @@ namespace AttendanceManagement.Models
         {
             string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + HttpUtility.UrlEncode(address, Encoding.UTF8) + "&language=zh-TW&key=AIzaSyAnwBmNoOCbLM69TsWonLV-i134H4Y3o70";
             string result = "";//回傳結果 
-            using (WebClient client = new WebClient())
+            try
             {
-                //指定語言，否則Google預設回傳英文   
-                client.Headers[HttpRequestHeader.AcceptLanguage] = "zh-TW";
-                //不設定的話，會回傳中文亂碼
-                client.Encoding = Encoding.UTF8;
-                result = client.DownloadString(url);
-            }//end using
-
-            return result;
+                using (WebClient client = new WebClient())
+                {
+                    //指定語言，否則Google預設回傳英文   
+                    client.Headers[HttpRequestHeader.AcceptLanguage] = "zh-TW";
+                    //不設定的話，會回傳中文亂碼
+                    client.Encoding = Encoding.UTF8;
+                    result = client.DownloadString(url);
+                }//end using
+                return result;
+            }
+            catch (Exception)
+            {
+                result = "查無此位置";
+                return result;
+            }
         }//end method
 
         public static double[] ChineseAddressToLatLng(string json)
         {
-
-            //將Json字串轉成物件  
-            GoogleGeocodingAPI.RootObject rootObj = JsonConvert.DeserializeObject<GoogleGeocodingAPI.RootObject>(json);
-
             //回傳結果
-            double[] latLng = new double[2];
-            //防呆
-            if (rootObj.status == "OK")
+            double[] latLng = { 0, 0 };
+            if (!json.Equals("查無此位置"))
             {
-                //從results開始往下找 
-                double lat = rootObj.results[0].geometry.location.lat;//緯度  
-                double lng = rootObj.results[0].geometry.location.lng;//經度   
-                //緯度
-                latLng[0] = lat;
-                //經度
-                latLng[1] = lng;
-            }//end if 
-            else
-            {//todo寫Log
-
-            }//end else 
+                //將Json字串轉成物件  
+                GoogleGeocodingAPI.RootObject rootObj = JsonConvert.DeserializeObject<GoogleGeocodingAPI.RootObject>(json);
+                //防呆
+                if (rootObj.status == "OK")
+                {
+                    //從results開始往下找 
+                    double lat = rootObj.results[0].geometry.location.lat;//緯度  
+                    double lng = rootObj.results[0].geometry.location.lng;//經度   
+                                                                          //緯度
+                    latLng[0] = lat;
+                    //經度
+                    latLng[1] = lng;
+                }//end if 
+            }
             return latLng;
         }//end method 
         public static string latLngToChineseAddress(params double[] latLng)
@@ -60,16 +64,24 @@ namespace AttendanceManagement.Models
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
             //指定語言，否則Google預設回傳英文 
             request.Headers.Add("Accept-Language", "zh-tw");
-            using (var response = request.GetResponse())
+            try
             {
-                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
+                using (var response = request.GetResponse())
                 {
-                    json = sr.ReadToEnd();
+                    using (StreamReader sr = new StreamReader(response.GetResponseStream()))
+                    {
+                        json = sr.ReadToEnd();
+                    }
                 }
-            }
-            GoogleGeocodingAPI.RootObject rootObj = JsonConvert.DeserializeObject<GoogleGeocodingAPI.RootObject>(json);
+                GoogleGeocodingAPI.RootObject rootObj = JsonConvert.DeserializeObject<GoogleGeocodingAPI.RootObject>(json);
 
-            return rootObj.results[0].formatted_address;
+                return rootObj.results[0].formatted_address;
+            }
+            catch (Exception)
+            {
+                string result = "座標(" + string.Join(",", latLng) + ")，查無此位置";
+                return result;
+            }
 
         }
     }
