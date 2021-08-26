@@ -36,6 +36,11 @@ namespace AttendanceManagement.Controllers
         [HttpGet]//打卡資料篩選
         public async Task<ActionResult> SearchWorkRecord(DateTime? date, string employee_name)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
+
             //輸入公司代碼取得打卡紀錄
             List<Work_Record> all_work_Records = await StaffModel.Get_WorkRecordAsync(Session["company_hash"].ToString());
 

@@ -232,11 +232,9 @@ namespace AttendanceManagement.Models
             //解析打卡紀錄之JSON內容
             bool login = JsonConvert.DeserializeObject<bool>(GetResponse);
 
-            List<CompanyLogin> company = new List<CompanyLogin>();
-            CompanyLogin company_data = new Models.CompanyLogin();
-            company.Add(company_data);
+            CompanyLogin company = new Models.CompanyLogin();
 
-            company[0].enabled = false;
+            company.enabled = false;
 
             if (login)
             {
@@ -244,13 +242,59 @@ namespace AttendanceManagement.Models
                 response = await client.GetAsync(url + CompanyGetCompanyHash + "code=" + code + "&password=" + manager_password);
                 //取得API回傳的打卡紀錄內容
                 GetResponse = await response.Content.ReadAsStringAsync();
-                company = JsonConvert.DeserializeObject<List<CompanyLogin>>(GetResponse);
+                company = JsonConvert.DeserializeObject<CompanyLogin>(GetResponse);
                 
-                company[0].enabled = true;
-                return company[0];
+                company.enabled = true;
+                return company;
             }
-            return company[0];
+            return company;
         }
+        public static async Task<ManagerLogin> CompanyManagerLogin(string code, string email ,string manager_password)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerLogin + "code=" + code + "&email=" + email + "&password=" + manager_password);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            bool login = JsonConvert.DeserializeObject<bool>(GetResponse);
+
+            List<ManagerLogin> manager = new List<ManagerLogin>();
+            ManagerLogin managerLogin = new ManagerLogin();
+            manager.Add(managerLogin);
+            manager[0].enabled = false;
+
+            if (login)
+            {
+                //連上WebAPI
+                response = await client.GetAsync(url + ManagerGetCompanyHash + "code=" + code + "&email=" + email + "&password=" + manager_password);
+                //取得API回傳的打卡紀錄內容
+                GetResponse = await response.Content.ReadAsStringAsync();
+                manager = JsonConvert.DeserializeObject<List<ManagerLogin>>(GetResponse);
+
+                manager[0].enabled = true;
+                return manager[0];
+            }
+            return manager[0];
+        }
+        public static async Task<bool> EditManagerPassword(string hashaccount, string manager_password)
+        {
+            List<ManagerPassword> managerPasswords = new List<ManagerPassword>();
+            ManagerPassword managerPassword = new ManagerPassword
+            {
+                HashAccount = hashaccount,
+                Password = manager_password
+            };
+            managerPasswords.Add(managerPassword);
+            string jsonData = JsonConvert.SerializeObject(managerPasswords);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + ManagerEditManagerPassword, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }//變更管理員密碼
         public static async Task<bool> EditCompanyManagerPassword(string companyhash, string manager_password)
         {
             List<CompanyManagerPassword> managerPasswords = new List<CompanyManagerPassword>();
@@ -355,10 +399,22 @@ namespace AttendanceManagement.Models
         public string Name { get; set; }
         public bool enabled { get; set; }
     }//公司登入
+    public class ManagerLogin
+    {
+        public string CompanyHash { get; set; }
+        public string HashAccount { get; set; }
+        public string Name { get; set; }
+        public bool enabled { get; set; }
+    }//管理員登入
     public class CompanyManagerPassword//公司密碼
     {
         public string CompanyHash { get; set; }
         public string ManagerPassword { get; set; }
+    }
+    public class ManagerPassword//管理員密碼
+    {
+        public string HashAccount { get; set; }
+        public string Password { get; set; }
     }
 }
     

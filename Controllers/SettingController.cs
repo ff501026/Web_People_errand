@@ -38,15 +38,33 @@ namespace AttendanceManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeCompanyPassword(string NewPassword, string NewPassword2)
         {
-            if (NewPassword.Equals(NewPassword2)) {
-            bool result = await CompanyManagerPasswordModel.EditCompanyManagerPassword(Session["company_hash"].ToString(), NewPassword);
-                if (result)
-                    return Content($"<script>alert('更新成功！');window.location='index';</script>");
+            if (Session["hash_account"]==null)
+            {
+                if (NewPassword.Equals(NewPassword2))
+                {
+                    bool result = await CompanyManagerPasswordModel.EditCompanyManagerPassword(Session["company_hash"].ToString(), NewPassword);
+                    if (result)
+                        return Content($"<script>alert('公司密碼更新成功！');window.location='index';</script>");
+                    else
+                        return Content($"<script>alert('公司密碼更新失敗！如有問題請連繫後台!');history.go(-1);</script>");
+                }
                 else
-                    return Content($"<script>alert('更新失敗！如有問題請連繫後台!{NewPassword}');history.go(-1);</script>"); 
+                    return Content($"<script>alert('密碼輸入錯誤！請重新再試！');history.go(-1);</script>");
             }
-            else
-                return Content($"<script>alert('密碼輸入錯誤！請重新再試！');history.go(-1);</script>");
+            else 
+            {
+                if (NewPassword.Equals(NewPassword2))
+                {
+                    bool result = await CompanyManagerPasswordModel.EditManagerPassword(Session["hash_account"].ToString(), NewPassword);
+                    if (result)
+                        return Content($"<script>alert('管理員密碼更新成功！');window.location='index';</script>");
+                    else
+                        return Content($"<script>alert('管理員密碼更新失敗！如有問題請連繫後台!');history.go(-1);</script>");
+                }
+                else
+                    return Content($"<script>alert('密碼輸入錯誤！請重新再試！');history.go(-1);</script>");
+            }
+            
         }
 
         [HttpPost]

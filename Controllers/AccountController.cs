@@ -18,19 +18,34 @@ namespace AttendanceManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CompanyLogin(string code, string manager_password)
+        public async Task<ActionResult> CompanyLogin(string code, string email,string manager_password)
         {
-            
-            CompanyLogin result = await CompanyManagerPasswordModel.Login(code,manager_password);
-            if (result.enabled)
+            if (email.Equals(""))
             {
-                Session["company_hash"] = result.CompanyHash;
-                Session["name"] = result.Name;
+                CompanyLogin result = await CompanyManagerPasswordModel.Login(code, manager_password);
+                if (result.enabled)
+                {
+                    Session["company_hash"] = result.CompanyHash;
+                    Session["name"] = result.Name;
 
-                return RedirectToAction("Index","PunchRecords",null);
+                    return RedirectToAction("Index", "PunchRecords", null);
+                }
+                else
+                    return Content($"<script>alert('公司ID或Email或密碼錯誤');history.go(-1);</script>");
             }
-            else
-                return Content($"<script>alert('公司ID或密碼錯誤');history.go(-1);</script>");
+            else 
+            {
+                ManagerLogin result = await CompanyManagerPasswordModel.CompanyManagerLogin(code,email, manager_password);
+                if (result.enabled)
+                {
+                    Session["company_hash"] = result.CompanyHash;
+                    Session["hash_account"] = result.HashAccount;
+                    Session["name"] = result.Name;
+                    return RedirectToAction("Index", "PunchRecords", null);
+                }
+                else
+                    return Content($"<script>alert('公司ID或Email或密碼錯誤');history.go(-1);</script>");
+            }
         }
     }
 }

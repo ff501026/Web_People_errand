@@ -15,10 +15,10 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyGetCompanyHash = "Companies/Get_CompanyHash?"; //取得公司編號
         public static readonly string CompanyGetCompanyAddress = "Companies/Get_CompanyAddress?company_hash="; //取得公司地址
         public static readonly string CompanyEditCompanyAddress = "Companies/Update_CompanyAddress"; //(Put)修改公司地址
-        public static readonly string CompanyLogin = "Companies/Login_Company?"; //管理員登入
+        public static readonly string CompanyLogin = "Companies/Login_Company?"; //公司登入
         public static readonly string CompanyGetTime = "Companies/Get_WorkTime_RestTime/"; //查看公司上下班時間
         public static readonly string CompanyEditTime = "Companies/Update_WorkTime_RestTime?"; //(PUT)編輯公司上下班時間
-        public static readonly string CompanyEditManagerPassword = "Companies/UpdateManagerPassword"; //(PUT)編輯公司上下班時間
+        public static readonly string CompanyEditManagerPassword = "Companies/UpdateCompanyPassword"; //(PUT)編輯公司密碼
         public static readonly string CompanyGetWorkRecord = "Companies/GetWorkRecord/"; //查看公司員工打卡紀錄api
         public static readonly string CompanyReviewEmployee = "Companies/Review_Employee/"; //查看公司待審核之員工帳號資料api
         public static readonly string CompanyPassEmployee = "Companies/Pass_Employee/";//查看公司審核通過之員工資料api
@@ -45,9 +45,11 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyAddJobtitle = "EmployeeJobtitleTypes/add_jobtitle";//(POST)新增職稱API
         public static readonly string CompanyEditJobtitle = "EmployeeJobtitleTypes/UpdateJobtitle";//(PUT)編輯職稱API
         public static readonly string CompanyDeleteJobtitle = "EmployeeJobtitleTypes/DeleteJobtitle/";//(Delete)刪除職稱
-
-        public static string CompanyHash="";//公司
-        public static string CompanyName = "";//公司
+        public static readonly string ManagerLogin = "Companies/Login_Manager?";//管理員登入
+        public static readonly string ManagerGetCompanyHash = "Companies/Get_Manager?"; //管理員登入取得HASH跟NAME
+        public static readonly string ManagerEditManagerPassword = "Companies/UpdateManagerPassword"; //(PUT)變更管理員密碼
+        public static readonly string ManagerUpdateEnabled = "Companies/UpdateManagerEnabled"; //(PUT)啟用或停用管理員
+        public static readonly string ManagerAdd = "Companies/AddManagerAccount"; //(PUT)新增管理員
 
         public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL
         {
