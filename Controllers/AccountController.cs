@@ -22,7 +22,7 @@ namespace AttendanceManagement.Controllers
         {
             if (email.Equals(""))
             {
-                CompanyLogin result = await CompanyManagerPasswordModel.Login(code, manager_password);
+                CompanyLogin result = await CompanyManagerModel.LoginCompany(code, manager_password);
                 if (result.enabled)
                 {
                     Session["company_hash"] = result.CompanyHash;
@@ -35,7 +35,7 @@ namespace AttendanceManagement.Controllers
             }
             else 
             {
-                ManagerLogin result = await CompanyManagerPasswordModel.CompanyManagerLogin(code,email, manager_password);
+                ManagerLogin result = await CompanyManagerModel.LoginManager(code,email, manager_password);
                 if (result.enabled)
                 {
                     Session["company_hash"] = result.CompanyHash;

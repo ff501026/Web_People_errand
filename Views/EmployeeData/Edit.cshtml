@@ -14,121 +14,135 @@
             <div>修改員工資料</div>
         </h1>
 
-        @using (Html.BeginForm("EnabledEmployee", "EmployeeData", new {num=num, id = passEmployees[num].HashAccount },FormMethod.Post))
-        {
-    <div class="d-flex bd-highlight mb-3">
-        @if (passEmployees[num].Enabled == true)
-        {
+        
+        <div class="d-flex bd-highlight mb-3">
+            @using (Html.BeginForm("EnabledEmployee", "EmployeeData", new { num = num, id = passEmployees[num].HashAccount }, FormMethod.Post))
+            {
+                if (passEmployees[num].Enabled == true)
+                {
 
 
-            <div class="p-2 bd-highlight">
-                <div class="p-lg-2 flex-fill bd-highlight">
-                    <div class="search-element">
-                        <button id="Enabled" name="Enabled" value=false class="btn btn-danger" type="submit"><i class="bi-power"></i>停用</button>
+                    <div class="p-2 bd-highlight">
+                        <div class="p-lg-2 flex-fill bd-highlight">
+                            <div class="search-element">
+                                <button id="Enabled" name="Enabled" value=false class="btn btn-danger" type="submit"><i class="bi-power"></i>停用</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="p-2 bd-highlight">
+                }
+                else
+                {
+                    <div class="p-2 bd-highlight">
+                        <div class="p-2 flex-fill bd-highlight">
+                            <div class="search-element">
+                                <button id="Enabled" name="Enabled" value=true class="btn btn-warning" type="submit"><i class="bi-power"></i>恢復</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @*<div class="p-2 bd-highlight">
                 <div class="p-2 flex-fill bd-highlight">
                     <div class="search-element">
-                        <button id="Enabled" name="Enabled" value=true class="btn btn-warning" type="submit"><i class="bi-power"></i>恢復</button>
+                        <button id="Enabled" name="Enabled" value=true class="btn btn-warning" type="submit"><i class="bi-trash-fill"></i>清除設備ID</button>
                     </div>
                 </div>
-            </div>
-        }
-        @*<div class="p-2 bd-highlight">
-            <div class="p-2 flex-fill bd-highlight">
-                <div class="search-element">
-                    <button id="Enabled" name="Enabled" value=true class="btn btn-warning" type="submit"><i class="bi-trash-fill"></i>清除設備ID</button>
-                </div>
-            </div>
-        </div>*@
-    </div>
-        }
-            @using (Html.BeginForm("EditEmployee", "EmployeeData", new {num=num, id = passEmployees[num].HashAccount }, FormMethod.Post))
+            </div>*@
+            }
+            @using (Html.BeginForm("AddManager", "EmployeeData", new { num = num, id = passEmployees[num].HashAccount }, FormMethod.Post))
             {
-                @Html.AntiForgeryToken()
-                <div class="section-body">
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row" style="margin-bottom:20px">
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            <label for="#">員工姓名</label>
-                                            <input id="name" name="name" value="@passEmployees[num].Name" type="text" class="form-control"  tabindex="1" placeholder="請輸入員工姓名" required autofocus>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            <label for="#">電話</label>
-                                            <input id="phone" name="phone" value="@passEmployees[num].Phone" type="text" class="form-control"  tabindex="1" placeholder="請輸入電話"  autofocus>
-                                        </div>
-                                    </div>
+                <div class="p-2 bd-highlight">
+                    <div class="p-2 flex-fill bd-highlight">
+                        <div class="search-element">
+                            <button id="AddManager" name="AddManager" value=true class="btn btn-warning" type="submit"><i class="bi-trash-fill"></i>提升管理員</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
 
-                                    <div class="row" style="margin-bottom:20px">
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            <label for="#">驗證碼(phone code)</label>
-                                            <input id="phonecode" name="phonecode" value="@passEmployees[num].PhoneCode" readonly="readonly" type="text" class="form-control" tabindex="1" placeholder="請輸入驗證碼" required autofocus>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            <label for="#">Email</label>
-                                            <input id="email" name="email" value="@passEmployees[num].Email" type="email" class="form-control" tabindex="1" placeholder="請輸入Email帳號" required autofocus>
-                                        </div>
+        
+        @using (Html.BeginForm("EditEmployee", "EmployeeData", new { num = num, id = passEmployees[num].HashAccount }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="section-body">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row" style="margin-bottom:20px">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="#">員工姓名</label>
+                                        <input id="name" name="name" value="@passEmployees[num].Name" type="text" class="form-control" tabindex="1" placeholder="請輸入員工姓名" required autofocus>
                                     </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="#">電話</label>
+                                        <input id="phone" name="phone" value="@passEmployees[num].Phone" type="text" class="form-control" tabindex="1" placeholder="請輸入電話" autofocus>
+                                    </div>
+                                </div>
 
-                                    <div class="row" style="margin-bottom:20px">
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            <label for="#">職稱</label>
-                                            <select id="jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                                <option>請選擇職稱</option>
-                                                @foreach (var jobtitle in jobTitles)
+                                <div class="row" style="margin-bottom:20px">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="#">驗證碼(phone code)</label>
+                                        <input id="phonecode" name="phonecode" value="@passEmployees[num].PhoneCode" readonly="readonly" type="text" class="form-control" tabindex="1" placeholder="請輸入驗證碼" required autofocus>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="#">Email</label>
+                                        <input id="email" name="email" value="@passEmployees[num].Email" type="email" class="form-control" tabindex="1" placeholder="請輸入Email帳號" required autofocus>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-bottom:20px">
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="#">職稱</label>
+                                        <select id="jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                                            <option>請選擇職稱</option>
+                                            @foreach (var jobtitle in jobTitles)
+                                            {
+                                                if (jobtitle.Name.Equals(passEmployees[num].JobTitle))
                                                 {
-                                                    if (jobtitle.Name.Equals(passEmployees[num].JobTitle))
-                                                    {
-                                                        <option selected>@jobtitle.Name</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>@jobtitle.Name</option>
-                                                    }
+                                                    <option selected>@jobtitle.Name</option>
                                                 }
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-12">
-                                            <label for="#">部門</label>
-                                            <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                                <option>請選擇部門</option>
-                                                @foreach (var department in departments)
+                                                else
                                                 {
-                                                    if (department.Name.Equals(passEmployees[num].Department))
-                                                    {
-                                                        <option selected>@department.Name</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option>@department.Name</option>
-                                                    }
-
+                                                    <option>@jobtitle.Name</option>
                                                 }
-                                            </select>
-                                        </div>
+                                            }
+                                        </select>
                                     </div>
+                                    <div class="col-lg-6 col-md-6 col-12">
+                                        <label for="#">部門</label>
+                                        <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                                            <option>請選擇部門</option>
+                                            @foreach (var department in departments)
+                                            {
+                                                if (department.Name.Equals(passEmployees[num].Department))
+                                                {
+                                                    <option selected>@department.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option>@department.Name</option>
+                                                }
 
-                                    <div class="d-flex justify-content-center flex-row bd-highlight">
-                                        <div class="p-2 flex-fill bd-highlight">
-                                            <button class="btn btn-success" id="Button" name="Button" type="submit" value="RenewButton">更新</button>
-                                        </div>
-                                        <div class="p-2 flex-fill bd-highlight">
-                                            <button class="btn btn-primary" id="Button" name="Button" value="BackButton" onclick="javascript:window.history.go(-1);" type="submit"><i class="bi-box-arrow-in-left"></i>返回</button>
-                                        </div>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center flex-row bd-highlight">
+                                    <div class="p-2 flex-fill bd-highlight">
+                                        <button class="btn btn-success" id="Button" name="Button" type="submit" value="RenewButton">更新</button>
+                                    </div>
+                                    <div class="p-2 flex-fill bd-highlight">
+                                        <button class="btn btn-primary" id="Button" name="Button" value="BackButton" onclick="javascript:window.history.go(-1);" type="submit"><i class="bi-box-arrow-in-left"></i>返回</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
-        </section>
+            </div>
+        }
+    </section>
 </div>

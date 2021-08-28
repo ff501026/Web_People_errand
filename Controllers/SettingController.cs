@@ -42,7 +42,7 @@ namespace AttendanceManagement.Controllers
             {
                 if (NewPassword.Equals(NewPassword2))
                 {
-                    bool result = await CompanyManagerPasswordModel.EditCompanyManagerPassword(Session["company_hash"].ToString(), NewPassword);
+                    bool result = await CompanyManagerModel.EditCompanyPassword(Session["company_hash"].ToString(), NewPassword);
                     if (result)
                         return Content($"<script>alert('公司密碼更新成功！');window.location='index';</script>");
                     else
@@ -55,7 +55,7 @@ namespace AttendanceManagement.Controllers
             {
                 if (NewPassword.Equals(NewPassword2))
                 {
-                    bool result = await CompanyManagerPasswordModel.EditManagerPassword(Session["hash_account"].ToString(), NewPassword);
+                    bool result = await CompanyManagerModel.EditManagerPassword(Session["hash_account"].ToString(), NewPassword);
                     if (result)
                         return Content($"<script>alert('管理員密碼更新成功！');window.location='index';</script>");
                     else
