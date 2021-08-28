@@ -1,0 +1,46 @@
+﻿
+@{ ViewBag.Title = "組織圖";
+                List<AttendanceManagement.Models.LeaveRecord> reviewleaveRecords = ViewBag.review_leaverecord;
+                List<AttendanceManagement.Models.LeaveRecord> passleaveRecords = ViewBag.pass_leaverecord; }
+<style>
+ 
+
+</style>
+
+<div class="main-content">
+    <section class="section">
+        <h3 class="page_name">
+            組織圖
+        </h3>
+
+        <div class="section-body" style="margin-top:25px">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card" style="border:1px solid #808080; border-radius:4px; padding:50px">
+                        <div class="d-flex" data-toggle="collapse" href="#collapseExample" role="button" style="border: 1px solid #9E9E9E; border-radius: 5px; margin: 5px 0px ">
+                            <div class="mr-auto p-2" style="text-align:center">
+                                Sam
+                            </div>
+                            <div class="p-2">
+                                <p>總經理室</p>
+                                <p style="margin:0px 0px 0px 40px">總經理</p>
+                            </div>
+                        </div>
+                        <div class="collapse" id="collapseExample">
+                            <div class="d-flex" style="margin-left: 15px; border: 1px solid #9E9E9E; border-radius: 5px; margin: 20px 0px 20px 50px">
+                                <div class="mr-auto p-2">
+                                    Rudy
+                                </div>
+                                <div class="p-2">
+                                    <p>營業部</p>
+                                    <p style="margin:0px 0px 0px 40px">經理</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

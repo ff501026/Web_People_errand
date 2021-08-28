@@ -32,6 +32,7 @@
                     <a href="@Url.Action("Index","LeaveRecords")" class="nav_link  @(Context.Request.Path == "/LeaveRecords" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/contact-form.png"> <span class="nav_name">請假管理</span> </a>
                     @*<a href="@Url.Action("Index","DataExport")" class="nav_link @(Context.Request.Path == "/DataExport" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/pie-chart.png"> <span class="nav_name">資料匯出</span> </a>*@
                     <a href="@Url.Action("Index","Setting")" class="nav_link @(Context.Request.Path == "/Setting" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/settings (1).png"> <span class="nav_name">系統設定</span> </a>
+                    <a href="@Url.Action("Index","OrganizationChart")" class="nav_link @(Context.Request.Path == "/OrganizationChart" ? "active" : "")"> <img class="nav_logo2" src="~/Content/images/organization.png"> <span class="nav_name">組織圖</span> </a>
                 </div>
                 <a href="@Url.Action("Index","Account")" class="nav_link @(Context.Request.Path == "/Account" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/turn-off.png"> <span class="nav_name">登出</span> </a>
             </div> <a href="#" class="nav_link"> <i class='bi-power'></i> <span class="nav_name">登出</span> </a>

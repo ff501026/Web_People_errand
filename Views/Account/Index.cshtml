@@ -22,7 +22,14 @@
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0xOKdg7UH0RrFHjydfMhRIz2xvpWkB9E&callback=initMap" async defer></script>*@
+<style>
+    #code, #email, #manager_password {
+        border: 1px solid #C2BFBF;
+        background-color: #FFFFFF;
+        box-shadow: 3px 3px 3px #D2D3D3;
+    }
 
+</style>
 <div class="login-brand">
     <span class="nav_logo-name2">&nbsp;</span>
     @*<div id="map"></div>*@
@@ -37,19 +44,16 @@
         <div class="card-body">
             <form method="POST" action="#" class="needs-validation" novalidate="">
                 <div class="form-group">
-                    <label for="email">公司ID</label>
                     <input id="code" name="code" type="text" class="form-control" placeholder="請輸入公司ID" tabindex="1" maxlength="30" required autofocus>
                 </div>
                 <div class="form-group">
-                    <label for="email">管理員信箱</label>
                     <input id="email" name="email" type="email" class="form-control" placeholder="請輸入管理員信箱" tabindex="1" autofocus>
                 </div>
                 <div class="form-group">
-                    <label for="email">管理員密碼</label>
                     <input id="manager_password" name="manager_password" type="password" class="form-control" placeholder="請輸入管理員密碼" tabindex="1" maxlength="30" required autofocus>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" tabindex="4">
+                    <button type="submit" class="btn btn-primary btn-block" tabindex="4" style="background-image: linear-gradient(to top, #09203f 0%, #537895 100%); opacity: 40%; border: 1px solid #ABB7C3">
                         Login
                     </button>
                 </div>
