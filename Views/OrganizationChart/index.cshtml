@@ -3,7 +3,30 @@
                 List<AttendanceManagement.Models.LeaveRecord> reviewleaveRecords = ViewBag.review_leaverecord;
                 List<AttendanceManagement.Models.LeaveRecord> passleaveRecords = ViewBag.pass_leaverecord; }
 <style>
- 
+
+
+        .dot {
+            top:20px;
+            background: orange;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+        }
+    .dot::before{
+        content: '';
+        display: block;
+        background: orange;
+        height: 10px;
+        z-index: -1;
+    }
+    .dot::before {
+   
+        top: -20px;
+        left: 0px;
+        transform: rotate(90deg);
+    }
+
+  
 
 </style>
 
@@ -17,19 +40,20 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12">
                     <div class="card" style="border:1px solid #808080; border-radius:4px; padding:50px">
-                        <div class="d-flex" data-toggle="collapse" href="#collapseExample" role="button" style="border: 1px solid #9E9E9E; border-radius: 5px; margin: 5px 0px ">
+                        <div id="connect" class="d-flex" data-toggle="collapse" href="#collapseExample" role="button" style="border: 1px solid #9E9E9E; border-radius: 5px; margin: 5px 0px ">
                             <div class="mr-auto p-2" style="text-align:center">
-                                Sam
+                                <p>Sam</p>
                             </div>
                             <div class="p-2">
                                 <p>總經理室</p>
                                 <p style="margin:0px 0px 0px 40px">總經理</p>
                             </div>
                         </div>
+                        <span class="dot"></span>
                         <div class="collapse" id="collapseExample">
                             <div class="d-flex" style="margin-left: 15px; border: 1px solid #9E9E9E; border-radius: 5px; margin: 20px 0px 20px 50px">
                                 <div class="mr-auto p-2">
-                                    Rudy
+                                    <p>Rudy</p>
                                 </div>
                                 <div class="p-2">
                                     <p>營業部</p>
@@ -37,7 +61,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
