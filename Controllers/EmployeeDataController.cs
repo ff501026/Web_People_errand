@@ -85,8 +85,8 @@ namespace AttendanceManagement.Controllers
 
             string managerkey = await CompanyManagerModel.GetManagerKey(id);
 
-            AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[num].Email, "差勤打卡提升後台管理員通知", $"<h1>{passEmployees[num].Name}您好!您已被邀請成為差勤打卡後台管理員</h1><p>請於三天內至以下網址設定您的管理員密碼，逾期則提升管理員失敗。</p><p><a href='https://localhost:44366/PasswordSetting/index?key={managerkey}'>https://localhost:44366/PasswordSetting/index?key={managerkey}</a></p>");
-            return Content($"<script>alert('已發送提升管理員請求至員工信箱！若員工三天內未回覆提升請求，則提升管理員失敗，請重新邀請成為管理員。');history.go(-1);</script>");
+            AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[num].Email, "差勤打卡提升後台管理員通知", $"<h1>{passEmployees[num].Name}您好!您已被邀請成為差勤打卡後台管理員</h1><p>請於三天內至以下網址設定您的管理員密碼，逾期則提升管理員失敗。</p><p><a href='http://163.18.110.102/PasswordSetting/index?key={managerkey}'>http://163.18.110.102/PasswordSetting/index?key={managerkey}</a></p>");
+            return Content($"<script>alert('已發送提升管理員請求至員工信箱！若員工三天內未回覆提升請求，則提升管理員失敗，請重新邀請成為管理員。');window.location='/EmployeeData/index';</script>");
 
         }
 
@@ -130,7 +130,7 @@ namespace AttendanceManagement.Controllers
                 return Content("<script>alert('審核失敗！如有問題請連繫後台');history.go(-1);</script>");
         }
         [HttpPost]//員工管理修改頁面，修改按鈕
-        public async Task<ActionResult> EditEmployee(int num,string Button, string id, string name, string phone, string email, string phonecode, string department, string jobtitle)
+        public async Task<ActionResult> EditEmployee(int num,string Button, string id, string name, string phone, string email,string old_email, string phonecode, string department, string jobtitle)
         {
             List<Department> departments = await DepartmentModel.Get_DepartmentAsync(Session["company_hash"].ToString());//輸入公司代碼取得部門資料
             List<JobTitle> jobtitles = await JobtitleModel.Get_JobtitleAsync(Session["company_hash"].ToString());//輸入公司代碼取得職稱資料
@@ -147,16 +147,23 @@ namespace AttendanceManagement.Controllers
                 {
                     return Content("<script>alert('更新失敗，請確認是否有賦予職稱及部門！');history.go(-1);</script>");
                 }
-
-                result = await PassEmployeeModel.RenewEmployees(id,name,phone,email, departments[departmentIndex].DepartmentId, jobtitles[jobtitleIndex].JobTitleId);//(PUT)更新員工資料
-
+                else if (!email.Equals(old_email)) 
+                {
+                    bool repeat = await PassEmployeeModel.EmployeeBoolEmail(Session["company_hash"].ToString(), email);
+                    if (repeat) 
+                    {
+                        return Content("<script>alert('此Email已被註冊，請使用別的信箱！');history.go(-1);</script>");
+                    }
+                    else result = await PassEmployeeModel.RenewEmployees(id, name, phone, email, departments[departmentIndex].DepartmentId, jobtitles[jobtitleIndex].JobTitleId);//(PUT)更新員工資料
+                }
+                else result = await PassEmployeeModel.RenewEmployees(id, name, phone, email, departments[departmentIndex].DepartmentId, jobtitles[jobtitleIndex].JobTitleId);//(PUT)更新員工資料
                 if (result)
                 {
                     AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[num].Email, "差勤打卡資料更新通知", "<h1>您的差勤打卡個人資料已更新</h1><p>請至差勤打卡APP個人資料確認更新內容，如有問題請連繫後台。</p>");
                     return RedirectToAction("index");
                 }
                 else
-                    return Content("<script>alert('更新失敗！如有問題請連繫後台');history.go(-1);</script>");
+                    return Content($"<script>alert('更新失敗！如有問題請連繫後台{id},{name},{phone},{departments[departmentIndex].DepartmentId},{jobtitles[jobtitleIndex].JobTitleId},{email}');history.go(-1);</script>");
             }
             return RedirectToAction("index");
         }
