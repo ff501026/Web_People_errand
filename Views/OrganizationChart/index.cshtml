@@ -1,66 +1,102 @@
 ﻿
 @{ ViewBag.Title = "組織圖";
-                List<AttendanceManagement.Models.LeaveRecord> reviewleaveRecords = ViewBag.review_leaverecord;
-                List<AttendanceManagement.Models.LeaveRecord> passleaveRecords = ViewBag.pass_leaverecord; }
-<style>
+    List<AttendanceManagement.Models.LeaveRecord> reviewleaveRecords = ViewBag.review_leaverecord;
+    List<AttendanceManagement.Models.LeaveRecord> passleaveRecords = ViewBag.pass_leaverecord; }
 
-
-        .dot {
-            top:20px;
-            background: orange;
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-        }
-    .dot::before{
-        content: '';
-        display: block;
-        background: orange;
-        height: 10px;
-        z-index: -1;
-    }
-    .dot::before {
-   
-        top: -20px;
-        left: 0px;
-        transform: rotate(90deg);
-    }
-
-  
-
-</style>
 
 <div class="main-content">
     <section class="section">
         <h3 class="page_name">
             組織圖
         </h3>
-
         <div class="section-body" style="margin-top:25px">
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12">
-                    <div class="card" style="border:1px solid #808080; border-radius:4px; padding:50px">
-                        <div id="connect" class="d-flex" data-toggle="collapse" href="#collapseExample" role="button" style="border: 1px solid #9E9E9E; border-radius: 5px; margin: 5px 0px ">
-                            <div class="mr-auto p-2" style="text-align:center">
-                                <p>Sam</p>
-                            </div>
-                            <div class="p-2">
-                                <p>總經理室</p>
-                                <p style="margin:0px 0px 0px 40px">總經理</p>
-                            </div>
-                        </div>
-                        <span class="dot"></span>
-                        <div class="collapse" id="collapseExample">
-                            <div class="d-flex" style="margin-left: 15px; border: 1px solid #9E9E9E; border-radius: 5px; margin: 20px 0px 20px 50px">
-                                <div class="mr-auto p-2">
-                                    <p>Rudy</p>
+                    <div class="card" style="border:1px solid #555555; border-radius:4px; padding:30px">
+                        <ul id="OrganizationTop">
+                            <li class="root" id="OrganizationContent">
+                                <div id="O_top" class="d-flex" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2" >
+                                    <div class="mr-auto p-2" style="text-align:center">
+                                        <p>Sam</p>
+                                    </div>
+                                    <div class="p-2">
+                                        <p>總經理室</p>
+                                        <p id="Job_Title">總經理</p>
+                                    </div>
                                 </div>
-                                <div class="p-2">
-                                    <p>營業部</p>
-                                    <p style="margin:0px 0px 0px 40px">經理</p>
-                                </div>
-                            </div>
-                        </div>
+                                <ul id="OrganizationTop">
+                                    <li id="OrganizationContent">
+                                        <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                            <div data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample11 multiCollapseExample22 multiCollapseExample33">
+                                                <div class="d-flex" id="O_member">
+                                                    <div class="mr-auto p-2">
+                                                        <p>Rudy</p>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <p>營業部</p>
+                                                        <p id="Job_Title">經理</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul id="OrganizationTop">
+                                            <li id="OrganizationContent">
+                                                <div class="collapse multi-collapse" id="multiCollapseExample11">
+                                                    <div class="d-flex" id="O_member">
+                                                        <div class="mr-auto p-2">
+                                                            <p>陳念心</p>
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <p>營業部</p>
+                                                            <p id="Job_Title">職員</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li id="OrganizationContent">
+                                                <div class="collapse multi-collapse" id="multiCollapseExample22">
+                                                    <div class="d-flex" id="O_member">
+                                                        <div class="mr-auto p-2">
+                                                            <p>林彥東</p>
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <p>營業部</p>
+                                                            <p id="Job_Title">職員</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li id="OrganizationContent">
+                                                <div class="collapse multi-collapse" id="multiCollapseExample33">
+                                                    <div class="d-flex" id="O_member">
+                                                        <div class="mr-auto p-2">
+                                                            <p>劉筱君</p>
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <p>營業部</p>
+                                                            <p id="Job_Title">職員</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li id="OrganizationContent">
+                                        <div class="collapse multi-collapse" id="multiCollapseExample2">
+                                            <div class="d-flex" id="O_member">
+                                                <div class="mr-auto p-2">
+                                                    <p>Lowy</p>
+                                                </div>
+                                                <div class="p-2">
+                                                    <p>行銷部</p>
+                                                    <p id="Job_Title">經理</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

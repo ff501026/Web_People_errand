@@ -11,7 +11,6 @@ namespace AttendanceManagement.Controllers
         // GET: OrganizationChart
         public ActionResult Index()
         {
-            Session.Clear();
             return View();
         }
     }

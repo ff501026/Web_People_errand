@@ -221,9 +221,65 @@ namespace AttendanceManagement.Models
             return false;
         }
     }//公司上下班時間方法
-    class CompanyManagerPasswordModel : HttpResponse
+    class CompanyManagerModel : HttpResponse
     {
-        public static async Task<CompanyLogin> Login(string code, string manager_password)
+        public static async Task<string> GetManagerKey(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerKey + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            string managerkey = GetResponse.ToString();
+
+            return managerkey;
+        }//取得ManagerKey
+
+        public static async Task<List<ManagerKeyData>> ManagerKeyGetEmployee(string manager_key)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerKeyGetData + manager_key);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<ManagerKeyData> managerkeydata = JsonConvert.DeserializeObject<List<ManagerKeyData>>(GetResponse);
+
+            return managerkeydata;
+        }//ManagerKey取得員工資料
+
+        public static async Task<bool> BoolManager(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerBool + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            bool result = JsonConvert.DeserializeObject<bool>(GetResponse);
+
+            return result;
+        }//判斷是否有此管理員帳號
+
+        public static async Task<bool> AddManager(string hash_account, string manager_password)
+        {
+            List<ManagerPassword> managerPasswords = new List<ManagerPassword>();
+            ManagerPassword managerPassword = new ManagerPassword
+            {
+                HashAccount = hash_account,
+                Password = manager_password
+            };
+            managerPasswords.Add(managerPassword);
+            string jsonData = JsonConvert.SerializeObject(managerPasswords);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PostAsync(url + ManagerAdd, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }//註冊管理員
+
+        public static async Task<CompanyLogin> LoginCompany(string code, string manager_password)
         {
             //連上WebAPI
             response = await client.GetAsync(url + CompanyLogin + "code=" + code + "&password=" + manager_password);
@@ -248,8 +304,8 @@ namespace AttendanceManagement.Models
                 return company;
             }
             return company;
-        }
-        public static async Task<ManagerLogin> CompanyManagerLogin(string code, string email ,string manager_password)
+        }//公司登入
+        public static async Task<ManagerLogin> LoginManager(string code, string email ,string manager_password)
         {
             //連上WebAPI
             response = await client.GetAsync(url + ManagerLogin + "code=" + code + "&email=" + email + "&password=" + manager_password);
@@ -275,7 +331,7 @@ namespace AttendanceManagement.Models
                 return manager[0];
             }
             return manager[0];
-        }
+        }//管理員登入
         public static async Task<bool> EditManagerPassword(string hashaccount, string manager_password)
         {
             List<ManagerPassword> managerPasswords = new List<ManagerPassword>();
@@ -295,7 +351,7 @@ namespace AttendanceManagement.Models
             }
             return false;
         }//變更管理員密碼
-        public static async Task<bool> EditCompanyManagerPassword(string companyhash, string manager_password)
+        public static async Task<bool> EditCompanyPassword(string companyhash, string manager_password)
         {
             List<CompanyManagerPassword> managerPasswords = new List<CompanyManagerPassword>();
             CompanyManagerPassword managerPassword = new CompanyManagerPassword
@@ -313,8 +369,8 @@ namespace AttendanceManagement.Models
                 return true;
             }
             return false;
-        }
-    }//公司登入方法包刮變更密碼
+        }//變更公司密碼
+    }//管理員方法
     class CompanyAddressModel : HttpResponse
     {
         public static async Task<List<CompanyAddress>> Get_CompanyAddress(string company_hash)
@@ -353,6 +409,13 @@ namespace AttendanceManagement.Models
             return false;
         }
     }//公司地址方法
+    public class ManagerKeyData
+    {
+        public string HashAccount { get; set; }//員工編號
+        public string Code { get; set; }//公司ID
+        public string Name { get; set; }//員工姓名
+        public DateTime ManagerKeyOverDate { get; set; }//Key到期時間
+    }//ManagerKey取得的員工資料
     public class CompanyAddress
     {
         public string CompanyHash { get; set; }

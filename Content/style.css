@@ -3385,3 +3385,101 @@ input:checked + .slider .off {
     .slider.round:before {
         border-radius: 50%;
     }
+
+
+
+/*密碼設定頁*/
+#mpassword {
+    border: 1px solid #C2BFBF;
+    background-color: #FFFFFF;
+    box-shadow: 3px 3px 3px #D2D3D3;
+    margin-bottom: 30px;
+    background-image: url('~/Content/employee.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+}
+
+#companytext {
+    font-size: medium;
+    color: #9E9E9E;
+}
+
+#companyhello {
+    font-size: medium;
+    color: #7A7A7A;
+}
+/*登入頁*/
+#code, #email, #manager_password {
+    border: 1px solid #C2BFBF;
+    background-color: #FFFFFF;
+    box-shadow: 3px 3px 3px #D2D3D3;
+}
+/*組織圖*/
+#OrganizationTop {
+    margin: 0px 0px 0px 30px;
+    list-style: none;
+    line-height: 2em;
+    font-family: Arial;
+}
+
+#OrganizationContent {
+    font-size: 16px;
+    position: relative;
+}
+
+    #OrganizationContent::before {
+        position: absolute;
+        left: -15px;
+        top: 0px;
+        content: '';
+        display: block;
+        border-left: 1px solid #ddd;
+        height: 1em;
+        border-bottom: 1px solid #ddd;
+        width: 10px;
+    }
+
+    #OrganizationContent::after {
+        position: absolute;
+        left: -15px;
+        bottom: -7px;
+        content: '';
+        display: block;
+        border-left: 1px solid #ddd;
+        height: 100%;
+    }
+
+    #OrganizationContent.root {
+        margin: 0px 0px 0px -5px;
+    }
+
+        #OrganizationContent .root:before {
+            display: none;
+        }
+
+        #OrganizationContent.root::after {
+            display: none;
+        }
+
+
+
+    #OrganizationContent:last-child::after {
+        display: none;
+    }
+#O_top {
+    border: 1px solid #9E9E9E;
+    border-radius: 5px;
+    margin: 5px 0px;
+}
+#O_member {
+    margin-left: 15px;
+    border: 1px solid #9E9E9E;
+    border-radius: 5px;
+    margin: 20px 0px 20px 40px;
+}
+#Job_Title {
+    margin: 0px 0px 0px 40px;
+}
+
+  
+    

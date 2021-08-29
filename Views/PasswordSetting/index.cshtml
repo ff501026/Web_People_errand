@@ -1,6 +1,8 @@
 ﻿
 @{ ViewBag.Title = "密碼設定";
-    Layout = "~/Views/Shared/_LoginLayout.cshtml"; }
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    List<AttendanceManagement.Models.ManagerKeyData> managerKeyDatas = ViewBag.ManagerKeyData;
+}
 @*<style>
         html, body {
             width: 100%;
@@ -20,54 +22,44 @@
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0xOKdg7UH0RrFHjydfMhRIz2xvpWkB9E&callback=initMap" async defer></script>*@
-<style>
-
-
-    #mpassword {
-        border: 1px solid #C2BFBF;
-        background-color: #FFFFFF;
-        box-shadow: 3px 3px 3px #D2D3D3;
-        margin-bottom:30px;
-        background-image: url('~/Content/employee.png');
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-    }
-    #companytext {
-        font-size:medium;
-        color: #9E9E9E;
-    }
-    #companyhello {
-        font-size: medium;
-        color: #7A7A7A;
-    }
-</style>
 
 <div class="login-brand">
     <span class="nav_logo-name2">&nbsp;</span>
     @*<div id="map"></div>*@
 </div>
 
-@using (Html.BeginForm("CompanyLogin", "Account", FormMethod.Post))
+@if (managerKeyDatas.Count == 0 || managerKeyDatas[0].ManagerKeyOverDate < DateTime.Now)
 {
-@Html.AntiForgeryToken()
-                <div class="card2 card-primary">
-                    <div class="card-header"><nobr id="companytext">您的公司代碼 : </nobr><nobr id="companytext">597b4657</nobr></div>
-                    <div class="card-header" style="margin-top:auto"><nobr id="companyhello">拖拉古</nobr><nobr id="companyhello">你好 ! 請設定您的新密碼 : </nobr></div>
-                    <div class="card-body">
-                        <form method="POST" action="#" class="needs-validation" novalidate="">
-                            <div class="form-group">
-                                <label for="mpassword" style="font-size:medium;">Password</label>
-                                <input id="mpassword" name="mpassword" type="password" class="form-control" placeholder="Enter password" tabindex="1">
-                            </div>
-                            <div class="form-group">
-                                <input id="mpassword" name="manager_password" type="password" class="form-control" placeholder="Confirm password" tabindex="1" maxlength="30">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block" tabindex="4" style="background-image: linear-gradient(to top, #09203f 0%, #537895 100%); opacity: 40%; border: 1px solid #ABB7C3">
-                                    新增
-                                </button>
-                            </div>
-                        </form>
+
+    <div class="card2 card-primary">
+        <div class="card-header"><p>OOPS!抱歉您的連結已過時</p><p></p><h5>請重新發送請求</h5></div>
+    </div>
+}
+else
+{
+    using (Html.BeginForm("ManagerPassword", "PasswordSetting", new { id = managerKeyDatas[0].HashAccount }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="card2 card-primary">
+            <div class="card-header"><nobr id="companytext">您的公司代碼 : </nobr><nobr id="companytext">@managerKeyDatas[0].Code</nobr></div>
+            <div class="card-header" style="margin-top:auto"><nobr id="companyhello">@managerKeyDatas[0].Name</nobr><nobr id="companyhello">你好 ! 請設定您的新密碼 : </nobr></div>
+            <div class="card-body">
+                <form method="POST" action="#" class="needs-validation" novalidate="">
+                    <div class="form-group">
+                        <label for="mpassword" style="font-size:medium;">Password</label>
+                        <input id="mpassword" name="manager_password" type="password" class="form-control" placeholder="Enter password" tabindex="1">
                     </div>
-                </div>}
+                    <div class="form-group">
+                        <input id="mpassword" name="manager_password2" type="password" class="form-control" placeholder="Confirm password" tabindex="1" maxlength="30">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block" tabindex="4" style="background-image: linear-gradient(to top, #09203f 0%, #537895 100%); opacity: 40%; border: 1px solid #ABB7C3">
+                            確認
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+}
 

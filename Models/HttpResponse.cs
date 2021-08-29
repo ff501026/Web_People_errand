@@ -50,6 +50,10 @@ namespace AttendanceManagement.Models
         public static readonly string ManagerEditManagerPassword = "Companies/UpdateManagerPassword"; //(PUT)變更管理員密碼
         public static readonly string ManagerUpdateEnabled = "Companies/UpdateManagerEnabled"; //(PUT)啟用或停用管理員
         public static readonly string ManagerAdd = "Companies/AddManagerAccount"; //(PUT)新增管理員
+        public static readonly string ManagerKey = "Employees/get_employee_manager_key/"; //取得ManagerKey
+        public static readonly string ManagerKeyGetData = "Employees/get_employee_data/"; //用ManagerKey取得員工資料
+        public static readonly string ManagerBool = "Companies/BoolManager/"; //判斷是否有此管理員帳號
+
 
         public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL
         {
