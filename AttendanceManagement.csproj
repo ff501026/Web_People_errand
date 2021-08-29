@@ -249,6 +249,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttendanceManagementController.cs" />
+    <Compile Include="Controllers\AuthoritySettingController.cs" />
     <Compile Include="Controllers\DataExportController.cs" />
     <Compile Include="Controllers\EmployeeDataController.cs" />
     <Compile Include="Controllers\LeaveRecordsController.cs" />
@@ -354,6 +355,7 @@
     <Content Include="Views\EmployeeData\Review.cshtml" />
     <Content Include="Views\PasswordSetting\index.cshtml" />
     <Content Include="Views\OrganizationChart\index.cshtml" />
+    <Content Include="Views\AuthoritySetting\index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
