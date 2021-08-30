@@ -62,7 +62,7 @@
         
 
         
-        @using (Html.BeginForm("EditEmployee", "EmployeeData", new { num = num, id = passEmployees[num].HashAccount }, FormMethod.Post))
+        @using (Html.BeginForm("EditEmployee", "EmployeeData", new { num = num, id = passEmployees[num].HashAccount, old_email=passEmployees[num].Email }, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             <div class="section-body">

@@ -278,6 +278,8 @@
     <Content Include="Content\images\clock.png" />
     <Content Include="Content\images\close %281%29.png" />
     <Content Include="Content\images\date.png" />
+    <Content Include="Content\images\delete.png" />
+    <Content Include="Content\images\edit-button.png" />
     <Content Include="Content\images\edit.png" />
     <Content Include="Content\images\file.png" />
     <Content Include="Content\images\LoginBack.jpg" />

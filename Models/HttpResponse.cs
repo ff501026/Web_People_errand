@@ -53,6 +53,8 @@ namespace AttendanceManagement.Models
         public static readonly string ManagerKey = "Employees/get_employee_manager_key/"; //取得ManagerKey
         public static readonly string ManagerKeyGetData = "Employees/get_employee_data/"; //用ManagerKey取得員工資料
         public static readonly string ManagerBool = "Companies/BoolManager/"; //判斷是否有此管理員帳號
+        public static readonly string EmployeeBoolRepeatEmail = "EmployeeInformations/BoolEmployeeInformationEmail?";//判斷EMAIL是否重複
+        public static readonly string CompanyGetOrganization = "Companies/OrganizationChart/";//組織圖
 
 
         public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL

@@ -10,6 +10,20 @@ using System.Web;
 
 namespace AttendanceManagement.Models
 {
+    class OrganizationChartModel :HttpResponse
+    {
+        public static async Task<List<OrganizationChart>> GetOrganization(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetOrganization + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<OrganizationChart> organization = JsonConvert.DeserializeObject<List<OrganizationChart>>(GetResponse);
+
+            return organization;
+        }
+    }
     class ReviewEmployeeModel:HttpResponse
     {
         public static async Task<List<ReviewEmployee>> ReviewEmployees(string company_hash)
@@ -37,7 +51,18 @@ namespace AttendanceManagement.Models
 
             return pass_employee;
         }
-        public static async Task<bool> EnabledEmployees(string hashaccount,bool enabled)//停用或恢復員工帳號
+        public static async Task<bool> EmployeeBoolEmail(string company_hash,string email)//判斷此EMAIL是否被用過
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + EmployeeBoolRepeatEmail + "hash_company="+company_hash+ "&email="+email);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            bool result = JsonConvert.DeserializeObject<bool>(GetResponse);
+
+            return result;
+        }
+            public static async Task<bool> EnabledEmployees(string hashaccount,bool enabled)//停用或恢復員工帳號
         {
             List<EnabledEmployee> enabledEmployees = new List<EnabledEmployee>();
             EnabledEmployee enabledEmployee = new EnabledEmployee()//要寫進LIST的資料
@@ -218,4 +243,12 @@ namespace AttendanceManagement.Models
         public int DepartmentId { get; set; }//員工部門代號
         public int JobTitleId { get; set; }//員工職稱代號
     }//已審核員工資料編輯
+    public class OrganizationChart//組織圖
+    {
+        public string HashAccount { get; set; }
+        public string Name { get; set; }
+        public string ManagerHash { get; set; }
+        public string Department { get; set; }
+        public string Jobtitle{get;set;}
+    }
 }
