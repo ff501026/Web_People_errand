@@ -13,7 +13,7 @@
 <div class="main-content">
     <section class="section">
         <h3 class="page_name">
-            公出管理
+            <img class="nav_logo5" src="~/Content/images/portfolio.png">&nbsp;公出管理
         </h3>
 
         @*
@@ -91,16 +91,17 @@
             </form>
         }
 
-        <div class="row" style="margin-top:25px">
-            <div class="col-lg-12 col-md-12 col-12 col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>公出紀錄</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
+        <div class="section-body" style="margin-top:25px">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>公出紀錄</h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table">
+
                                     <tr>
                                         <th>編號</th>
                                         @*
@@ -115,53 +116,54 @@
                                         <th></th>
                                         *@
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var trip2record in Trip2Records)
-                                    {
-                                        <tr data-toggle="modal" data-target="#exampleModal2.@trip2record.GroupId" id="id" name="id" value="@trip2record.GroupId">
-                                            <td>@trip2record.Num</td>
 
-                                            @*
-                                            @if (pass_triprecord.Review == true)
-                                            {
-                                                <td><div class="badge badge-info">審核通過</div></td>
-                                            }
-                                            else
-                                            {
-                                                <td><div class="badge badge-danger">審核拒絕</div></td>
-                                            }
-                                            *@
+                                    <tbody>
+                                        @foreach (var trip2record in Trip2Records)
+                                        {
+                                            <tr data-toggle="modal" data-target="#exampleModal2.@trip2record.GroupId" id="id" name="id" value="@trip2record.GroupId">
+                                                <td class="rowBorderStart">@trip2record.Num</td>
 
-                                            <td><a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@trip2record.Name</td>
-                                            <td>@trip2record.StartTime</td>
-                                            <td>@trip2record.EndTime</td>
+                                                @*
+                                                @if (pass_triprecord.Review == true)
+                                                {
+                                                    <td><div class="badge badge-info">審核通過</div></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><div class="badge badge-danger">審核拒絕</div></td>
+                                                }
+                                                *@
 
-                                            @*
-                                            <td>@pass_triprecord.Location</td>
-                                            <td>@pass_triprecord.CreatedTime</td>
-                                            <td><a href="/TripRecords/Edit?id=@pass_triprecord.TripRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
-                                            *@
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                            <div class="card-footer text-right">
-                                <nav class="d-inline-block">
-                                    <ul class="pagination mb-0">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">2</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                                <td class="rowBorderMiddle"><a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@trip2record.Name</td>
+                                                <td class="rowBorderMiddle">@trip2record.StartTime</td>
+                                                <td class="rowBorderEnd">@trip2record.EndTime</td>
+
+                                                @*
+                                                <td>@pass_triprecord.Location</td>
+                                                <td>@pass_triprecord.CreatedTime</td>
+                                                <td><a href="/TripRecords/Edit?id=@pass_triprecord.TripRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
+                                                *@
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="card-footer text-right">
+                                    <nav class="d-inline-block">
+                                        <ul class="pagination mb-0">
+                                            <li class="page-item">
+                                                <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">2</a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -184,12 +186,12 @@
                     </button>
                 </div>
                 <hr size="10" color="#d9d9d9" align="center" width="95%">
-                <div class="modal-body">
+                <div class="modal-body2">
                     @foreach (var detailtrip2record in DetailTrip2Records)
                     {
                         if (trip2record.GroupId == @detailtrip2record.GroupId)
                         {
-                            <div class="cardA card-primary" style="margin-top:-18px">
+                            <div class="cardA card-primary">
                                 <div class="row">
                                     <div class="col-12">
                                         @switch (detailtrip2record.Trip2Type)

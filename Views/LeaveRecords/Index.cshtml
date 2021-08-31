@@ -18,66 +18,67 @@
                         <div class="card-header">
                             <h4>待審核-請假申請</h4>
                         </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th>員工姓名</th>
-                                        <th>假別</th>
-                                        <th>開始時間</th>
-                                        <th>結束時間</th>
-                                        <th>申請時間</th>
-                                        <th>審核</th>
-                                    </tr>
 
-                                    @foreach (var review_leaverecord in reviewleaveRecords)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name</a>
-                                            </td>
-                                            <td>@review_leaverecord.LeaveType</td>
-                                            <td>@review_leaverecord.StartDate</td>
-                                            <td>@review_leaverecord.EndDate</td>
-                                            <td>@review_leaverecord.CreatedTime</td>
-                                            <td>
-                                                <a href="/LeaveRecords/Check?id=@review_leaverecord.LeaveRecordId" class="btn btn-success btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
-                                            </td>
-                                        </tr>
-                                    }
-                                    @*<tr>
-                                        <td>
-                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-                                        </td>
-                                        <td>事假</td>
-                                        <td>2021-06-28 9:00</td>
-                                        <td>2021-06-28 18:00</td>
-                                        <td>2021-06-26 16:00</td>
-                                        <td>
-                                            <a href="@Url.Action("Check","LeaveRecords")" class="btn btn-success btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a>
-                                        </td>
-                                    </tr>*@
-                                    @*
-                                    <tr>
-                                        <td>
-                                            <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-                                        </td>
-                                        <td>0912-345678</td>
-                                        <td>daMingWang@gmail.com</td>
-                                        <td>12345</td>
-                                        <td>
-                                            <a class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-warning btn-action" data-toggle="tooltip" title="perge"><i class="bi-trash-fill"></i></a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete"><i class="bi-power"></i></a>
-                                        </td>
-                                    </tr>
-                                    *@
+                        <div class="col-12">
+                            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
 
-                                </table>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="live__scroll">
+                                            <div class="row">
+                                                <div class="row d-flex flex-row flex-nowrap" ">
+                                                    @foreach (var review_leaverecord in reviewleaveRecords)
+                                                    {
+                                                        <div class="col-md-4 mb-3">
+                                                            <div class="card">
+                                                                <div class="card-body" style="color:gray">
+                                                                    <div class="badge badge-warning">@review_leaverecord.LeaveType</div>
+                                                                    <div class="row" style="margin-top:10px">
+                                                                        <div class="col-12 col-lg-4">
+                                                                            申請人
+                                                                        </div>
+                                                                        <div class="col-12 col-lg-8">
+                                                                            <img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row" style="margin-top:10px">
+                                                                        <div class="col-12 col-lg-4">
+                                                                            請假時間
+                                                                        </div>
+                                                                        <div class="col-12 col-lg-8">
+                                                                            @review_leaverecord.StartDate
+                                                                            <br />至<br />
+                                                                            @review_leaverecord.EndDate
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row" style="margin-top:10px">
+                                                                        <div class="col-12 col-lg-4">
+                                                                            申請時間
+                                                                        </div>
+                                                                        <div class="col-12 col-lg-8">
+                                                                            2021/08/26
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row" style="margin-top:10px">
+                                                                        <div class="col-12 col-lg-4">
+                                                                            請假事由
+                                                                        </div>
+                                                                        <textarea id="" name="" rows="4" cols="28" style="border: 2px #d4cbcb solid; border-radius:5px;margin-left:5%">
+                                                                     </textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -87,98 +88,99 @@
         @using (Html.BeginForm("SearchLeaveRecord", "LeaveRecords", FormMethod.Get))
         {
             @Html.AntiForgeryToken()
-    <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-12">
-                <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
-            </div>
+            <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
+                    </div>
 
-            <div class="col-lg-5 col-md-5 col-12">
-                <i class="bi-calendar"></i> 日期：<input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
-            </div>
+                    <div class="col-lg-5 col-md-5 col-12">
+                        <i class="bi-calendar"></i> 日期：<input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
+                    </div>
 
-            <div class="col-lg-1 col-md-1 col-12">
-                <div class="search-element">
-                    <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                    <div class="col-lg-1 col-md-1 col-12">
+                        <div class="search-element">
+                            <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </form>
+            </form>
         }
 
-            <div class="section-body" style="margin-top:25px">
-                <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>請假紀錄</h4>
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <tr>
-                                            <th>員工姓名</th>
-                                            <th>假別</th>
-                                            <th>開始時間</th>
-                                            <th>結束時間</th>
-                                            <th>申請時間</th>
-                                            <th>狀態</th>
-                                            <th></th>
-                                        </tr>
+        <div class="section-body" style="margin-top:25px">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>請假紀錄</h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>員工姓名</th>
+                                        <th>假別</th>
+                                        <th>開始時間</th>
+                                        <th>結束時間</th>
+                                        <th>申請時間</th>
+                                        <th>狀態</th>
+                                        <th></th>
+                                    </tr>
 
-                                        @foreach (var pass_leaverecord in passleaveRecords)
-                                        {
-                                            <tr>
+                                    @foreach (var pass_leaverecord in passleaveRecords)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_leaverecord.Name</a>
+                                            </td>
+                                            <td>@pass_leaverecord.LeaveType</td>
+                                            <td>@pass_leaverecord.StartDate</td>
+                                            <td>@pass_leaverecord.EndDate</td>
+                                            <td>@pass_leaverecord.CreatedTime</td>
+                                            @if (pass_leaverecord.Review == true)
+                                            {
                                                 <td>
-                                                    <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_leaverecord.Name</a>
+                                                    <div class="badge badge-success">核准</div>
                                                 </td>
-                                                <td>@pass_leaverecord.LeaveType</td>
-                                                <td>@pass_leaverecord.StartDate</td>
-                                                <td>@pass_leaverecord.EndDate</td>
-                                                <td>@pass_leaverecord.CreatedTime</td>
-                                                @if (pass_leaverecord.Review == true)
-                                                {
-                                                    <td>
-                                                        <div class="badge badge-success">核准</div>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td>
-                                                        <div class="badge badge-danger">拒絕</div>
-                                                    </td>
-                                                }
+                                            }
+                                            else
+                                            {
                                                 <td>
-                                                    <a href="/LeaveRecords/Edit?id=@pass_leaverecord.LeaveRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                                    @*<button class="btn btn-danger btn-action" type="submit"><i class="bi-trash"></i></button>*@
+                                                    <div class="badge badge-danger">拒絕</div>
                                                 </td>
-                                            </tr>
-                                        }
-                                    </table>
-                                </div>
+                                            }
+                                            <td>
+                                                <a href="/LeaveRecords/Edit?id=@pass_leaverecord.LeaveRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                                @*<button class="btn btn-danger btn-action" type="submit"><i class="bi-trash"></i></button>*@
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
                             </div>
-                            <div class="card-footer text-right">
-                                <nav class="d-inline-block">
-                                    <ul class="pagination mb-0">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">2</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-        </section>
+    </section>
 </div>
+
