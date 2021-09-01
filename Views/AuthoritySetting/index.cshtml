@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "權限設定";
+    List<AttendanceManagement.Models.Manager> managers = ViewBag.managers;//公司全部的管理員
 }
 
 <div class="main-content">
@@ -7,224 +8,347 @@
         <h3 class="page_name">
             權限設定
         </h3>
-    <div class="section-body" style="margin-top:25px">
-        <div class="row">
-            <div class="col-8">
-                <div class="card" id="BigBorder">
-                    <div class="card-header">
-                        <h4 id="BigTitle">權限套用對象設定</h4>
-                    </div>
-                    <hr style="margin: 10px 20px 0px 20px" />
+        <div class="section-body" style="margin-top:25px">
+            <div class="row">
+                <div class="col-8">
+                    <div class="card" id="BigBorder" style="border:1px solid #CCC;box-shadow:0px 0px 1px;">
+                        <div class="card-header">
+                            <h4 id="BigTitle">權限套用對象設定</h4>
+                        </div>
+                        <hr style="margin: 10px 20px 0px 20px ;border-top:2px solid #ccc;" />
 
-                    <div class="card-body">
-                        <div style="margin:10px 0px 10px 50px;">
-                            <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                                <div class="row">
-                                    <div class="col">
-                                        管理員姓名
-                                    </div>
-                                    <div class="col">
-                                        職稱
-                                    </div>
-                                    <div class="col">
-                                        套用群組
+                        <div class="card-body">
+                            <div style="margin:10px 0px 10px 0px;">
+                                <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                    <div class="row">
+                                        <div class="col">
+                                            管理員姓名
+                                        </div>
+                                        <div class="col">
+                                            部門
+                                        </div>
+                                        <div class="col">
+                                            職稱
+                                        </div>
+                                        <div class="col">
+                                            套用群組
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                             <div>
-                                <div id="SmallTopBorder">
-                                    <div style=" display: flex; align-items: center; ">
+                                @*<div id="SmallTopBorder">
+                                        <div style=" display: flex; align-items: center; ">
+                                            <h5 id="Content">資料顯示對象</h5>
+                                        </div>
+                                    </div>*@
+                                <div id="SmallContentBorder" style="margin-left:0 ;border:1px solid #CCC">
+                                    <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                        @foreach (var manager in managers)
+                                        {
+                                            <div class="row">
+                                                <div class="col">
+                                                    @manager.Name
+                                                </div>
+                                                <div class="col">
+                                                    @manager.Department
+                                                </div>
+                                                <div class="col">
+                                                    @manager.Jobtitle
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                                        <option selected>ㄏㄏ</option>
+                                                        <option value="1">One</option>
+                                                        <option value="2">Two</option>
+                                                        <option value="3">Three</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                @*<div id="SmallTopBorder">
                                         <h5 id="Content">資料顯示對象</h5>
-                                    </div>
-                                </div>
-                                <div id="SmallContentBorder">
-                                    <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                                        <div class="row">
-                                            <div class="col">
-                                                SSD
-                                            </div>
-                                            <div class="col">
-                                                經理
-                                            </div>
-                                            <div class="col">
-                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                    <option selected>ㄏㄏ</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div id="SmallTopBorder">
-                                    <h5 id="Content">資料顯示對象</h5>
-                                </div>
-                                <div id="SmallContentBorder">
-                                    <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                                        <div class="row">
-                                            <div class="col">
-                                                SSD
-                                            </div>
-                                            <div class="col">
-                                                經理
-                                            </div>
-                                            <div class="col">
-                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                    <option selected>ㄏㄏ</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="SmallContentBorder">
-                                    <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                                        <div class="row">
-                                            <div class="col">
-                                                SSD
-                                            </div>
-                                            <div class="col">
-                                                經理
-                                            </div>
-                                            <div class="col">
-                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                    <option selected>ㄏㄏ</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div id="SmallTopBorder">
-                                    <h5 id="Content">資料顯示對象</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="col-10">
-                <div class="card" id="BigBorder">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-md-4" id="CenterSet">
-                                <h4 id="BigTitle">群組</h4>
-                            </div>
-                                <div class="col-md-2 offset-md-6">
-                                    <button class="btn btn-primary" type="submit" id="smallbutton" style="background-color: #85B5FB; border: 1px solid #85B5FB;">新增群組</button>
-                                </div>
-                        </div>
-                    </div>
-                    <hr style="margin: 10px 20px 0px 20px" />
-                    <div class="card-body">
-                        <div class="col-6">
-                            <div class="card" style="border:1px solid #555555; border-radius:4px">
-                                <div class="card-header">
-                                    <div class="row" style="padding:0px 10px 0px 10px">
-                                        <div class="col-7" style="position: relative; display: flex; align-items: center; ">
-                                            <div class="row" style="padding:0px 0px 0px 2px">
-                                                <h4  id="Content">群組名 : </h4>
-                                                <h4  id="Content">ㄏㄏ</h4>
-                                            </div>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="row" style="float:right">
-                                                <button class="btn btn-primary" type="submit" id="smallbutton" style="background-color: #EBF2FA;  border: 1px solid #EBF2FA; "><img src="~/Content/images/edit-button.png" id="smallbuttonimg"/></button>
-                                                <button class="btn btn-primary" type="submit" id="smallbutton"  style="background-color: #FFCCD1;   border: 1px solid #FFCCD1; "><img src="~/Content/images/delete.png" id="smallbuttonimg"/></button>
+                                    </div>*@
+                                @*<div id="SmallContentBorder">
+                                        <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                            <div class="row">
+                                                <div class="col">
+                                                    SSD
+                                                </div>
+                                                <div class="col">
+                                                    經理
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                                        <option selected>ㄏㄏ</option>
+                                                        <option value="1">One</option>
+                                                        <option value="2">Two</option>
+                                                        <option value="3">Three</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
-                                </div>
-                                <hr style="margin: 0px 20px 0px 20px" />
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-7" id="CenterSet">
-                                            <div>
-                                                <h5  id="Content">資料顯示對象</h5>
+                                    </div>
+                                    <div id="SmallContentBorder">
+                                        <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                            <div class="row">
+                                                <div class="col">
+                                                    SSD
+                                                </div>
+                                                <div class="col">
+                                                    經理
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                                        <option selected>ㄏㄏ</option>
+                                                        <option value="1">One</option>
+                                                        <option value="2">Two</option>
+                                                        <option value="3">Three</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-5" id="CenterSet">
-                                            <select  class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                <option selected>全部都是這樣子</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
+                                    </div>*@
+                            </div>
+                            <div>
+                                @*<div id="SmallTopBorder">
+                                        <h5 id="Content">資料顯示對象</h5>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="card" id="BigBorder" style="border: 1px solid #CCC; box-shadow: 0px 0px 1px;">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-4" id="CenterSet">
+                                    <h4 id="BigTitle">群組</h4>
+                                </div>
+                                <div class="col-md-2 offset-md-6">
+                                    <button class="btn btn-primary" type="submit" id="smallbutton" style="background-color: #85B5FB; border: 1px solid #85B5FB;" data-toggle="modal" data-target="#exampleModal1">新增群組</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin: 10px 20px 0px 20px;border-top:2px solid #ccc;" />
+                        <div class="card-body">
+                            <div class="col-6">
+                                <div class="card" style="border:2px solid #CCC;">
+                                    <div class="card-header">
+                                        <div class="row" style="padding:0px 10px 0px 0px">
+                                            <div class="col-10" style="position: relative; display: flex; align-items: center; ">
+                                                <div class="row" style="padding:0px 0px 0px 2px">
+                                                    <div class="col-md-3" style="float: left; padding: 0px;text-align:left">
+                                                        <h4 id="Content" style="float:left;margin-right:10px;">群組名:</h4>
+                                                    </div>
+                                                    <div class="col-md-9" style="padding:0">
+                                                        <input type="text" class="show" value="ㄏㄏ"id="department_name" name="department_name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px; margin:0px">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="row" style="float:right">
+                                                    <button class="btn btn-primary" type="submit" id="smallbutton" style="background-color: #FFCCD1;border: 1px solid #FFCCD1; margin-left:5px"><img src="~/Content/images/delete.png" id="smallbuttonimg" /></button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-7" id="CenterSet">
-                                            <h5 id="Content">可審核對象</h5>
+                                    <hr style="margin: 0px 20px 0px 20px" />
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7" id="CenterSet">
+                                                <div>
+                                                    <h5 id="Content">資料顯示對象</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-5" id="CenterSet">
+                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                                    <option selected>全部</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-5" id="CenterSet">
-                                            <select  class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                <option selected>全部</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-7" id="CenterSet">
+                                                <h5 id="Content">可審核對象</h5>
+                                            </div>
+                                            <div class="col-5" id="CenterSet">
+                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                                    <option selected>全部</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-7" id="CenterSet">
-                                            <h5 style="font-size:14px">上下班時間設定</h5>
+                                        <div class="row">
+                                            <div class="col-7" id="CenterSet">
+                                                <h5 style="font-size:14px">上下班時間設定</h5>
+                                            </div>
+                                            <div class="col-5" id="CenterSet">
+                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                                    <option selected>可編輯</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-5" id="CenterSet">
-                                            <select  class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                <option selected>可編輯</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-7" id="CenterSet">
+                                                <h5 style="font-size:14px">部門與職稱設定</h5>
+                                            </div>
+                                            <div class="col-5" id="CenterSet">
+                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px ">
+                                                    <option selected>不可編輯</option>
+                                                    <option value="1">one</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-7" id="CenterSet">
-                                            <h5 style="font-size:14px">部門與職稱設定</h5>
+                                        <div class="row">
+                                            <div class="col-7" id="CenterSet">
+                                                <h5 id="Content">打卡位置設定</h5>
+                                            </div>
+                                            <div class="col-5" id="CenterSet">
+                                                <select data-width="200px" class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                                    <option selected>不可編輯</option>
+                                                    <option value="1">One</option>
+                                                    <option value="2">Two</option>
+                                                    <option value="3">Three</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col-5" id="CenterSet">
-                                            <select  class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px ">
-                                                <option selected>不可編輯</option>
-                                                <option value="1">one</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-7" id="CenterSet">
-                                            <h5 id="Content">打卡位置設定</h5>
-                                        </div>
-                                        <div class="col-5" id="CenterSet">
-                                            <select data-width="200px" class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                <option selected>不可編輯</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                         <hr style="margin: 10px 0px 10px 0px" />
                                         <div class="col align-self-center" style="margin:0 auto;text-align:center">
                                             <button class="btn btn-primary" type="submit" style="background-color: #DF5B57; border: 1px solid #DF5B57; border-radius: 4px; margin: 5px; ">取消</button>
                                             <button class="btn btn-primary" type="submit" style="background-color: #6CA7ED; border: 1px solid #6CA7ED; border-radius: 4px; margin: 5px; ">儲存</button>
                                         </div>
-                                </div>
-                                </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">新增群組</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("AddDepartment", "Setting", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div class="form-group">
+                        
+                        <div class="card" style="border:1px solid #CCC;box-shadow:0px 0px 0px;">
+                            <div class="card-header">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-2" style="padding:0">
+                                                <h4 align="right" id="Content" style="float:right;margin-right:10px" >群組名 : </h4>
+                                            </div>
+                                            <div class="col-md-10" style="padding-left:0">
+                                                <input type="text" class="show" id="department_name" name="department_name" style=" width: 100%;border: 1px solid #ccc;border-radius: 4px;font-size: 16px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <hr style="margin: 0px 20px 0px 20px" />
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-7" id="CenterSet">
+                                        <div>
+                                            <h5 id="Content">資料顯示對象</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-5" id="CenterSet">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                            <option selected>全部都是這樣子</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7" id="CenterSet">
+                                        <h5 id="Content">可審核對象</h5>
+                                    </div>
+                                    <div class="col-5" id="CenterSet">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                            <option selected>全部</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7" id="CenterSet">
+                                        <h5 style="font-size:14px">上下班時間設定</h5>
+                                    </div>
+                                    <div class="col-5" id="CenterSet">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                            <option selected>可編輯</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7" id="CenterSet">
+                                        <h5 style="font-size:14px">部門與職稱設定</h5>
+                                    </div>
+                                    <div class="col-5" id="CenterSet">
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px ">
+                                            <option selected>不可編輯</option>
+                                            <option value="1">one</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-7" id="CenterSet">
+                                        <h5 id="Content">打卡位置設定</h5>
+                                    </div>
+                                    <div class="col-5" id="CenterSet">
+                                        <select data-width="200px" class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                            <option selected>不可編輯</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr style="margin: 10px 0px 10px 0px" />
+                                <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                    <button class="btn btn-primary" type="submit" style="background-color: #DF5B57; border: 1px solid #DF5B57; border-radius: 4px; margin: 5px; ">取消</button>
+                                    <button class="btn btn-primary" type="submit" style="background-color: #6CA7ED; border: 1px solid #6CA7ED; border-radius: 4px; margin: 5px; ">儲存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>

@@ -29,52 +29,63 @@
                                                 <div class="row d-flex flex-row flex-nowrap" ">
                                                     @foreach (var review_leaverecord in reviewleaveRecords)
                                                     {
-                                                        <div class="col-md-4 mb-3">
-                                                            <div class="card">
-                                                                <div class="card-body" style="color:gray">
-                                                                    <div class="badge badge-warning">@review_leaverecord.LeaveType</div>
-                                                                    <div class="row" style="margin-top:10px">
-                                                                        <div class="col-12 col-lg-4">
-                                                                            申請人
+                                                        
+                                                            @Html.AntiForgeryToken()
+                                                            <div class="col-md-5 mb-3">
+                                                                <div class="card">
+                                                                    <div class="card-body" style="color:gray">
+                                                                        <div class="badge badge-warning">@review_leaverecord.LeaveType</div>
+                                                                        <div class="row" style="margin-top:10px">
+                                                                            <div class="col-12 col-lg-4">
+                                                                                申請人
+                                                                            </div>
+                                                                            <div class="col-12 col-lg-8">
+                                                                                <img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-12 col-lg-8">
-                                                                            <img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name
-                                                                        </div>
-                                                                    </div>
 
-                                                                    <div class="row" style="margin-top:10px">
-                                                                        <div class="col-12 col-lg-4">
-                                                                            請假時間
+                                                                        <div class="row" style="margin-top:10px">
+                                                                            <div class="col-12 col-lg-4">
+                                                                                請假時間
+                                                                            </div>
+                                                                            <div class="col-12 col-lg-8">
+                                                                                @review_leaverecord.StartDate
+                                                                                <br />至<br />
+                                                                                @review_leaverecord.EndDate
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-12 col-lg-8">
-                                                                            @review_leaverecord.StartDate
-                                                                            <br />至<br />
-                                                                            @review_leaverecord.EndDate
-                                                                        </div>
-                                                                    </div>
 
-                                                                    <div class="row" style="margin-top:10px">
-                                                                        <div class="col-12 col-lg-4">
-                                                                            申請時間
+                                                                        <div class="row" style="margin-top:10px">
+                                                                            <div class="col-12 col-lg-4">
+                                                                                申請時間
+                                                                            </div>
+                                                                            <div class="col-12 col-lg-8">
+                                                                                2021/08/26
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-12 col-lg-8">
-                                                                            2021/08/26
-                                                                        </div>
-                                                                    </div>
 
-                                                                    <div class="row" style="margin-top:10px">
-                                                                        <div class="col-12 col-lg-4">
-                                                                            請假事由
+                                                                        <div class="row" style="margin-top:10px">
+                                                                            <div class="col-12 col-lg-4" style="margin-bottom:5px">
+                                                                                請假事由
+                                                                            </div>
+                                                                            <textarea id="reason" name="reason" rows="4" class="col-11" style="padding:5px; border: 2px #d4cbcb solid; border-radius:5px; margin-left:2.5%;"readonly="readonly">@review_leaverecord.Reason</textarea>
                                                                         </div>
-                                                                        <textarea id="" name="" rows="4" cols="28" style="border: 2px #d4cbcb solid; border-radius:5px;margin-left:5%">
-                                                                     </textarea>
-                                                                    </div>
+                                                                        @using (Html.BeginForm("ReviewLeaveRecord", "LeaveRecords", new { id = review_leaverecord.HashAccount, leave_id = review_leaverecord.LeaveRecordId }, FormMethod.Post))
+                                                                        {
+                                                                            <div class="row" style="margin-top:20px">
+                                                                                <div class="col-12 col-lg-12 text-center">
+                                                                                    <button id="Button" name="Button" value="SaveButton" type="submit" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
+                                                                                    <button id="Button" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
+                                                                                </div>
+                                                                            </div>
+                                                                         }
+                                                                        </div>
+
                                                                 </div>
-
                                                             </div>
-                                                        </div>
-                                                    }
-                                                </div>
+                                                            
+                                                        }
+                                                    </div>
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +151,7 @@
                                             @if (pass_leaverecord.Review == true)
                                             {
                                                 <td>
-                                                    <div class="badge badge-success">核准</div>
+                                                    <div class="badge badge-info">核准</div>
                                                 </td>
                                             }
                                             else
@@ -150,7 +161,7 @@
                                                 </td>
                                             }
                                             <td>
-                                                <a href="/LeaveRecords/Edit?id=@pass_leaverecord.LeaveRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                                <a href="/LeaveRecords/Edit?id=@pass_leaverecord.LeaveRecordId" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
                                                 @*<button class="btn btn-danger btn-action" type="submit"><i class="bi-trash"></i></button>*@
                                             </td>
                                         </tr>

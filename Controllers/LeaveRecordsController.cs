@@ -63,22 +63,21 @@ namespace AttendanceManagement.Controllers
             return View("Check");
         }
         [HttpPost]//公差審核頁面，審核按鈕
-        public async Task<ActionResult> ReviewLeaveRecord(int num,int id, string Button)
+        public async Task<ActionResult> ReviewLeaveRecord(int leave_id,string id, string Button)
         {
-
-            //輸入公司代碼取得待審核公出申請紀錄
-            List<LeaveRecord> review_leaverecord = await ReviewLeaveRecordModel.Get_ReviewLeaveRecord(Session["company_hash"].ToString());
-            string hashaccount = review_leaverecord[num].HashAccount;//員工編號
-
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             //輸入公司代碼取得已審核員工資料
             List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(Session["company_hash"].ToString());
-            int Index = passEmployees.FindIndex(item => item.HashAccount.Equals(hashaccount)); ;//員工索引值，用來找出員工EMAIL
+            int Index = passEmployees.FindIndex(item => item.HashAccount.Equals(id)); ;//員工索引值，用來找出員工EMAIL
 
             bool result = false;
 
             if (Button.Equals("SaveButton"))
             {
-                result = await Review_LeaveRecordModel.ReviewLeaveRecord(id, true);//PUT更新審核狀態
+                result = await Review_LeaveRecordModel.ReviewLeaveRecord(leave_id, true);//PUT更新審核狀態
 
                 if (result)
                 {
@@ -90,7 +89,7 @@ namespace AttendanceManagement.Controllers
             }
             else
             {
-                result = await Review_LeaveRecordModel.ReviewLeaveRecord(id, false);//PUT更新審核狀態
+                result = await Review_LeaveRecordModel.ReviewLeaveRecord(leave_id, false);//PUT更新審核狀態
 
                 if (result)
                 {

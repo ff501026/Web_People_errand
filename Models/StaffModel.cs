@@ -223,10 +223,10 @@ namespace AttendanceManagement.Models
     }//公司上下班時間方法
     class CompanyManagerModel : HttpResponse
     {
-        public static async Task<string> GetManagerKey(string hash_account)
+        public static async Task<string> GetManagerKey(string company_hash)
         {
             //連上WebAPI
-            response = await client.GetAsync(url + ManagerKey + hash_account);
+            response = await client.GetAsync(url + ManagerKey + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
@@ -234,6 +234,17 @@ namespace AttendanceManagement.Models
 
             return managerkey;
         }//取得ManagerKey
+        public static async Task<List<Manager>> GetAllManager(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerAll + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<Manager> manager = JsonConvert.DeserializeObject<List<Manager>>(GetResponse);
+
+            return manager;
+        }//查看公司全部管理員
 
         public static async Task<List<ManagerKeyData>> ManagerKeyGetEmployee(string manager_key)
         {
@@ -272,6 +283,26 @@ namespace AttendanceManagement.Models
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             response = await client.PostAsync(url + ManagerAdd, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }//註冊管理員
+
+        public static async Task<bool> UpdateManagerEnabled(string hash_account, bool enabled)
+        {
+            List<ManagerEnabled> managerEnableds = new List<ManagerEnabled>();
+            ManagerEnabled managerEnabled = new ManagerEnabled
+            {
+                HashAccount = hash_account,
+                Enabled = enabled
+            };
+            managerEnableds.Add(managerEnabled);
+            string jsonData = JsonConvert.SerializeObject(managerEnableds);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + ManagerUpdateEnabled, content);
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -478,6 +509,20 @@ namespace AttendanceManagement.Models
     {
         public string HashAccount { get; set; }
         public string Password { get; set; }
+    }
+    public class ManagerEnabled//管理員啟用或停用
+    {
+        public string HashAccount { get; set; }
+        public bool Enabled { get; set; }
+    }
+    public class Manager//管理員
+    {
+        public string ManagerHash { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }//員工電子郵件
+        public string Department { get; set; }
+        public string Jobtitle { get; set; }
+        public bool Enabled { get; set; }//使用狀態
     }
 }
     
