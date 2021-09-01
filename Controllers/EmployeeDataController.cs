@@ -138,12 +138,13 @@ namespace AttendanceManagement.Controllers
             }
         }
         [HttpPost]//員工管理修改頁面，修改按鈕
-        public async Task<ActionResult> EditEmployee(bool? ManagerStatus,string managerhash, bool? old_enabled, string Button, string id, string name, string phone, string email,string old_email, int department, int jobtitle,bool? manager,bool? disable)
+        public async Task<ActionResult> EditEmployee(string managerhash, bool? old_enabled, string Button, string id, string name, string phone, string email,string old_email, int department, int jobtitle,bool? manager,bool? disable)
         {
             if (Session["company_hash"] == null)
             {
                 return RedirectToAction("Index", "Account", null);
             }
+            bool? ManagerStatus = null;
             //輸入公司取得全部的管理員
             List<Manager> managers = await CompanyManagerModel.GetAllManager(Session["company_hash"].ToString());
             List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(Session["company_hash"].ToString());//已審核資料

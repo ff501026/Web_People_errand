@@ -7,7 +7,6 @@
     List<AttendanceManagement.Models.ReviewEmployee> reviewEmployees = ViewBag.review_employee; //待審核資料
     List<AttendanceManagement.Models.PassEmployee> passEmployees = ViewBag.pass_employee; //已審核資料(會變動的資料，有可能是全部也可能是篩選後)
     List<AttendanceManagement.Models.PassEmployee> all_passEmployees = ViewBag.all_passemployee; //全部的已審核資料(不會變動)
-    bool? ManagerStatus = null;
 }
 
 
@@ -214,7 +213,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
-                        <h5 id="name" name="name" value="@pass_employee.Name" class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">@pass_employee.Name</h5>
+                        <h5 id="name" name="name" value="@pass_employee.Name" class="modal-title"  style="font-size:20px; font-family:Agency FB">@pass_employee.Name</h5>
                         @if (pass_employee.Enabled == true)
                         {
                             <div class="badge badge-info" style="margin-left:10px">使用中</div>
@@ -295,25 +294,21 @@
                                     </div>
 
                                     <div class="row" style="margin-top:15px;margin-bottom:15px">
-
-                                        @foreach (var manager in managers)
+                                        @if ((managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)) != -1))
                                         {
-                                            if (manager.ManagerHash.Equals(pass_employee.HashAccount) && manager.Enabled==true)
-                                            {
-                                                <div class="col-12 col-lg-6">
-                                                    <input type="checkbox" id="manager" name="manager" value=true checked>管理者
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div class="col-12 col-lg-6">
-                                                    <input type="checkbox" id="manager" name="manager" value=true>管理者
-                                                </div>
-                                            }
+                                            <div class="col-12 col-lg-6">
+                                                <input type="checkbox" id="manager" name="manager" value=true checked>管理者
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-12 col-lg-6">
+                                                <input type="checkbox" id="manager" name="manager" value=true >管理者
+                                            </div>
                                         }
                                         <div class="col-12 col-lg-6">
                                             直屬主管：
-                                            <select id="managerhash" name="managerhash" type="text" >
+                                            <select id="managerhash" name="managerhash" type="text">
                                                 <option value="">請選擇</option>
                                                 @foreach (var pass in passEmployees)
                                                 {
