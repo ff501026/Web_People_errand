@@ -146,7 +146,7 @@
                                                         <h4 id="Content" style="float:left;margin-right:10px;">群組名:</h4>
                                                     </div>
                                                     <div class="col-md-9" style="padding:0">
-                                                        <input type="text" class="show" value="ㄏㄏ"id="department_name" name="department_name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px; margin:0px">
+                                                        <input type="text" class="show" value="ㄏㄏ"id="department_name" name="department_name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px; margin:0px"required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -251,7 +251,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @using (Html.BeginForm("AddDepartment", "Setting", FormMethod.Post))
+            @using (Html.BeginForm("Add", "Setting", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 <div class="modal-body">
@@ -265,7 +265,7 @@
                                                 <h4 align="right" id="Content" style="float:right;margin-right:10px" >群組名 : </h4>
                                             </div>
                                             <div class="col-md-10" style="padding-left:0">
-                                                <input type="text" class="show" id="department_name" name="department_name" style=" width: 100%;border: 1px solid #ccc;border-radius: 4px;font-size: 16px;">
+                                                <input type="text" class="show" id="department_name" name="department_name" style=" width: 100%;width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px;" required>
                                             </div>
                                         </div>
                                     </div>
@@ -280,7 +280,7 @@
                                     </div>
                                     <div class="col-5" id="CenterSet">
                                         <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                            <option selected>全部都是這樣子</option>
+                                            <option selected>全部</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>

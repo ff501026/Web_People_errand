@@ -240,113 +240,88 @@
             </div>
         </div>
         *@
-        <div class="section-body">
-            <div class="row">
-                <div class="col-12 col-sm-5 col-lg-4">
-                    <div class="card" >
-                        <div class="card card-primary" style="border:none;box-shadow:0px 0px 0px;">
-                            <div class="card-header">
-                                <h4>上下班時間設定</h4>
-                            </div>
-                            <hr style="margin: -10px 20px 0px 20px" />
-                            
-                            <div class="card-body">
-                                @foreach (var department in departments)
-                                {
-                                    <div class="row" id="topborder">
-                                        <div class="col-5" style="margin:10px 0px 0px 0px">
-                                            <p>@department.Name</p>
-                                        </div>
-                                        <div class="col-7" style="display: flex; justify-content: flex-end;">
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                <option selected>早班</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    foreach (var jobTitle in jobTitles) {
-                                    <div class="row" id="contentborder">
-                                        <div class="col-5" style="margin:10px 0px 0px 0px">
-                                            <p>@jobTitle.Name</p>
-                                        </div>
-                                        <div class="col-7" style="display: flex; justify-content: flex-end;">
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                <option selected>早班</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    }
-                                    @*<div class="row" id="contentborder">
-                                        <div class="col-5" style="margin:10px 0px 0px 0px">
-                                            <p>職員</p>
-                                        </div>
-                                        <div class="col-7" style="display: flex; justify-content: flex-end;">
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                <option selected>早班</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                    </div>*@
-                                    @*<div class="row" id="topborder">
-                                        <div class="col-5" style="margin:10px 0px 0px 0px">
-                                            <p>技術部</p>
-                                        </div>
-                                        <div class="col-7" style="display: flex; justify-content: flex-end;">
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                <option selected>早班</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                    </div>*@
-                                }
-                            </div>
-                            
-                        </div>
-                    </div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-sm-5 col-lg-4">
 
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h4>上下班時間設定</h4>
+                    </div>
+                    <hr style="margin: -10px 20px 0px 20px" />
+                    <div class="card-body">
+                        @foreach (var department in departments)
+                        {
+                        <div class="row" id="topborder">
+                            <div class="col-4" id="CenterSet">
+                                <p style="margin:0px auto;">@department.Name</p>
+                            </div>
+                            <div class="col-8" style="display: flex; justify-content: flex-end;">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                    <option selected>早班</option>
+                                    <option value="中班">中班</option>
+                                    <option value="晚班">晚班</option>
+                                    <option value="大夜班">大夜班</option>
+                                </select>
+                            </div>
+                        </div>
+                        foreach (var jobTitle in jobTitles) {
+                        <div class="row" id="contentborder">
+                            <div class="col-4" id="CenterSet">
+                                <p style="margin:0px auto;">@jobTitle.Name</p>
+                            </div>
+                            <div class="col-8" style="display: flex; justify-content: flex-end;">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                    <option selected>早班</option>
+                                    <option value="中班">中班</option>
+                                    <option value="晚班">晚班</option>
+                                    <option value="大夜班">大夜班</option>
+                                </select>
+                            </div>
+                        </div>
+                        }
+                        
+                        }
+                        
+
+                    </div>
                 </div>
-                <div class="col-12 col-sm-7 col-lg-8">
-                    <div class="card" style="border: 1px solid #EDEEEF; border-radius: 4px">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-9" id="CenterSet">
-                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                        <option selected>早班</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                                <div class="col-3"id="CenterSet" style="float:right;">
-                                    <div class="row">
-                                        <button class="btn btn-primary" type="submit" style="opacity: 0.9; background-color: #32CD32; border: 1px solid #32CD32; border-radius: 4px; float: right; margin: 5px">新增</button>
-                                        <button class="btn btn-primary" type="submit" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C; border-radius: 4px; float: right; margin: 5px ">刪除</button>
-                                    </div>
+
+            </div>
+            <div class="col-12 col-sm-7 col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row" style="margin:0px 10px 0px 0px;">
+                            <div class="col-8" id="CenterSet">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
+                                    <option selected>早班</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <div class="row" style="float:right;">
+                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" id="workonoffbutton" style="opacity: 0.9; background-color: #32CD32; border: 1px solid #32CD32; font-size: 25px; ">+</button>
+                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" id="workonoffbutton" style="opacity: 0.9;"><i class="bi-trash-fill" style="margin:0px auto;"></i></button>
                                 </div>
                             </div>
-                            <hr style="margin: 10px 10px 0px 10px" />
-                            <div class="card-body">
+                        </div>
+                        <hr style="margin: 10px 20px 0px 20px" />
+                        <div class="card-body">
+                            <div class="col align-self-center" style="margin:0 auto;text-align:center">
                                 <div class="p-2">
                                     <div class="row">
                                         <div class="col">
                                             <div class="row">
                                                 <div>群組名稱 : </div>
-                                                <input class="form-control" type="text" placeholder="早班" aria-label="Search" style="font-size: 14px; width: 75%; margin: 0px 0px 0px 10px" required>
+                                                <input class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="row">
-                                                <div>類型設定 : </div>
-                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="font-size: 14px;width: 75%; margin: 0px 0px 0px 10px; border: 1px solid #EDEEEF; border-radius: 4px">
+                                                <div>樣式設定 : </div>
+                                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px">
                                                     <option selected>一般</option>
                                                     <option value="1">One</option>
                                                     <option value="2">Two</option>
@@ -361,13 +336,13 @@
                                         <div class="col">
                                             <div class="row">
                                                 <div>上班時間 : </div>
-                                                <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 75%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
+                                                <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="row">
                                                 <div>下班時間 : </div>
-                                                <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 75%; margin: 0px 0px 0px 10px" aria-label="Search" value="@company_Times.RestTime">
+                                                <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
                                             </div>
                                         </div>
                                     </div>
@@ -375,22 +350,23 @@
                                 <div class="p-2">
                                     <div class="row">
                                         <div class="col">
-                                            <div class="row" style="margin-top=10px">
-                                                <label>休息時間設定 : </label>
-                                                <input class="form-control" type="text" placeholder="請設定休息時間" aria-label="Search" style="width: 50%; font-size: 14px; margin: 0px 10px 0px 10px">
-                                                <label>分鐘</label>
+                                            <div class="row">
+                                                <div>休息時間設定 : </div>
+                                                <input class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                <div>分鐘</div>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="row" style="float:right">
-                                                <button class="btn btn-primary" type="submit" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C; border-radius: 4px; margin: 5px ">取消</button>
-                                                <button class="btn btn-primary" type="submit" style="opacity:0.9;background-color: #68A3FB; border: 1px solid #7298FF; border-radius: 4px; margin: 5px ">儲存</button>
+                                                <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                </div>
+
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -432,7 +408,7 @@
             </div>
         </div>
         *@
-    </section>
+</section>
 </div>
 
 

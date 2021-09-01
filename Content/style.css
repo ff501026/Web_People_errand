@@ -3950,6 +3950,15 @@ input:checked + .slider .off {
     border-radius: 4px;
     margin: 5px 0px 5px 20px;
 }
-
-  
+#workonoffbutton {
+    border-radius: 4px;
+    margin: 5px;
+}
+#inputsetting {
+    width: 72%;
+    margin: 0px 0px 0px 10px;
+}
+#textcenter {
+    margin: 0px auto;
+}
     
