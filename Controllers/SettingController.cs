@@ -13,6 +13,7 @@ namespace AttendanceManagement.Controllers
         // GET: Setting
         public async Task<ActionResult> Index()
         {
+            
             if (Session["company_hash"] == null)
             {
                 return RedirectToAction("Index", "Account", null);
@@ -30,7 +31,7 @@ namespace AttendanceManagement.Controllers
             ViewBag.jobtitles = jobtitle;//職稱
             ViewBag.company_time = company_Times;
             ViewBag.company_address = companyAddresses;
-
+            
             return View();
         }
        
