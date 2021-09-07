@@ -21,71 +21,60 @@
 
                         <div class="col-12">
                             <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
                                         <div class="live__scroll">
                                             <div class="row">
-                                                <div class="row d-flex flex-row flex-nowrap" ">
+                                                <div class="row d-flex flex-row flex-nowrap">
                                                     @foreach (var review_leaverecord in reviewleaveRecords)
                                                     {
-                                                        
-                                                            @Html.AntiForgeryToken()
-                                                            <div class="col-md-5 mb-3">
-                                                                <div class="card">
-                                                                    <div class="card-body" style="color:gray">
-                                                                        <div class="badge badge-warning">@review_leaverecord.LeaveType</div>
-                                                                        <div class="row" style="margin-top:10px">
-                                                                            <div class="col-12 col-lg-4">
-                                                                                申請人
-                                                                            </div>
-                                                                            <div class="col-12 col-lg-8">
-                                                                                <img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name
-                                                                            </div>
-                                                                        </div>
 
-                                                                        <div class="row" style="margin-top:10px">
-                                                                            <div class="col-12 col-lg-4">
-                                                                                請假時間
-                                                                            </div>
-                                                                            <div class="col-12 col-lg-8">
-                                                                                @review_leaverecord.StartDate
-                                                                                <br />至<br />
-                                                                                @review_leaverecord.EndDate
-                                                                            </div>
+                                        @Html.AntiForgeryToken()
+                                                        <div class="col-md-5 mb-3">
+                                                            <div class="card">
+                                                                <div class="card-body" style="color:gray">
+                                                                    <div class="badge badge-warning">@review_leaverecord.LeaveType</div>
+                                                                    <div class="row" style="margin-top:10px">
+                                                                        <div class="col-12">
+                                                                            <nobr style="margin:0px 20px 0px 0px;">申請人</nobr>
+                                                                            <img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name
                                                                         </div>
+                                                                    </div>
 
-                                                                        <div class="row" style="margin-top:10px">
-                                                                            <div class="col-12 col-lg-4">
-                                                                                申請時間
-                                                                            </div>
-                                                                            <div class="col-12 col-lg-8">
-                                                                                2021/08/26
-                                                                            </div>
+                                                                    <div class="row" style="margin-top:10px">
+                                                                        <div class="col-12">
+                                                                           
+                                                                            <nobr>@review_leaverecord.StartDate.ToString("yyyy-MM-dd HH:mm")</nobr>
+                                                                            <nobr>至</nobr>
+                                                                        <nobr>@review_leaverecord.EndDate.ToString("yyyy-MM-dd HH:mm")</nobr>
                                                                         </div>
+                                                                    </div>
 
-                                                                        <div class="row" style="margin-top:10px">
-                                                                            <div class="col-12 col-lg-4" style="margin-bottom:5px">
-                                                                                請假事由
-                                                                            </div>
-                                                                            <textarea id="reason" name="reason" rows="4" class="col-11" style="padding:5px; border: 2px #d4cbcb solid; border-radius:5px; margin-left:2.5%;"readonly="readonly">@review_leaverecord.Reason</textarea>
+                                                                    <div class="row" style="margin-top:10px">
+                                                                        <div class="col-12">
+                                                                            <nobr style="margin:0px 10px 0px 0px;">申請時間</nobr>
+                                                                            <nobr> 2021/08/26</nobr>
                                                                         </div>
-                                                                        @using (Html.BeginForm("ReviewLeaveRecord", "LeaveRecords", new { id = review_leaverecord.HashAccount, leave_id = review_leaverecord.LeaveRecordId }, FormMethod.Post))
-                                                                        {
-                                                                            <div class="row" style="margin-top:20px">
-                                                                                <div class="col-12 col-lg-12 text-center">
-                                                                                    <button id="Button" name="Button" value="SaveButton" type="submit" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
-                                                                                    <button id="Button" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
-                                                                                </div>
-                                                                            </div>
-                                                                         }
-                                                                        </div>
+                                                                    </div>
 
+                                                                    <div class="row" style="margin-top:10px">
+                                                                        <div class="col-12 col-lg-4" style="margin-bottom:5px">
+                                                                            請假事由
+                                                                        </div>
+                                                                        <textarea id="reason" name="reason" rows="4" class="col-11" style="padding:5px; border: 2px #d4cbcb solid; border-radius:5px; margin-left:2.5%;" readonly="readonly">@review_leaverecord.Reason</textarea>
+                                                                    </div>
+                                                                    @using (Html.BeginForm("ReviewLeaveRecord", "LeaveRecords", new { id = review_leaverecord.HashAccount, leave_id = review_leaverecord.LeaveRecordId }, FormMethod.Post))
+                                                                    {
+                                                    <div class="row" style="margin-top:20px">
+                                                        <div class="col-12 col-lg-12 text-center">
+                                                            <button id="Button" name="Button" value="SaveButton" type="submit" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
+                                                            <button id="Button" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
+                                                        </div>
+                                                    </div>}
                                                                 </div>
                                                             </div>
-                                                            
-                                                        }
-                                                    </div>
+                                                        </div>}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -98,24 +87,38 @@
         </div>
         @using (Html.BeginForm("SearchLeaveRecord", "LeaveRecords", FormMethod.Get))
         {
-            @Html.AntiForgeryToken()
-            <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-12">
-                        <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
-                    </div>
+                                                                                @Html.AntiForgeryToken()
+                                                                                <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
+                                                                    
+                                                                                    <div class="row">
+                                                                    
+                                                                                        <div class="col-lg-6 col-md-6 col-12">
+                                                                    
+                                                                                            <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
+                                                                    
+                                                                                        </div>
+                                                                    
 
-                    <div class="col-lg-5 col-md-5 col-12">
-                        <i class="bi-calendar"></i> 日期：<input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
-                    </div>
+                                                                                        <div class="col-lg-5 col-md-5 col-12">
+                                                                    
+                                                                                            <i class="bi-calendar"></i> 日期：<input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                                                    
+                                                                                        </div>
+                                                                    
 
-                    <div class="col-lg-1 col-md-1 col-12">
-                        <div class="search-element">
-                            <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                                                                                        <div class="col-lg-1 col-md-1 col-12">
+                                                                    
+                                                                                            <div class="search-element">
+                                                                    
+                                                                                                <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                                                                    
+                                                                                            </div>
+                                                                    
+                                                                                        </div>
+                                                                    
+                                                                                    </div>
+                                                                    
+                                                                                </form>
         }
 
         <div class="section-body" style="margin-top:25px">
@@ -155,7 +158,7 @@
                                                 </td>
                                             }
                                             else
-                                            {
+                                                                            {
                                                 <td>
                                                     <div class="badge badge-danger">拒絕</div>
                                                 </td>
@@ -175,11 +178,11 @@
                                     <li class="page-item disabled">
                                         <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
                                     </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item active"><a class="page-link" href="#pageone">1 <span class="sr-only">(current)</span></a></li>
                                     <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
+                                        <a class="page-link" href="#pagetwo">2</a>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#pagethree">3</a></li>
                                     <li class="page-item">
                                         <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
                                     </li>

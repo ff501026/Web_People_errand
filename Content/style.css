@@ -3960,5 +3960,11 @@ input:checked + .slider .off {
 }
 #textcenter {
     margin: 0px auto;
+    font-size: 14px;
 }
-    
+.bi bi-caret-down-fil:hover{
+    color:#555555;
+}
+.bi bi-caret-down-fil:active {
+    color: #555555;
+}

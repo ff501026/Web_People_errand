@@ -13,6 +13,7 @@ namespace AttendanceManagement.Controllers
         // GET: Authority
         public async Task<ActionResult> Index()
         {
+            
             if (Session["company_hash"] == null)
             {
                 return RedirectToAction("Index", "Account", null);
@@ -21,6 +22,7 @@ namespace AttendanceManagement.Controllers
             List<Manager> managers = await CompanyManagerModel.GetAllManager(Session["company_hash"].ToString());
 
             ViewBag.managers = managers;//全部的管理員
+            
             return View();
         }
     }
