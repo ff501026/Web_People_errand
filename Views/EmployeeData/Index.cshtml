@@ -134,66 +134,79 @@
 
                                     @foreach (var pass_employee in passEmployees)
                                     {
-                                        <tr>
-                                            <td class="rowBorderStart"></td>
-                                            <td class="rowBorderMiddle">
-                                                <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
-                                            </td>
-                                            <td class="rowBorderMiddle">@pass_employee.Phone</td>
-                                            <td class="rowBorderMiddle">@pass_employee.Department</td>
-                                            <td class="rowBorderMiddle">@pass_employee.JobTitle</td>
-                                            <td class="rowBorderMiddle">@pass_employee.Email</td>
+                        <tr>
+                            <td class="rowBorderStart"></td>
+                            <td class="rowBorderMiddle">
+                                <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
+                            </td>
+                            <td class="rowBorderMiddle">@pass_employee.Phone</td>
+                            <td class="rowBorderMiddle">@pass_employee.Department</td>
+                            <td class="rowBorderMiddle">@pass_employee.JobTitle</td>
+                            <td class="rowBorderMiddle">@pass_employee.Email</td>
 
-                                            @if (pass_employee.Enabled == true)
-                                                {
-                                        <td class="rowBorderMiddle">
-                                            <div class="badge badge-info">使用中</div>
-                                        </td>
-                                                }
-                                                else
-                                                {
-                                        <td class="rowBorderMiddle">
-                                            <div class="badge badge-danger">停用</div>
-                                        </td>
-                                                }
+                            @if (pass_employee.Enabled == true)
+                            {
+                    <td class="rowBorderMiddle">
+                        <div class="badge badge-info">使用中</div>
+                    </td> }
+                                    else
+                                    {
+                    <td class="rowBorderMiddle">
+                        <div class="badge badge-danger">停用</div>
+                    </td>}
 
-                                            @*<td>
-                                                    <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                                </td>*@
+                            @*<td>
+                <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+            </td>*@
 
-                                            <td class="rowBorderEnd">
-                                                <button type="button" class="btn2 btn2-primary btn2-action" data-toggle="modal" data-target="#@pass_employee.HashAccount"><i class="bi-pencil-square"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr></tr>
-                                    }
+                            <td class="rowBorderEnd">
+                                <button type="button" class="btn2 btn2-primary btn2-action" data-toggle="modal" data-target="#@pass_employee.HashAccount"><i class="bi-pencil-square"></i></button>
+                            </td>
+                        </tr>
+                                        <tr></tr>}
                                 </table>
                             </div>
                         </div>
                         @if (passEmployees.Count >= 10)
                         {
-                            <div class="card-footer text-right">
-                                <nav class="d-inline-block">
-                                    <ul class="pagination mb-0">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a class="page-link" href="#" id="page" name="page" value=1>1 <span class="sr-only">(current)</span></a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" id="page" name="page" value=2>2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" id="page" name="page" value=3>3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        }
+                    <div class="card-footer text-right">
+                        <nav class="d-inline-block">
+                            <ul class="pagination mb-0">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#" id="page" name="page" value=1>1 <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" id="page" name="page" value=2>2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" id="page" name="page" value=3>3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>}
+                        <div class="card-footer text-right">
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#pageone">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#pagetwo">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#pagethree">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
