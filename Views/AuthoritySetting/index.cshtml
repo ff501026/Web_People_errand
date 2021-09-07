@@ -198,8 +198,8 @@
                                                         <div class="row align-items-center" id="topborder">
                                                             <div class="col" id="CenterSet" style="font-size:14px">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaulttop2">
-                                                                    <label class="form-check-label" for="flexCheckDefaulttop2">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="chElt" onclick="checkAll();">
+                                                                    <label class="form-check-label" >
                                                                         業務部
                                                                     </label>
                                                                 </div>
@@ -216,8 +216,8 @@
                                                             <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
                                                                 <div class="col" id="CenterSet" style="font-size:14px">
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultcontent2">
-                                                                        <label class="form-check-label" for="flexCheckDefaultcontent2">
+                                                                        <input class="form-check-input" type="checkbox" value="" name="content">
+                                                                        <label class="form-check-label">
                                                                             經理
                                                                         </label>
                                                                     </div>
@@ -246,8 +246,8 @@
                                                         <div class="row align-items-center" id="topborder">
                                                             <div class="col" id="CenterSet" style="font-size:14px">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaulttop">
-                                                                    <label class="form-check-label" for="flexCheckDefaulttop">
+                                                                    <input class="form-check-input" type="checkbox" id="chElt2" onclick="checkAll2();">
+                                                                    <label class="form-check-label" >
                                                                         業務部
                                                                     </label>
                                                                 </div>
@@ -265,8 +265,8 @@
                                                             <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
                                                                 <div class="col" id="CenterSet" style="font-size:14px">
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultcontent">
-                                                                        <label class="form-check-label" for="flexCheckDefaultcontent">
+                                                                        <input class="form-check-input" type="checkbox" value="" name="content2">
+                                                                        <label class="form-check-label">
                                                                             經理
                                                                         </label>
                                                                     </div>
@@ -459,5 +459,29 @@
             $("#custom2").css("display", "block");
         }
 
+    }
+</script>
+<script type="text/javascript">
+    function checkAll() {
+        var chElt = document.getElementById("chElt");
+        var checkedElt = chElt.checked;
+        console.log(checkedElt)
+        var allCheck = document.getElementsByName("content");
+        if (checkedElt) {
+            for (var i = 0; i < allCheck.length; i++) {
+                allCheck[i].checked = true;
+            }
+        } 
+    }
+    function checkAll2() {
+        var chElt = document.getElementById("chElt2");
+        var checkedElt = chElt.checked;
+        console.log(checkedElt)
+        var allCheck = document.getElementsByName("content2");
+        if (checkedElt) {
+            for (var i = 0; i < allCheck.length; i++) {
+                allCheck[i].checked = true;
+            }
+        }
     }
 </script>

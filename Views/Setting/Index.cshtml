@@ -323,7 +323,129 @@
                             </div>
                             <hr style="margin: 10px 20px 0px 20px" />
                             <div class="card-body">
-                                <div >
+                                <div id="editDiv" class="col align-self-center" style="margin:0 auto;text-align:center;display:none;">
+                                    <div class="p-2">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div>群組名稱 : </div>
+                                                    <input class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div>樣式設定 : </div>
+
+                                                    <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
+                                                        <option selected value="1">一般</option>
+                                                        <option value="2">彈性</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="editgeneral">
+                                        <div class="p-2">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div>開始時間 : </div>
+                                                        <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div>結束時間 : </div>
+                                                        <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div>休息時間設定 : </div>
+                                                        <input class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                        <div>分鐘</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row" style="float:right">
+                                                        <button class="btn btn-primary" type="submit" id="workonoffbutton"  style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                        <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="editelasticity" style="display:none;">
+                                        <div class="p-1">
+                                            <div class="row">
+                                                <b style="float:left;margin:0px 0px 0px 12px;">上班打卡時間設定</b>
+                                            </div>
+                                        </div>
+                                        <div class="p-2">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div>開始時間 : </div>
+                                                        <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div>結束時間 : </div>
+                                                        <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <div>休息時間設定 : </div>
+                                                        <input class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                        <div>分鐘</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-1">
+                                            <div class="row">
+                                                <b style="float:left;margin:0px 0px 0px 12px;">下班打卡時間設定</b>
+                                            </div>
+                                        </div>
+                                        <div class="p-2">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div>開始時間 : </div>
+                                                        <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div>結束時間 : </div>
+                                                        <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row" style="float:right">
+                                                        <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                        <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                     <div class="col align-self-center" id="WorkSettingbody"  style="margin:0 auto;text-align:center;display:none;">
                                         <div class="p-2">
                                             <div class="row">
@@ -447,7 +569,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -711,12 +833,28 @@
                     }
 
                 }
+                function showinfo2(values) {
+                    if (values == 1) {
+                        $("#editelasticity").css("display", "none");
+                        $("#editgeneral").css("display", "block");
+                    }
+                    else if (values == 2) {
+                        $("#editgeneral").css("display", "none");
+                        $("#editelasticity").css("display", "block");
+                    }
+
+                }
                 function showvalue(values) {
+                    var x = document.getElementById("editDiv");
+                    var y = document.getElementById("WorkSettingbody");
                     if (values == 0) {
                         $("#deletebutton").css("display", "none");
+                        x.style.display = "none";
                     }
                     else  {
                         $("#deletebutton").css("display", "block");
+                        x.style.display = "block";
+                        y.style.display = "none";
                     }
 
                 }
@@ -724,16 +862,20 @@
             <script>
                 function hideFunction() {
                     var x = document.getElementById("WorkSettingbody");
+                    var y = document.getElementById("editDiv");
                     if (x.style.display === "none") {
                         x.style.display = "block";
+                        y.style.display = "none";
                     } else {
                         x.style.display = "none";
                     }
                 }
                 function showFunction() {
                     var x = document.getElementById("WorkSettingbody");
+                    var y = document.getElementById("editDiv");
                     if (x.style.display === "none") {
                         x.style.display = "block";
+                        y.style.display = "none";
                     } 
                 }
             </script>
