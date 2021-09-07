@@ -87,38 +87,38 @@
         </div>
         @using (Html.BeginForm("SearchLeaveRecord", "LeaveRecords", FormMethod.Get))
         {
-                                                                                @Html.AntiForgeryToken()
-                                                                                <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
+            @Html.AntiForgeryToken()
+            <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
                                                                     
-                                                                                    <div class="row">
+                <div class="row">
                                                                     
-                                                                                        <div class="col-lg-6 col-md-6 col-12">
+                    <div class="col-lg-6 col-md-6 col-12">
                                                                     
-                                                                                            <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
+                        <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
                                                                     
-                                                                                        </div>
-                                                                    
-
-                                                                                        <div class="col-lg-5 col-md-5 col-12">
-                                                                    
-                                                                                            <i class="bi-calendar"></i> 日期：<input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
-                                                                    
-                                                                                        </div>
+                    </div>
                                                                     
 
-                                                                                        <div class="col-lg-1 col-md-1 col-12">
+                    <div class="col-lg-5 col-md-5 col-12">
                                                                     
-                                                                                            <div class="search-element">
+                        <i class="bi-calendar"></i> 日期：<input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
                                                                     
-                                                                                                <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                    </div>
                                                                     
-                                                                                            </div>
+
+                    <div class="col-lg-1 col-md-1 col-12">
                                                                     
-                                                                                        </div>
+                        <div class="search-element">
                                                                     
-                                                                                    </div>
+                            <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
                                                                     
-                                                                                </form>
+                        </div>
+                                                                    
+                    </div>
+                                                                    
+                </div>
+                                                                    
+            </form>
         }
 
         <div class="section-body" style="margin-top:25px">

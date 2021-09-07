@@ -47,46 +47,49 @@
                             </div>
                             <div>
                                 @*<div id="SmallTopBorder">
-                                        <div style=" display: flex; align-items: center; ">
-                                            <h5 id="Content">資料顯示對象</h5>
-                                        </div>
-                                    </div>*@
-                                <div id="SmallContentBorder" style="margin-left:0 ;border:1px solid #CCC">
-                                   
-                <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                    @foreach (var manager in managers)
-                    {
-                        <div class="row">
-                            <div class="col" id="CenterSet">
-                                <h5 id="textcenter">
-                                    @manager.Name
-                                </h5>
-                            </div>
-                            <div class="col" id="CenterSet">
-                                <h5 id="textcenter">
-                                    @manager.Department
-                                </h5>
-                            </div>
-                            <div class="col" id="CenterSet">
-                                <h5 id="textcenter">
-                                    @manager.Jobtitle
-                                </h5>
-                            </div>
-                            <div class="col" id="CenterSet">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin:0px auto;" id="select">
-                                    <option selected>ㄏㄏ</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                        </div>
-                    }
+            <div style=" display: flex; align-items: center; ">
+                <h5 id="Content">資料顯示對象</h5>
+            </div>
+        </div>*@
+                                @foreach (var manager in managers)
+                                {
+                                    <div id="SmallContentBorder" style="margin-left:0 ;border:1px solid #CCC">
 
-        </div>
-                                 
+
+                                        <div class="col align-self-center" style="margin:0 auto;text-align:center">
+
+                                            <div class="row">
+                                                <div class="col" id="CenterSet">
+                                                    <h5 id="textcenter">
+                                                        @manager.Name
+                                                    </h5>
+                                                </div>
+                                                <div class="col" id="CenterSet">
+                                                    <h5 id="textcenter">
+                                                        @manager.Department
+                                                    </h5>
+                                                </div>
+                                                <div class="col" id="CenterSet">
+                                                    <h5 id="textcenter">
+                                                        @manager.Jobtitle
+                                                    </h5>
+                                                </div>
+                                                <div class="col" id="CenterSet">
+                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin:0px auto;" id="select">
+                                                        <option selected>ㄏㄏ</option>
+                                                        <option value="1">One</option>
+                                                        <option value="2">Two</option>
+                                                        <option value="3">Three</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        
+
+                                    </div>}
                                 </div>
-                        </div>
                         <div>
                             @*<div id="SmallTopBorder">
                                     <h5 id="Content">資料顯示對象</h5>
@@ -148,7 +151,7 @@
                                 <h4 id="BigTitle">群組</h4>
                             </div>
                             <div class="col-md-2 offset-md-6">
-                                <button class="btn btn-primary" type="submit" id="smallbutton" style="background-color: #85B5FB; border: 1px solid #85B5FB;">新增群組</button>
+                                <button class="btn btn-primary" type="submit" id="smallbutton" style="background-color: #85B5FB; border: 1px solid #85B5FB;" data-toggle="modal" data-target="#exampleModal1">新增群組</button>
                             </div>
                         </div>
                     </div>
@@ -364,10 +367,9 @@
                                 </div>
                                 <div class="col-5" id="CenterSet">
                                     <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                        <option selected>全部</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option selected value="12">全部</option>
+                                        <option value="22">同部門</option>
+                                        <option value="32">自訂</option>
                                     </select>
                                 </div>
                             </div>
@@ -377,10 +379,9 @@
                                 </div>
                                 <div class="col-5" id="CenterSet">
                                     <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                        <option selected>全部</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option selected value="12">全部</option>
+                                        <option value="22">同部門</option>
+                                        <option value="32">自訂</option>
                                     </select>
                                 </div>
                             </div>
