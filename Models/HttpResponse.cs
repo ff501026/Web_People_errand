@@ -56,6 +56,14 @@ namespace AttendanceManagement.Models
         public static readonly string ManagerAll = "Companies/Get_All_Manager/"; //查看公司全部管理員
         public static readonly string EmployeeBoolRepeatEmail = "EmployeeInformations/BoolEmployeeInformationEmail?";//判斷EMAIL是否重複
         public static readonly string CompanyGetOrganization = "Companies/OrganizationChart/";//組織圖
+        public static readonly string CompanyGetAllGeneralWorktime = "Companies/GetAllGeneralWorkTime/";//查看公司全部一般上下班設定
+        public static readonly string CompanyGetAllFlexibleWorktime = "Companies/GetAllFlexibleWorkTime/";//查看公司全部彈性上下班設定
+        public static readonly string CompanyEditGeneralWorktime = "EmployeeGeneralWorktimes/update_general_worktime";//修改公司一般上下班設定
+        public static readonly string CompanyEditFlexibleWorktime = "EmployeeFlexibleWorktimes/update_flexible_worktime";//修改公司彈性上下班設定
+        public static readonly string CompanyAddGeneralWorktime = "EmployeeGeneralWorktimes/add_general_worktime";//新增公司一般上下班設定
+        public static readonly string CompanyAddFlexibleWorktime = "EmployeeFlexibleWorktimes/add_flexible_worktime";//新增公司彈性上下班設定
+        public static readonly string CompanyDeleteFlexibleWorktime = "EmployeeFlexibleWorktimes/DeleteFlexibleWorktime/";//刪除公司彈性上下班設定
+        public static readonly string CompanyDeleteGeneralWorktime = "EmployeeGeneralWorktimes/DeleteGeneralWorktime/";//刪除公司一般上下班設定
 
 
         public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL

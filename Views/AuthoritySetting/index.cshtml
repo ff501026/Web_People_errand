@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "權限設定";
-   List<AttendanceManagement.Models.Manager> managers = ViewBag.managers;//公司全部的管理員
+    List<AttendanceManagement.Models.Manager> managers = ViewBag.managers;//公司全部的管理員
+    List<AttendanceManagement.Models.Department> departments = ViewBag.departments;
+    List<AttendanceManagement.Models.JobTitle> jobTitles = ViewBag.jobtitles;
 }
 <style>
     h5{
@@ -161,17 +163,20 @@
                             <div class="card" style="border: 2px solid #CCC; border-radius: 4px;box-shadow:none;">
                                 <div class="card-header">
                                     <div class="row" style="padding:0px 10px 0px 0px">
-                                        <div class="col-5" style="position: relative; display: flex; align-items: center; ">
-                                            <div class="row" style="margin:0px 0px 0px -10px">
-                                                <h4 id="Content">群組名 : </h4>
-                                                <h4 id="Content">ㄏㄏ</h4>
-                                            </div>
+                                        <div class="col-10" style="padding-top:10px">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-3" style="padding:0">
+                                                            <h4 align="right" id="Content" style="float:right;margin-right:10px">群組名 : </h4>
+                                                        </div>
+                                                        <div class="col-md-9" style="padding-left:0;">
+                                                            <input value="ㄏㄏ"type="text" class="show" id="department_name" name="department_name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px;" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                         </div>
-                                        <div class="col-7">
-                                            <div class="row" style="float:right">
-                                                <button class="btn btn-primary" type="submit" id="smallbutton" style="background-color: #EBF2FA;  border: 1px solid #EBF2FA; "><img src="~/Content/images/edit-button.png" id="smallbuttonimg" /></button>
+                                        <div class="col-2" >
                                                 <button class="btn btn-primary" type="submit" id="smallbutton" style="background-color: #FFCCD1;   border: 1px solid #FFCCD1; "><img src="~/Content/images/delete.png" id="smallbuttonimg" /></button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -184,98 +189,108 @@
                                                     <h5 style="font-size:14px;">資料顯示對象</h5>
                                                 </div>
                                                 <div class="col-4" id="CenterSet" >
-                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="auditstate" onchange="showinfo(this[selectedIndex].value)">
-                                                        <option selected value="11">全部</option>
-                                                        <option value="21">同部門</option>
-                                                        <option value="31">自訂</option>
+                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="auditstate" onchange="showinfo(this[selectedIndex].value,'#custom')">
+                                                        <option selected value="1">全部</option>
+                                                        <option value="2">同部門</option>
+                                                        <option value="3">自訂</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div id="custom"  style="display:none;border:1px solid #dbdbdb;border-radius:4px;margin:0px 0px 10px 0px;">
-                                               
+                                               @foreach (var department in departments) {
                                                 <div class="col-12" id="CenterSet" style="width: 100%;">
                                                     <div class="col-12">
                                                         <div class="row align-items-center" id="topborder">
                                                             <div class="col" id="CenterSet" style="font-size:14px">
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="chElt" onclick="checkAll();">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="C1_@department.DepartmentId" onclick="checkAll('C1_@department.DepartmentId','1_@department.DepartmentId');">
                                                                     <label class="form-check-label" >
-                                                                        業務部
+                                                                        @department.Name
                                                                     </label>
                                                                 </div>
                                                             </div>
                                                             <div class="float-right" id="CenterSet">
-                                                                <button type="submit"  class="btn btn-danger btn-sm" data-toggle="collapse" data-target="#collapseContent2" aria-expanded="false" aria-controls="collapseContent2" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
+                                                                <button type="submit"  class="btn btn-danger btn-sm" data-toggle="collapse" data-target="#1 @department.DepartmentId" aria-expanded="false" aria-controls="1 @department.DepartmentId" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                   
                                                 <div class="col-12" id="CenterSet" style="width: 100%;">
                                                     <div class="col-12">
-                                                        <div class="collapse" id="collapseContent2">
+                                                        <div class="collapse" id="1 @department.DepartmentId">
+                                                            @foreach (var jobtitle in jobTitles)
+                                                            {
                                                             <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
                                                                 <div class="col" id="CenterSet" style="font-size:14px">
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" name="content">
+                                                                        <input class="form-check-input" type="checkbox" value="" name="1_@department.DepartmentId">
                                                                         <label class="form-check-label">
-                                                                            經理
+                                                                            @jobtitle.Name
                                                                         </label>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div>}
                                                         </div>
                                                     </div>
                                                 </div>
+                                                   
+                                               }
                                             </div>
                                             <div class="row">
                                                 <div class="col-8" id="CenterSet">
                                                     <h5 id="Content">可審核對象</h5>
                                                 </div>
                                                 <div class="col-4" id="CenterSet" >
-                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" onchange="showinfo(this[selectedIndex].value)">
-                                                        <option selected value="12">全部</option>
-                                                        <option value="22">同部門</option>
-                                                        <option value="32">自訂</option>
+                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" onchange="showinfo(this[selectedIndex].value,'#custom2')">
+                                                        <option selected value="1">全部</option>
+                                                        <option value="2">同部門</option>
+                                                        <option value="3">自訂</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div id="custom2" style="display: none;border: 1px solid #dbdbdb; border-radius: 4px; margin; margin: 0px 0px 10px 0px;">
-                                            
-                                                <div class="col-12" id="CenterSet" style="width: 100%;">
-                                                    <div class="col-12">
-                                                        <div class="row align-items-center" id="topborder">
-                                                            <div class="col" id="CenterSet" style="font-size:14px">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" id="chElt2" onclick="checkAll2();">
-                                                                    <label class="form-check-label" >
-                                                                        業務部
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="float-right" id="CenterSet">
-                                                                <button type="submit"  class="btn btn-danger btn-sm" data-toggle="collapse" data-target="#collapseContent" aria-expanded="false" aria-controls="collapseContent" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12" id="CenterSet" style="width: 100%;">
-                                                    <div class="col-12">
-                                                        <div class="collapse" id="collapseContent">
-                                                            <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
+                                                @foreach (var department in departments)
+                                                {
+                                                    <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                        <div class="col-12">
+                                                            <div class="row align-items-center" id="topborder">
                                                                 <div class="col" id="CenterSet" style="font-size:14px">
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" value="" name="content2">
+                                                                        <input class="form-check-input" type="checkbox" id="C2_@department.DepartmentId" onclick="checkAll('C2_@department.DepartmentId','2_@department.DepartmentId');">
                                                                         <label class="form-check-label">
-                                                                            經理
+                                                                            @department.Name
                                                                         </label>
                                                                     </div>
                                                                 </div>
+
+                                                                <div class="float-right" id="CenterSet">
+                                                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="collapse" data-target="#2 @department.DepartmentId" aria-expanded="false" aria-controls="2 @department.DepartmentId" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                        <div class="col-12">
+                                                            <div class="collapse" id="2 @department.DepartmentId">
+                                                                @foreach (var jobtitle in jobTitles)
+                                                                {
+                                                                    <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
+                                                                        <div class="col" id="CenterSet" style="font-size:14px">
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input" type="checkbox" value="" name="2_@department.DepartmentId">
+                                                                                <label class="form-check-label">
+                                                                                    @jobtitle.Name
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    }
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                    }
                                                 </div>
-                                            </div>
                                             <div class="row">
                                                 <div class="col-8" id="CenterSet">
                                                     <h5 style="font-size:14px">上下班時間設定</h5>
@@ -358,76 +373,156 @@
                             </div>
                         </div>
                         <hr style="margin: 0px 20px 0px 20px" />
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-7" id="CenterSet">
-                                    <div>
-                                        <h5 id="Content">資料顯示對象</h5>
+                        <div style="height: 320px; overflow-y: auto;overflow-x:hidden;">
+                            <div class="card-body" style="margin: 0 auto;">
+                                <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                    <div class="row">
+                                        <div class="col-8" id="CenterSet">
+                                            <h5 style="font-size:14px;">資料顯示對象</h5>
+                                        </div>
+                                        <div class="col-4" id="CenterSet">
+                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="auditstate" onchange="showinfo(this[selectedIndex].value,'#custom3')">
+                                                <option selected value="1">全部</option>
+                                                <option value="2">同部門</option>
+                                                <option value="3">自訂</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="custom3" style="display:none;border:1px solid #dbdbdb;border-radius:4px;margin:0px 0px 10px 0px;">
+                                        @foreach (var department in departments)
+                                        {
+                                            <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                <div class="col-12">
+                                                    <div class="row align-items-center" id="topborder">
+                                                        <div class="col" id="CenterSet" style="font-size:14px">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" value="" id="C3_@department.DepartmentId" onclick="checkAll('C3_@department.DepartmentId','3_@department.DepartmentId');">
+                                                                <label class="form-check-label">
+                                                                    @department.Name
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="float-right" id="CenterSet">
+                                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="collapse" data-target="#3 @department.DepartmentId" aria-expanded="false" aria-controls="3 @department.DepartmentId" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                <div class="col-12">
+                                                    <div class="collapse" id="3 @department.DepartmentId">
+                                                        @foreach (var jobtitle in jobTitles)
+                                                        {
+                                                            <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
+                                                                <div class="col" id="CenterSet" style="font-size:14px">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" value="" name="3_@department.DepartmentId">
+                                                                        <label class="form-check-label">
+                                                                            @jobtitle.Name
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8" id="CenterSet">
+                                            <h5 id="Content">可審核對象</h5>
+                                        </div>
+                                        <div class="col-4" id="CenterSet">
+                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" onchange="showinfo(this[selectedIndex].value,'#custom4')">
+                                                <option selected value="1">全部</option>
+                                                <option value="2">同部門</option>
+                                                <option value="3">自訂</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="custom4" style="display: none;border: 1px solid #dbdbdb; border-radius: 4px; margin; margin: 0px 0px 10px 0px;">
+                                        @foreach (var department in departments)
+                                        {
+                                            <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                <div class="col-12">
+                                                    <div class="row align-items-center" id="topborder">
+                                                        <div class="col" id="CenterSet" style="font-size:14px">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="C4_@department.DepartmentId" onclick="checkAll('C4_@department.DepartmentId','4_@department.DepartmentId');">
+                                                                <label class="form-check-label">
+                                                                    @department.Name
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="float-right" id="CenterSet">
+                                                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="collapse" data-target="#4 @department.DepartmentId" aria-expanded="false" aria-controls="4 @department.DepartmentId" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                <div class="col-12">
+                                                    <div class="collapse" id="4 @department.DepartmentId">
+                                                        @foreach (var jobtitle in jobTitles)
+                                                        {
+                                                            <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
+                                                                <div class="col" id="CenterSet" style="font-size:14px">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" value="" name="4_@department.DepartmentId">
+                                                                        <label class="form-check-label">
+                                                                            @jobtitle.Name
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8" id="CenterSet">
+                                            <h5 style="font-size:14px">上下班時間設定</h5>
+                                        </div>
+                                        <div class="col-4" id="CenterSet">
+                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select">
+                                                <option selected>可編輯</option>
+                                                <option value="不可編輯">不可編輯</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8" id="CenterSet">
+                                            <h5 style="font-size:14px">部門與職稱設定</h5>
+                                        </div>
+                                        <div class="col-4" id="CenterSet">
+                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select">
+                                                <option selected>可編輯</option>
+                                                <option value="不可編輯">不可編輯</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8" id="CenterSet">
+                                            <h5 id="Content">打卡位置設定</h5>
+                                        </div>
+                                        <div class="col-4" id="CenterSet">
+                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select">
+                                                <option selected>可編輯</option>
+                                                <option value="不可編輯">不可編輯</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr style="margin: 15px 0px 15px 0px" />
+                                    <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                        <button class="btn btn-primary" type="submit" style="background-color: #DF5B57; border: 1px solid #DF5B57; border-radius: 4px; margin: 5px; ">取消</button>
+                                        <button class="btn btn-primary" type="submit" style="background-color: #6CA7ED; border: 1px solid #6CA7ED; border-radius: 4px; margin: 5px; ">儲存</button>
                                     </div>
                                 </div>
-                                <div class="col-5" id="CenterSet">
-                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                        <option selected value="12">全部</option>
-                                        <option value="22">同部門</option>
-                                        <option value="32">自訂</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-7" id="CenterSet">
-                                    <h5 id="Content">可審核對象</h5>
-                                </div>
-                                <div class="col-5" id="CenterSet">
-                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                        <option selected value="12">全部</option>
-                                        <option value="22">同部門</option>
-                                        <option value="32">自訂</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-7" id="CenterSet">
-                                    <h5 style="font-size:14px">上下班時間設定</h5>
-                                </div>
-                                <div class="col-5" id="CenterSet">
-                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                        <option selected>可編輯</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-7" id="CenterSet">
-                                    <h5 style="font-size:14px">部門與職稱設定</h5>
-                                </div>
-                                <div class="col-5" id="CenterSet">
-                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px ">
-                                        <option selected>不可編輯</option>
-                                        <option value="1">one</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-7" id="CenterSet">
-                                    <h5 id="Content">打卡位置設定</h5>
-                                </div>
-                                <div class="col-5" id="CenterSet">
-                                    <select data-width="200px" class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                        <option selected>不可編輯</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <hr style="margin: 10px 0px 10px 0px" />
-                            <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                                <button class="btn btn-primary" type="submit" style="background-color: #DF5B57; border: 1px solid #DF5B57; border-radius: 4px; margin: 5px; ">取消</button>
-                                <button class="btn btn-primary" type="submit" style="background-color: #6CA7ED; border: 1px solid #6CA7ED; border-radius: 4px; margin: 5px; ">儲存</button>
                             </div>
                         </div>
                     </div>
@@ -439,45 +534,23 @@
 </div>
 
 <script type="text/javascript">
-    function showinfo(values) {
-        if (values == 11) {
-            $("#custom").css("display", "none");
+    function showinfo(values,values1) {
+        if (values == 1) {
+            $(values1).css("display", "none");
         }
-        if (values == 21) {
-            $("#custom").css("display", "none");
+        else if (values == 2) {
+            $(values1).css("display", "none");
         }
-        if (values == 31) {
-            $("#custom").css("display", "block");
+        else if (values == 3) {
+            $(values1).css("display", "block");
         }
-        if (values == 12) {
-            $("#custom2").css("display", "none");
-        }
-        if (values == 22) {
-            $("#custom2").css("display", "none");
-        }
-        if (values == 32) {
-            $("#custom2").css("display", "block");
-        }
+    }
 
-    }
-</script>
-<script type="text/javascript">
-    function checkAll() {
-        var chElt = document.getElementById("chElt");
+    function checkAll(values1, values) {
+        var chElt = document.getElementById(values1);
         var checkedElt = chElt.checked;
         console.log(checkedElt)
-        var allCheck = document.getElementsByName("content");
-        if (checkedElt) {
-            for (var i = 0; i < allCheck.length; i++) {
-                allCheck[i].checked = true;
-            }
-        } 
-    }
-    function checkAll2() {
-        var chElt = document.getElementById("chElt2");
-        var checkedElt = chElt.checked;
-        console.log(checkedElt)
-        var allCheck = document.getElementsByName("content2");
+        var allCheck = document.getElementsByName(values);
         if (checkedElt) {
             for (var i = 0; i < allCheck.length; i++) {
                 allCheck[i].checked = true;
@@ -485,3 +558,4 @@
         }
     }
 </script>
+

@@ -220,7 +220,7 @@ namespace AttendanceManagement.Models
 
             return false;
         }
-    }//公司上下班時間方法
+    }//公司上下班時間方法(初版)
     class CompanyManagerModel : HttpResponse
     {
         public static async Task<string> GetManagerKey(string company_hash)
@@ -440,6 +440,49 @@ namespace AttendanceManagement.Models
             return false;
         }
     }//公司地址方法
+    class CompanyWorkTimeModel : HttpResponse //公司上下班時間方法(新版)
+    {
+        public static async Task<List<EmployeeGeneralWorktime>> Get_GeneralWorktime(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetAllGeneralWorktime + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<EmployeeGeneralWorktime> employeeGeneralWorktimes = JsonConvert.DeserializeObject<List<EmployeeGeneralWorktime>>(GetResponse);
+            return employeeGeneralWorktimes;
+        }
+
+        public static async Task<List<EmployeeFlexibleWorktime>> Get_FlexibleWorktime(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetAllFlexibleWorktime + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<EmployeeFlexibleWorktime> employeeFlexibleWorktimes = JsonConvert.DeserializeObject<List<EmployeeFlexibleWorktime>>(GetResponse);
+            return employeeFlexibleWorktimes;
+        }
+
+    }//公司上下班時間方法(新版)
+    public partial class EmployeeGeneralWorktime//取得一般上下班設定
+    {
+        public string GeneralWorktimeId { get; set; }
+        public string Name { get; set; }
+        public TimeSpan WorkTime { get; set; }
+        public TimeSpan RestTime { get; set; }
+        public int BreakTime { get; set; }
+    }
+    public partial class EmployeeFlexibleWorktime //取得彈性上下班設定
+    {
+        public string FlexibleWorktimeId { get; set; }
+        public string Name { get; set; }
+        public TimeSpan WorkTimeStart { get; set; }
+        public TimeSpan WorkTimeEnd { get; set; }
+        public TimeSpan RestTimeStart { get; set; }
+        public TimeSpan RestTimeEnd { get; set; }
+        public int BreakTime { get; set; }
+    }
     public class ManagerKeyData
     {
         public string HashAccount { get; set; }//員工編號

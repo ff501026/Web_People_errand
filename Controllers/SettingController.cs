@@ -24,14 +24,22 @@ namespace AttendanceManagement.Controllers
             List<JobTitle> jobtitle = await JobtitleModel.Get_JobtitleAsync(Session["company_hash"].ToString());
             //輸入公司代碼取得地址
             List<CompanyAddress> companyAddresses = await CompanyAddressModel.Get_CompanyAddress(Session["company_hash"].ToString());
-            //取得公司上下班時間
+            //取得公司上下班時間(舊版)
             Company_Time company_Times = await CompanyTimeModel.GetCompany_Times(Session["company_hash"].ToString());
+            //取得公司一般上下班時間(新版)
+            List<EmployeeGeneralWorktime> GeneralWorktime = await CompanyWorkTimeModel.Get_GeneralWorktime(Session["company_hash"].ToString());
+            //取得公司彈性上下班時間(新版)
+            List<EmployeeFlexibleWorktime> FlexibleWorktime = await CompanyWorkTimeModel.Get_FlexibleWorktime(Session["company_hash"].ToString());
+
 
             ViewBag.departments = department;//部門名稱
             ViewBag.jobtitles = jobtitle;//職稱
-            ViewBag.company_time = company_Times;
-            ViewBag.company_address = companyAddresses;
-            
+            ViewBag.company_time = company_Times;//公司上下班時間(舊版)
+            ViewBag.company_address = companyAddresses;//公司地址
+            ViewBag.general_worktime = GeneralWorktime;//公司一般上下班時間(舊版)
+            ViewBag.flexible_worktime = FlexibleWorktime;//公司一般上下班時間(舊版)
+
+
             return View();
         }
        
