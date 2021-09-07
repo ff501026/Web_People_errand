@@ -21,16 +21,16 @@
                             <div style="margin:10px 0px 10px 0px;">
                                 <div class="col align-self-center" style="margin:0 auto;text-align:center">
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col" style="font-weight:bold;">
                                             管理員姓名
                                         </div>
-                                        <div class="col">
+                                        <div class="col" style="font-weight:bold">
                                             部門
                                         </div>
-                                        <div class="col">
+                                        <div class="col" style="font-weight:bold">
                                             職稱
                                         </div>
-                                        <div class="col">
+                                        <div class="col" style="font-weight:bold">
                                             套用群組
                                         </div>
                                     </div>
@@ -38,25 +38,28 @@
                             </div>
                             <div>
                                 @*<div id="SmallTopBorder">
-                                        <div style=" display: flex; align-items: center; ">
-                                            <h5 id="Content">資料顯示對象</h5>
-                                        </div>
-                                    </div>*@
-                                <div id="SmallContentBorder" style="margin-left:0 ;border:1px solid #CCC">
-                                    <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                                        @foreach (var manager in managers)
-                                        {
+            <div style=" display: flex; align-items: center; ">
+                <h5 id="Content">資料顯示對象</h5>
+            </div>
+        </div>*@
+                                @foreach (var manager in managers)
+                                {
+                                    <div id="SmallContentBorder" style="margin-left:0 ;border:1px solid #CCC">
+                                        <div class="col align-self-center" style="margin:0 auto;text-align:center">
+
                                             <div class="row">
-                                                <div class="col">
-                                                    @manager.Name
+                                                <div class="col align-self-center" style="margin:0 auto;text-align:left">
+                                                    <img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@manager.Name
                                                 </div>
-                                                <div class="col">
+                                                <div class="col align-self-center" style="margin:0 auto;text-align:center">
+
                                                     @manager.Department
                                                 </div>
-                                                <div class="col">
+                                                <div class="col align-self-center" style="margin:0 auto;text-align:center">
+
                                                     @manager.Jobtitle
                                                 </div>
-                                                <div class="col">
+                                                <div class="col" style="margin:0 auto;text-align:center">
                                                     <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
                                                         <option selected>ㄏㄏ</option>
                                                         <option value="1">One</option>
@@ -65,10 +68,10 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        }
-                                    </div>
+                                            
+                                        </div>
+                                    </div>}
                                 </div>
-                            </div>
                             <div>
                                 @*<div id="SmallTopBorder">
                                         <h5 id="Content">資料顯示對象</h5>
@@ -167,10 +170,10 @@
                                             </div>
                                             <div class="col-5" id="CenterSet">
                                                 <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                    <option selected>全部</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    <option value="1" selected>全部</option>
+                                                    <option value="2">直屬員工</option>
+                                                    <option value="3">同部門</option>
+                                                    <option value="4">自訂</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -180,10 +183,10 @@
                                             </div>
                                             <div class="col-5" id="CenterSet">
                                                 <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                    <option selected>全部</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    <option value="1" selected>全部</option>
+                                                    <option value="2">直屬員工</option>
+                                                    <option value="3">同部門</option>
+                                                    <option value="4">自訂</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -193,10 +196,8 @@
                                             </div>
                                             <div class="col-5" id="CenterSet">
                                                 <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                    <option selected>可編輯</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    <option value="@true" selected>可編輯</option>
+                                                    <option value="@false">不可編輯</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -206,10 +207,8 @@
                                             </div>
                                             <div class="col-5" id="CenterSet">
                                                 <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px ">
-                                                    <option selected>不可編輯</option>
-                                                    <option value="1">one</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    <option value="@true" selected>可編輯</option>
+                                                    <option value="@false">不可編輯</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -219,10 +218,8 @@
                                             </div>
                                             <div class="col-5" id="CenterSet">
                                                 <select data-width="200px" class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                                    <option selected>不可編輯</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    <option value="@true" selected>可編輯</option>
+                                                    <option value="@false">不可編輯</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -280,10 +277,10 @@
                                     </div>
                                     <div class="col-5" id="CenterSet">
                                         <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                            <option selected>全部</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option value="1" selected>全部</option>
+                                            <option value="2">直屬員工</option>
+                                            <option value="3">同部門</option>
+                                            <option value="4">自訂</option>
                                         </select>
                                     </div>
                                 </div>
@@ -293,10 +290,10 @@
                                     </div>
                                     <div class="col-5" id="CenterSet">
                                         <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                            <option selected>全部</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option value="1" selected>全部</option>
+                                            <option value="2">直屬員工</option>
+                                            <option value="3">同部門</option>
+                                            <option value="4">自訂</option>
                                         </select>
                                     </div>
                                 </div>
@@ -306,10 +303,8 @@
                                     </div>
                                     <div class="col-5" id="CenterSet">
                                         <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                            <option selected>可編輯</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option value="@true"selected>可編輯</option>
+                                            <option value="@false">不可編輯</option>
                                         </select>
                                     </div>
                                 </div>
@@ -319,10 +314,8 @@
                                     </div>
                                     <div class="col-5" id="CenterSet">
                                         <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px ">
-                                            <option selected>不可編輯</option>
-                                            <option value="1">one</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option value="@true" selected>可編輯</option>
+                                            <option value="@false">不可編輯</option>
                                         </select>
                                     </div>
                                 </div>
@@ -332,10 +325,8 @@
                                     </div>
                                     <div class="col-5" id="CenterSet">
                                         <select data-width="200px" class="form-select form-select-sm" aria-label=".form-select-sm example" id="select">
-                                            <option selected>不可編輯</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option value="@true" selected>可編輯</option>
+                                            <option value="@false">不可編輯</option>
                                         </select>
                                     </div>
                                 </div>
