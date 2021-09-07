@@ -3819,7 +3819,7 @@ input:checked + .slider .off {
 }
 /*組織圖*/
 #OrganizationTop {
-    margin: 0px 0px 0px 30px;
+    margin: 0px 0px 0px 20px;
     list-style: none;
     line-height: 2em;
     font-family: Arial;
@@ -3832,23 +3832,23 @@ input:checked + .slider .off {
 
     #OrganizationContent::before {
         position: absolute;
-        left: -15px;
-        top: 0px;
+        left: 15px;
+        top: -17px;
         content: '';
         display: block;
-        border-left: 1px solid #ddd;
-        height: 1em;
-        border-bottom: 1px solid #ddd;
-        width: 10px;
+        border-left: 2px solid #D5E3D6;
+        height: 2em;
+        border-bottom: 2px solid #D5E3D6;
+        width: 20px;
     }
 
     #OrganizationContent::after {
         position: absolute;
-        left: -15px;
-        bottom: -7px;
+        left: -30px;
+        bottom: -20px;
         content: '';
         display: block;
-        border-left: 1px solid #ddd;
+        border-left: 2px solid #D5E3D6;
         height: 100%;
     }
 
@@ -3856,7 +3856,7 @@ input:checked + .slider .off {
         margin: 0px 0px 0px -5px;
     }
 
-        #OrganizationContent .root:before {
+        #OrganizationContent.root::before {
             display: none;
         }
 
@@ -3954,7 +3954,7 @@ input:checked + .slider .off {
     border-radius: 4px;
     margin: 5px;
 }
-#inputsetting {
+    #inputsetting {
     width: 72%;
     margin: 0px 0px 0px 10px;
 }
