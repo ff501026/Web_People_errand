@@ -30,16 +30,17 @@ namespace AttendanceManagement.Controllers
             List<EmployeeGeneralWorktime> GeneralWorktime = await CompanyWorkTimeModel.Get_GeneralWorktime(Session["company_hash"].ToString());
             //取得公司彈性上下班時間(新版)
             List<EmployeeFlexibleWorktime> FlexibleWorktime = await CompanyWorkTimeModel.Get_FlexibleWorktime(Session["company_hash"].ToString());
+            //取得員工上下班時間(新版)
+            List<EmployeeWorkTime> employeeWorkTimes = await CompanyWorkTimeModel.Get_EmployeeWorkTime(Session["company_hash"].ToString());
 
 
             ViewBag.departments = department;//部門名稱
             ViewBag.jobtitles = jobtitle;//職稱
             ViewBag.company_time = company_Times;//公司上下班時間(舊版)
             ViewBag.company_address = companyAddresses;//公司地址
-            ViewBag.general_worktime = GeneralWorktime;//公司一般上下班時間(舊版)
-            ViewBag.flexible_worktime = FlexibleWorktime;//公司一般上下班時間(舊版)
-
-
+            ViewBag.general_worktime = GeneralWorktime;//公司一般上下班時間(新版)
+            ViewBag.flexible_worktime = FlexibleWorktime;//公司彈性上下班時間(新版)
+            ViewBag.employeeWorkTimes = employeeWorkTimes;//員工上下班時間(新版)
             return View();
         }
        
@@ -74,6 +75,196 @@ namespace AttendanceManagement.Controllers
                     return Content($"<script>alert('密碼輸入錯誤！請重新再試！');history.go(-1);</script>");
             }
             
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateEmployeeWorkTime(int n_department, int n_jobtitle, string updateworktime)
+        {
+            bool result = await CompanyWorkTimeModel.Update_EmployeeWorkTime(n_department, n_jobtitle, updateworktime);
+            if(result)
+                return Content($"<script>window.location='/Setting/index';</script>");
+            else
+                return Content($"<script>alert('更新失敗！請重新再試！{n_department},{n_jobtitle},{updateworktime}');history.go(-1);</script>");
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteWorktime(string DeleteId)
+        {
+            if (DeleteId.Substring(0, 1) == "G")
+            {
+                bool result3 = await CompanyWorkTimeModel.Renew_EmployeeWorkTime(DeleteId, "");
+                if (result3)
+                {
+                    bool result = await CompanyWorkTimeModel.Delete_GeneralWorktime(DeleteId);
+                    if (result)
+                        return RedirectToAction("index");
+                    else
+                        return Content($"<script>alert('刪除失敗！如有問題請連繫後台!');window.location='/Setting/index'</script>");
+                }
+                else
+                    return Content($"<script>alert('更新失敗！請重新再試！');history.go(-1);</script>");
+
+            }
+            else 
+            {
+                bool result3 = await CompanyWorkTimeModel.Renew_EmployeeWorkTime(DeleteId, "");
+                if (result3) 
+                {
+                    bool result = await CompanyWorkTimeModel.Delete_FlexibleWorktime(DeleteId);
+                    if (result)
+                        return RedirectToAction("index");
+                    else
+                        return Content($"<script>alert('刪除失敗！如有問題請連繫後台!');window.location='/Setting/index'</script>");
+
+                }
+                else
+                    return Content($"<script>alert('更新失敗！請重新再試！');history.go(-1);</script>");
+
+                
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddWorktime(string Name, int auditstate, string WorkTime, string RestTime, int? BreakTime, string WorkTimeStart, string WorkTimeEnd, string RestTimeStart, string RestTimeEnd, int? BreakTime2)
+        {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
+            if (BreakTime == null)
+            {
+                BreakTime = 0;
+            }
+            if (BreakTime2 == null)
+            {
+                BreakTime2 = 0;
+            }
+            DateTime dt1 = Convert.ToDateTime(WorkTimeStart);
+            DateTime dt2 = Convert.ToDateTime(WorkTimeEnd);
+            DateTime dt3 = Convert.ToDateTime(RestTimeStart);
+            DateTime dt4 = Convert.ToDateTime(RestTimeEnd);
+            if (auditstate == 1)
+            {
+                string result2 = await CompanyWorkTimeModel.Add_GeneralWorktime(Session["company_hash"].ToString(), Name, WorkTime, RestTime, BreakTime);
+                if (!result2.Equals(""))
+                    return Content($"<script>alert('新增成功！');window.location='/Setting/index';</script>");
+                else
+                    return Content($"<script>alert('新增失敗！如有問題請連繫後台!');window.location='/Setting/index'</script>");
+            }
+            else 
+            {
+                if (DateTime.Compare(dt1, dt2) == 0 || DateTime.Compare(dt3, dt4) == 0)
+                {
+                    return Content($"<script>alert('開始時間不能等於結束時間!');window.location='/Setting/index';</script>");
+                }
+                string result2 = await CompanyWorkTimeModel.Add_FlexibleWorktime(Session["company_hash"].ToString(), Name, WorkTimeStart, WorkTimeEnd, RestTimeStart, RestTimeEnd, BreakTime2);
+                if (!result2.Equals(""))
+                    return Content($"<script>alert('新增成功！');window.location='/Setting/index';</script>");
+                else
+                    return Content($"<script>alert('新增失敗！如有問題請連繫後台!');window.location='/Setting/index'</script>");
+
+            }
+        }
+
+            [HttpPost]
+        public async Task<ActionResult> EditWorktime(string id, string old_state,string Name,string auditstate, string WorkTime,string RestTime,int? BreakTime,string WorkTimeStart,string WorkTimeEnd,string RestTimeStart,string RestTimeEnd,int? BreakTime2)
+        {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
+            if (BreakTime == null) 
+            {
+                BreakTime = 0;
+            }
+            if (BreakTime2 == null)
+            {
+                BreakTime2 = 0;
+            }
+            DateTime dt1 = Convert.ToDateTime(WorkTimeStart);
+            DateTime dt2 = Convert.ToDateTime(WorkTimeEnd);
+            DateTime dt3 = Convert.ToDateTime(RestTimeStart);
+            DateTime dt4 = Convert.ToDateTime(RestTimeEnd);
+
+            if (auditstate.Equals(old_state))
+            {
+                if (old_state.Substring(5, 1).Equals("G"))//更新一般
+                {
+                    bool result = await CompanyWorkTimeModel.Edit_GeneralWorktime(id, Name, WorkTime, RestTime, BreakTime);
+                    if (result)
+                        return Content($"<script>alert('更新成功！');window.location='/Setting/index';</script>");
+                    else
+                        return Content($"<script>alert('更新失敗！如有問題請連繫後台!');window.location='/Setting/index';</script>");
+                }
+                else //更新彈性
+                {
+                    if (DateTime.Compare(dt1, dt2) == 0 || DateTime.Compare(dt3, dt4) == 0)
+                    {
+                        return Content($"<script>alert('開始時間不能等於結束時間!');window.location='/Setting/index';</script>");
+                    }
+                    bool result = await CompanyWorkTimeModel.Edit_FlexibleWorktime(id, Name, WorkTimeStart, WorkTimeEnd, RestTimeStart, RestTimeEnd, BreakTime2);
+                    if (result)
+                        return Content($"<script>alert('更新成功！');window.location='/Setting/index';</script>");
+                    else
+                        return Content($"<script>alert('更新失敗！如有問題請連繫後台!');window.location='/Setting/index';</script>");
+
+                }
+
+            }
+            else 
+            {
+                if (old_state.Substring(5, 1).Equals("G"))//刪除一般新增彈性
+                {
+                    if (DateTime.Compare(dt1, dt2) == 0 || DateTime.Compare(dt3, dt4) == 0)
+                    {
+                        return Content($"<script>alert('開始時間不能等於結束時間!');window.location='/Setting/index';</script>");
+                    }
+                    string new_worktimeid = await CompanyWorkTimeModel.Add_FlexibleWorktime(Session["company_hash"].ToString(), Name, WorkTimeStart, WorkTimeEnd, RestTimeStart, RestTimeEnd, BreakTime2);
+                    if (!new_worktimeid.Equals(""))
+                    {
+                        bool result3 = await CompanyWorkTimeModel.Renew_EmployeeWorkTime(id, new_worktimeid);
+                        if (result3) 
+                        {
+                            bool result = await CompanyWorkTimeModel.Delete_GeneralWorktime(id);
+                            if (result)
+                                return Content($"<script>alert('更新成功！');window.location='/Setting/index';</script>");
+                            else
+                                return Content($"<script>alert('更新失敗！如有問題請連繫後台!{Session["company_hash"].ToString()},{Name},{WorkTimeStart},{WorkTimeEnd},{RestTimeStart},{RestTimeEnd},{BreakTime2}');window.location='/Setting/index';</script>");
+                        }
+                        else
+                            return Content($"<script>alert('更新失敗！請重新再試！');history.go(-1);</script>");
+                    }
+                    else
+                        return Content($"<script>alert('更新失敗！如有問題請連繫後台!');window.location='/Setting/index'</script>");
+
+                }
+                else //刪除彈性新增一般
+                {
+                    string new_worktimeid = await CompanyWorkTimeModel.Add_GeneralWorktime(Session["company_hash"].ToString(), Name, WorkTime, RestTime, BreakTime);
+                    if (!new_worktimeid.Equals(""))
+                    {
+                        bool result3 = await CompanyWorkTimeModel.Renew_EmployeeWorkTime(id, new_worktimeid);
+                        if (result3) 
+                        {
+                            bool result = await CompanyWorkTimeModel.Delete_FlexibleWorktime(id);
+                            if (result)
+                                return Content($"<script>alert('更新成功！');window.location='/Setting/index';</script>");
+                            else
+                                return Content($"<script>alert('更新失敗！如有問題請連繫後台!{Session["company_hash"].ToString()},{Name},{WorkTimeStart},{WorkTimeEnd},{RestTimeStart},{RestTimeEnd},{BreakTime2}');window.location='/Setting/index';</script>");
+
+                        }
+                        else
+                            return Content($"<script>alert('更新失敗！請重新再試！');history.go(-1);</script>");
+
+                    }
+                    else
+                        return Content($"<script>alert('更新失敗！如有問題請連繫後台!');window.location='/Setting/index'</script>");
+
+                 }
+            }
+                
+
         }
 
         [HttpPost]
@@ -129,7 +320,7 @@ namespace AttendanceManagement.Controllers
                 result = await JobtitleModel.Add_Jobtitle(Session["company_hash"].ToString(), jobtitle_name);
                 if (result)
                 {
-                    return RedirectToAction("index");
+                    return Content($"<script>alert('新增失敗！如有問題請連繫後台!');history.go(-1);</script>");
                 }
                 else
                     return Content($"<script>alert('新增失敗！如有問題請連繫後台!');history.go(-1);</script>");

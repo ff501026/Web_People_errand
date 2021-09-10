@@ -4,6 +4,13 @@
     List<AttendanceManagement.Models.LeaveRecord> reviewleaveRecords = ViewBag.review_leaverecord;
     List<AttendanceManagement.Models.LeaveRecord> passleaveRecords = ViewBag.pass_leaverecord;
 }
+<script type="text/javascript">
+    window.onload = function () {
+        var _offset = sessionStorage.getItem("toTop");
+        $(document).scrollTop(_offset);
+        sessionStorage.clear();
+    };
+</script>
 <style>
     .active {
         color: #ffffff;
@@ -89,8 +96,8 @@
                                                                     {
                                                     <div class="row" style="margin-top:20px">
                                                         <div class="col-12 col-lg-12 text-center">
-                                                            <button id="Button" name="Button" value="SaveButton" type="submit" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
-                                                            <button id="Button" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
+                                                            <button id="Button" name="Button" onclick="set();" value="SaveButton" type="submit" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
+                                                            <button id="Button" name="Button" onclick="set();" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
                                                         </div>
                                                     </div>}
                                                                 </div>
@@ -132,7 +139,7 @@
                                                                     
                         <div class="search-element">
                                                                     
-                            <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                            <button id="button" name="button" onclick="set();" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
                                                                     
                         </div>
                                                                     
@@ -219,4 +226,9 @@
 
     </section>
 </div>
-
+<script type="text/javascript">
+    function set() {
+        sessionStorage.removeItem("toTop");
+        sessionStorage.setItem("toTop", $(window).scrollTop());
+    }
+</script>

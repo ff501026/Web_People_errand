@@ -224,6 +224,7 @@ namespace AttendanceManagement.Models
         public string JobTitle { get; set; }//員工職稱
         public string Email { get; set; }//員工電子郵件
         public string PhoneCode { get; set; }//員工驗證碼(phone_code)
+        public string WorktimeId { get; set; }//上下班代碼
         public bool? Enabled { get; set; }//使用狀態
     }//已審核員工資料
     public class SetEmployee

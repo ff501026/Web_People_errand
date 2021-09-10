@@ -3,6 +3,11 @@
     ViewBag.Title = "打卡紀錄";
     List<AttendanceManagement.Models.Work_Record> work_record = ViewBag.workrecord;
     AttendanceManagement.Models.Company_Time company_Times = ViewBag.company_time;
+    List<AttendanceManagement.Models.EmployeeGeneralWorktime> generalWorktimes = ViewBag.general_worktime;
+    List<AttendanceManagement.Models.EmployeeFlexibleWorktime> flexibleWorktimes = ViewBag.flexible_worktime;
+    List<AttendanceManagement.Models.EmployeeWorkTime> employeeWorkTimes = ViewBag.employeeWorkTimes;
+    List<AttendanceManagement.Models.PassEmployee> passEmployees = ViewBag.pass_employee; //已審核資料
+
     int num = ViewBag.Num;//打卡記錄總共有幾筆
     int number = 0;//編號
 }
@@ -57,34 +62,71 @@
                                     </tr>
                                     @for (int i = num - 1; i >= 0; i--)
                                     {
+                                        int index = passEmployees.FindIndex(t => t.HashAccount.Equals(work_record[i].HashAccount));
                                         number++;
-                                        <tr>
-                                            <td class="rowBorderStart">@number</td>
-                                            <td class="rowBorderMiddle">
-                                                <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
-                                            </td>
-                                            <td class="rowBorderMiddle">@work_record[i].WorkTime</td>
-                                            <td class="rowBorderMiddle">@work_record[i].RestTime</td>
-                                            @if (company_Times.WorkTime != null)
+                                <tr>
+                                    <td class="rowBorderStart">@number</td>
+                                    <td class="rowBorderMiddle">
+                                        <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
+                                    </td>
+                                    <td class="rowBorderMiddle">@work_record[i].WorkTime</td>
+                                    <td class="rowBorderMiddle">@work_record[i].RestTime</td>
+                                    @if (passEmployees[index].WorktimeId != null || passEmployees[index].WorktimeId == "")
+                                    {
+                                        int g_index = generalWorktimes.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));
+                                        int f_index = flexibleWorktimes.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));
+                                        if (passEmployees[index].WorktimeId.Substring(0, 1) == "G")
+                                        {
+                                            TimeSpan dt2 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
+
+                                            if (TimeSpan.Compare(generalWorktimes[g_index].WorkTime, dt2) > 0)
                                             {
-                                                TimeSpan worktime = (TimeSpan)company_Times.WorkTime;
-                                                if (@work_record[i].WorkTime.Hour < worktime.Hours)
+                                                <td class="rowBorderEnd"><div class="badge badge-info">準時</div></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="rowBorderEnd"><div class="badge badge-danger">遲到</div></td>
+                                            }
+                                        }
+                                        else if (passEmployees[index].WorktimeId.Substring(0, 1) == "F")
+                                        {
+                                            TimeSpan dt3 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
+
+                                            if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, flexibleWorktimes[f_index].WorkTimeEnd) > 0)
+                                            {
+                                                if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, dt3) < 0 || TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeEnd, dt3) > 0)
                                                 {
                                                     <td class="rowBorderEnd"><div class="badge badge-info">準時</div></td>
                                                 }
-                                                else if (@work_record[i].WorkTime.Hour == worktime.Hours)
+                                                else
                                                 {
-                                                    if (@work_record[i].WorkTime.Minute <= worktime.Minutes)
-                                                    {
-                                                        <td><div class="badge badge-info">準時</div></td>
-                                                    }
+                                                    <td class="rowBorderEnd"><div class="badge badge-danger">遲到</div></td>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, dt3) < 0 && TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeEnd, dt3) > 0)
+                                                {
+                                                    <td class="rowBorderEnd"><div class="badge badge-info">準時</div></td>
                                                 }
                                                 else
                                                 {
                                                     <td class="rowBorderEnd"><div class="badge badge-danger">遲到</div></td>
                                                 }
                                             }
-                                        </tr>
+                                        }
+                                        else
+                                        {
+                                            <td class="rowBorderEnd"><div class="badge badge-danger"></div></td>
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td class="rowBorderEnd"><div class="badge badge-danger"></div></td>
+                                    }
+                                </tr>
                                     }
                                     @*<tr>
                                             <td>1</td>

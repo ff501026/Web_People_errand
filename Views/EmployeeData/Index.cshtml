@@ -10,7 +10,13 @@
 }
 
 
-
+<script type="text/javascript">
+    window.onload = function () {
+        var _offset = sessionStorage.getItem("toTop");
+        $(document).scrollTop(_offset);
+        sessionStorage.clear();
+    };
+</script>
 <div class="main-content">
     <section class="section">
         <h3 class="page_name">
@@ -104,7 +110,7 @@
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                            <button id="button" onclick="set();" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
                         </div>
                     </div>
                 </div>
@@ -134,62 +140,65 @@
 
                                     @foreach (var pass_employee in passEmployees)
                                     {
-                        <tr>
-                            <td class="rowBorderStart"></td>
-                            <td class="rowBorderMiddle">
-                                <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
-                            </td>
-                            <td class="rowBorderMiddle">@pass_employee.Phone</td>
-                            <td class="rowBorderMiddle">@pass_employee.Department</td>
-                            <td class="rowBorderMiddle">@pass_employee.JobTitle</td>
-                            <td class="rowBorderMiddle">@pass_employee.Email</td>
+                                        <tr>
+                                            <td class="rowBorderStart"></td>
+                                            <td class="rowBorderMiddle">
+                                                <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
+                                            </td>
+                                            <td class="rowBorderMiddle">@pass_employee.Phone</td>
+                                            <td class="rowBorderMiddle">@pass_employee.Department</td>
+                                            <td class="rowBorderMiddle">@pass_employee.JobTitle</td>
+                                            <td class="rowBorderMiddle">@pass_employee.Email</td>
 
-                            @if (pass_employee.Enabled == true)
-                            {
-                    <td class="rowBorderMiddle">
-                        <div class="badge badge-info">使用中</div>
-                    </td> }
-                                    else
-                                    {
-                    <td class="rowBorderMiddle">
-                        <div class="badge badge-danger">停用</div>
-                    </td>}
+                                            @if (pass_employee.Enabled == true)
+                                            {
+                                                <td class="rowBorderMiddle">
+                                                    <div class="badge badge-info">使用中</div>
+                                                </td>
+ }
+                                            else
+                                            {
+                                                <td class="rowBorderMiddle">
+                                                    <div class="badge badge-danger">停用</div>
+                                                </td>
+}
 
-                            @*<td>
-                <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-            </td>*@
+                                            @*<td>
+                                                    <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                                </td>*@
 
-                            <td class="rowBorderEnd">
-                                <button type="button" class="btn2 btn2-primary btn2-action" data-toggle="modal" data-target="#@pass_employee.HashAccount"><i class="bi-pencil-square"></i></button>
-                            </td>
-                        </tr>
-                                        <tr></tr>}
+                                            <td class="rowBorderEnd">
+                                                <button type="button" class="btn2 btn2-primary btn2-action" data-toggle="modal" data-target="#@pass_employee.HashAccount"><i class="bi-pencil-square"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr></tr>
+}
                                 </table>
                             </div>
                         </div>
                         @if (passEmployees.Count >= 10)
                         {
-                    <div class="card-footer text-right">
-                        <nav class="d-inline-block">
-                            <ul class="pagination mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#" id="page" name="page" value=1>1 <span class="sr-only">(current)</span></a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" id="page" name="page" value=2>2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" id="page" name="page" value=3>3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>}
+                            <div class="card-footer text-right">
+                                <nav class="d-inline-block">
+                                    <ul class="pagination mb-0">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                        </li>
+                                        <li class="page-item active">
+                                            <a class="page-link" href="#" id="page" name="page" value=1>1 <span class="sr-only">(current)</span></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" id="page" name="page" value=2>2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" id="page" name="page" value=3>3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>}
                         <div class="card-footer text-right">
                             <nav class="d-inline-block">
                                 <ul class="pagination mb-0">
@@ -219,14 +228,14 @@
 
 @foreach (var pass_employee in passEmployees)
 {
-    using (Html.BeginForm("EditEmployee", "EmployeeData", new { name=pass_employee.Name,id = pass_employee.HashAccount, old_email = pass_employee.Email, old_enabled = pass_employee.Enabled }, FormMethod.Post))
+    using (Html.BeginForm("EditEmployee", "EmployeeData", new { name = pass_employee.Name, id = pass_employee.HashAccount, old_email = pass_employee.Email, old_enabled = pass_employee.Enabled }, FormMethod.Post))
     {
         <div class="modal fade bd-example-modal-lg" id="@pass_employee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog  modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
-                        <h5 id="name" name="name" value="@pass_employee.Name" class="modal-title"  style="font-size:20px; font-family:Agency FB">@pass_employee.Name</h5>
+                        <h5 id="name" name="name" value="@pass_employee.Name" class="modal-title" style="font-size:20px; font-family:Agency FB">@pass_employee.Name</h5>
                         @if (pass_employee.Enabled == true)
                         {
                             <div class="badge badge-info" style="margin-left:10px">使用中</div>
@@ -316,7 +325,7 @@
                                         else
                                         {
                                             <div class="col-12 col-lg-6">
-                                                <input type="checkbox" id="manager" name="manager" value=true >管理者
+                                                <input type="checkbox" id="manager" name="manager" value=true>管理者
                                             </div>
                                         }
                                         <div class="col-12 col-lg-6">
@@ -359,8 +368,8 @@
 
                                     <div class="row" style="margin-top:20px">
                                         <div class="col-12 col-lg-12 text-center">
-                                            <button id="Button" name="Button" type="submit" value="RenewButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
-                                            <button id="Button" name="Button" value="BackButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1" data-dismiss="modal"><i class="bi-x-lg"></i></button>
+                                            <button id="Button" onclick="set();" name="Button" type="submit" value="RenewButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
+                                            <button id="Button"  name="Button" value="BackButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1" data-dismiss="modal"><i class="bi-x-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -377,7 +386,7 @@
 
 @foreach (var reviewEmployee in reviewEmployees)
 {
-    using (Html.BeginForm("SetEmployeeInformation", "EmployeeData", new { id = reviewEmployee.HashAccount,email=reviewEmployee.Email }, FormMethod.Post))
+    using (Html.BeginForm("SetEmployeeInformation", "EmployeeData", new { id = reviewEmployee.HashAccount, email = reviewEmployee.Email }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         <div class="modal fade bd-example-modal-lg" id="@reviewEmployee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -462,8 +471,8 @@
 
                                     <div class="row" style="margin-top:20px">
                                         <div class="col-12 col-lg-12 text-center">
-                                            <button id="Button" name="Button" type="submit" value="SaveButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
-                                            <button id="Button" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
+                                            <button id="Button" onclick="set();" name="Button" type="submit" value="SaveButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
+                                            <button id="Button" onclick="set();" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -479,7 +488,12 @@
 }
 
 
-
+<script type="text/javascript">
+    function set() {
+        sessionStorage.removeItem("toTop");
+        sessionStorage.setItem("toTop", $(window).scrollTop());
+    }
+</script>
 <script>
         @*var itemA = '<%=@foreach(var pass_employee in passEmployees) { @pass_employee.HashAccount} %>'*@
 

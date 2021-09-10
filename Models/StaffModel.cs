@@ -442,6 +442,58 @@ namespace AttendanceManagement.Models
     }//公司地址方法
     class CompanyWorkTimeModel : HttpResponse //公司上下班時間方法(新版)
     {
+        public static async Task<List<EmployeeWorkTime>> Get_EmployeeWorkTime(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetEmployeeWorktime + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<EmployeeWorkTime> employeeWorkTimes = JsonConvert.DeserializeObject<List<EmployeeWorkTime>>(GetResponse);
+            return employeeWorkTimes;
+        }
+
+        public static async Task<bool> Update_EmployeeWorkTime(int departmentid,int jobtitleid,string worktimeid)
+        {
+
+            List<EmployeeWorkTime> employeeWorkTimes = new List<EmployeeWorkTime>();
+            EmployeeWorkTime employeeWorkTime = new EmployeeWorkTime
+            {
+                DepartmentId = departmentid,
+                JobtitleId = jobtitleid,
+                WorktimeId = worktimeid
+            };
+            employeeWorkTimes.Add(employeeWorkTime);
+            string jsonData = JsonConvert.SerializeObject(employeeWorkTimes);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyUpdateEmployeeWorktime, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+        public static async Task<bool> Renew_EmployeeWorkTime(string old_id, string new_id)
+        {
+
+            List<RenewWorktime> renewWorktimes = new List<RenewWorktime>();
+            RenewWorktime renewWorktime = new RenewWorktime
+            {
+                Worktime = old_id,
+                NewWorktime = new_id
+            };
+            renewWorktimes.Add(renewWorktime);
+            string jsonData = JsonConvert.SerializeObject(renewWorktimes);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyRenewEmployeeWorktime, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
         public static async Task<List<EmployeeGeneralWorktime>> Get_GeneralWorktime(string company_hash)
         {
             //連上WebAPI
@@ -451,6 +503,63 @@ namespace AttendanceManagement.Models
             //解析打卡紀錄之JSON內容
             List<EmployeeGeneralWorktime> employeeGeneralWorktimes = JsonConvert.DeserializeObject<List<EmployeeGeneralWorktime>>(GetResponse);
             return employeeGeneralWorktimes;
+        }
+        public static async Task<string> Add_GeneralWorktime(string companyhash, string Name, string WorkTime, string RestTime, int? BreakTime)
+        {
+
+            List<GeneralWorkTime> generalWorkTimes = new List<GeneralWorkTime>();
+            GeneralWorkTime generalWorkTime = new GeneralWorkTime
+            {
+                CompanyHash = companyhash,
+                Name = Name,
+                WorkTime = WorkTime,
+                RestTime = RestTime,
+                BreakTime = BreakTime
+            };
+            generalWorkTimes.Add(generalWorkTime);
+            string jsonData = JsonConvert.SerializeObject(generalWorkTimes);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PostAsync(url + CompanyAddGeneralWorktime, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                GetResponse = await response.Content.ReadAsStringAsync();
+                return GetResponse;
+            }
+            return "";
+        }
+        public static async Task<bool> Edit_GeneralWorktime(string id, string Name, string WorkTime,string RestTime,int? BreakTime)
+        {
+
+            List<GeneralWorkTime> generalWorkTimes = new List<GeneralWorkTime>();
+            GeneralWorkTime generalWorkTime = new GeneralWorkTime
+            {
+                GeneralWorktimeId = id,
+                Name = Name,
+                WorkTime = WorkTime,
+                RestTime = RestTime,
+                BreakTime = BreakTime
+            };
+            generalWorkTimes.Add(generalWorkTime);
+            string jsonData = JsonConvert.SerializeObject(generalWorkTimes);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyEditGeneralWorktime, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static async Task<bool> Delete_GeneralWorktime(string id)//刪除一般
+        {
+            response = await client.DeleteAsync(url + CompanyDeleteGeneralWorktime + id);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
         }
 
         public static async Task<List<EmployeeFlexibleWorktime>> Get_FlexibleWorktime(string company_hash)
@@ -463,15 +572,98 @@ namespace AttendanceManagement.Models
             List<EmployeeFlexibleWorktime> employeeFlexibleWorktimes = JsonConvert.DeserializeObject<List<EmployeeFlexibleWorktime>>(GetResponse);
             return employeeFlexibleWorktimes;
         }
+        public static async Task<string> Add_FlexibleWorktime(string companyhash, string Name, string WorkTimeStart, string WorkTimeEnd,string RestTimeStart, string RestTimeEnd, int? BreakTime)
+        {
+
+            List<FlexibleWorkTime> flexibleWorkTimes = new List<FlexibleWorkTime>();
+            FlexibleWorkTime flexibleWorkTime = new FlexibleWorkTime
+            {
+                CompanyHash = companyhash,
+                Name = Name,
+                WorkTimeStart = WorkTimeStart,
+                WorkTimeEnd = WorkTimeEnd,
+                RestTimeStart = RestTimeStart,
+                RestTimeEnd = RestTimeEnd,
+                BreakTime = BreakTime
+            };
+            flexibleWorkTimes.Add(flexibleWorkTime);
+            string jsonData = JsonConvert.SerializeObject(flexibleWorkTimes);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PostAsync(url + CompanyAddFlexibleWorktime, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                GetResponse = await response.Content.ReadAsStringAsync();
+                return GetResponse;
+            }
+            return "";
+        }
+
+        public static async Task<bool> Edit_FlexibleWorktime(string id, string Name, string WorkTimeStart, string WorkTimeEnd, string RestTimeStart, string RestTimeEnd, int? BreakTime)
+        {
+
+            List<FlexibleWorkTime> flexibleWorkTimes = new List<FlexibleWorkTime>();
+            FlexibleWorkTime flexibleWorkTime = new FlexibleWorkTime
+            {
+                FlexibleWorktimeId = id,
+                Name = Name,
+                WorkTimeStart = WorkTimeStart,
+                WorkTimeEnd = WorkTimeEnd,
+                RestTimeStart = RestTimeStart,
+                RestTimeEnd = RestTimeEnd,
+                BreakTime = BreakTime
+            };
+            flexibleWorkTimes.Add(flexibleWorkTime);
+            string jsonData = JsonConvert.SerializeObject(flexibleWorkTimes);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyEditFlexibleWorktime, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+        public static async Task<bool> Delete_FlexibleWorktime(string id)//刪除彈性
+        {
+            response = await client.DeleteAsync(url + CompanyDeleteFlexibleWorktime + id);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
 
     }//公司上下班時間方法(新版)
+
+    public class RenewWorktime
+    {
+        public string Worktime { get; set; }
+        public string NewWorktime { get; set; }
+    }
+
+    public partial class EmployeeWorkTime//員工上下班時間
+    {
+        public int DepartmentId { get; set; }
+        public int JobtitleId { get; set; }
+        public string WorktimeId { get; set; }
+    }
     public partial class EmployeeGeneralWorktime//取得一般上下班設定
     {
         public string GeneralWorktimeId { get; set; }
         public string Name { get; set; }
         public TimeSpan WorkTime { get; set; }
         public TimeSpan RestTime { get; set; }
-        public int BreakTime { get; set; }
+        public int? BreakTime { get; set; }
+    }
+    public class GeneralWorkTime //一般上下班設定(Post)(Put)
+    {
+        public string GeneralWorktimeId { get; set; }
+        public string CompanyHash { get; set; }
+        public string Name { get; set; }
+        public string WorkTime { get; set; }
+        public string RestTime { get; set; }
+        public int? BreakTime { get; set; }
     }
     public partial class EmployeeFlexibleWorktime //取得彈性上下班設定
     {
@@ -481,7 +673,18 @@ namespace AttendanceManagement.Models
         public TimeSpan WorkTimeEnd { get; set; }
         public TimeSpan RestTimeStart { get; set; }
         public TimeSpan RestTimeEnd { get; set; }
-        public int BreakTime { get; set; }
+        public int? BreakTime { get; set; }
+    }
+    public class FlexibleWorkTime //彈性上下班設定(Post)(Put)
+    {
+        public string FlexibleWorktimeId { get; set; }
+        public string CompanyHash { get; set; }
+        public string Name { get; set; }
+        public string WorkTimeStart { get; set; }
+        public string WorkTimeEnd { get; set; }
+        public string RestTimeStart { get; set; }
+        public string RestTimeEnd { get; set; }
+        public int? BreakTime { get; set; }
     }
     public class ManagerKeyData
     {
@@ -499,6 +702,7 @@ namespace AttendanceManagement.Models
     }//公司地址
     public class Work_Record
     {
+        public string HashAccount { get; set; }
         public int Num { get; set; }//編號
         public string Name { get; set; }//員工姓名
         public DateTime WorkTime { get; set; }//上班紀錄

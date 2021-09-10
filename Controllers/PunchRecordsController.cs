@@ -20,16 +20,26 @@ namespace AttendanceManagement.Controllers
             }
             //輸入公司代碼取得打卡紀錄
             List<Work_Record> work_record = await StaffModel.Get_WorkRecordAsync(Session["company_hash"].ToString());
-            //取得公司上下班時間
-            Company_Time company_Times = await CompanyTimeModel.GetCompany_Times(Session["company_hash"].ToString());
-            int num=0;
+            //取得公司一般上下班時間(新版)
+            List<EmployeeGeneralWorktime> GeneralWorktime = await CompanyWorkTimeModel.Get_GeneralWorktime(Session["company_hash"].ToString());
+            //取得公司彈性上下班時間(新版)
+            List<EmployeeFlexibleWorktime> FlexibleWorktime = await CompanyWorkTimeModel.Get_FlexibleWorktime(Session["company_hash"].ToString());
+            //取得員工上下班時間(新版)
+            List<EmployeeWorkTime> employeeWorkTimes = await CompanyWorkTimeModel.Get_EmployeeWorkTime(Session["company_hash"].ToString());
+            //輸入公司代碼取得全部的已審核資料
+            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(Session["company_hash"].ToString());
+
+            int num =0;
             foreach (var work in work_record) 
             {
                 num++;
             }
             ViewBag.Num = num;//打卡記錄總共有幾筆
             ViewBag.workrecord = work_record;//打卡紀錄
-            ViewBag.company_time = company_Times;
+            ViewBag.general_worktime = GeneralWorktime;//公司一般上下班時間(新版)
+            ViewBag.flexible_worktime = FlexibleWorktime;//公司彈性上下班時間(新版)
+            ViewBag.employeeWorkTimes = employeeWorkTimes;//員工上下班時間(新版)
+            ViewBag.pass_employee = passEmployees; //審核過資料
             return View("Index");
         }
 

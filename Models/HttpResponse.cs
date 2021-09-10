@@ -64,6 +64,9 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyAddFlexibleWorktime = "EmployeeFlexibleWorktimes/add_flexible_worktime";//新增公司彈性上下班設定
         public static readonly string CompanyDeleteFlexibleWorktime = "EmployeeFlexibleWorktimes/DeleteFlexibleWorktime/";//刪除公司彈性上下班設定
         public static readonly string CompanyDeleteGeneralWorktime = "EmployeeGeneralWorktimes/DeleteGeneralWorktime/";//刪除公司一般上下班設定
+        public static readonly string CompanyGetEmployeeWorktime = "Companies/CompanyEmployeeWorkTime/";//查看公司所有部門職稱
+        public static readonly string CompanyUpdateEmployeeWorktime = "Companies/UpdateEmployeeWorkTime";//編輯部門職稱上下班時間
+        public static readonly string CompanyRenewEmployeeWorktime = "Companies/RenewWorktime";//編輯更新員工上下班時間
 
 
         public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL
