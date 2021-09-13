@@ -317,7 +317,7 @@
                                                                         {
                                                                             if (employeeWorkTime.WorktimeId == flexibleWorktime.FlexibleWorktimeId)
                                                                             {
-                                                                                    <option value="@flexibleWorktime.FlexibleWorktimeId" selected>@flexibleWorktime.Name</option>
+                                                                                    <option value="@flexibleWorktime.FlexibleWorktimeId" selected >@flexibleWorktime.Name</option>
                                                                                 }
                                                                             else
                                                                             {
@@ -425,7 +425,7 @@
                                                         </div>
                                                         <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="button" onclick="BackFunction()" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                                <button class="btn btn-primary" type="button" onclick="set(); window.location.reload();" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
                                                                 <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                             </div>
                                                         </div>
@@ -490,7 +490,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="button" onclick="BackFunction()" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                                <button class="btn btn-primary" type="button" onclick="set(); window.location.reload();" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" >取消</button>
                                                                 <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                             </div>
                                                         </div>
@@ -585,7 +585,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" onclick="set(); window.location.reload();">取消</button>
                                                                 <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                             </div>
                                                         </div>
@@ -620,7 +620,7 @@
                                                         </div>
                                                         <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                                <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" onclick="set(); window.location.reload();">取消</button>
                                                                 <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                             </div>
                                                         </div>

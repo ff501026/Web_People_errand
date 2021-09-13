@@ -635,6 +635,130 @@ namespace AttendanceManagement.Models
         }
 
     }//公司上下班時間方法(新版)
+    class CompanyManagerPermissionsModel : HttpResponse
+    {
+        public static async Task<List<ManagerPermissions>> Get_ManagerPermissions(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetManagerPermissions + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<ManagerPermissions> managerPermissions = JsonConvert.DeserializeObject<List<ManagerPermissions>>(GetResponse);
+            return managerPermissions;
+        }
+        public static async Task<int> Add_ManagerPermissions(string companyhash, string Name, int employee_display,int? customization_display, int employee_review, int? customization_review, bool setting_worktime, bool setting_department_jobtitle, bool setting_location)
+        {
+
+            List<ManagerPermissions> managerPermissions = new List<ManagerPermissions>();
+            ManagerPermissions managerPermission = new ManagerPermissions
+            {
+                CompanyHash = companyhash,
+                Name = Name,
+                EmployeeDisplay = employee_display,
+                CustomizationDisplay = customization_display,
+                EmployeeReview = employee_review,
+                CustomizationReview = customization_review,
+                SettingWorktime = setting_worktime,
+                SettingDepartmentJobtitle = setting_department_jobtitle,
+                SettingLocation = setting_location
+            };
+            managerPermissions.Add(managerPermission);
+            string jsonData = JsonConvert.SerializeObject(managerPermissions);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PostAsync(url + CompanyAddManagerPermissions, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                GetResponse = await response.Content.ReadAsStringAsync();
+                int PermissionsId = JsonConvert.DeserializeObject<int>(GetResponse);
+                return PermissionsId;
+            }
+            return -1;
+        }
+
+       public static async Task<bool> Edit_ManagerPermissions(int permissions_id, string Name, int employee_display, int? customization_display, int employee_review, int? customization_review, bool setting_worktime, bool setting_department_jobtitle, bool setting_location)
+        {
+
+            List<ManagerPermissions> managerPermissions = new List<ManagerPermissions>();
+            ManagerPermissions managerPermission = new ManagerPermissions
+            {
+                PermissionsId = permissions_id,
+                Name = Name,
+                EmployeeDisplay = employee_display,
+                CustomizationDisplay = customization_display,
+                EmployeeReview = employee_review,
+                CustomizationReview = customization_review,
+                SettingWorktime = setting_worktime,
+                SettingDepartmentJobtitle = setting_department_jobtitle,
+                SettingLocation = setting_location
+            };
+            managerPermissions.Add(managerPermission);
+            string jsonData = JsonConvert.SerializeObject(managerPermissions);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyUpdateManagerPermissions, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+        public static async Task<bool> Delete_ManagerPermissions(int id)//刪除
+        {
+            response = await client.DeleteAsync(url + CompanyDeleteManagerPermissions + id);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static async Task<List<ManagerPermissionsCustomizations>> Get_ManagerPermissionsCustomizations(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetManagerPermissionsCustomizations);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<ManagerPermissionsCustomizations> managerPermissionsCustomizations = JsonConvert.DeserializeObject<List<ManagerPermissionsCustomizations>>(GetResponse);
+            return managerPermissionsCustomizations;
+        }
+        public static async Task<int?> Add_ManagerPermissionsCustomizations(List<ManagerPermissionsCustomizations> managerPermissionsCustomizations)
+        {
+
+            List<ManagerPermissionsCustomizations> managerPermissionsCustomizations1 = new List<ManagerPermissionsCustomizations>();
+            foreach (var input in managerPermissionsCustomizations) 
+            {
+                ManagerPermissionsCustomizations managerPermissionsCustomization = new ManagerPermissionsCustomizations
+                {
+                    DepartmentId = input.DepartmentId,
+                    JobtitleId = input.JobtitleId
+                };
+                managerPermissionsCustomizations1.Add(managerPermissionsCustomization);
+            }
+            string jsonData = JsonConvert.SerializeObject(managerPermissionsCustomizations1);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PostAsync(url + CompanyAddManagerPermissionsCustomizations, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                GetResponse = await response.Content.ReadAsStringAsync();
+                int PermissionsId = JsonConvert.DeserializeObject<int>(GetResponse);
+                return PermissionsId;
+            }
+            return null;
+        }
+        public static async Task<bool> Delete_ManagerPermissionsCustomizations(int id)//刪除
+        {
+            response = await client.DeleteAsync(url + CompanyDeleteManagerPermissionsCustomizations + id);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 
     public class RenewWorktime
     {
@@ -769,7 +893,29 @@ namespace AttendanceManagement.Models
         public string Email { get; set; }//員工電子郵件
         public string Department { get; set; }
         public string Jobtitle { get; set; }
+        public int? PermissionsId { get; set; }
         public bool Enabled { get; set; }//使用狀態
+    }
+
+    public class ManagerPermissions //權限
+    {
+        public int PermissionsId { get; set; }
+        public string CompanyHash { get; set; }
+        public string Name { get; set; }
+        public int EmployeeDisplay { get; set; }
+        public int? CustomizationDisplay { get; set; }
+        public int EmployeeReview { get; set; }
+        public int? CustomizationReview { get; set; }
+        public bool SettingWorktime { get; set; }
+        public bool SettingDepartmentJobtitle { get; set; }
+        public bool SettingLocation { get; set; }
+    }
+    public class ManagerPermissionsCustomizations //權限自訂
+    {
+        public int CustomizationId { get; set; }
+        public int PermissionsId { get; set; }
+        public int DepartmentId { get; set; }
+        public int JobtitleId { get; set; }
     }
 }
     

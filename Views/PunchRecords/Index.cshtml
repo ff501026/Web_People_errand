@@ -73,11 +73,42 @@
                                     <td class="rowBorderMiddle">@work_record[i].RestTime</td>
                                     @if (passEmployees[index].WorktimeId != null || passEmployees[index].WorktimeId == "")
                                     {
-                                        int g_index = generalWorktimes.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));
-                                        int f_index = flexibleWorktimes.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));
+                                        int g_index = generalWorktimes.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));//一般上下班設定的index
+                                        int f_index = flexibleWorktimes.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));//彈性上下班設定的index
                                         if (passEmployees[index].WorktimeId.Substring(0, 1) == "G")
                                         {
-                                            TimeSpan dt2 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
+                                            TimeSpan dt2 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));//員工打卡紀錄的上班時間
+                                            TimeSpan dt = TimeSpan.Parse(work_record[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
+                                            TimeSpan hour = new TimeSpan();//公司規定的上班時數
+                                            if (generalWorktimes[g_index].RestTime > generalWorktimes[g_index].WorkTime)
+                                            {
+                                                hour = generalWorktimes[g_index].RestTime - generalWorktimes[g_index].WorkTime; //公司規定的上班時數
+                                            }
+                                            else
+                                            {
+                                                hour = generalWorktimes[g_index].WorkTime - generalWorktimes[g_index].RestTime; //公司規定的上班時數
+
+                                            }
+                                            TimeSpan ts = work_record[i].RestTime.Subtract(work_record[i].WorkTime); //員工打卡的上班時數
+                                            TimeSpan time = new TimeSpan(1, 0, 0);//一小時
+
+
+                                            if (ts > hour + time)//員工的上班時數大於規定的上班時數
+                                            {
+                                                <td class="rowBorderEnd"><div class="badge  badge-success" style="background-color: #DFFAD9; color: #32DE38 ">異常</div></td>
+                                            }
+                                            else if (dt < generalWorktimes[g_index].RestTime)//員工的下班時間比規定的下班時間早
+                                            {
+                                                <td class="rowBorderEnd"><div class="badge  badge-warning" style="background-color: #FEF7CA; color: #FFA200; ">早退</div></td>
+                                            }
+                                            else if (ts > hour)//員工的下班時間比規定的下班時間早
+                                            {
+                                                <td class="rowBorderEnd"><div class="badge  badge-warning" style="background-color: #FEF7CA; color: #FFA200; ">早退</div></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="rowBorderEnd"><div class="badge badge-info">正常</div></td>
+                                            }
 
                                             if (TimeSpan.Compare(generalWorktimes[g_index].WorkTime, dt2) > 0)
                                             {
@@ -91,6 +122,19 @@
                                         else if (passEmployees[index].WorktimeId.Substring(0, 1) == "F")
                                         {
                                             TimeSpan dt3 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
+                                            TimeSpan dt = TimeSpan.Parse(work_record[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
+                                            if (dt > flexibleWorktimes[f_index].RestTimeEnd)//員工的下班時間比規定的下班時間晚
+                                            {
+                                                <td class="rowBorderEnd"><div class="badge  badge-success" style="background-color: #DFFAD9; color: #32DE38 ">異常</div></td>
+                                            }
+                                            else if (dt < flexibleWorktimes[f_index].RestTimeStart)//員工的下班時間比規定的下班時間早
+                                            {
+                                                <td class="rowBorderEnd"><div class="badge  badge-warning" style="background-color: #FEF7CA; color: #FFA200; ">早退</div></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="rowBorderEnd"><div class="badge badge-info">正常</div></td>
+                                            }
 
                                             if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, flexibleWorktimes[f_index].WorkTimeEnd) > 0)
                                             {

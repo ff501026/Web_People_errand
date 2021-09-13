@@ -67,6 +67,14 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyGetEmployeeWorktime = "Companies/CompanyEmployeeWorkTime/";//查看公司所有部門職稱
         public static readonly string CompanyUpdateEmployeeWorktime = "Companies/UpdateEmployeeWorkTime";//編輯部門職稱上下班時間
         public static readonly string CompanyRenewEmployeeWorktime = "Companies/RenewWorktime";//編輯更新員工上下班時間
+        public static readonly string CompanyGetManagerPermissions = "Companies/Get_Manager_Permissions?company_hash=";//取得權限設定
+        public static readonly string CompanyAddManagerPermissions = "ManagerPermissions/add_manager_permissions";//新增權限設定
+        public static readonly string CompanyUpdateManagerPermissions = "ManagerPermissions/update_manager_permissions";//編輯權限設定
+        public static readonly string CompanyDeleteManagerPermissions = "ManagerPermissions/DeleteManagerPermissions/";//刪除權限設定
+        public static readonly string CompanyGetManagerPermissionsCustomizations = "Companies/Get_Manager_Permissions_Customizations";//取得權限自訂設定
+        public static readonly string CompanyAddManagerPermissionsCustomizations = "ManagerPermissionsCustomizations/add_manager_permissions_customization";//新增權限自訂設定
+        public static readonly string CompanyDeleteManagerPermissionsCustomizations = "ManagerPermissionsCustomizations/DeleteManagerPermissionsCustomization/";//刪除權限自訂設定
+
 
 
         public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL
