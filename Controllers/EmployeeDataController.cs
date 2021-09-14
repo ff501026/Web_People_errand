@@ -34,6 +34,22 @@ namespace AttendanceManagement.Controllers
             //輸入公司代碼取得全部的已審核資料(不會變動)
             List<PassEmployee> all_passEmployees = await PassEmployeeModel.PassEmployees(Session["company_hash"].ToString());
 
+            if (Session["hash_account"] != null)
+            {
+                int index = managers.FindIndex(item => item.ManagerHash.Equals(Session["hash_account"].ToString()));
+
+                if (managers[index].PermissionsId == null || managers[index].PermissionsId == 1) { }
+                else if (managers[index].PermissionsId == 2)
+                {
+                    passEmployees = await PassEmployeeModel.ManagerPassEmployees2(Session["hash_account"].ToString());
+                }
+                else
+                {
+                    passEmployees = await PassEmployeeModel.ManagerPassEmployees3(Session["hash_account"].ToString());
+
+                }
+            }
+
             ViewBag.managers = managers;//全部的管理員
             ViewBag.all_passemployee = all_passEmployees;//全部的已審核資料
             ViewBag.department = departments;//部門名稱

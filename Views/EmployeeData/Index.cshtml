@@ -318,9 +318,19 @@
                                     <div class="row" style="margin-top:15px;margin-bottom:15px">
                                         @if ((managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)) != -1))
                                         {
-                                            <div class="col-12 col-lg-6">
-                                                <input type="checkbox" id="manager" name="manager" value=true checked>管理者
-                                            </div>
+                                            if (managers[(managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)))].Enabled == true)
+                                            {
+                                                <div class="col-12 col-lg-6">
+                                                    <input type="checkbox" id="manager" name="manager" value=true checked>管理者
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-12 col-lg-6">
+                                                    <input type="checkbox" id="manager" name="manager" value=true>管理者
+                                                </div>
+                                            }
+
                                         }
                                         else
                                         {
@@ -332,7 +342,7 @@
                                             直屬主管：
                                             <select id="managerhash" name="managerhash" type="text">
                                                 <option value="">請選擇</option>
-                                                @foreach (var pass in passEmployees)
+                                                @foreach (var pass in all_passEmployees)
                                                 {
                                                     if (pass.HashAccount != pass_employee.HashAccount)
                                                     {

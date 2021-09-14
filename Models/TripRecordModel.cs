@@ -143,6 +143,28 @@ namespace AttendanceManagement.Models
 
             return trip2record;
         }
+        public static async Task<List<Trip2Record>> Manager_Get_Trip2Record2(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerGetTrip2Record2 + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<Trip2Record> trip2record = JsonConvert.DeserializeObject<List<Trip2Record>>(GetResponse);
+
+            return trip2record;
+        }
+        public static async Task<List<Trip2Record>> Manager_Get_Trip2Record3(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerGetTrip2Record3 + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<Trip2Record> trip2record = JsonConvert.DeserializeObject<List<Trip2Record>>(GetResponse);
+
+            return trip2record;
+        }
         public static async Task<List<DetailTrip2Record>> Detail_Trip2Record(string company_hash)
         {
             //連上WebAPI

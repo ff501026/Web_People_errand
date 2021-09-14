@@ -13,7 +13,10 @@ namespace AttendanceManagement.Controllers
         // GET: Authority
         public async Task<ActionResult> Index()
         {
-            
+            if (Session["hash_account"] != null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             if (Session["company_hash"] == null)
             {
                 return RedirectToAction("Index", "Account", null);
@@ -28,8 +31,11 @@ namespace AttendanceManagement.Controllers
             List<ManagerPermissions> managerPermissions = await CompanyManagerPermissionsModel.Get_ManagerPermissions(Session["company_hash"].ToString());
             //取得權限自訂
             List<ManagerPermissionsCustomizations> customizations = await CompanyManagerPermissionsModel.Get_ManagerPermissionsCustomizations(Session["company_hash"].ToString());
+            //取得角色套用權限資料
+            List<ManagerAccountPermissions> managerAccountPermissions = await CompanyManagerPermissionsModel.Get_ManagerAccountPermissions(Session["company_hash"].ToString());
 
-            ViewBag.customizations = customizations;//權限
+            ViewBag.managerAccountPermissions = managerAccountPermissions;//角色權限
+            ViewBag.customizations = customizations;//權限自訂
             ViewBag.managerPermissions = managerPermissions;//權限
             ViewBag.departments = department;//部門名稱
             ViewBag.jobtitles = jobtitle;//職稱
@@ -39,24 +45,50 @@ namespace AttendanceManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> DeleteManagerPermissions(int id, int? old_display, int? old_review)
+        public async Task<ActionResult> UpdateManagerAccountPermissions(int department_id, int jobtitle_id, int? permission_id)
         {
+            if (Session["hash_account"] != null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             if (Session["company_hash"] == null)
             {
                 return RedirectToAction("Index", "Account", null);
             }
             bool result = false;
 
-            result = await CompanyManagerPermissionsModel.Delete_ManagerPermissions(id);
+            result = await CompanyManagerPermissionsModel.Edit_ManagerAccountPermissions(Session["company_hash"].ToString(), department_id,jobtitle_id, permission_id);
+            if (result)
+            {
+                return RedirectToAction("index");
+            }
+            else
+                return Content($"<script>alert('變更失敗！如有問題請連繫後台!');history.go(-1);</script>");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteManagerPermissions(int id, int? old_display, int? old_review)
+        {
+            if (Session["hash_account"] != null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
+            bool result = false;
+
+            result = await CompanyManagerPermissionsModel.Delete_ManagerPermissions(Session["company_hash"].ToString(), id);
             if (result)
             {
                 if (old_display != null)
                 {
-                    bool deleteresult = await CompanyManagerPermissionsModel.Delete_ManagerPermissionsCustomizations((int)old_display);
+                    bool deleteresult = await CompanyManagerPermissionsModel.Delete_ManagerPermissionsCustomizations(Session["company_hash"].ToString(), (int)old_display);
                 }
                 if (old_review != null)
                 {
-                    bool deleteresult = await CompanyManagerPermissionsModel.Delete_ManagerPermissionsCustomizations((int)old_review);
+                    bool deleteresult = await CompanyManagerPermissionsModel.Delete_ManagerPermissionsCustomizations(Session["company_hash"].ToString(),(int)old_review);
                 }
                 return RedirectToAction("index");
             }
@@ -67,6 +99,10 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> AddManagerPermissions(string[] check3, string[] check4,string name, int employee_display,int employee_review,bool setting_worktime,bool setting_department_jobtitle, bool setting_location)
         {
+            if (Session["hash_account"] != null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             if (Session["company_hash"] == null)
             {
                 return RedirectToAction("Index", "Account", null);
@@ -160,6 +196,10 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateManagerPermissions(int id,string name, int employee_display, string[] check1,string[] check2,int employee_review, bool setting_worktime, bool setting_department_jobtitle, bool setting_location,int? old_display, int? old_review)
         {
+            if (Session["hash_account"] != null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             if (Session["company_hash"] == null)
             {
                 return RedirectToAction("Index", "Account", null);
@@ -240,16 +280,16 @@ namespace AttendanceManagement.Controllers
                 }
             }//審核對象自訂
 
-            bool result = await CompanyManagerPermissionsModel.Edit_ManagerPermissions(id, name, employee_display, display_id, employee_review, review_id, setting_worktime, setting_department_jobtitle, setting_location);
+            bool result = await CompanyManagerPermissionsModel.Edit_ManagerPermissions(Session["company_hash"].ToString(),id, name, employee_display, display_id, employee_review, review_id, setting_worktime, setting_department_jobtitle, setting_location);
             if (result)
             {
                 if (old_display != null)
                 {
-                    bool deleteresult = await CompanyManagerPermissionsModel.Delete_ManagerPermissionsCustomizations((int)old_display);
+                    bool deleteresult = await CompanyManagerPermissionsModel.Delete_ManagerPermissionsCustomizations(Session["company_hash"].ToString(),(int)old_display);
                 }
                 if (old_review != null)
                 {
-                    bool deleteresult = await CompanyManagerPermissionsModel.Delete_ManagerPermissionsCustomizations((int)old_review);
+                    bool deleteresult = await CompanyManagerPermissionsModel.Delete_ManagerPermissionsCustomizations(Session["company_hash"].ToString(),(int)old_review);
                 }
                 return RedirectToAction("index");
             }

@@ -8,9 +8,12 @@
     List<AttendanceManagement.Models.EmployeeGeneralWorktime> generalWorktimes = ViewBag.general_worktime;
     List<AttendanceManagement.Models.EmployeeFlexibleWorktime> flexibleWorktimes = ViewBag.flexible_worktime;
     List<AttendanceManagement.Models.EmployeeWorkTime> employeeWorkTimes = ViewBag.employeeWorkTimes;
+    List<AttendanceManagement.Models.ManagerPermissions> managerPermissions = ViewBag.managerPermissions;
     int d_index = 0;
     int j_index = 0;
-    }
+
+
+}
 
 <script type="text/javascript">
     window.onload = function () {
@@ -24,121 +27,213 @@
         <h1 class="section-header">
             <div>系統設定</div>
         </h1>
-        <div class="section-body">
-            <div class="row">
-                <div class="col-12 col-sm-4 col-lg-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <ul class="nav nav-pills flex-column" id="myTab2" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#home4" role="tab" aria-controls="home" aria-selected="true">部門設定</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">職稱設定</a>
-                                        </li>
-
-                                        @*<li class="nav-item">
-                                                <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact4" role="tab" aria-controls="contact" aria-selected="false">出勤時間設定</a>
-                                            </li>*@
-
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="GPS-tab4" data-toggle="tab" href="#GPS4" role="tab" aria-controls="GPS" aria-selected="false">打卡定位位置設定</a>
-                                        </li>
-                                    </ul>
+        @if (managerPermissions.Count == 0 || (managerPermissions[0].SettingDepartmentJobtitle == true && managerPermissions[0].SettingLocation == true))
+        {
+            <div class="section-body">
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <ul class="nav nav-pills flex-column" id="myTab2" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#home4" role="tab" aria-controls="home" aria-selected="true">部門設定</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">職稱設定</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="GPS-tab4" data-toggle="tab" href="#GPS4" role="tab" aria-controls="GPS" aria-selected="false">打卡定位位置設定</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-12 col-sm-8 col-lg-9">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="tab-content" id="myTab2Content">
-                                        <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4" style="width:100%; color: black;">
-                                            <div class="d-flex">
-                                                <div class="mr-auto p-2">在此新增、更新、刪除部門</div>
-                                                <div class="p-2">
-                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal1">新增</button>
-                                                </div>
-                                            </div>
-                                            @foreach (var department in departments)
-                                            {
+                    <div class="col-12 col-sm-8 col-lg-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="tab-content" id="myTab2Content">
+                                            <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4" style="width:100%; color: black;">
                                                 <div class="d-flex">
-                                                    <div class="mr-auto p-2">
-                                                        @department.Name
+                                                    <div class="mr-auto p-2">在此新增、更新、刪除部門</div>
+                                                    <div class="p-2">
+                                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal1">新增</button>
+                                                    </div>
                                                 </div>
-                                                <div class="p-2">
-                                                    <button type="submit" onclick="set();" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId"><i class="bi-pencil-square"></i></button>
-                                                </div>
-                                                <div class="p-2">
-                                                    <button type="submit" onclick="set();" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId" onclick="ShowValue()"><i class="bi-trash-fill"></i></button>
-                                                </div>
+                                                @foreach (var department in departments)
+                                                {
+                                                    <div class="d-flex">
+                                                        <div class="mr-auto p-2">
+                                                            @department.Name
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <button type="submit" onclick="set();" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId"><i class="bi-pencil-square"></i></button>
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <button type="submit" onclick="set();" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId" onclick="ShowValue()"><i class="bi-trash-fill"></i></button>
+                                                        </div>
+                                                    </div>
+                                                }
                                             </div>
-                                            }
-                                        </div>
-                                        <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4" style="width:100%; color: black;">
+                                            <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4" style="width:100%; color: black;">
 
 
-                                            <div class="d-flex">
-                                                <div class="mr-auto p-2">在此新增、更新、刪除職稱</div>
-                                                <div class="p-2">
-                                                    <button type="button" onclick="set();" class="btn btn-success" data-toggle="modal" data-target="#exampleModal4">新增</button>
+                                                <div class="d-flex">
+                                                    <div class="mr-auto p-2">在此新增、更新、刪除職稱</div>
+                                                    <div class="p-2">
+                                                        <button type="button" onclick="set();" class="btn btn-success" data-toggle="modal" data-target="#exampleModal4">新增</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                         
-                                                    @foreach (var jobtitle in jobTitles)
-                                                    {
+
+                                                @foreach (var jobtitle in jobTitles)
+                                                {
                                                     <div class="d-flex">
                                                         <div class="mr-auto p-2">
                                                             @jobtitle.Name
                                                         </div>
 
                                                         <div class="p-2">
-                                                            <button type="submit" onclick="set();" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal5.@jobtitle.JobTitleId" id="id" name="id" value="@jobtitle.JobTitleId"><i class="bi-pencil-square" ></i></button>
+                                                            <button type="submit" onclick="set();" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal5.@jobtitle.JobTitleId" id="id" name="id" value="@jobtitle.JobTitleId"><i class="bi-pencil-square"></i></button>
                                                         </div>
                                                         <div class="p-2">
-                                                            <button type="submit"  onclick="set();" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal6.@jobtitle.JobTitleId" id="id" name="id" value="@jobtitle.JobTitleId"><i class="bi-trash-fill"></i></button>
+                                                            <button type="submit" onclick="set();" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal6.@jobtitle.JobTitleId" id="id" name="id" value="@jobtitle.JobTitleId"><i class="bi-trash-fill"></i></button>
                                                         </div>
                                                     </div>
-                                                    }
+                                                }
+                                            </div>
+
+                                            <div class="tab-pane fade" id="GPS4" role="tabpanel" aria-labelledby="GPS-tab4" style="width:100%; color: black;">
+
+                                                <div class="d-flex">
+                                                    <div class="mr-auto p-2">公司地址</div>
+                                                    <div class="p-2">
+                                                        <div class="p-2">
+                                                            緯度：@companyAddresses[0].CoordinateX
+                                                            、
+                                                            經度：@companyAddresses[0].CoordinateY
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            
-                                            @*<div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4" style="width:100%; color: black;">
+                                                <div class="d-flex justify-content-end">
+                                                    <div class="mr-auto p-2">
+                                                        @companyAddresses[0].Address
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <button type="button" onclick="set();" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal7"><i class="bi-pencil-square"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (managerPermissions[0].SettingDepartmentJobtitle == false && managerPermissions[0].SettingLocation == false)
+        {
+        }
+        else
+        {
+            <div class="section-body">
+                <div class="row">
+                    <div class="col-12 col-sm-4 col-lg-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <ul class="nav nav-pills flex-column" id="myTab2" role="tablist">
+                                            @if (managerPermissions[0].SettingDepartmentJobtitle == true)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#home4" role="tab" aria-controls="home" aria-selected="true">部門設定</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">職稱設定</a>
+                                                </li>
+                                            }
+                                            @if (managerPermissions[0].SettingLocation == true)
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="GPS-tab4" data-toggle="tab" href="#GPS4" role="tab" aria-controls="GPS" aria-selected="false">打卡定位位置設定</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-sm-8 col-lg-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="tab-content" id="myTab2Content">
+                                            @if (managerPermissions[0].SettingDepartmentJobtitle == true)
+                                            {
+                                                <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4" style="width:100%; color: black;">
                                                     <div class="d-flex">
-                                                        <div class="mr-auto p-2">
-                                                            業務部
-                                                        </div>
+                                                        <div class="mr-auto p-2">在此新增、更新、刪除部門</div>
                                                         <div class="p-2">
-                                                            <button class="btn btn-default btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                                <i class="bi-caret-down-fill"></i>
-                                                            </button>
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal1">新增</button>
                                                         </div>
                                                     </div>
-
-                                                    <div class="collapse" id="collapseExample">
-                                                        <div class="card card-body">
-                                                            <div class="d-flex">
-                                                                <div class="mr-auto p-2">
-                                                                    經理
-                                                                </div>
-                                                                <div class="p-2">
-                                                                    <button class="btn btn-outline-primary btn-sm" type="submit"><i class="bi-pencil-square"></i></button>
-                                                                </div>
-                                                                <div class="p-2">
-                                                                    <button class="btn btn-danger btn-sm" " type="submit"><i class="bi-trash-fill"></i></button>
-                                                                </div>
+                                                    @foreach (var department in departments)
+                                                    {
+                                                        <div class="d-flex">
+                                                            <div class="mr-auto p-2">
+                                                                @department.Name
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <button type="submit" onclick="set();" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId"><i class="bi-pencil-square"></i></button>
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <button type="submit" onclick="set();" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId" onclick="ShowValue()"><i class="bi-trash-fill"></i></button>
                                                             </div>
                                                         </div>
+                                                    }
+                                                </div>
+                                                <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4" style="width:100%; color: black;">
+
+
+                                                    <div class="d-flex">
+                                                        <div class="mr-auto p-2">在此新增、更新、刪除職稱</div>
+                                                        <div class="p-2">
+                                                            <button type="button" onclick="set();" class="btn btn-success" data-toggle="modal" data-target="#exampleModal4">新增</button>
+                                                        </div>
                                                     </div>
 
-                                                </div>*@
-                              
+                                                    @foreach (var jobtitle in jobTitles)
+                                                    {
+                                                        <div class="d-flex">
+                                                            <div class="mr-auto p-2">
+                                                                @jobtitle.Name
+                                                            </div>
+
+                                                            <div class="p-2">
+                                                                <button type="submit" onclick="set();" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal5.@jobtitle.JobTitleId" id="id" name="id" value="@jobtitle.JobTitleId"><i class="bi-pencil-square"></i></button>
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <button type="submit" onclick="set();" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal6.@jobtitle.JobTitleId" id="id" name="id" value="@jobtitle.JobTitleId"><i class="bi-trash-fill"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            }
+                                            @if (managerPermissions[0].SettingLocation == true)
+                                            {
                                                 <div class="tab-pane fade" id="GPS4" role="tabpanel" aria-labelledby="GPS-tab4" style="width:100%; color: black;">
 
                                                     <div class="d-flex">
@@ -160,111 +255,113 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                     
+                                            }
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
+        }
 
 
 
-            <div class="section-body">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-lg-12">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h4>變更後台登入密碼</h4>
-                            </div>
 
-                            <div class="card-body">
-                                @using (Html.BeginForm("ChangeCompanyPassword", "Setting", FormMethod.Post))
-                                {
-                    @Html.AntiForgeryToken()
-
-
-                                    <div class="row">
-                                        <div class="col-lg-auto col-md-10 col-12">
-                                            新後台登入密碼：
-                                            <input id="NewPassword" required name="NewPassword" class="form-control" type="password" placeholder="請輸入新密碼" aria-label="Search">
-                                        </div>
-                                        <div class="col-lg-auto col-md-10 col-12">
-                                            確認密碼：
-                                            <input id="NewPassword2" required name="NewPassword2" class="form-control" type="password" placeholder="請輸入新密碼" aria-label="Search">
-                                        </div>
-                                        <div class="col-lg-auto col-md-2 col-12">
-                                            <button onclick="set();" class="btn btn-primary" type="submit">修改</button>
-                                        </div>
-                                    </div>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @*
+        <div class="section-body">
+            <div class="row">
                 <div class="col-12 col-sm-12 col-lg-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4>手機打卡記錄設定</h4>
+                            <h4>變更後台登入密碼</h4>
                         </div>
 
                         <div class="card-body">
+                            @using (Html.BeginForm("ChangeCompanyPassword", "Setting", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
 
-                            <form class="form-inline mr-auto">
+
                                 <div class="row">
-                                    <div class="col-lg-auto col-md-3 col-3" style="margin-top:10px">
-                                        可查詢當月：
+                                    <div class="col-lg-auto col-md-10 col-12">
+                                        新後台登入密碼：
+                                        <input id="NewPassword" required name="NewPassword" class="form-control" type="password" placeholder="請輸入新密碼" aria-label="Search">
                                     </div>
-                                    <div class="col-lg-auto col-md-2 col-12" style="margin-top:10px">
-                                        <label class="switch">
-                                            <input type="checkbox" id="togBtn">是
-                                            <div class="slider round">
-                                                <span class="on">是</span>
-                                                <span class="off">否</span>
-                                            </div>
-                                        </label>
+                                    <div class="col-lg-auto col-md-10 col-12">
+                                        確認密碼：
+                                        <input id="NewPassword2" required name="NewPassword2" class="form-control" type="password" placeholder="請輸入新密碼" aria-label="Search">
                                     </div>
-                                    <div class="col-lg-auto col-md-5 col-12">
-                                        可查詢天數：<input class="form-control" type="text" placeholder="若設定為0則不限制天數" aria-label="Search">
+                                    <div class="col-lg-auto col-md-2 col-12">
+                                        <button onclick="set();" class="btn btn-primary" type="submit">修改</button>
                                     </div>
-                                    <div class="col-lg-auto col-md-1 col-12">
-                                        <button class="btn btn-primary" type="submit">修改</button>
-                                    </div>
-                                </div>
-                            </form>
-
+                                </div>}
                         </div>
-
                     </div>
                 </div>
-            *@
+            </div>
+        </div>
+
+        @*
+        <div class="col-12 col-sm-12 col-lg-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h4>手機打卡記錄設定</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <form class="form-inline mr-auto">
+                        <div class="row">
+                            <div class="col-lg-auto col-md-3 col-3" style="margin-top:10px">
+                                可查詢當月：
+                            </div>
+                            <div class="col-lg-auto col-md-2 col-12" style="margin-top:10px">
+                                <label class="switch">
+                                    <input type="checkbox" id="togBtn">是
+                                    <div class="slider round">
+                                        <span class="on">是</span>
+                                        <span class="off">否</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-lg-auto col-md-5 col-12">
+                                可查詢天數：<input class="form-control" type="text" placeholder="若設定為0則不限制天數" aria-label="Search">
+                            </div>
+                            <div class="col-lg-auto col-md-1 col-12">
+                                <button class="btn btn-primary" type="submit">修改</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+        *@
+        @if (managerPermissions.Count == 0 || managerPermissions[0].SettingWorktime == true  )
+        {
             <div class="section-body">
                 <div class="row">
                     <div class="col-12 col-sm-5 col-lg-4">
-                       
+
                         <div class="card card-primary">
                             <div class="card-header">
                                 <div class="row" style="margin:0px 10px 0px 0px;">
                                     <div class="col" id="CenterSet">
                                         <h4 style="margin:0px 0px 0px -15px;">上下班時間設定</h4>
                                     </div>
-                                 
+
                                 </div>
                             </div>
                             <hr style="margin: -10px 20px 0px 20px" />
-                  
+
                             <div class="card-body" id="SettingEmployeeWorkTime">
                                 <div style="height: 345px; overflow-y: auto;overflow-x:hidden;">
                                     @foreach (var department in departments)
                                     {
                                         j_index = 0;
-                                        <div >
+                                        <div>
                                             <div class="row align-items-center" id="topborder">
                                                 <div class="col" id="CenterSet" style="font-size:14px;" data-toggle="collapse" data-target="#multiCollapseExample_@d_index" aria-expanded="false" aria-controls="multiCollapseExample_@d_index">
                                                     @department.Name
@@ -292,7 +389,7 @@
                                                 {
                                                     if (department.DepartmentId == employeeWorkTime.DepartmentId && jobTitle.JobTitleId == employeeWorkTime.JobtitleId)
                                                     {
-                                                        <div >
+                                                        <div>
                                                             <div class="row align-items-center" id="contentborder">
                                                                 <div class="col" id="CenterSet" style="font-size:14px">
                                                                     @jobTitle.Name
@@ -301,30 +398,30 @@
                                                                     @using (Html.BeginForm("UpdateEmployeeWorkTime", "Setting", new { n_department = employeeWorkTime.DepartmentId, n_jobtitle = employeeWorkTime.JobtitleId }, FormMethod.Post, new { id = "changee_mployee_worktime" }))
                                                                     {
                                                                         <select name="updateworktime" class="form-select form-select-sm select" aria-label=".form-select-sm example" id="ClassSelectContent_@j_index@d_index" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;" onchange="set();$(this.form).submit()">
-                                                                            <option value="" selected></option>
+                                                                            <option value="0" selected></option>
                                                                             @foreach (var generalWorktime in generalWorktimes)
-                                                                        {
-                                                                            if (employeeWorkTime.WorktimeId == generalWorktime.GeneralWorktimeId)
                                                                             {
+                                                                                if (employeeWorkTime.WorktimeId == generalWorktime.GeneralWorktimeId)
+                                                                                {
                                                                                     <option value="@generalWorktime.GeneralWorktimeId" selected>@generalWorktime.Name</option>
                                                                                 }
-                                                                            else
-                                                                            {
+                                                                                else
+                                                                                {
                                                                                     <option value="@generalWorktime.GeneralWorktimeId">@generalWorktime.Name</option>
                                                                                 }
-                                                                        }
-                                                                        @foreach (var flexibleWorktime in flexibleWorktimes)
-                                                                        {
-                                                                            if (employeeWorkTime.WorktimeId == flexibleWorktime.FlexibleWorktimeId)
+                                                                            }
+                                                                            @foreach (var flexibleWorktime in flexibleWorktimes)
                                                                             {
-                                                                                    <option value="@flexibleWorktime.FlexibleWorktimeId" selected >@flexibleWorktime.Name</option>
+                                                                                if (employeeWorkTime.WorktimeId == flexibleWorktime.FlexibleWorktimeId)
+                                                                                {
+                                                                                    <option value="@flexibleWorktime.FlexibleWorktimeId" selected>@flexibleWorktime.Name</option>
                                                                                 }
-                                                                            else
-                                                                            {
+                                                                                else
+                                                                                {
                                                                                     <option value="@flexibleWorktime.FlexibleWorktimeId">@flexibleWorktime.Name</option>
                                                                                 }
-                                                                        }
-                                                                        
+                                                                            }
+
                                                                         </select>
                                                                     }
                                                                 </div>
@@ -335,276 +432,340 @@
                                                 j_index++;
                                             }
                                         </div>
-                                            d_index++;
-                                            }
-                                        </div>
-                                    </div>
-
-
-                            </div>
-                    </div>
-                <div class="col-12 col-sm-7 col-lg-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="row" style="margin:0px 10px 0px 0px;">
-                                <div class="col-8" id="CenterSet">
-                                   
-                                    <select class="form-select form-select-sm" onchange="showvalue(this[selectedIndex].value);this.size=1; this.blur();" aria-label=".form-select-sm example" id="worktimeselect" onfocus='this.size=4;' onblur='this.size=1;'>
-                                        <option value="0"></option>
-                                        @foreach (var generalWorktime in generalWorktimes)
-                                        {
-                                            <option value="@generalWorktime.GeneralWorktimeId">@generalWorktime.Name</option>
-                                        }
-                                        @foreach (var flexibleWorktime in flexibleWorktimes)
-                                        {
-                                            <option value="@flexibleWorktime.FlexibleWorktimeId">@flexibleWorktime.Name</option>
-                                        }
-                                    </select>                          
-                                </div>
-                                <div class="col-4">
-                                    <div class="row" style="float:right;">
-                                        <button name="delete" type="button" onclick="set()" class="btn btn-danger btn-sm" data-toggle="modal" id="deletebutton" data-target="#DeleteWorkTime" style="opacity: 0.9; display: none; border-radius: 4px; margin: 5px;"><i class="bi-trash-fill" style="margin: 0px auto;  "></i></button>
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="showFunction()" style="opacity: 0.9; background-color: #32CD32; border: 1px solid #32CD32; font-size: 25px; border-radius: 4px; margin: 5px;">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr style="margin: 10px 20px 0px 20px" />
-                            <div class="card-body">
-                                @*編輯一般*@
-                                @foreach (var generalWorktime in generalWorktimes)
-                                {
-                                    using (Html.BeginForm("EditWorktime", "Setting", new { id = generalWorktime.GeneralWorktimeId, old_state = "tab2_" + generalWorktime.GeneralWorktimeId }, FormMethod.Post))
-                                    {
-                                        <div id="tab_@generalWorktime.GeneralWorktimeId" class="col align-self-center" style="margin:0 auto;text-align:center;display:none;">
-                                            <div class="p-2">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="row">
-                                                            <div>群組名稱 : </div>
-                                                            <input name="Name" value="@generalWorktime.Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;" >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="row">
-                                                            <div>模式設定 : </div>
-
-                                                            <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
-                                                                <option selected value="tab2_@generalWorktime.GeneralWorktimeId">一般</option>
-                                                                <option value="tab2_editelasticity_@generalWorktime.GeneralWorktimeId">彈性</option>
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="tab2_@generalWorktime.GeneralWorktimeId">
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>開始時間 : </div>
-                                                                <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>結束時間 : </div>
-                                                                <input value="@generalWorktime.RestTime" class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>休息時間設定 : </div>
-                                                                <input name="BreakTime" value="@generalWorktime.BreakTime" oninput="value=value.replace(/[^\d]/g,'')" id="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                                <div>分鐘</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="button" onclick="set(); window.location.reload();" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
-                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="tab2_editelasticity_@generalWorktime.GeneralWorktimeId" style="display:none;">
-                                                <div class="p-1">
-                                                    <div class="row">
-                                                        <b style="float:left;margin:0px 0px 0px 12px;">上班打卡時間設定</b>
-                                                    </div>
-                                                </div>
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>開始時間 : </div>
-                                                                <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>結束時間 : </div>
-                                                                <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <div class="row">
-                                                                <div>休息時間設定 : </div>
-                                                                <input name="BreakTime2" class="form-control" type="text" oninput="value=value.replace(/[^\d]/g,'')" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                                <div>分鐘</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="p-1">
-                                                    <div class="row">
-                                                        <b style="float:left;margin:0px 0px 0px 12px;">下班打卡時間設定</b>
-                                                    </div>
-                                                </div>
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>開始時間 : </div>
-                                                                <input value="@generalWorktime.RestTime" class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>結束時間 : </div>
-                                                                <input value="@generalWorktime.RestTime" class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="button" onclick="set(); window.location.reload();" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" >取消</button>
-                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        d_index++;
                                     }
-                                }
-                                @*編輯彈性*@
-                                @foreach (var flexibleWorktime in flexibleWorktimes)
-                                {
-                                    using (Html.BeginForm("EditWorktime", "Setting", new { id = flexibleWorktime.FlexibleWorktimeId, old_state = "tab2_" + flexibleWorktime.FlexibleWorktimeId }, FormMethod.Post))
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-7 col-lg-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row" style="margin:0px 10px 0px 0px;">
+                                    <div class="col-8" id="CenterSet">
+
+                                        <select class="form-select form-select-sm" onchange="showvalue(this[selectedIndex].value);this.size=1; this.blur();" aria-label=".form-select-sm example" id="worktimeselect" onfocus='this.size=4;' onblur='this.size=1;'>
+                                            <option value="0"></option>
+                                            @foreach (var generalWorktime in generalWorktimes)
+                                            {
+                                                <option value="@generalWorktime.GeneralWorktimeId">@generalWorktime.Name</option>
+                                            }
+                                            @foreach (var flexibleWorktime in flexibleWorktimes)
+                                            {
+                                                <option value="@flexibleWorktime.FlexibleWorktimeId">@flexibleWorktime.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="row" style="float:right;">
+                                            <button name="delete" type="button" onclick="set()" class="btn btn-danger btn-sm" data-toggle="modal" id="deletebutton" data-target="#DeleteWorkTime" style="opacity: 0.9; display: none; border-radius: 4px; margin: 5px;"><i class="bi-trash-fill" style="margin: 0px auto;  "></i></button>
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="showFunction()" style="opacity: 0.9; background-color: #32CD32; border: 1px solid #32CD32; font-size: 25px; border-radius: 4px; margin: 5px;">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="margin: 10px 20px 0px 20px" />
+                                <div class="card-body">
+                                    @*編輯一般*@
+                                    @foreach (var generalWorktime in generalWorktimes)
                                     {
-                                        <div id="tab_@flexibleWorktime.FlexibleWorktimeId" class="col align-self-center" style="margin:0 auto;text-align:center;display:none;">
+                                        using (Html.BeginForm("EditWorktime", "Setting", new { id = generalWorktime.GeneralWorktimeId, old_state = "tab2_" + generalWorktime.GeneralWorktimeId }, FormMethod.Post))
+                                        {
+                                            <div id="tab_@generalWorktime.GeneralWorktimeId" class="col align-self-center" style="margin:0 auto;text-align:center;display:none;">
+                                                <div class="p-2">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div>群組名稱 : </div>
+                                                                <input name="Name" value="@generalWorktime.Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div>模式設定 : </div>
+
+                                                                <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
+                                                                    <option selected value="tab2_@generalWorktime.GeneralWorktimeId">一般</option>
+                                                                    <option value="tab2_editelasticity_@generalWorktime.GeneralWorktimeId">彈性</option>
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="tab2_@generalWorktime.GeneralWorktimeId">
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>開始時間 : </div>
+                                                                    <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>結束時間 : </div>
+                                                                    <input value="@generalWorktime.RestTime" class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>休息時間設定 : </div>
+                                                                    <input name="BreakTime" value="@generalWorktime.BreakTime" oninput="value=value.replace(/[^\d]/g,'')" id="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                                    <div>分鐘</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="row" style="float:right">
+                                                                    <button class="btn btn-primary" type="button" onclick="set(); window.location.reload();" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                                    <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="tab2_editelasticity_@generalWorktime.GeneralWorktimeId" style="display:none;">
+                                                    <div class="p-1">
+                                                        <div class="row">
+                                                            <b style="float:left;margin:0px 0px 0px 12px;">上班打卡時間設定</b>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>開始時間 : </div>
+                                                                    <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>結束時間 : </div>
+                                                                    <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="row">
+                                                                    <div>休息時間設定 : </div>
+                                                                    <input name="BreakTime2" class="form-control" type="text" oninput="value=value.replace(/[^\d]/g,'')" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                                    <div>分鐘</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-1">
+                                                        <div class="row">
+                                                            <b style="float:left;margin:0px 0px 0px 12px;">下班打卡時間設定</b>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>開始時間 : </div>
+                                                                    <input value="@generalWorktime.RestTime" class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>結束時間 : </div>
+                                                                    <input value="@generalWorktime.RestTime" class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row" style="float:right">
+                                                                    <button class="btn btn-primary" type="button" onclick="set(); window.location.reload();" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                                    <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    @*編輯彈性*@
+                                    @foreach (var flexibleWorktime in flexibleWorktimes)
+                                    {
+                                        using (Html.BeginForm("EditWorktime", "Setting", new { id = flexibleWorktime.FlexibleWorktimeId, old_state = "tab2_" + flexibleWorktime.FlexibleWorktimeId }, FormMethod.Post))
+                                        {
+                                            <div id="tab_@flexibleWorktime.FlexibleWorktimeId" class="col align-self-center" style="margin:0 auto;text-align:center;display:none;">
+                                                <div class="p-2">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div>群組名稱 : </div>
+                                                                <input name="Name" value="@flexibleWorktime.Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div>模式設定 : </div>
+
+                                                                <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
+                                                                    <option value="tab2_editgeneral_@flexibleWorktime.FlexibleWorktimeId">一般</option>
+                                                                    <option selected value="tab2_@flexibleWorktime.FlexibleWorktimeId">彈性</option>
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="tab2_@flexibleWorktime.FlexibleWorktimeId">
+                                                    <div class="p-1">
+                                                        <div class="row">
+                                                            <b style="float:left;margin:0px 0px 0px 12px;">上班打卡時間設定</b>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>開始時間 : </div>
+                                                                    <input value="@flexibleWorktime.WorkTimeStart" class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>結束時間 : </div>
+                                                                    <input value="@flexibleWorktime.WorkTimeEnd" class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="row">
+                                                                    <div>休息時間設定 : </div>
+                                                                    <input name="BreakTime2" value="@flexibleWorktime.BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                                    <div>分鐘</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-1">
+                                                        <div class="row">
+                                                            <b style="float:left;margin:0px 0px 0px 12px;">下班打卡時間設定</b>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>開始時間 : </div>
+                                                                    <input value="@flexibleWorktime.RestTimeStart" class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>結束時間 : </div>
+                                                                    <input value="@flexibleWorktime.RestTimeEnd" class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row" style="float:right">
+                                                                    <button class="btn btn-primary" type="button" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" onclick="set(); window.location.reload();">取消</button>
+                                                                    <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="tab2_editgeneral_@flexibleWorktime.FlexibleWorktimeId" style="display:none;">
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>開始時間 : </div>
+                                                                    <input value="@flexibleWorktime.WorkTimeStart" class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>結束時間 : </div>
+                                                                    <input value="@flexibleWorktime.RestTimeStart" class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="row">
+                                                                    <div>休息時間設定 : </div>
+                                                                    <input name="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                                    <div>分鐘</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="row" style="float:right">
+                                                                    <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" onclick="set(); window.location.reload();">取消</button>
+                                                                    <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+                                    @*新增*@
+                                    @using (Html.BeginForm("AddWorktime", "Setting", FormMethod.Post))
+                                    {
+                                        <div class="col align-self-center" id="WorkSettingbody" style="margin:0 auto;text-align:center;display:none;">
                                             <div class="p-2">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="row">
                                                             <div>群組名稱 : </div>
-                                                            <input name="Name" value="@flexibleWorktime.Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;">
+                                                            <input name="Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;" required>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="row">
                                                             <div>模式設定 : </div>
 
-                                                            <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
-                                                                <option value="tab2_editgeneral_@flexibleWorktime.FlexibleWorktimeId">一般</option>
-                                                                <option selected value="tab2_@flexibleWorktime.FlexibleWorktimeId">彈性</option>
+                                                            <select name="auditstate" onchange="showinfo(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
+                                                                <option selected value="1">一般</option>
+                                                                <option value="2">彈性</option>
                                                             </select>
 
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="tab2_@flexibleWorktime.FlexibleWorktimeId">
-                                                <div class="p-1">
-                                                    <div class="row">
-                                                        <b style="float:left;margin:0px 0px 0px 12px;">上班打卡時間設定</b>
-                                                    </div>
-                                                </div>
+                                            <div id="general">
                                                 <div class="p-2">
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="row">
                                                                 <div>開始時間 : </div>
-                                                                <input value="@flexibleWorktime.WorkTimeStart" class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
                                                             </div>
                                                         </div>
                                                         <div class="col">
                                                             <div class="row">
                                                                 <div>結束時間 : </div>
-                                                                <input value="@flexibleWorktime.WorkTimeEnd" class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <div class="row">
-                                                                <div>休息時間設定 : </div>
-                                                                <input name="BreakTime2" value="@flexibleWorktime.BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                                <div>分鐘</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="p-1">
-                                                    <div class="row">
-                                                        <b style="float:left;margin:0px 0px 0px 12px;">下班打卡時間設定</b>
-                                                    </div>
-                                                </div>
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>開始時間 : </div>
-                                                                <input value="@flexibleWorktime.RestTimeStart" class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>結束時間 : </div>
-                                                                <input value="@flexibleWorktime.RestTimeEnd" class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" onclick="set(); window.location.reload();">取消</button>
-                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="tab2_editgeneral_@flexibleWorktime.FlexibleWorktimeId" style="display:none;">
-                                                <div class="p-2">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>開始時間 : </div>
-                                                                <input value="@flexibleWorktime.WorkTimeStart" class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="row">
-                                                                <div>結束時間 : </div>
-                                                                <input value="@flexibleWorktime.RestTimeStart" class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -620,7 +781,72 @@
                                                         </div>
                                                         <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" onclick="set(); window.location.reload();">取消</button>
+                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="hideFunction()" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                                <button class="btn btn-primary" type="submit" id="workonoffbutton" onclick="set();" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="elasticity" style="display:none;">
+                                                <div class="p-1">
+                                                    <div class="row">
+                                                        <b style="float:left;margin:0px 0px 0px 12px;">上班打卡時間設定</b>
+                                                    </div>
+                                                </div>
+                                                <div class="p-2">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div>開始時間 : </div>
+                                                                <input class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div>結束時間 : </div>
+                                                                <input class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-2">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="row">
+                                                                <div>休息時間設定 : </div>
+                                                                <input name="BreakTime2" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                                <div>分鐘</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-1">
+                                                    <div class="row">
+                                                        <b style="float:left;margin:0px 0px 0px 12px;">下班打卡時間設定</b>
+                                                    </div>
+                                                </div>
+                                                <div class="p-2">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div>開始時間 : </div>
+                                                                <input class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div>結束時間 : </div>
+                                                                <input class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-2">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row" style="float:right">
+                                                                <button class="btn btn-primary" type="submit" id="workonoffbutton" onclick="hideFunction();" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
                                                                 <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                             </div>
                                                         </div>
@@ -629,179 +855,52 @@
                                             </div>
                                         </div>
                                     }
-                                }
 
-                                @*新增*@
-                                @using (Html.BeginForm("AddWorktime", "Setting", FormMethod.Post))
-                                {
-                                <div class="col align-self-center" id="WorkSettingbody" style="margin:0 auto;text-align:center;display:none;">
-                                    <div class="p-2">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="row">
-                                                    <div>群組名稱 : </div>
-                                                    <input name="Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;" required>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="row">
-                                                    <div>模式設定 : </div>
-
-                                                    <select name="auditstate" onchange="showinfo(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
-                                                        <option selected value="1">一般</option>
-                                                        <option value="2">彈性</option>
-                                                    </select>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="general">
-                                        <div class="p-2">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row">
-                                                        <div>開始時間 : </div>
-                                                        <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="row">
-                                                        <div>結束時間 : </div>
-                                                        <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row">
-                                                        <div>休息時間設定 : </div>
-                                                        <input name="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                        <div>分鐘</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="row" style="float:right">
-                                                        <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="hideFunction()" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
-                                                        <button class="btn btn-primary" type="submit" id="workonoffbutton" onclick="set();" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="elasticity" style="display:none;">
-                                        <div class="p-1">
-                                            <div class="row">
-                                                <b style="float:left;margin:0px 0px 0px 12px;">上班打卡時間設定</b>
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row">
-                                                        <div>開始時間 : </div>
-                                                        <input class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="row">
-                                                        <div>結束時間 : </div>
-                                                        <input class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="row">
-                                                        <div>休息時間設定 : </div>
-                                                        <input name="BreakTime2" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                        <div>分鐘</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="p-1">
-                                            <div class="row">
-                                                <b style="float:left;margin:0px 0px 0px 12px;">下班打卡時間設定</b>
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row">
-                                                        <div>開始時間 : </div>
-                                                        <input class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="row">
-                                                        <div>結束時間 : </div>
-                                                        <input class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="p-2">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row" style="float:right">
-                                                        <button class="btn btn-primary" type="submit" id="workonoffbutton" onclick="hideFunction();" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
-                                                        <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                                }
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
 
 
-@*
-    <div class="col-12 col-sm-12 col-lg-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h4>下上班逾時打卡設定</h4>
+
+        @*
+        <div class="col-12 col-sm-12 col-lg-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h4>下上班逾時打卡設定</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <form class="form-inline mr-auto">
+                        <div class="row">
+                            <div class="col-lg-auto col-md-3 col-3">
+                                上下班逾時禁止打卡：
+                            </div>
+                            <div class="col-lg-auto col-md-2 col-12">
+                                <label class="switch">
+                                    <input type="checkbox" id="togBtn">
+                                    <div class="slider round">
+                                        <span class="on">是</span>
+                                        <span class="off">否</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-lg-auto col-md-5 col-12" style="color: grey;">
+                                *若開啟，上下班30分後打卡，需要後台許可app顯示該筆紀錄。
+                            </div>
+                            <div class="col-lg-auto col-md-1 col-12">
+                                <button class="btn btn-primary" type="submit">修改</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <div class="card-body">
-
-                <form class="form-inline mr-auto">
-                    <div class="row">
-                        <div class="col-lg-auto col-md-3 col-3">
-                            上下班逾時禁止打卡：
-                        </div>
-                        <div class="col-lg-auto col-md-2 col-12">
-                            <label class="switch">
-                                <input type="checkbox" id="togBtn">
-                                <div class="slider round">
-                                    <span class="on">是</span>
-                                    <span class="off">否</span>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="col-lg-auto col-md-5 col-12" style="color: grey;">
-                            *若開啟，上下班30分後打卡，需要後台許可app顯示該筆紀錄。
-                        </div>
-                        <div class="col-lg-auto col-md-1 col-12">
-                            <button class="btn btn-primary" type="submit">修改</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
-    </div>
-*@
+        *@
 
     </section>
     </div>

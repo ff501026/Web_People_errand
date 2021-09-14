@@ -51,6 +51,28 @@ namespace AttendanceManagement.Models
 
             return pass_employee;
         }
+        public static async Task<List<PassEmployee>> ManagerPassEmployees2(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerGetPassEmployee2 + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<PassEmployee> pass_employee = JsonConvert.DeserializeObject<List<PassEmployee>>(GetResponse);
+
+            return pass_employee;
+        }
+        public static async Task<List<PassEmployee>> ManagerPassEmployees3(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerGetPassEmployee3 + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<PassEmployee> pass_employee = JsonConvert.DeserializeObject<List<PassEmployee>>(GetResponse);
+
+            return pass_employee;
+        }
         public static async Task<bool> EmployeeBoolEmail(string company_hash,string email)//判斷此EMAIL是否被用過
         {
             //連上WebAPI
@@ -161,7 +183,9 @@ namespace AttendanceManagement.Models
                 JobTitle = passEmployee[index].JobTitle,//員工職稱
                 Email = passEmployee[index].Email, //員工電子郵件
                 PhoneCode = passEmployee[index].PhoneCode,//員工驗證碼(phone_code)
-                Enabled = passEmployee[index].Enabled
+                Enabled = passEmployee[index].Enabled,
+                WorktimeId = passEmployee[index].WorktimeId,
+                ManagerHash = passEmployee[index].ManagerHash
             };
             return search;
         }

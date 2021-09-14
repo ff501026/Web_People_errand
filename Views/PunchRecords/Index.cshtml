@@ -55,29 +55,75 @@
                                 <table class="table">
                                     <tr>
                                         <th>編號</th>
+                                        <th>是否遲到</th>
                                         <th>員工姓名</th>
                                         <th>上班時間</th>
                                         <th>下班時間</th>
-                                        <th>是否遲到</th>
+                                        <th>下班狀態</th>
                                     </tr>
-                                    @for (int i = num - 1; i >= 0; i--)
-                                    {
-                                        int index = passEmployees.FindIndex(t => t.HashAccount.Equals(work_record[i].HashAccount));
-                                        number++;
+                                    
+                            <tbody id="tablePage">
+                                @for (int i = num - 1; i >= 0; i--)
+                                {
+                                    int index = passEmployees.FindIndex(t => t.HashAccount.Equals(work_record[i].HashAccount));
+                                    number++;
                                 <tr>
                                     <td class="rowBorderStart">@number</td>
+                                    <td class="rowBorderMiddle" style="width:100px;">
+                                        @if (passEmployees[index].WorktimeId != null && passEmployees[index].WorktimeId != "0")
+                                        {
+                                            int g_index = generalWorktimes.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));
+                                            int f_index = flexibleWorktimes.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));
+                                            if (passEmployees[index].WorktimeId.Substring(0, 1) == "G")
+                                            {
+                                                TimeSpan dt2 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
+
+                                                if (TimeSpan.Compare(generalWorktimes[g_index].WorkTime, dt2) > 0)
+                                                {
+                                                    <div class="badge badge-info" style="background-color: white; font-weight: bold;">準時</div> }
+                                                else
+                                                {
+                                                    <div class="badge badge-danger" style="background-color: white; font-weight: bold;">遲到</div> }
+                                            }
+                                            else if (passEmployees[index].WorktimeId.Substring(0, 1) == "F")
+                                            {
+                                                TimeSpan dt3 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
+
+                                                if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, flexibleWorktimes[f_index].WorkTimeEnd) > 0)
+                                                {
+                                                    if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, dt3) < 0 || TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeEnd, dt3) > 0)
+                                                    {
+                                                        <div class="badge badge-info" style="background-color: white; font-weight: bold;">準時</div> }
+                                                    else
+                                                    {
+                                                        <div class="badge badge-danger" style="background-color: white; font-weight: bold;">遲到</div> }
+                                                }
+                                                else
+                                                {
+                                                    if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, dt3) < 0 && TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeEnd, dt3) > 0)
+                                                    {
+                                                        <div class="badge badge-info" style="background-color: white; font-weight: bold;">準時</div>}
+                                                    else
+                                                    {
+                                                        <div class="badge badge-danger" style="background-color: white; font-weight: bold;">遲到</div>}
+                                                }
+                                            }
+
+                                        }
+
+                                    </td>
                                     <td class="rowBorderMiddle">
                                         <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
                                     </td>
                                     <td class="rowBorderMiddle">@work_record[i].WorkTime</td>
                                     <td class="rowBorderMiddle">@work_record[i].RestTime</td>
-                                    @if (passEmployees[index].WorktimeId != null || passEmployees[index].WorktimeId == "")
+                                    @if (passEmployees[index].WorktimeId != null )
                                     {
-                                        int g_index = generalWorktimes.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));//一般上下班設定的index
-                                        int f_index = flexibleWorktimes.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));//彈性上下班設定的index
+                                        int g_index = generalWorktimes.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));
+                                        int f_index = flexibleWorktimes.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));
                                         if (passEmployees[index].WorktimeId.Substring(0, 1) == "G")
                                         {
-                                            TimeSpan dt2 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));//員工打卡紀錄的上班時間
+                                            TimeSpan dt2 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
                                             TimeSpan dt = TimeSpan.Parse(work_record[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
                                             TimeSpan hour = new TimeSpan();//公司規定的上班時數
                                             if (generalWorktimes[g_index].RestTime > generalWorktimes[g_index].WorkTime)
@@ -95,28 +141,19 @@
 
                                             if (ts > hour + time)//員工的上班時數大於規定的上班時數
                                             {
-                                                <td class="rowBorderEnd"><div class="badge  badge-success" style="background-color: #DFFAD9; color: #32DE38 ">異常</div></td>
+                                                <td class="rowBorderEnd"> <div class="badge badge-success" style="background-color: #E0F9D9; color: #40D03A; font-weight: bold; ">異常</div></td>
                                             }
                                             else if (dt < generalWorktimes[g_index].RestTime)//員工的下班時間比規定的下班時間早
                                             {
-                                                <td class="rowBorderEnd"><div class="badge  badge-warning" style="background-color: #FEF7CA; color: #FFA200; ">早退</div></td>
+                                                <td class="rowBorderEnd"> <div class="badge badge-warning" style="background-color: #FEF7CB; color: #F0BF58;font-weight:bold;">早退</div></td>
                                             }
-                                            else if (ts > hour)//員工的下班時間比規定的下班時間早
+                                            else if (ts < hour)//員工的上班時數比規定的上班時數小
                                             {
-                                                <td class="rowBorderEnd"><div class="badge  badge-warning" style="background-color: #FEF7CA; color: #FFA200; ">早退</div></td>
-                                            }
-                                            else
-                                            {
-                                                <td class="rowBorderEnd"><div class="badge badge-info">正常</div></td>
-                                            }
-
-                                            if (TimeSpan.Compare(generalWorktimes[g_index].WorkTime, dt2) > 0)
-                                            {
-                                                <td class="rowBorderEnd"><div class="badge badge-info">準時</div></td>
+                                                <td class="rowBorderEnd"> <div class="badge badge-warning" style="background-color: #FEF7CB; color: #F0BF58;font-weight:bold;">早退</div></td>
                                             }
                                             else
                                             {
-                                                <td class="rowBorderEnd"><div class="badge badge-danger">遲到</div></td>
+                                                <td class="rowBorderEnd"> <div class="badge badge-info" style="background-color: #CAE1FF; color: #869DE9; font-weight: bold; ">正常</div></td>
                                             }
                                         }
                                         else if (passEmployees[index].WorktimeId.Substring(0, 1) == "F")
@@ -125,73 +162,34 @@
                                             TimeSpan dt = TimeSpan.Parse(work_record[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
                                             if (dt > flexibleWorktimes[f_index].RestTimeEnd)//員工的下班時間比規定的下班時間晚
                                             {
-                                                <td class="rowBorderEnd"><div class="badge  badge-success" style="background-color: #DFFAD9; color: #32DE38 ">異常</div></td>
+                                                <td class="rowBorderEnd"> <div class="badge badge-success" style="background-color: #E0F9D9; color: #40D03A; font-weight: bold; ">異常</div></td>
                                             }
                                             else if (dt < flexibleWorktimes[f_index].RestTimeStart)//員工的下班時間比規定的下班時間早
                                             {
-                                                <td class="rowBorderEnd"><div class="badge  badge-warning" style="background-color: #FEF7CA; color: #FFA200; ">早退</div></td>
+                                                <td class="rowBorderEnd"> <div class="badge badge-warning" style="background-color: #FEF7CB; color: #F0BF58;font-weight:bold;">早退</div></td>
                                             }
                                             else
                                             {
-                                                <td class="rowBorderEnd"><div class="badge badge-info">正常</div></td>
-                                            }
-
-                                            if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, flexibleWorktimes[f_index].WorkTimeEnd) > 0)
-                                            {
-                                                if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, dt3) < 0 || TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeEnd, dt3) > 0)
-                                                {
-                                                    <td class="rowBorderEnd"><div class="badge badge-info">準時</div></td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="rowBorderEnd"><div class="badge badge-danger">遲到</div></td>
-                                                }
-
-                                            }
-                                            else
-                                            {
-                                                if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, dt3) < 0 && TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeEnd, dt3) > 0)
-                                                {
-                                                    <td class="rowBorderEnd"><div class="badge badge-info">準時</div></td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="rowBorderEnd"><div class="badge badge-danger">遲到</div></td>
-                                                }
+                                                <td class="rowBorderEnd"> <div class="badge badge-info" style="background-color: #CAE1FF; color: #869DE9; font-weight: bold; ">正常</div></td>
                                             }
                                         }
                                         else
                                         {
-                                            <td class="rowBorderEnd"><div class="badge badge-danger"></div></td>
-
+                                            <td class="rowBorderEnd"></td>
                                         }
+
                                     }
-                                    else
+                                    @if (passEmployees[index].WorktimeId == null)
                                     {
-                                        <td class="rowBorderEnd"><div class="badge badge-danger"></div></td>
+                                        <td class="rowBorderEnd"></td>
                                     }
+
+
                                 </tr>
-                                    }
-                                    @*<tr>
-                                            <td>1</td>
-                                            <td>
-                                                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">王大明</a>
-                                            </td>
-                                            <td>2017-01-09 08:57:00</td>
-                                            <td>2017-01-09 18:05:00</td>
-                                            <td>高雄市燕巢區大學路1號</td>
-                                            <td><div class="badge badge-success">準時</div></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>
-                                                <a href="#"><img src="~/Content/employee.png" alt="avatar" width="30" class="rounded-circle mr-1">周星星</a>
-                                            </td>
-                                            <td>2017-01-08 09:10:00</td>
-                                            <td>2017-01-08 19:21:00</td>
-                                            <td>高雄市燕巢區大學路1號</td>
-                                            <td><div class="badge badge-danger">遲到</div></td>
-                                        </tr>*@
+                                }
+                                </tbody>
+
+
                                 </table>
                             </div>
                         </div>

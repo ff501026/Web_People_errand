@@ -74,8 +74,18 @@ namespace AttendanceManagement.Models
         public static readonly string CompanyGetManagerPermissionsCustomizations = "Companies/Get_Manager_Permissions_Customizations";//取得權限自訂設定
         public static readonly string CompanyAddManagerPermissionsCustomizations = "ManagerPermissionsCustomizations/add_manager_permissions_customization";//新增權限自訂設定
         public static readonly string CompanyDeleteManagerPermissionsCustomizations = "ManagerPermissionsCustomizations/DeleteManagerPermissionsCustomization/";//刪除權限自訂設定
-
-
+        public static readonly string CompanyGetManagerAccountPermissions = "Companies/CompanyManagerAccountPermissions/"; //取得角色套用權限資料
+        public static readonly string CompanyUpdateManagerAccountPermissions = "Companies/UpdateManagerAccountPermissions"; //編輯角色套用權限資料
+        public static readonly string CompanyGetManagerRolePermissions = "Companies/GetManagerRolePermissions/"; //取得目前登入的管理員的權限設定
+        public static readonly string ManagerGetReviewLeaveRecord = "EmployeeLeaveRecords/Review_LeaveRecord?hash_company="; //管理員取得待審核請假資料
+        public static readonly string ManagerGetPassLeaveRecord2 = "Companies/Pass_LeaveRecord2/"; //管理員取得直屬員工已審核請假資料
+        public static readonly string ManagerGetPassLeaveRecord3 = "Companies/Pass_LeaveRecord3/"; //管理員取得自訂對象已審核請假資料
+        public static readonly string ManagerGetWorkRecord2 = "Companies/GetWorkRecord2/"; //管理員取得直屬員工打卡資料
+        public static readonly string ManagerGetWorkRecord3 = "Companies/GetWorkRecord3/"; //管理員取得自訂對象打卡資料
+        public static readonly string ManagerGetPassEmployee2 = "Companies/Manager_GetPassEmployee2/"; //管理員取得直屬員工資料
+        public static readonly string ManagerGetPassEmployee3 = "Companies/Manager_GetPassEmployee3/"; //管理員取得自訂對象資料
+        public static readonly string ManagerGetTrip2Record2 = "Companies/Get_Trip2Record2/"; //管理員取得直屬員工公差資料
+        public static readonly string ManagerGetTrip2Record3 = "Companies/Get_Trip2Record3/"; //管理員取得自訂對象公差資料
 
         public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL
         {

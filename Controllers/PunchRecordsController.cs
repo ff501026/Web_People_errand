@@ -29,6 +29,23 @@ namespace AttendanceManagement.Controllers
             //輸入公司代碼取得全部的已審核資料
             List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(Session["company_hash"].ToString());
 
+            if (Session["hash_account"] != null)
+            {
+                //輸入公司取得全部的管理員
+                List<Manager> managers = await CompanyManagerModel.GetAllManager(Session["company_hash"].ToString());
+                int index = managers.FindIndex(item => item.ManagerHash.Equals(Session["hash_account"].ToString()));
+
+                if (managers[index].PermissionsId == null || managers[index].PermissionsId == 1) { }
+                else if (managers[index].PermissionsId == 2)
+                {
+                    work_record = await StaffModel.Manager_Get_WorkRecordAsync2(Session["hash_account"].ToString());
+                }
+                else
+                {
+                    work_record = await StaffModel.Manager_Get_WorkRecordAsync3(Session["hash_account"].ToString());
+                }
+            }
+
             int num =0;
             foreach (var work in work_record) 
             {

@@ -26,6 +26,24 @@ namespace AttendanceManagement.Controllers
             //輸入公司代碼取得詳細公出2申請紀錄
             List<DetailTrip2Record> detailtrip2record = await Trip2RecordModel.Detail_Trip2Record(Session["company_hash"].ToString());
 
+            if (Session["hash_account"] != null)
+            {
+                //輸入公司取得全部的管理員
+                List<Manager> managers = await CompanyManagerModel.GetAllManager(Session["company_hash"].ToString());
+                int index = managers.FindIndex(item => item.ManagerHash.Equals(Session["hash_account"].ToString()));
+
+                if (managers[index].PermissionsId == null || managers[index].PermissionsId == 1) { }
+                else if (managers[index].PermissionsId == 2)
+                {
+                    trip2record = await Trip2RecordModel.Manager_Get_Trip2Record2(Session["hash_account"].ToString());
+                }
+                else
+                {
+                    trip2record = await Trip2RecordModel.Manager_Get_Trip2Record3(Session["hash_account"].ToString());
+
+                }
+            }
+
             ViewBag.review_triprecord = review_triprecord;//待審核公出申請紀錄
             ViewBag.pass_triprecord = pass_triprecord;//已審核公出申請紀錄
             ViewBag.trip2record = trip2record;//公出紀錄2

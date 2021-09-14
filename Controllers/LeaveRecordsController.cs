@@ -17,10 +17,31 @@ namespace AttendanceManagement.Controllers
             {
                 return RedirectToAction("Index", "Account", null);
             }
+
             //輸入公司代碼取得待審核請假申請紀錄
             List<LeaveRecord> review_leaverecord = await ReviewLeaveRecordModel.Get_ReviewLeaveRecord(Session["company_hash"].ToString());
             //輸入公司代碼取得已審核請假申請紀錄
             List<LeaveRecord> pass_leaverecord = await PassLeaveRecordModel.Get_PassLeaveRecord(Session["company_hash"].ToString());
+            
+            if (Session["hash_account"] != null)
+            {
+                //輸入公司取得全部的管理員
+                List<Manager> managers = await CompanyManagerModel.GetAllManager(Session["company_hash"].ToString());
+                int index = managers.FindIndex(item => item.ManagerHash.Equals(Session["hash_account"].ToString()));
+
+                review_leaverecord = await ReviewLeaveRecordModel.Manager_Get_ReviewLeaveRecord(Session["company_hash"].ToString(), Session["hash_account"].ToString());
+
+                if (managers[index].PermissionsId == null || managers[index].PermissionsId == 1) { }
+                else if (managers[index].PermissionsId == 2)
+                {
+                    pass_leaverecord = await PassLeaveRecordModel.Manager_Get_PassLeaveRecord2(Session["hash_account"].ToString());
+                }
+                else 
+                {
+                    pass_leaverecord = await PassLeaveRecordModel.Manager_Get_PassLeaveRecord3(Session["hash_account"].ToString());
+
+                }
+            }
 
             ViewBag.review_leaverecord = review_leaverecord;//待審核請假申請紀錄
             ViewBag.pass_leaverecord = pass_leaverecord;//待審核請假申請紀錄

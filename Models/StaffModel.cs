@@ -23,6 +23,28 @@ namespace AttendanceManagement.Models
             List<Work_Record> employee_workrecrd = JsonConvert.DeserializeObject<List<Work_Record>>(GetResponse);
             return employee_workrecrd;
         }
+
+        public static async Task<List<Work_Record>> Manager_Get_WorkRecordAsync2(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerGetWorkRecord2 + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<Work_Record> employee_workrecrd = JsonConvert.DeserializeObject<List<Work_Record>>(GetResponse);
+            return employee_workrecrd;
+        }
+
+        public static async Task<List<Work_Record>> Manager_Get_WorkRecordAsync3(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerGetWorkRecord3 + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<Work_Record> employee_workrecrd = JsonConvert.DeserializeObject<List<Work_Record>>(GetResponse);
+            return employee_workrecrd;
+        }
         public static async Task<List<Work_Record>> Search_WorkRecord2(string company_hash, DateTime? date, string name)//兩條件篩選
         {
             //輸入公司代碼取得打卡紀錄
@@ -677,7 +699,7 @@ namespace AttendanceManagement.Models
             return -1;
         }
 
-       public static async Task<bool> Edit_ManagerPermissions(int permissions_id, string Name, int employee_display, int? customization_display, int employee_review, int? customization_review, bool setting_worktime, bool setting_department_jobtitle, bool setting_location)
+       public static async Task<bool> Edit_ManagerPermissions(string company_hash,int permissions_id, string Name, int employee_display, int? customization_display, int employee_review, int? customization_review, bool setting_worktime, bool setting_department_jobtitle, bool setting_location)
         {
 
             List<ManagerPermissions> managerPermissions = new List<ManagerPermissions>();
@@ -704,7 +726,7 @@ namespace AttendanceManagement.Models
             }
             return false;
         }
-        public static async Task<bool> Delete_ManagerPermissions(int id)//刪除
+        public static async Task<bool> Delete_ManagerPermissions(string company_hash,int id)//刪除
         {
             response = await client.DeleteAsync(url + CompanyDeleteManagerPermissions + id);
             if (response.StatusCode.ToString().Equals("OK"))
@@ -749,7 +771,7 @@ namespace AttendanceManagement.Models
             }
             return null;
         }
-        public static async Task<bool> Delete_ManagerPermissionsCustomizations(int id)//刪除
+        public static async Task<bool> Delete_ManagerPermissionsCustomizations(string company_hash,int id)//刪除
         {
             response = await client.DeleteAsync(url + CompanyDeleteManagerPermissionsCustomizations + id);
             if (response.StatusCode.ToString().Equals("OK"))
@@ -758,8 +780,57 @@ namespace AttendanceManagement.Models
             }
             return false;
         }
-    }
 
+        public static async Task<List<ManagerAccountPermissions>> Get_ManagerAccountPermissions(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetManagerAccountPermissions + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<ManagerAccountPermissions> managerAccountPermissions = JsonConvert.DeserializeObject<List<ManagerAccountPermissions>>(GetResponse);
+            return managerAccountPermissions;
+        }
+
+        public static async Task<bool> Edit_ManagerAccountPermissions(string company_hash,int department_id, int jobtitle_id, int? permissions_id)
+        {
+
+            List<ManagerAccountPermissions> managerAccountPermissions = new List<ManagerAccountPermissions>();
+            ManagerAccountPermissions managerAccount = new ManagerAccountPermissions
+            {
+                DepartmentId = department_id,
+                JobtitleId = jobtitle_id,
+                PermissionsId = permissions_id
+            };
+            managerAccountPermissions.Add(managerAccount);
+            string jsonData = JsonConvert.SerializeObject(managerAccountPermissions);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyUpdateManagerAccountPermissions, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static async Task<List<ManagerPermissions>> Get_ManagerRolePermissions(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetManagerRolePermissions + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<ManagerPermissions> managerAccountPermissions = JsonConvert.DeserializeObject<List<ManagerPermissions>>(GetResponse);
+            return managerAccountPermissions;
+        }
+    }
+    public class ManagerAccountPermissions 
+    {
+        public int DepartmentId { get; set; }
+        public int JobtitleId { get; set; }
+        public int? PermissionsId { get; set; }
+    }
     public class RenewWorktime
     {
         public string Worktime { get; set; }
@@ -908,8 +979,9 @@ namespace AttendanceManagement.Models
         public int? CustomizationReview { get; set; }
         public bool SettingWorktime { get; set; }
         public bool SettingDepartmentJobtitle { get; set; }
-        public bool SettingLocation { get; set; }
+       public bool SettingLocation { get; set; }
     }
+
     public class ManagerPermissionsCustomizations //權限自訂
     {
         public int CustomizationId { get; set; }

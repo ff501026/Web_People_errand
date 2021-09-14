@@ -22,6 +22,17 @@ namespace AttendanceManagement.Models
 
             return review_leaverecord;
         }
+        public static async Task<List<LeaveRecord>> Manager_Get_ReviewLeaveRecord(string company_hash,string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerGetReviewLeaveRecord + company_hash+ "&hash_account="+hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<LeaveRecord> review_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
+
+            return review_leaverecord;
+        }
     }
     class PassLeaveRecordModel : HttpResponse
     {
@@ -29,6 +40,28 @@ namespace AttendanceManagement.Models
         {
             //連上WebAPI
             response = await client.GetAsync(url + CompanyPassLeaveRecord + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<LeaveRecord> pass_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
+
+            return pass_leaverecord;
+        }
+        public static async Task<List<LeaveRecord>> Manager_Get_PassLeaveRecord2(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerGetPassLeaveRecord2 + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<LeaveRecord> pass_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
+
+            return pass_leaverecord;
+        }
+        public static async Task<List<LeaveRecord>> Manager_Get_PassLeaveRecord3(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerGetPassLeaveRecord3 + hash_account);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容

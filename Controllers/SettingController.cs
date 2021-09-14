@@ -32,8 +32,14 @@ namespace AttendanceManagement.Controllers
             List<EmployeeFlexibleWorktime> FlexibleWorktime = await CompanyWorkTimeModel.Get_FlexibleWorktime(Session["company_hash"].ToString());
             //取得員工上下班時間(新版)
             List<EmployeeWorkTime> employeeWorkTimes = await CompanyWorkTimeModel.Get_EmployeeWorkTime(Session["company_hash"].ToString());
+            List<ManagerPermissions> managerPermissions = new List<ManagerPermissions>();
+            if (Session["hash_account"] != null)
+            {
+                //取得目前登入的管理員的權限設定
+                managerPermissions = await CompanyManagerPermissionsModel.Get_ManagerRolePermissions(Session["hash_account"].ToString());
+            }
 
-
+            ViewBag.managerPermissions = managerPermissions;//目前登入的管理員的權限設定
             ViewBag.departments = department;//部門名稱
             ViewBag.jobtitles = jobtitle;//職稱
             ViewBag.company_time = company_Times;//公司上下班時間(舊版)
