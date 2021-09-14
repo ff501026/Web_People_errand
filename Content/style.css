@@ -98,11 +98,11 @@ a {
 .nav_logo3 { /*�����CLOGO*/
     width: 40px;
     height: 40px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 
 .newlogo { /*�����CLOGO*/
-    margin-top: 2.2%
+    /*margin-top: 2.2%*/
 }
 
 .nav_logo2 {
@@ -556,11 +556,13 @@ a {
 .btn4-danger {
     background-color: #ffcccc;
 }
-
+    .btn4-danger:hover {
+      background-color:  #C92929 !important;
+    }
     .btn4-danger:focus,
     .btn4-danger:focus:active,
-    .btn4-danger:active,
-    .btn4-danger:hover {
+    .btn4-danger:active
+    {
         background-color: #FFF !important;
     }
 
@@ -787,12 +789,14 @@ a {
 .btn2-primary {
     background-color: #e8ecff;
 }
-
+    .btn2-primary:hover {
+        background-color: #e8ecff !important;
+    }
     .btn2-primary:focus,
     .btn2-primary:focus:active,
-    .btn2-primary:active,
-    .btn2-primary:hover {
+    .btn2-primary:active {
         background-color: #FFF !important;
+       
     }
 
 .btn2-success {
@@ -3823,6 +3827,7 @@ input:checked + .slider .off {
     list-style: none;
     line-height: 2em;
     font-family: Arial;
+
 }
 
 #OrganizationContent {
@@ -3832,8 +3837,8 @@ input:checked + .slider .off {
 
     #OrganizationContent::before {
         position: absolute;
-        left: 15px;
-        top: -17px;
+        left: 20px;
+        top: -20px;
         content: '';
         display: block;
         border-left: 2px solid #D5E3D6;
@@ -3845,11 +3850,12 @@ input:checked + .slider .off {
     #OrganizationContent::after {
         position: absolute;
         left: -30px;
-        bottom: -20px;
+        bottom: -50px;
         content: '';
         display: block;
         border-left: 2px solid #D5E3D6;
         height: 100%;
+
     }
 
     #OrganizationContent.root {
@@ -3874,7 +3880,9 @@ input:checked + .slider .off {
     border-radius: 5px;
     display: flex;
     align-items: center;
-    margin: 5px 0px;
+    margin: 25px 0px;
+    background-color: white;
+    
 }
 #O_member {
     margin-left: 15px;
@@ -3883,6 +3891,7 @@ input:checked + .slider .off {
     border: 2px solid #D5E3D6;
     border-radius: 5px;
     margin: 20px 0px 20px 40px;
+    background-color:white;
 }
 #Job_Title {
     margin: 0px 0px 0px 40px;

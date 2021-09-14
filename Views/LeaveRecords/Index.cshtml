@@ -58,7 +58,7 @@
                                                     @foreach (var review_leaverecord in reviewleaveRecords)
                                                     {
 
-                                        @Html.AntiForgeryToken()
+                                                        @Html.AntiForgeryToken()
                                                         <div class="col-md-5 mb-3">
                                                             <div class="card">
                                                                 <div class="card-body" style="color:gray">
@@ -66,7 +66,7 @@
                                                                     <div class="row" style="margin-top:10px">
                                                                         <div class="col-12">
                                                                             <nobr style="margin:0px 20px 0px 0px;">申請人</nobr>
-                                                                            <img src="~/Content/images/avatar.png"  style="margin:0px 0px 0px 10px;" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name
+                                                                            <img src="~/Content/images/avatar.png" style="margin:0px 0px 0px 10px;" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name
                                                                         </div>
                                                                     </div>
 
@@ -94,12 +94,12 @@
                                                                     </div>
                                                                     @using (Html.BeginForm("ReviewLeaveRecord", "LeaveRecords", new { id = review_leaverecord.HashAccount, leave_id = review_leaverecord.LeaveRecordId }, FormMethod.Post))
                                                                     {
-                                                    <div class="row" style="margin-top:20px">
-                                                        <div class="col-12 col-lg-12 text-center">
-                                                            <button id="Button" name="Button" onclick="set();" value="SaveButton" type="submit" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
-                                                            <button id="Button" name="Button" onclick="set();" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
-                                                        </div>
-                                                    </div>}
+                                                                        <div class="row" style="margin-top:20px">
+                                                                            <div class="col-12 col-lg-12 text-center">
+                                                                                <button id="Button" name="Button" onclick="set();" value="SaveButton" type="submit" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
+                                                                                <button id="Button" name="Button" onclick="set();" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
+                                                                            </div>
+                                                                        </div>}
                                                                 </div>
                                                             </div>
                                                         </div>}
@@ -193,7 +193,7 @@
                                                 </td>
                                             }
                                             <td class="rowBorderEnd">
-                                                <a href="/LeaveRecords/Edit?id=@pass_leaverecord.LeaveRecordId" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                                <a href="/LeaveRecords/Edit?id=@pass_leaverecord.LeaveRecordId" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square" style="color: #68A3FC;"></i></a>
                                                 @*<button class="btn btn-danger btn-action" type="submit"><i class="bi-trash"></i></button>*@
                                             </td>
                                         </tr>

@@ -43,6 +43,7 @@ namespace AttendanceManagement.Controllers
             ViewBag.employeeWorkTimes = employeeWorkTimes;//員工上下班時間(新版)
             return View();
         }
+    
        
         [HttpPost]
         [ValidateAntiForgeryToken]

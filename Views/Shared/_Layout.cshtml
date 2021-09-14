@@ -9,10 +9,37 @@
     <title>@ViewBag.Title - 人事差勤打卡系統</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+   <style>
+       span:hover {
+           color: #79ADFC;
+       }
+       a:hover {
+           color: #79ADFC;
+       }
+       a {
+           color: #979797;
+       }
+       span {
+           color: #979797;
+       }
+       #titlename:hover {
+           color: #808080;
+       }
+   </style>
 </head>
 <body id="body-pd">
     <header class="header" id="header">
-        <div class="header-toggle newlogo" id="header-toggle"> <img class="nav_logo3" src="~/Content/images/差勤打卡LOGO.png"><span class="nav_logo-name">&nbsp;&nbsp;Punch.</span> </div>
+        <div class="header-toggle newlogo" id="header-toggle">
+            <div class="row">
+                <div class="col align-self-center">
+                    <img class="nav_logo3" src="~/Content/images/差勤打卡LOGO.png" >
+                </div>
+                <div class="col align-self-center">
+                    <span class="nav_logo-name" id="titlename" style="cursor: default;margin:0px 0px 0px -15px;">Punch.</span>
+                </div>
+               
+            </div>
+        </div>
         <div class="sidebar-user-picture">
             @*&nbsp;<img alt="使用者圖片" src="~/Content/images/user2.png">*@
             <div class="user-name">@Session["name"]</div>
@@ -26,7 +53,7 @@
             <div>
                 @*<a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"><img class="nav_logo2" src="~/Content/images/差勤打卡LOGO2.png"><span class="nav_logo-name">人事差勤打卡系統</span> </a>*@
                 <div class="nav_list">
-                    <a href="@Url.Action("Index","EmployeeData")" class="nav_link @(Context.Request.Path == "/EmployeeData" ? "active" : "")"> <img class="nav_logo2" src="~/Content/images/user.png"> <span class="nav_name">員工管理</span> </a>
+                    <a href="@Url.Action("Index","EmployeeData")" class="nav_link @(Context.Request.Path == "/EmployeeData" ? "active" : "")" > <img class="nav_logo2" src="~/Content/images/user.png"> <span class="nav_name">員工管理</span> </a>
                     <a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/PunchRecords" ? "active" : "")"> <img class="nav_logo2" src="~/Content/images/clock.png"><span class="nav_name">打卡紀錄</span> </a>
                     <a href="@Url.Action("Index","TripRecords")" class="nav_link  @(Context.Request.Path == "/TripRecords" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/portfolio.png"> <span class="nav_name">公出管理</span> </a>
                     <a href="@Url.Action("Index","LeaveRecords")" class="nav_link  @(Context.Request.Path == "/LeaveRecords" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/contact-form.png"> <span class="nav_name">請假管理</span> </a>

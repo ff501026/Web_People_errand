@@ -10,6 +10,9 @@
     List<AttendanceManagement.Models.EmployeeWorkTime> employeeWorkTimes = ViewBag.employeeWorkTimes;
     int d_index = 0;
     int j_index = 0;
+    int color_index = 0;
+    int color_index2 = 0;
+    var worktimecolor = "#000000";
     }
 
 <script type="text/javascript">
@@ -19,6 +22,7 @@
         sessionStorage.clear();
     };
 </script>
+
 <div class="main-content">
     <section class="section">
         <h1 class="section-header">
@@ -76,7 +80,7 @@
                                                     <button type="submit" onclick="set();" class="btn btn-outline-primary  btn-sm" data-toggle="modal" data-target="#exampleModal2.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId"><i class="bi-pencil-square"></i></button>
                                                 </div>
                                                 <div class="p-2">
-                                                    <button type="submit" onclick="set();" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId" onclick="ShowValue()"><i class="bi-trash-fill"></i></button>
+                                                    <button type="submit" onclick="ShowValue();set();" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal3.@department.DepartmentId" id="id" name="id" value="@department.DepartmentId"><i class="bi-trash-fill"></i></button>
                                                 </div>
                                             </div>
                                             }
@@ -198,7 +202,7 @@
                                             <input id="NewPassword2" required name="NewPassword2" class="form-control" type="password" placeholder="請輸入新密碼" aria-label="Search">
                                         </div>
                                         <div class="col-lg-auto col-md-2 col-12">
-                                            <button onclick="set();" class="btn btn-primary" type="submit">修改</button>
+                                            <button onclick="set();" class="btn btn-info" type="submit" style="background-color: #68A3FC;">修改</button>
                                         </div>
                                     </div>}
                             </div>
@@ -300,32 +304,34 @@
                                                                 <div class="float-right" id="CenterSet">
                                                                     @using (Html.BeginForm("UpdateEmployeeWorkTime", "Setting", new { n_department = employeeWorkTime.DepartmentId, n_jobtitle = employeeWorkTime.JobtitleId }, FormMethod.Post, new { id = "changee_mployee_worktime" }))
                                                                     {
-                                                                        <select name="updateworktime" class="form-select form-select-sm select" aria-label=".form-select-sm example" id="ClassSelectContent_@j_index@d_index" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;" onchange="set();$(this.form).submit()">
-                                                                            <option value="" selected></option>
-                                                                            @foreach (var generalWorktime in generalWorktimes)
+                                                                    <select name="updateworktime" class="coloroptionS_@color_index2 form-select form-select-sm select" aria-label=".form-select-sm example" id="ClassSelectContent_@j_index@d_index" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;" onchange="this.className=this.options[this.selectedIndex].className;set();$(this.form).submit()">
+                                                                        <option value="" selected></option>
+                                                                        @foreach (var generalWorktime in generalWorktimes)
                                                                         {
                                                                             if (employeeWorkTime.WorktimeId == generalWorktime.GeneralWorktimeId)
                                                                             {
-                                                                                    <option value="@generalWorktime.GeneralWorktimeId" selected>@generalWorktime.Name</option>
-                                                                                }
+                                                                                <option value="@generalWorktime.GeneralWorktimeId" class="coloroptionS_@color_index2" selected style="color:@worktimecolor;">@generalWorktime.Name</option>
+                                                                            }
                                                                             else
                                                                             {
-                                                                                    <option value="@generalWorktime.GeneralWorktimeId">@generalWorktime.Name</option>
-                                                                                }
+                                                                                <option value="@generalWorktime.GeneralWorktimeId" class="coloroptionS_@color_index2" style="color:@worktimecolor;">@generalWorktime.Name</option>
+                                                                            }
+                                                                            color_index2++;
                                                                         }
                                                                         @foreach (var flexibleWorktime in flexibleWorktimes)
                                                                         {
                                                                             if (employeeWorkTime.WorktimeId == flexibleWorktime.FlexibleWorktimeId)
                                                                             {
-                                                                                    <option value="@flexibleWorktime.FlexibleWorktimeId" selected>@flexibleWorktime.Name</option>
-                                                                                }
+                                                                                <option value="@flexibleWorktime.FlexibleWorktimeId" class="coloroptionS_@color_index2" selected style="color:@worktimecolor;">@flexibleWorktime.Name</option>
+                                                                            }
                                                                             else
                                                                             {
-                                                                                    <option value="@flexibleWorktime.FlexibleWorktimeId">@flexibleWorktime.Name</option>
-                                                                                }
+                                                                                <option value="@flexibleWorktime.FlexibleWorktimeId" class="coloroptionS_@color_index2" style="color:@worktimecolor;">@flexibleWorktime.Name</option>
+                                                                            }
+                                                                            color_index2++;
                                                                         }
-                                                                        
-                                                                        </select>
+
+                                                                    </select>
                                                                     }
                                                                 </div>
                                                             </div>
@@ -348,16 +354,17 @@
                         <div class="card-header">
                             <div class="row" style="margin:0px 10px 0px 0px;">
                                 <div class="col-8" id="CenterSet">
-                                   
-                                    <select class="form-select form-select-sm" onchange="showvalue(this[selectedIndex].value);this.size=1; this.blur();" aria-label=".form-select-sm example" id="worktimeselect" onfocus='this.size=4;' onblur='this.size=1;'>
+                                    <select class="coloroption_@color_index form-select form-select-sm" id="worktimeselect"  onchange="this.className=this.options[this.selectedIndex].className;showvalue(this[selectedIndex].value);this.size=1;" this.blur();" aria-label=".form-select-sm example" onfocus='this.size=4;' onblur='this.size=1;'>
                                         <option value="0"></option>
                                         @foreach (var generalWorktime in generalWorktimes)
                                         {
-                                            <option value="@generalWorktime.GeneralWorktimeId">@generalWorktime.Name</option>
+                                            <option value="@generalWorktime.GeneralWorktimeId" class="coloroption_@color_index"  style="color:@worktimecolor;">@generalWorktime.Name</option>
+                                            color_index++;
                                         }
                                         @foreach (var flexibleWorktime in flexibleWorktimes)
                                         {
-                                            <option value="@flexibleWorktime.FlexibleWorktimeId">@flexibleWorktime.Name</option>
+                                            <option value="@flexibleWorktime.FlexibleWorktimeId"  class="coloroption_@color_index" style="color:@worktimecolor;">@flexibleWorktime.Name</option>
+                                            color_index++;
                                         }
                                     </select>                          
                                 </div>
@@ -387,7 +394,6 @@
                                                     <div class="col">
                                                         <div class="row">
                                                             <div>模式設定 : </div>
-
                                                             <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
                                                                 <option selected value="tab2_@generalWorktime.GeneralWorktimeId">一般</option>
                                                                 <option value="tab2_editelasticity_@generalWorktime.GeneralWorktimeId">彈性</option>
@@ -424,9 +430,19 @@
                                                             </div>
                                                         </div>
                                                         <div class="col">
+                                                            <div class="row">
+                                                                <div id ="colorVal">選擇顏色 : </div>
+                                                                <input type="color"  value="#68A3FB" id="editgeneralcolor" style="width: 25%; border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; " >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-2">
+                                                    <div class="row">
+                                                        <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="button" onclick="BackFunction()" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
-                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                <button class="btn btn-danger" type="submit" onclick="BackFunction()" id="workonoffbutton" style="opacity:0.9;">取消</button>
+                                                                <button class="btn btn-info" type="submit"  onclick="set(); $(this.form).submit();  editgeneralFunction() " id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -463,6 +479,12 @@
                                                                 <div>分鐘</div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-6">
+                                                            <div class="row">
+                                                                <div id="colorVal">選擇顏色 : </div>
+                                                                <input type="color" value="#68A3FB" id="editelasticitycolor" style="width: 25%; border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="p-1">
@@ -486,12 +508,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="p-2">
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="button" onclick="BackFunction()" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
-                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                <button class="btn btn-danger" type="submit" onclick="BackFunction()" id="workonoffbutton" style="opacity:0.9;">取消</button>
+                                                                <button class="btn btn-info" type="submit" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -558,6 +581,12 @@
                                                                 <div>分鐘</div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-6">
+                                                            <div class="row">
+                                                                <div id ="colorVal">選擇顏色 : </div>
+                                                                <input type="color" id="editelasticitycolor" value="#68A3FB" style="width: 25%; border: 1px solid #EDEEEF;margin:0px 0px 0px 10px;border-radius:4px;">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="p-1">
@@ -591,6 +620,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                             <div id="tab2_editgeneral_@flexibleWorktime.FlexibleWorktimeId" style="display:none;">
                                                 <div class="p-2">
@@ -619,9 +649,20 @@
                                                             </div>
                                                         </div>
                                                         <div class="col">
+                                                            <div class="row" >
+                                                                        <div id ="colorVal">選擇顏色 : </div>
+                                                                        <input type="color" id="editgeneralcolor" value="#68A3FB" style="width: 25%; border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-2">
+                                                    <div class="row">
+                                                      
+                                                        <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-primary" type="submit" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
-                                                                <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                <button class="btn btn-danger" type="submit" id="workonoffbutton" style="opacity: 0.9;">取消</button>
+                                                                <button class="btn btn-info" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -646,7 +687,6 @@
                                             <div class="col">
                                                 <div class="row">
                                                     <div>模式設定 : </div>
-
                                                     <select name="auditstate" onchange="showinfo(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
                                                         <option selected value="1">一般</option>
                                                         <option value="2">彈性</option>
@@ -683,9 +723,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="col">
+                                                    <div class="row">
+                                                        <div>選擇顏色 : </div>
+                                                        <input type="color" name="favcolor" id="newgeneralcolor" value="#68A3FB" style="width: 25%; border: 1px solid #EDEEEF;margin:0px 0px 0px 10px;border-radius:4px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2">
+                                            <div class="row">
+                                                <div class="col">
                                                     <div class="row" style="float:right">
-                                                        <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="hideFunction()" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
-                                                        <button class="btn btn-primary" type="submit" id="workonoffbutton" onclick="set();" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                        <button class="btn btn-info" type="button" id="workonoffbutton" onclick="hideFunction()" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                        <button class="btn btn-info" type="submit" id="workonoffbutton" onclick="newgeneralFunction();set()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -722,6 +772,12 @@
                                                         <div>分鐘</div>
                                                     </div>
                                                 </div>
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <div id ="colorVal">選擇顏色 : </div>
+                                                        <input type="color" name="newelasticitycolor" id="color" value="#68A3FB" style="width: 25%; border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="p-1">
@@ -749,8 +805,8 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="row" style="float:right">
-                                                        <button class="btn btn-primary" type="submit" id="workonoffbutton" onclick="hideFunction();" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
-                                                        <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                        <button class="btn btn-info" type="submit" id="workonoffbutton" onclick="hideFunction();" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
+                                                        <button class="btn btn-info" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1037,16 +1093,21 @@
                     var x = document.getElementById(values1).selectedIndex;
                     for (i = 0; i < values; i++) {
                         document.forms["changee_mployee_worktime"].submit();
-
                         document.getElementById("ClassSelectContent_" + i + values2).options[x].selected = true;
                     }
                 }
             </script>
             <script type="text/javascript">
+                function newgeneralFunction() {
+                    var x = document.getElementById("newgeneralcolor").value;
+                    document.getElementsByClassName("coloroption_" + 1)[0].style.color = x; //主要是改1,[0]是固定的
+
+                }
                 function set()
                 {
                     sessionStorage.removeItem("toTop");
                     sessionStorage.setItem("toTop", $(window).scrollTop());
+
                 }
                 function showinfo(values) {
                     if (values == 1) {
@@ -1073,13 +1134,15 @@
                         $("#deletebutton").css("display", "none");
                         $('div[id^="tab_"]').hide();
                     } else
-                    { 
+                    {
                     $("#deletebutton").css("display", "block");
                     $('div[id^="tab_"]').hide();
                     y.style.display = "none";
                     z.style.display = "block";
                     x.style.display = "block";
                     }
+              
+                    
                 }
             </script>
             <script>
