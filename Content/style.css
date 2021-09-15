@@ -98,11 +98,11 @@ a {
 .nav_logo3 { /*�����CLOGO*/
     width: 40px;
     height: 40px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 
 .newlogo { /*�����CLOGO*/
-    margin-top: 2.2%
+    /*margin-top: 2.2%*/
 }
 
 .nav_logo2 {
@@ -557,10 +557,13 @@ a {
     background-color: #ffcccc;
 }
 
+    .btn4-danger:hover {
+        background-color: #C92929 !important;
+    }
+
     .btn4-danger:focus,
     .btn4-danger:focus:active,
-    .btn4-danger:active,
-    .btn4-danger:hover {
+    .btn4-danger:active {
         background-color: #FFF !important;
     }
 
@@ -788,10 +791,13 @@ a {
     background-color: #e8ecff;
 }
 
+    .btn2-primary:hover {
+        background-color: #e8ecff !important;
+    }
+
     .btn2-primary:focus,
     .btn2-primary:focus:active,
-    .btn2-primary:active,
-    .btn2-primary:hover {
+    .btn2-primary:active {
         background-color: #FFF !important;
     }
 
@@ -3832,8 +3838,8 @@ input:checked + .slider .off {
 
     #OrganizationContent::before {
         position: absolute;
-        left: 15px;
-        top: -17px;
+        left: 20px;
+        top: -20px;
         content: '';
         display: block;
         border-left: 2px solid #D5E3D6;
@@ -3845,7 +3851,7 @@ input:checked + .slider .off {
     #OrganizationContent::after {
         position: absolute;
         left: -30px;
-        bottom: -20px;
+        bottom: -50px;
         content: '';
         display: block;
         border-left: 2px solid #D5E3D6;
@@ -3869,13 +3875,16 @@ input:checked + .slider .off {
     #OrganizationContent:last-child::after {
         display: none;
     }
+
 #O_top {
     border: 2px solid #D5E3D6;
     border-radius: 5px;
     display: flex;
     align-items: center;
-    margin: 5px 0px;
+    margin: 25px 0px;
+    background-color: white;
 }
+
 #O_member {
     margin-left: 15px;
     display: flex;
@@ -3883,7 +3892,9 @@ input:checked + .slider .off {
     border: 2px solid #D5E3D6;
     border-radius: 5px;
     margin: 20px 0px 20px 40px;
+    background-color: white;
 }
+
 #Job_Title {
     margin: 0px 0px 0px 40px;
 }
@@ -3892,41 +3903,48 @@ input:checked + .slider .off {
     border: 1px solid #555555;
     border-radius: 4px;
     position: relative;
-   
 }
+
 #BigTitle {
     font-size: 18px;
 }
+
 #Content {
     font-size: 14px;
 }
+
 #select {
     margin: 5px;
     border: 1px solid #EDEEEF;
     border-radius: 4px;
 }
+
 #SmallTopBorder {
     border: 1px solid #EDEEEF;
     border-radius: 4px;
     margin: 10px 0px 10px 0px;
     padding: 10px;
 }
+
 #SmallContentBorder {
     border: 1px solid #EDEEEF;
     border-radius: 4px;
     margin: 10px 0px 10px 50px;
     padding: 10px;
 }
+
 #CenterSet {
     position: relative;
     display: flex;
     align-items: center;
 }
+
 #CenterSet {
     position: relative;
     display: flex;
     align-items: center;
 }
+
 #smallbutton {
     padding: 10px;
     border-radius: 4px;
@@ -3934,37 +3952,44 @@ input:checked + .slider .off {
     float: right;
     font-size: 14px;
 }
+
 #smallbuttonimg {
     height: 20px;
     width: 20px;
     margin: 0 auto;
-
 }
+
 #topborder {
-    border:1px solid #EDEEEF;
+    border: 1px solid #EDEEEF;
     border-radius: 4px;
     margin: 5px 0px 5px 0px;
 }
+
 #contentborder {
     border: 1px solid #EDEEEF;
     border-radius: 4px;
     margin: 5px 0px 5px 20px;
 }
+
 #workonoffbutton {
     border-radius: 4px;
     margin: 5px;
 }
-    #inputsetting {
+
+#inputsetting {
     width: 72%;
     margin: 0px 0px 0px 10px;
 }
+
 #textcenter {
     margin: 0px auto;
     font-size: 14px;
 }
-.bi bi-caret-down-fil:hover{
-    color:#555555;
+
+.bi bi-caret-down-fil:hover {
+    color: #555555;
 }
+
 .bi bi-caret-down-fil:active {
     color: #555555;
 }

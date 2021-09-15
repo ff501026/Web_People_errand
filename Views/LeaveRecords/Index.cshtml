@@ -80,7 +80,7 @@
                                                                     <div class="row" style="margin-top:10px;padding:0px 10px 0px 0px;">
                                                                         <div class="col-12">
                                                                             <nobr style="margin:0px 20px 0px 0px;">申請時間</nobr>
-                                                                            <nobr> 2021/08/26</nobr>
+                                                                            <nobr> @review_leaverecord.CreatedTime.ToString("yyyy-MM-dd HH:mm")</nobr>
                                                                         </div>
                                                                     </div>
 
@@ -170,31 +170,31 @@
 
                                     @foreach (var pass_leaverecord in passleaveRecords)
                                     {
-                                        <tr>
-                                            <td class="rowBorderStart">
-                                                <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_leaverecord.Name</a>
-                                            </td>
-                                            <td class="rowBorderMiddle">@pass_leaverecord.LeaveType</td>
-                                            <td class="rowBorderMiddle">@pass_leaverecord.StartDate</td>
-                                            <td class="rowBorderMiddle">@pass_leaverecord.EndDate</td>
-                                            <td class="rowBorderMiddle">@pass_leaverecord.CreatedTime</td>
-                                            @if (pass_leaverecord.Review == true)
-                                            {
-                                                <td class="rowBorderMiddle">
-                                                    <div class="badge badge-info">核准</div>
-                                                </td>
-                                            }
-                                            else
-                                                                            {
-                                                <td class="rowBorderMiddle">
-                                                    <div class="badge badge-danger">拒絕</div>
-                                                </td>
-                                            }
-                                            <td class="rowBorderEnd">
-                                                <a href="/LeaveRecords/Edit?id=@pass_leaverecord.LeaveRecordId" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                                @*<button class="btn btn-danger btn-action" type="submit"><i class="bi-trash"></i></button>*@
-                                            </td>
-                                        </tr>
+                                <tr>
+                                    <td class="rowBorderStart">
+                                        <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_leaverecord.Name</a>
+                                    </td>
+                                    <td class="rowBorderMiddle">@pass_leaverecord.LeaveType</td>
+                                    <td class="rowBorderMiddle">@pass_leaverecord.StartDate</td>
+                                    <td class="rowBorderMiddle">@pass_leaverecord.EndDate</td>
+                                    <td class="rowBorderMiddle">@pass_leaverecord.CreatedTime</td>
+                                    @if (pass_leaverecord.Review == true)
+                                    {
+                                        <td class="rowBorderMiddle">
+                                            <div class="badge badge-info">核准</div>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="rowBorderMiddle">
+                                            <div class="badge badge-danger">拒絕</div>
+                                        </td>
+                                    }
+                                    <td class="rowBorderEnd">
+                                        <a href="/LeaveRecords/Edit?id=@pass_leaverecord.LeaveRecordId" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square" style="color: #68A3FC;"></i></a>
+                                        @*<button class="btn btn-danger btn-action" type="submit"><i class="bi-trash"></i></button>*@
+                                    </td>
+                                </tr>
                                     }
                                 </table>
                             </div>

@@ -86,6 +86,10 @@ namespace AttendanceManagement.Models
         public static readonly string ManagerGetPassEmployee3 = "Companies/Manager_GetPassEmployee3/"; //管理員取得自訂對象資料
         public static readonly string ManagerGetTrip2Record2 = "Companies/Get_Trip2Record2/"; //管理員取得直屬員工公差資料
         public static readonly string ManagerGetTrip2Record3 = "Companies/Get_Trip2Record3/"; //管理員取得自訂對象公差資料
+        public static readonly string ManagerUpdateAgent = "Companies/UpdateManagerAgent"; //編輯職務代理人
+        public static readonly string ManageGetBossPermissions = "Companies/GetbossSettingPermissions/"; //職務代理人取得代理對象的設定權限
+        public static readonly string ManageBoolAgent = "EmployeeLeaveRecords/BoolAgentReviewLeave/"; //判斷是否可以執行代理權限
+
 
         public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL
         {

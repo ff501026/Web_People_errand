@@ -28,22 +28,52 @@ namespace AttendanceManagement.Controllers
             List<EmployeeWorkTime> employeeWorkTimes = await CompanyWorkTimeModel.Get_EmployeeWorkTime(Session["company_hash"].ToString());
             //輸入公司代碼取得全部的已審核資料
             List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(Session["company_hash"].ToString());
+            //取得權限
+            List<ManagerPermissions> managerPermissions = await CompanyManagerPermissionsModel.Get_ManagerPermissions(Session["company_hash"].ToString());
 
             if (Session["hash_account"] != null)
             {
                 //輸入公司取得全部的管理員
                 List<Manager> managers = await CompanyManagerModel.GetAllManager(Session["company_hash"].ToString());
                 int index = managers.FindIndex(item => item.ManagerHash.Equals(Session["hash_account"].ToString()));
-
-                if (managers[index].PermissionsId == null || managers[index].PermissionsId == 1) { }
-                else if (managers[index].PermissionsId == 2)
+                if (managers[index].PermissionsId == null) { }
+                else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[index].PermissionsId)].EmployeeDisplay == 1) { }
+                else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[index].PermissionsId)].EmployeeDisplay == 2)
                 {
                     work_record = await StaffModel.Manager_Get_WorkRecordAsync2(Session["hash_account"].ToString());
                 }
-                else
+                else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[index].PermissionsId)].EmployeeDisplay == 3)
                 {
                     work_record = await StaffModel.Manager_Get_WorkRecordAsync3(Session["hash_account"].ToString());
                 }
+                else
+                {
+                    if (await CompanyManagerPermissionsModel.Manager_Bool_Agent(Session["hash_account"].ToString()))
+                    {
+                        int bossindex = managers.FindIndex(item => item.AgentHash.Equals(Session["hash_account"].ToString()));
+
+                        if (managers[bossindex].PermissionsId == null) { }
+                        else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[bossindex].PermissionsId)].EmployeeDisplay == 1) { }
+                        else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[bossindex].PermissionsId)].EmployeeDisplay == 2)
+                        {
+                            work_record = await StaffModel.Manager_Get_WorkRecordAsync2(managers[bossindex].ManagerHash);
+                        }
+                        else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[bossindex].PermissionsId)].EmployeeDisplay == 3)
+                        {
+                            work_record = await StaffModel.Manager_Get_WorkRecordAsync3(managers[bossindex].ManagerHash);
+                        }
+                        else
+                        {
+                            work_record = await StaffModel.Get_WorkRecordAsync("n");
+                        }
+                    }
+                    else
+                    {
+                        work_record = await StaffModel.Get_WorkRecordAsync("n");
+                    }
+                    
+                }
+               
             }
 
             int num =0;

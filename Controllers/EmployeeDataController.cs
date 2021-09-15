@@ -33,20 +33,52 @@ namespace AttendanceManagement.Controllers
             List<JobTitle> jobtitles = await JobtitleModel.Get_JobtitleAsync(Session["company_hash"].ToString());
             //輸入公司代碼取得全部的已審核資料(不會變動)
             List<PassEmployee> all_passEmployees = await PassEmployeeModel.PassEmployees(Session["company_hash"].ToString());
+            //取得權限
+            List<ManagerPermissions> managerPermissions = await CompanyManagerPermissionsModel.Get_ManagerPermissions(Session["company_hash"].ToString());
+
 
             if (Session["hash_account"] != null)
             {
                 int index = managers.FindIndex(item => item.ManagerHash.Equals(Session["hash_account"].ToString()));
 
-                if (managers[index].PermissionsId == null || managers[index].PermissionsId == 1) { }
-                else if (managers[index].PermissionsId == 2)
+                if (managers[index].PermissionsId == null) { }
+                else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[index].PermissionsId)].EmployeeDisplay == 1) { }
+                else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[index].PermissionsId)].EmployeeDisplay == 2)
                 {
                     passEmployees = await PassEmployeeModel.ManagerPassEmployees2(Session["hash_account"].ToString());
                 }
-                else
+                else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[index].PermissionsId)].EmployeeDisplay == 3)
                 {
                     passEmployees = await PassEmployeeModel.ManagerPassEmployees3(Session["hash_account"].ToString());
+                }
+                else 
+                {
+                    if (await CompanyManagerPermissionsModel.Manager_Bool_Agent(Session["hash_account"].ToString()))
+                    {
+                        int bossindex = managers.FindIndex(item => item.AgentHash.Equals(Session["hash_account"].ToString()));
 
+                        if (managers[bossindex].PermissionsId == null) { }
+                        else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[bossindex].PermissionsId)].EmployeeDisplay == 1) { }
+                        else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[bossindex].PermissionsId)].EmployeeDisplay == 2)
+                        {
+                            passEmployees = await PassEmployeeModel.ManagerPassEmployees2(managers[bossindex].ManagerHash);
+                        }
+                        else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[bossindex].PermissionsId)].EmployeeDisplay == 3)
+                        {
+                            passEmployees = await PassEmployeeModel.ManagerPassEmployees3(managers[bossindex].ManagerHash);
+                        }
+                        else 
+                        {
+                            reviewEmployees = await ReviewEmployeeModel.ReviewEmployees("n");
+                            passEmployees = await PassEmployeeModel.PassEmployees("n");
+                        }
+                    }
+                    else 
+                    {
+                        reviewEmployees = await ReviewEmployeeModel.ReviewEmployees("n");
+                        passEmployees = await PassEmployeeModel.PassEmployees("n");
+                    }
+                    
                 }
             }
 
@@ -111,7 +143,7 @@ namespace AttendanceManagement.Controllers
         }
 
         [HttpPost]//員工管理審核頁面，審核按鈕
-        public async Task<ActionResult> SetEmployeeInformation(bool?manager,string managerhash,string email,string id,string Button, int department, int jobtitle)
+        public async Task<ActionResult> SetEmployeeInformation( bool?manager,string managerhash,string email,string id,string Button, int department, int jobtitle)
         {
             if (Session["company_hash"] == null)
             {
@@ -154,7 +186,7 @@ namespace AttendanceManagement.Controllers
             }
         }
         [HttpPost]//員工管理修改頁面，修改按鈕
-        public async Task<ActionResult> EditEmployee(string managerhash, bool? old_enabled, string Button, string id, string name, string phone, string email,string old_email, int department, int jobtitle,bool? manager,bool? disable)
+        public async Task<ActionResult> EditEmployee(string agent, string managerhash, bool? old_enabled, string Button, string id, string name, string phone, string email,string old_email, int department, int jobtitle,bool? manager,bool? disable)
         {
             if (Session["company_hash"] == null)
             {
@@ -175,9 +207,19 @@ namespace AttendanceManagement.Controllers
             bool update_result = false;
             bool Enabled_result = false;
             bool Manager_Enabled_result = false;
+            int isManager = managers.FindIndex(item => item.ManagerHash.Equals(id));
 
             if (Button.Equals("RenewButton"))
             {
+                if (isManager != -1) 
+                {
+                    bool Agent_result = await CompanyManagerModel.UpdateManagerAgent(id, agent);//(PUT)更新職務代理人
+                    if (Agent_result==false)
+                    {
+                        return Content("<script>alert('狀態更新失敗！如有問題請連繫後台');history.go(-1);</script>");
+                    }
+
+                }
                 if (disable == true && old_enabled == true)//如果停用帳號打勾且原始帳號狀態為使用中
                 {
                     Enabled_result = await PassEmployeeModel.EnabledEmployees(id, false);//(PUT)更新員工資料為停用
@@ -204,7 +246,7 @@ namespace AttendanceManagement.Controllers
                     Manager_Enabled_result = await CompanyManagerModel.UpdateManagerEnabled(id, true);//(PUT)更新管理員狀態為啟用
                     if (Manager_Enabled_result)
                     {
-                        result += "已恢復此帳號之管理員權限。\n";
+                        result += "已恢復此帳號之管理員權限。";
                         AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡管理員帳號狀態更新通知", "<h1>您的差勤打卡管理員帳號已恢復使用權限</h1><p>請至差勤打卡後台確認，如有問題請連繫後台。</p>");
                     }
                     else
@@ -212,14 +254,15 @@ namespace AttendanceManagement.Controllers
                 }
                 else if (manager == true && ManagerStatus == null)//如果提升管理員打勾且不是管理員
                 {
-                        result += await AddManager(email,id)+"\n";//邀請成為管理員
-                }else if(manager != true && ManagerStatus == true)//如果取消勾選管理員且管理員狀態是使用中
+                    result += await AddManager(email,id);//邀請成為管理員
+                }
+                else if(manager != true && ManagerStatus == true)//如果取消勾選管理員且管理員狀態是使用中
                 {
                     Manager_Enabled_result = await CompanyManagerModel.UpdateManagerEnabled(id, false);//(PUT)更新管理員狀態為停用
 
                     if (Manager_Enabled_result)
                     {
-                        result += "已停用此帳號之管理員權限。\n";
+                        result += "已停用此帳號之管理員權限。";
                         AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡管理員帳號狀態更新通知", "<h1>您的差勤打卡管理員帳號已遭停用</h1><p>如有問題請連繫後台。</p>");
                     }
                     else

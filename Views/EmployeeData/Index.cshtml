@@ -9,7 +9,45 @@
     List<AttendanceManagement.Models.PassEmployee> all_passEmployees = ViewBag.all_passemployee; //全部的已審核資料(不會變動)
 }
 
+<style>
+    #editbutton {
+        background-color: #E8ECFF;
+    }
 
+        #editbutton:hover {
+            background-color: #E8ECFF;
+        }
+
+    #editimage {
+        color: #68A3FC;
+    }
+
+        #editimage:hover {
+            color: #68A3FC;
+        }
+
+    #spanPre {
+        position: relative;
+        display: block;
+        padding: .5rem .75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #68a3fc;
+        background-color: #fff;
+        border: 1px solid #ededed;
+    }
+
+    #spanNext {
+        position: relative;
+        display: block;
+        padding: .5rem .75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: #68a3fc;
+        background-color: #fff;
+        border: 1px solid #ededed;
+    }
+</style>
 <script type="text/javascript">
     window.onload = function () {
         var _offset = sessionStorage.getItem("toTop");
@@ -140,37 +178,37 @@
 
                                     @foreach (var pass_employee in passEmployees)
                                     {
-                                        <tr>
-                                            <td class="rowBorderStart"></td>
-                                            <td class="rowBorderMiddle">
-                                                <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
-                                            </td>
-                                            <td class="rowBorderMiddle">@pass_employee.Phone</td>
-                                            <td class="rowBorderMiddle">@pass_employee.Department</td>
-                                            <td class="rowBorderMiddle">@pass_employee.JobTitle</td>
-                                            <td class="rowBorderMiddle">@pass_employee.Email</td>
+                                <tr>
+                                    <td class="rowBorderStart"></td>
+                                    <td class="rowBorderMiddle">
+                                        <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
+                                    </td>
+                                    <td class="rowBorderMiddle">@pass_employee.Phone</td>
+                                    <td class="rowBorderMiddle">@pass_employee.Department</td>
+                                    <td class="rowBorderMiddle">@pass_employee.JobTitle</td>
+                                    <td class="rowBorderMiddle">@pass_employee.Email</td>
 
-                                            @if (pass_employee.Enabled == true)
-                                            {
-                                                <td class="rowBorderMiddle">
-                                                    <div class="badge badge-info">使用中</div>
-                                                </td>
- }
-                                            else
-                                            {
-                                                <td class="rowBorderMiddle">
-                                                    <div class="badge badge-danger">停用</div>
-                                                </td>
-}
+                                    @if (pass_employee.Enabled == true)
+                                    {
+                                        <td class="rowBorderMiddle">
+                                            <div class="badge badge-info">使用中</div>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="rowBorderMiddle">
+                                            <div class="badge badge-danger">停用</div>
+                                        </td>
+                                    }
 
-                                            @*<td>
-                                                    <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                                                </td>*@
+                                    @*<td>
+            <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+        </td>*@
+                                    <td class="rowBorderEnd">
+                                        <button type="button" id="editbutton" class="btn2 btn2-primary btn2-action" data-toggle="modal" data-target="#@pass_employee.HashAccount"><i id="editimage" class="bi-pencil-square"></i></button>
+                                    </td>
 
-                                            <td class="rowBorderEnd">
-                                                <button type="button" class="btn2 btn2-primary btn2-action" data-toggle="modal" data-target="#@pass_employee.HashAccount"><i class="bi-pencil-square"></i></button>
-                                            </td>
-                                        </tr>
+                                </tr>
                                         <tr></tr>
 }
                                 </table>
@@ -330,15 +368,66 @@
                                                     <input type="checkbox" id="manager" name="manager" value=true>管理者
                                                 </div>
                                             }
-
+                                            <div class="col-12 col-lg-6">
+                                                職務代理人：
+                                                <select id="agent" name="agent" type="text">
+                                                    <option value="">請選擇</option>
+                                                    @foreach (var manager in managers)
+                                                    {
+                                                        if (manager.ManagerHash != pass_employee.HashAccount)
+                                                        {
+                                                            bool isAgent = false;
+                                                            foreach (var m in managers)
+                                                            {
+                                                                if (manager.ManagerHash.Equals(m.AgentHash) && !manager.ManagerHash.Equals(managers[(managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)))].AgentHash))
+                                                                {
+                                                                    isAgent = true;
+                                                                }
+                                                            }
+                                                            if (isAgent != true)
+                                                            {
+                                                                if (manager.ManagerHash.Equals(managers[(managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)))].AgentHash))
+                                                                {
+                                                                    <option value="@manager.ManagerHash" selected>@manager.Name</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@manager.ManagerHash">@manager.Name</option>
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
                                         }
                                         else
                                         {
                                             <div class="col-12 col-lg-6">
                                                 <input type="checkbox" id="manager" name="manager" value=true>管理者
                                             </div>
+                                            <div class="col-12 col-lg-6">
+                                                直屬主管：
+                                                <select id="managerhash" name="managerhash" type="text">
+                                                    <option value="">請選擇</option>
+                                                    @foreach (var pass in all_passEmployees)
+                                                    {
+                                                        if (pass.HashAccount != pass_employee.HashAccount)
+                                                        {
+                                                            if (pass.HashAccount.Equals(pass_employee.ManagerHash))
+                                                            {
+                                                                <option value="@pass.HashAccount" selected>@pass.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@pass.HashAccount">@pass.Name</option>
+                                                            }
+
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
                                         }
-                                        <div class="col-12 col-lg-6">
+                                        @*<div class="col-12 col-lg-6">
                                             直屬主管：
                                             <select id="managerhash" name="managerhash" type="text">
                                                 <option value="">請選擇</option>
@@ -358,7 +447,7 @@
                                                     }
                                                 }
                                             </select>
-                                        </div>
+                                        </div>*@
                                     </div>
                                     <div class="row" style="margin-top:15px;margin-bottom:15px">
                                         @if (pass_employee.Enabled == false)
@@ -373,7 +462,31 @@
                                                 <input type="checkbox" id="disable" name="disable" value=true>停用帳號
                                             </div>
                                         }
-                                    </div>
+                                        @if ((managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)) != -1))
+                                        {
+                                            <div class="col-12 col-lg-6">
+                                                直屬主管：
+                                                <select id="managerhash" name="managerhash" type="text">
+                                                    <option value="">請選擇</option>
+                                                    @foreach (var pass in all_passEmployees)
+                                                    {
+                                                        if (pass.HashAccount != pass_employee.HashAccount)
+                                                        {
+                                                            if (pass.HashAccount.Equals(pass_employee.ManagerHash))
+                                                            {
+                                                                <option value="@pass.HashAccount" selected>@pass.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@pass.HashAccount">@pass.Name</option>
+                                                            }
+
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                          }
+                                        </div>
 
 
                                     <div class="row" style="margin-top:20px">

@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -9,10 +8,41 @@
     <title>@ViewBag.Title - 人事差勤打卡系統</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+        span:hover {
+            color: #79ADFC;
+        }
+
+        a:hover {
+            color: #79ADFC;
+        }
+
+        a {
+            color: #979797;
+        }
+
+        span {
+            color: #979797;
+        }
+
+        #titlename:hover {
+            color: #808080;
+        }
+    </style>
 </head>
 <body id="body-pd">
     <header class="header" id="header">
-        <div class="header-toggle newlogo" id="header-toggle"> <img class="nav_logo3" src="~/Content/images/差勤打卡LOGO.png"><span class="nav_logo-name">&nbsp;&nbsp;Punch.</span> </div>
+        <div class="header-toggle newlogo" id="header-toggle">
+            <div class="row">
+                <div class="col align-self-center">
+                    <img class="nav_logo3" src="~/Content/images/差勤打卡LOGO.png">
+                </div>
+                <div class="col align-self-center">
+                    <span class="nav_logo-name" id="titlename" style="cursor: default;margin:0px 0px 0px -15px;">Punch.</span>
+                </div>
+
+            </div>
+        </div>
         <div class="sidebar-user-picture">
             @*&nbsp;<img alt="使用者圖片" src="~/Content/images/user2.png">*@
             <div class="user-name">@Session["name"]</div>
@@ -22,7 +52,7 @@
         </div>
     </header>
     <div class="l-navbar" id="nav-bar">
-        <nav class="nav">
+        <nav class="nav" style="margin:-25px 0px 0px 0px;">
             <div>
                 @*<a href="@Url.Action("Index","PunchRecords")" class="nav_link  @(Context.Request.Path == "/" ? "active" : "")"><img class="nav_logo2" src="~/Content/images/差勤打卡LOGO2.png"><span class="nav_logo-name">人事差勤打卡系統</span> </a>*@
                 <div class="nav_list">
@@ -39,7 +69,7 @@
                     <a href="@Url.Action("Index","OrganizationChart")" class="nav_link @(Context.Request.Path == "/OrganizationChart" ? "active" : "")"> <img class="nav_logo2" src="~/Content/images/organization.png"> <span class="nav_name">組織圖</span> </a>
                 </div>
                 <a href="@Url.Action("Index","Account")" class="nav_link @(Context.Request.Path == "/Account" ? "active" : "")">  <img class="nav_logo2" src="~/Content/images/turn-off.png"> <span class="nav_name">登出</span> </a>
-            </div> 
+            </div>
         </nav>
     </div>
 

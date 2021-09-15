@@ -32,6 +32,8 @@ namespace AttendanceManagement.Controllers
             List<EmployeeFlexibleWorktime> FlexibleWorktime = await CompanyWorkTimeModel.Get_FlexibleWorktime(Session["company_hash"].ToString());
             //取得員工上下班時間(新版)
             List<EmployeeWorkTime> employeeWorkTimes = await CompanyWorkTimeModel.Get_EmployeeWorkTime(Session["company_hash"].ToString());
+            //職務代理人取得代理對象的設定權限
+            List<BossSettingPermissions> bossSettingPermissions = await CompanyManagerPermissionsModel.Manager_Get_BossPermissions(Session["hash_account"] == null ? "n" : Session["hash_account"].ToString());
             List<ManagerPermissions> managerPermissions = new List<ManagerPermissions>();
             if (Session["hash_account"] != null)
             {
@@ -39,6 +41,7 @@ namespace AttendanceManagement.Controllers
                 managerPermissions = await CompanyManagerPermissionsModel.Get_ManagerRolePermissions(Session["hash_account"].ToString());
             }
 
+            ViewBag.bossSettingPermissions = bossSettingPermissions;//職務代理人取得代理對象的設定權限
             ViewBag.managerPermissions = managerPermissions;//目前登入的管理員的權限設定
             ViewBag.departments = department;//部門名稱
             ViewBag.jobtitles = jobtitle;//職稱
@@ -132,7 +135,7 @@ namespace AttendanceManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddWorktime(string Name, int auditstate, string WorkTime, string RestTime, int? BreakTime, string WorkTimeStart, string WorkTimeEnd, string RestTimeStart, string RestTimeEnd, int? BreakTime2)
+        public async Task<ActionResult> AddWorktime(string color2,string color,string Name, int auditstate, string WorkTime, string RestTime, int? BreakTime, string WorkTimeStart, string WorkTimeEnd, string RestTimeStart, string RestTimeEnd, int? BreakTime2)
         {
             if (Session["company_hash"] == null)
             {
@@ -152,7 +155,7 @@ namespace AttendanceManagement.Controllers
             DateTime dt4 = Convert.ToDateTime(RestTimeEnd);
             if (auditstate == 1)
             {
-                string result2 = await CompanyWorkTimeModel.Add_GeneralWorktime(Session["company_hash"].ToString(), Name, WorkTime, RestTime, BreakTime);
+                string result2 = await CompanyWorkTimeModel.Add_GeneralWorktime(Session["company_hash"].ToString(), Name, WorkTime, RestTime, BreakTime, color);
                 if (!result2.Equals(""))
                     return Content($"<script>alert('新增成功！');window.location='/Setting/index';</script>");
                 else
@@ -164,7 +167,7 @@ namespace AttendanceManagement.Controllers
                 {
                     return Content($"<script>alert('開始時間不能等於結束時間!');window.location='/Setting/index';</script>");
                 }
-                string result2 = await CompanyWorkTimeModel.Add_FlexibleWorktime(Session["company_hash"].ToString(), Name, WorkTimeStart, WorkTimeEnd, RestTimeStart, RestTimeEnd, BreakTime2);
+                string result2 = await CompanyWorkTimeModel.Add_FlexibleWorktime(Session["company_hash"].ToString(), Name, WorkTimeStart, WorkTimeEnd, RestTimeStart, RestTimeEnd, BreakTime2, color2);
                 if (!result2.Equals(""))
                     return Content($"<script>alert('新增成功！');window.location='/Setting/index';</script>");
                 else
@@ -174,7 +177,7 @@ namespace AttendanceManagement.Controllers
         }
 
             [HttpPost]
-        public async Task<ActionResult> EditWorktime(string id, string old_state,string Name,string auditstate, string WorkTime,string RestTime,int? BreakTime,string WorkTimeStart,string WorkTimeEnd,string RestTimeStart,string RestTimeEnd,int? BreakTime2)
+        public async Task<ActionResult> EditWorktime(string color2, string color,string id, string old_state,string Name,string auditstate, string WorkTime,string RestTime,int? BreakTime,string WorkTimeStart,string WorkTimeEnd,string RestTimeStart,string RestTimeEnd,int? BreakTime2)
         {
             if (Session["company_hash"] == null)
             {
@@ -197,7 +200,7 @@ namespace AttendanceManagement.Controllers
             {
                 if (old_state.Substring(5, 1).Equals("G"))//更新一般
                 {
-                    bool result = await CompanyWorkTimeModel.Edit_GeneralWorktime(id, Name, WorkTime, RestTime, BreakTime);
+                    bool result = await CompanyWorkTimeModel.Edit_GeneralWorktime(id, Name, WorkTime, RestTime, BreakTime,color);
                     if (result)
                         return Content($"<script>alert('更新成功！');window.location='/Setting/index';</script>");
                     else
@@ -209,7 +212,7 @@ namespace AttendanceManagement.Controllers
                     {
                         return Content($"<script>alert('開始時間不能等於結束時間!');window.location='/Setting/index';</script>");
                     }
-                    bool result = await CompanyWorkTimeModel.Edit_FlexibleWorktime(id, Name, WorkTimeStart, WorkTimeEnd, RestTimeStart, RestTimeEnd, BreakTime2);
+                    bool result = await CompanyWorkTimeModel.Edit_FlexibleWorktime(id, Name, WorkTimeStart, WorkTimeEnd, RestTimeStart, RestTimeEnd, BreakTime2,color2);
                     if (result)
                         return Content($"<script>alert('更新成功！');window.location='/Setting/index';</script>");
                     else
@@ -226,7 +229,7 @@ namespace AttendanceManagement.Controllers
                     {
                         return Content($"<script>alert('開始時間不能等於結束時間!');window.location='/Setting/index';</script>");
                     }
-                    string new_worktimeid = await CompanyWorkTimeModel.Add_FlexibleWorktime(Session["company_hash"].ToString(), Name, WorkTimeStart, WorkTimeEnd, RestTimeStart, RestTimeEnd, BreakTime2);
+                    string new_worktimeid = await CompanyWorkTimeModel.Add_FlexibleWorktime(Session["company_hash"].ToString(), Name, WorkTimeStart, WorkTimeEnd, RestTimeStart, RestTimeEnd, BreakTime2,color2);
                     if (!new_worktimeid.Equals(""))
                     {
                         bool result3 = await CompanyWorkTimeModel.Renew_EmployeeWorkTime(id, new_worktimeid);
@@ -247,7 +250,7 @@ namespace AttendanceManagement.Controllers
                 }
                 else //刪除彈性新增一般
                 {
-                    string new_worktimeid = await CompanyWorkTimeModel.Add_GeneralWorktime(Session["company_hash"].ToString(), Name, WorkTime, RestTime, BreakTime);
+                    string new_worktimeid = await CompanyWorkTimeModel.Add_GeneralWorktime(Session["company_hash"].ToString(), Name, WorkTime, RestTime, BreakTime,color);
                     if (!new_worktimeid.Equals(""))
                     {
                         bool result3 = await CompanyWorkTimeModel.Renew_EmployeeWorkTime(id, new_worktimeid);

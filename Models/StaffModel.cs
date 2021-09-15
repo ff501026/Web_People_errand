@@ -330,7 +330,27 @@ namespace AttendanceManagement.Models
                 return true;
             }
             return false;
-        }//註冊管理員
+        }//
+
+        public static async Task<bool> UpdateManagerAgent(string hash_account, string hash_agent)
+        {
+            List<ManagerAgent> managers = new List<ManagerAgent>();
+            ManagerAgent manager = new ManagerAgent
+            {
+                HashAccount = hash_account,
+                HashAgent = hash_agent
+            };
+            managers.Add(manager);
+            string jsonData = JsonConvert.SerializeObject(managers);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + ManagerUpdateAgent, content);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
 
         public static async Task<CompanyLogin> LoginCompany(string code, string manager_password)
         {
@@ -526,7 +546,7 @@ namespace AttendanceManagement.Models
             List<EmployeeGeneralWorktime> employeeGeneralWorktimes = JsonConvert.DeserializeObject<List<EmployeeGeneralWorktime>>(GetResponse);
             return employeeGeneralWorktimes;
         }
-        public static async Task<string> Add_GeneralWorktime(string companyhash, string Name, string WorkTime, string RestTime, int? BreakTime)
+        public static async Task<string> Add_GeneralWorktime(string companyhash, string Name, string WorkTime, string RestTime, int? BreakTime,string color)
         {
 
             List<GeneralWorkTime> generalWorkTimes = new List<GeneralWorkTime>();
@@ -536,7 +556,8 @@ namespace AttendanceManagement.Models
                 Name = Name,
                 WorkTime = WorkTime,
                 RestTime = RestTime,
-                BreakTime = BreakTime
+                BreakTime = BreakTime,
+                Color = color
             };
             generalWorkTimes.Add(generalWorkTime);
             string jsonData = JsonConvert.SerializeObject(generalWorkTimes);//序列化成JSON
@@ -550,7 +571,7 @@ namespace AttendanceManagement.Models
             }
             return "";
         }
-        public static async Task<bool> Edit_GeneralWorktime(string id, string Name, string WorkTime,string RestTime,int? BreakTime)
+        public static async Task<bool> Edit_GeneralWorktime(string id, string Name, string WorkTime,string RestTime,int? BreakTime,string color)
         {
 
             List<GeneralWorkTime> generalWorkTimes = new List<GeneralWorkTime>();
@@ -560,7 +581,8 @@ namespace AttendanceManagement.Models
                 Name = Name,
                 WorkTime = WorkTime,
                 RestTime = RestTime,
-                BreakTime = BreakTime
+                BreakTime = BreakTime,
+                Color = color
             };
             generalWorkTimes.Add(generalWorkTime);
             string jsonData = JsonConvert.SerializeObject(generalWorkTimes);//序列化成JSON
@@ -594,7 +616,7 @@ namespace AttendanceManagement.Models
             List<EmployeeFlexibleWorktime> employeeFlexibleWorktimes = JsonConvert.DeserializeObject<List<EmployeeFlexibleWorktime>>(GetResponse);
             return employeeFlexibleWorktimes;
         }
-        public static async Task<string> Add_FlexibleWorktime(string companyhash, string Name, string WorkTimeStart, string WorkTimeEnd,string RestTimeStart, string RestTimeEnd, int? BreakTime)
+        public static async Task<string> Add_FlexibleWorktime(string companyhash, string Name, string WorkTimeStart, string WorkTimeEnd,string RestTimeStart, string RestTimeEnd, int? BreakTime,string color)
         {
 
             List<FlexibleWorkTime> flexibleWorkTimes = new List<FlexibleWorkTime>();
@@ -606,7 +628,8 @@ namespace AttendanceManagement.Models
                 WorkTimeEnd = WorkTimeEnd,
                 RestTimeStart = RestTimeStart,
                 RestTimeEnd = RestTimeEnd,
-                BreakTime = BreakTime
+                BreakTime = BreakTime,
+                Color = color
             };
             flexibleWorkTimes.Add(flexibleWorkTime);
             string jsonData = JsonConvert.SerializeObject(flexibleWorkTimes);//序列化成JSON
@@ -621,7 +644,7 @@ namespace AttendanceManagement.Models
             return "";
         }
 
-        public static async Task<bool> Edit_FlexibleWorktime(string id, string Name, string WorkTimeStart, string WorkTimeEnd, string RestTimeStart, string RestTimeEnd, int? BreakTime)
+        public static async Task<bool> Edit_FlexibleWorktime(string id, string Name, string WorkTimeStart, string WorkTimeEnd, string RestTimeStart, string RestTimeEnd, int? BreakTime,string color)
         {
 
             List<FlexibleWorkTime> flexibleWorkTimes = new List<FlexibleWorkTime>();
@@ -633,7 +656,8 @@ namespace AttendanceManagement.Models
                 WorkTimeEnd = WorkTimeEnd,
                 RestTimeStart = RestTimeStart,
                 RestTimeEnd = RestTimeEnd,
-                BreakTime = BreakTime
+                BreakTime = BreakTime,
+                Color = color
             };
             flexibleWorkTimes.Add(flexibleWorkTime);
             string jsonData = JsonConvert.SerializeObject(flexibleWorkTimes);//序列化成JSON
@@ -659,6 +683,26 @@ namespace AttendanceManagement.Models
     }//公司上下班時間方法(新版)
     class CompanyManagerPermissionsModel : HttpResponse
     {
+        public static async Task<bool> Manager_Bool_Agent(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManageBoolAgent + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            bool result = JsonConvert.DeserializeObject<bool>(GetResponse);
+            return result;
+        }
+        public static async Task<List<BossSettingPermissions>> Manager_Get_BossPermissions(string hash_account)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManageGetBossPermissions + hash_account);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            //解析打卡紀錄之JSON內容
+            List<BossSettingPermissions> managerPermissions = JsonConvert.DeserializeObject<List<BossSettingPermissions>>(GetResponse);
+            return managerPermissions;
+        }
         public static async Task<List<ManagerPermissions>> Get_ManagerPermissions(string company_hash)
         {
             //連上WebAPI
@@ -825,6 +869,17 @@ namespace AttendanceManagement.Models
             return managerAccountPermissions;
         }
     }
+    public class BossSettingPermissions
+    {
+        public bool SettingWorktime { get; set; }
+        public bool SettingDepartmentJobtitle { get; set; }
+        public bool SettingLocation { get; set; }
+    }
+    public class ManagerAgent 
+    {
+        public string HashAccount { get; set; }
+        public string HashAgent { get; set; }
+    }
     public class ManagerAccountPermissions 
     {
         public int DepartmentId { get; set; }
@@ -850,6 +905,7 @@ namespace AttendanceManagement.Models
         public TimeSpan WorkTime { get; set; }
         public TimeSpan RestTime { get; set; }
         public int? BreakTime { get; set; }
+        public string Color { get; set; }
     }
     public class GeneralWorkTime //一般上下班設定(Post)(Put)
     {
@@ -859,6 +915,7 @@ namespace AttendanceManagement.Models
         public string WorkTime { get; set; }
         public string RestTime { get; set; }
         public int? BreakTime { get; set; }
+        public string Color { get; set; }
     }
     public partial class EmployeeFlexibleWorktime //取得彈性上下班設定
     {
@@ -869,6 +926,7 @@ namespace AttendanceManagement.Models
         public TimeSpan RestTimeStart { get; set; }
         public TimeSpan RestTimeEnd { get; set; }
         public int? BreakTime { get; set; }
+        public string Color { get; set; }
     }
     public class FlexibleWorkTime //彈性上下班設定(Post)(Put)
     {
@@ -880,6 +938,7 @@ namespace AttendanceManagement.Models
         public string RestTimeStart { get; set; }
         public string RestTimeEnd { get; set; }
         public int? BreakTime { get; set; }
+        public string Color { get; set; }
     }
     public class ManagerKeyData
     {
@@ -960,6 +1019,7 @@ namespace AttendanceManagement.Models
     public class Manager//管理員
     {
         public string ManagerHash { get; set; }
+        public string AgentHash { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }//員工電子郵件
         public string Department { get; set; }
