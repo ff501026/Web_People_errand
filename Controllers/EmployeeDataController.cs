@@ -225,7 +225,7 @@ namespace AttendanceManagement.Controllers
                     Enabled_result = await PassEmployeeModel.EnabledEmployees(id, false);//(PUT)更新員工資料為停用
                     if (Enabled_result)
                     {
-                        AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡帳號狀態更新通知", "<h1>您的差勤打卡帳號已遭停用</h1><p>如有問題請連繫後台。</p>");
+                        //AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡帳號狀態更新通知", "<h1>您的差勤打卡帳號已遭停用</h1><p>如有問題請連繫後台。</p>");
                     }
                     else
                         return Content("<script>alert('狀態更新失敗！如有問題請連繫後台');history.go(-1);</script>");
@@ -235,7 +235,7 @@ namespace AttendanceManagement.Controllers
                     Enabled_result = await PassEmployeeModel.EnabledEmployees(id, true);//(PUT)更新員工資料為使用中
                     if (Enabled_result)
                     {
-                        AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡帳號狀態更新通知", "<h1>您的差勤打卡帳號已恢復使用權限</h1><p>請至差勤打卡APP確認，如有問題請連繫後台。</p>");
+                        //AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡帳號狀態更新通知", "<h1>您的差勤打卡帳號已恢復使用權限</h1><p>請至差勤打卡APP確認，如有問題請連繫後台。</p>");
                     }
                     else
                         return Content("<script>alert('狀態更新失敗！如有問題請連繫後台');history.go(-1);</script>");
@@ -247,7 +247,7 @@ namespace AttendanceManagement.Controllers
                     if (Manager_Enabled_result)
                     {
                         result += "已恢復此帳號之管理員權限。";
-                        AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡管理員帳號狀態更新通知", "<h1>您的差勤打卡管理員帳號已恢復使用權限</h1><p>請至差勤打卡後台確認，如有問題請連繫後台。</p>");
+                        //AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡管理員帳號狀態更新通知", "<h1>您的差勤打卡管理員帳號已恢復使用權限</h1><p>請至差勤打卡後台確認，如有問題請連繫後台。</p>");
                     }
                     else
                         return Content("<script>alert('管理員狀態更新失敗！如有問題請連繫後台');history.go(-1);</script>");
@@ -263,7 +263,7 @@ namespace AttendanceManagement.Controllers
                     if (Manager_Enabled_result)
                     {
                         result += "已停用此帳號之管理員權限。";
-                        AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡管理員帳號狀態更新通知", "<h1>您的差勤打卡管理員帳號已遭停用</h1><p>如有問題請連繫後台。</p>");
+                        //AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡管理員帳號狀態更新通知", "<h1>您的差勤打卡管理員帳號已遭停用</h1><p>如有問題請連繫後台。</p>");
                     }
                     else
                         return Content("<script>alert('管理員狀態更新失敗！如有問題請連繫後台');history.go(-1);</script>");
@@ -281,7 +281,7 @@ namespace AttendanceManagement.Controllers
                 else update_result = await PassEmployeeModel.RenewEmployees(id, managerhash,name, phone, email, department, jobtitle);//(PUT)更新員工資料
                 if (update_result)
                 {
-                    AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡資料更新通知", "<h1>您的差勤打卡個人資料已更新</h1><p>請至差勤打卡APP個人資料確認更新內容，如有問題請連繫後台。</p>");
+                    //AttendanceManagement.Models.HttpResponse.sendGmail(email, "差勤打卡資料更新通知", "<h1>您的差勤打卡個人資料已更新</h1><p>請至差勤打卡APP個人資料確認更新內容，如有問題請連繫後台。</p>");
                     return Content($"<script>alert('更新成功！{result}');window.location='/EmployeeData/index';</script>");
                 }
                 else

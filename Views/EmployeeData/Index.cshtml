@@ -7,6 +7,10 @@
     List<AttendanceManagement.Models.ReviewEmployee> reviewEmployees = ViewBag.review_employee; //待審核資料
     List<AttendanceManagement.Models.PassEmployee> passEmployees = ViewBag.pass_employee; //已審核資料(會變動的資料，有可能是全部也可能是篩選後)
     List<AttendanceManagement.Models.PassEmployee> all_passEmployees = ViewBag.all_passemployee; //全部的已審核資料(不會變動)
+    int num1 = passEmployees.Count == 0 ? 1 : passEmployees.Count;
+    int endpage = (num1 / 10) + 1;
+    int endpageint = (num1 / 10);
+    int pagecount = 0;
 }
 
 <style>
@@ -53,6 +57,11 @@
         var _offset = sessionStorage.getItem("toTop");
         $(document).scrollTop(_offset);
         sessionStorage.clear();
+        if (@num1 < 10)
+        {
+           nextOff();
+           preOff();
+        }
     };
 </script>
 <div class="main-content">
@@ -172,73 +181,143 @@
                                         <th>部門</th>
                                         <th>職稱</th>
                                         <th>E-mail</th>
-                                        <th>狀態</th>
+                                        <th >狀態</th>
                                         <th>編輯</th>
                                     </tr>
+                                    <tbody id="tablePage">
+                                        @foreach (var pass_employee in passEmployees)
+                                        {
+                                            <tr>
+                                                <td class="rowBorderStart"></td>
+                                                <td class="rowBorderMiddle">
+                                                    <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
+                                                </td>
+                                                <td class="rowBorderMiddle">@pass_employee.Phone</td>
+                                                <td class="rowBorderMiddle">@pass_employee.Department</td>
+                                                <td class="rowBorderMiddle">@pass_employee.JobTitle</td>
+                                                <td class="rowBorderMiddle">@pass_employee.Email</td>
 
-                                    @foreach (var pass_employee in passEmployees)
-                                    {
-                                <tr>
-                                    <td class="rowBorderStart"></td>
-                                    <td class="rowBorderMiddle">
-                                        <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
-                                    </td>
-                                    <td class="rowBorderMiddle">@pass_employee.Phone</td>
-                                    <td class="rowBorderMiddle">@pass_employee.Department</td>
-                                    <td class="rowBorderMiddle">@pass_employee.JobTitle</td>
-                                    <td class="rowBorderMiddle">@pass_employee.Email</td>
+                                                @if (pass_employee.Enabled == true)
+                                                {
+                                                    <td class="rowBorderMiddle">
+                                                        <div class="badge badge-info">使用中</div>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="rowBorderMiddle">
+                                                        <div class="badge badge-danger">停用</div>
+                                                    </td>
+                                                }
 
-                                    @if (pass_employee.Enabled == true)
-                                    {
-                                        <td class="rowBorderMiddle">
-                                            <div class="badge badge-info">使用中</div>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td class="rowBorderMiddle">
-                                            <div class="badge badge-danger">停用</div>
-                                        </td>
-                                    }
+                                                @*<td>
+                    <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                </td>*@
+                                                <td class="rowBorderEnd">
+                                                    <button type="button" id="editbutton" class="btn2 btn2-primary btn2-action" data-toggle="modal" data-target="#@pass_employee.HashAccount"><i id="editimage" class="bi-pencil-square"></i></button>
+                                                </td>
 
-                                    @*<td>
-            <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-        </td>*@
-                                    <td class="rowBorderEnd">
-                                        <button type="button" id="editbutton" class="btn2 btn2-primary btn2-action" data-toggle="modal" data-target="#@pass_employee.HashAccount"><i id="editimage" class="bi-pencil-square"></i></button>
-                                    </td>
-
-                                </tr>
-                                        <tr></tr>
-}
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
-                        @if (passEmployees.Count >= 10)
-                        {
-                            <div class="card-footer text-right">
-                                <nav class="d-inline-block">
-                                    <ul class="pagination mb-0">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a class="page-link" href="#" id="page" name="page" value=1>1 <span class="sr-only">(current)</span></a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" id="page" name="page" value=2>2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" id="page" name="page" value=3>3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                            }
-                        
+                        @*@if (passEmployees.Count >= 10)
+                            {
+                                <div class="card-footer text-right">
+                                    <nav class="d-inline-block">
+                                        <ul class="pagination mb-0">
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                            </li>
+                                            <li class="page-item active">
+                                                <a class="page-link" href="#" id="page" name="page" value=1>1 <span class="sr-only">(current)</span></a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#" id="page" name="page" value=2>2</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#" id="page" name="page" value=3>3</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                }*@
+                    <div class="card-footer text-right">
+
+                        <nav class="d-inline-block">
+                            <ul class="pagination mb-0 pagination" id="pageList">
+                                @if (@num1 % 10 == 0)
+                                {
+                                    <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpageint)">首頁</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpage)">首頁</a></li>
+                                }
+                                <li class="page-item disabled " id="spanPre" style="border:0px;padding:0px">
+                                    <a class="page-link" href="javascript:pre();" style="color: #68a3fc;">&laquo;</a>
+                                </li>
+
+                                @if (@num1 % 10 == 0)
+                                {
+                                    for (var i = 1; i <= @endpageint; i++)
+                                    {
+                                        pagecount++;
+                                        if (pagecount <= 3)
+                                        {
+                                            <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
+                                        }
+                                    }
+                                }
+                                else if (@num1 < 10)
+                                {
+
+                                    <li class="active" id="spanpage_1"><a class="page-link" id="spanpage_a_1" href="javascript:nPage(1);nextOff();preOff();">1</a></li>
+
+                                }
+                                else
+                                {
+                                    for (var i = 1; i <= @endpage; i++)
+                                    {
+                                        pagecount++;
+                                        if (pagecount <= 3)
+                                        {
+                                            <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
+                                        }
+                                    }
+                                }
+
+
+                                <li class="page-item" id="spanNext" style="border:0px;padding:0px">
+                                    <a class="page-link" href="javascript:next()" style="color: #68a3fc;">&raquo;</a>
+                                </li>
+                                @if (@num1 % 10 == 0)
+                                {
+                                    <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpageint);nextOff();changepage(@endpageint,@endpageint);">末頁</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpage);nextOff();changepage(@endpage,@endpage);">末頁</a></li>
+                                }
+                            </ul>
+                        </nav>
+
+
+
+                    </div>
                     </div>
                 </div>
             </div>
@@ -413,26 +492,26 @@
                                             </div>
                                         }
                                         @*<div class="col-12 col-lg-6">
-                                            直屬主管：
-                                            <select id="managerhash" name="managerhash" type="text">
-                                                <option value="">請選擇</option>
-                                                @foreach (var pass in all_passEmployees)
-                                                {
-                                                    if (pass.HashAccount != pass_employee.HashAccount)
+                                                直屬主管：
+                                                <select id="managerhash" name="managerhash" type="text">
+                                                    <option value="">請選擇</option>
+                                                    @foreach (var pass in all_passEmployees)
                                                     {
-                                                        if (pass.HashAccount.Equals(pass_employee.ManagerHash))
+                                                        if (pass.HashAccount != pass_employee.HashAccount)
                                                         {
-                                                            <option value="@pass.HashAccount" selected>@pass.Name</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@pass.HashAccount">@pass.Name</option>
-                                                        }
+                                                            if (pass.HashAccount.Equals(pass_employee.ManagerHash))
+                                                            {
+                                                                <option value="@pass.HashAccount" selected>@pass.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@pass.HashAccount">@pass.Name</option>
+                                                            }
 
+                                                        }
                                                     }
-                                                }
-                                            </select>
-                                        </div>*@
+                                                </select>
+                                            </div>*@
                                     </div>
                                     <div class="row" style="margin-top:15px;margin-bottom:15px">
                                         @if (pass_employee.Enabled == false)
@@ -470,14 +549,14 @@
                                                     }
                                                 </select>
                                             </div>
-                                          }
-                                        </div>
+                                        }
+                                    </div>
 
 
                                     <div class="row" style="margin-top:20px">
                                         <div class="col-12 col-lg-12 text-center">
                                             <button id="Button" onclick="set();" name="Button" type="submit" value="RenewButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
-                                            <button id="Button"  name="Button" value="BackButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1" data-dismiss="modal"><i class="bi-x-lg"></i></button>
+                                            <button id="Button" name="Button" value="BackButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1" data-dismiss="modal"><i class="bi-x-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -595,14 +674,237 @@
     }
 }
 
-
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     function set() {
         sessionStorage.removeItem("toTop");
         sessionStorage.setItem("toTop", $(window).scrollTop());
     }
 </script>
-<script>
+<script type="text/javascript">
+    var theTable = document.getElementById("tablePage");
+    var spanPre = document.getElementById("spanPre");
+    var spanNext = document.getElementById("spanNext");
+    var pageList = document.getElementById("pageList");
+    var spanPageN = pageList.getElementsByTagName("li");
+
+
+    var numberRowsInTable = theTable.rows.length;
+    var pageSize = 10;
+    var page = 1;
+
+    function changepage(n, end) {
+        if (n > 2 && n < end) {
+            for (var i = 1; i <= end; i++) {
+                var prepage = document.getElementById("spanpage_" + i);
+                prepage.style.display = "none";
+            }
+            var page = document.getElementById("spanpage_" + n);
+            page.style.display = "block"
+            var prepage = document.getElementById("spanpage_" + (n - 1));
+            prepage.style.display = "block";
+            var nextpage = document.getElementById("spanpage_" + (n + 1));
+            nextpage.style.display = "block"
+        } else if (n == end) {
+            for (var i = 1; i < end - 2; i++) {
+                var prepage = document.getElementById("spanpage_" + i);
+                prepage.style.display = "none";
+            }
+            var prepage1 = document.getElementById("spanpage_" + n);
+            prepage1.style.display = "block"
+            var prepage2 = document.getElementById("spanpage_" + (n - 1));
+            prepage2.style.display = "block"
+            var prepage3 = document.getElementById("spanpage_" + (n - 2));
+            prepage3.style.display = "block"
+        } else if (n <= 2) {
+            for (var i = 1; i <= end; i++) {
+                var prepage = document.getElementById("spanpage_" + i);
+                prepage.style.display = "none";
+            }
+            var prepage1 = document.getElementById("spanpage_" + 1);
+            prepage1.style.display = "block"
+            var prepage2 = document.getElementById("spanpage_" + 2);
+            prepage2.style.display = "block"
+            var prepage3 = document.getElementById("spanpage_" + 3);
+            prepage3.style.display = "block"
+        }
+    }
+
+    //清除列表的active樣式
+    function clearActive() {
+        for (var i = 1; i < spanPageN.length - 3; i++) {
+            //console.log(spanPageN[i].id);
+            console.log(i);
+            spanPageN[i].setAttribute("class", "");
+            var spanApage = document.getElementById("spanpage_a_" + i);
+            spanApage.setAttribute("style", "");
+        }
+    }
+    //下一頁
+    function next() {
+
+        hideTable();
+
+        //當前最後一行行數
+        currentRow = pageSize * page;
+        maxRow = currentRow + pageSize;
+        // 判斷是否到了table最後幾行數據
+        if (maxRow > numberRowsInTable) {
+            maxRow = numberRowsInTable;
+
+        }
+        for (var i = currentRow; i < maxRow; i++) {
+            theTable.rows[i].style.display = '';
+        }
+
+        page++;
+
+        if (maxRow == numberRowsInTable) {
+            console.log(maxRow + "=======");
+            nextOff();
+
+        }
+        preOn();
+        showPageActive(page);
+        if (@num1% 10 == 0) {
+            changepage(page,@endpageint);
+        } else
+        {
+            changepage(page,@endpage);
+        }
+
+    }
+
+    //上一頁
+    function pre() {
+
+        hideTable();
+        page--;//4->3
+
+        currentRow = pageSize * page;//30
+
+        maxRow = currentRow - pageSize;//20
+        if (currentRow > numberRowsInTable) currentRow = numberRowsInTable;
+        for (var i = maxRow; i < currentRow; i++) {
+            //清除display樣式，display將使用默認
+            theTable.rows[i].style.display = '';
+        }
+
+        if (maxRow == 0) {
+            preOff();
+
+        }
+        showPageActive(page);
+        nextOn();
+        if (@num1% 10 == 0) {
+            changepage(page,@endpageint);
+        } else
+        {
+            changepage(page,@endpage);
+        }
+
+    }
+
+    //第幾頁
+    function nPage(n) {
+        hideTable();
+        page = n;
+        currentRow = pageSize * (n - 1);
+        maxRow = currentRow + pageSize;
+        maxRow = Math.min(maxRow, numberRowsInTable);
+
+        maxRow1 = currentRow + pageSize;
+        // 判斷是否到了table最後幾行數據
+        if (maxRow1 > numberRowsInTable) {
+            maxRow1 = numberRowsInTable;
+
+        }
+        for (var i = currentRow; i < maxRow; i++) {
+            theTable.rows[i].style.display = '';
+        }
+
+
+        if (n==1 && @num1 <= 10)
+        {
+            nextOff();
+            preOff();
+        }
+        else if (n == 1) {
+            nextOn();
+            preOff();
+        }else if (maxRow1 == numberRowsInTable) {
+            preOn();
+            nextOff();
+        } else {
+            nextOn();
+            preOn();
+        }
+        clearActive();
+
+        showPageActive(n);
+
+    }
+
+    function hideTable() {
+        for (var i = 0; i < numberRowsInTable; i++) {
+            theTable.rows[i].style.display = 'none';
+        }
+    }
+
+    //將當前頁設爲active
+    function showPageActive(p) {
+        clearActive();
+        //清除之前的
+        var nowpage = document.getElementById("spanpage_a_" + p);
+
+        nowpage.setAttribute("style", "background-color:#68a3fc; color:#ffffff;")
+
+    }
+
+    //總共頁數
+    function pageCount() {
+        var count = 0;
+        //判斷是否整除
+        if (numberRowsInTable % pageSize != 0) count = 1;
+        return parseInt(numberRowsInTable / pageSize) + count;
+    }
+
+
+    //上一頁下一頁鏈接的禁用和打開
+    function preOn() {
+        spanPre.innerHTML = " <a class='page-link' href='javascript:pre();'>&laquo;</a>";
+        spanPre.setAttribute("class", "");
+    }
+    function preOff() {
+        //bootstrap設置禁用樣式之後還是可以點擊一次，所以這裏直接修改innerHTML解決這個問題。
+        spanPre.innerHTML = " <a class='page-link' href='javascript:void(0);'>&laquo;</a>";
+        spanPre.setAttribute("class", "disabled");
+    }
+    function nextOn() {
+        spanNext.innerHTML = "<a class='page-link' href='javascript:next()'>&raquo;</a>";
+        spanNext.setAttribute("class", "");
+    }
+    function nextOff() {
+        spanNext.innerHTML = "<a class='page-link' href='javascript:void(0)'>&raquo;</a>";
+        spanNext.setAttribute("class", "disabled");
+    }
+
+
+    //隱藏表格 ,只顯示第一頁的內容
+    function hide() {
+        for (var i = pageSize; i < numberRowsInTable; i++) {
+            theTable.rows[i].style.display = 'none';
+        }
+        showPageActive(1);
+        preOff();
+        nextOn();
+    }
+
+    hide();
+</script>
+<script type="text/javascript">
+    
         @*var itemA = '<%=@foreach(var pass_employee in passEmployees) { @pass_employee.HashAccount} %>'*@
 
         $('#exampleModal2.1).on('bs.modal', function(event) {

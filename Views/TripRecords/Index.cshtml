@@ -5,11 +5,24 @@
     List<AttendanceManagement.Models.Trip2Record> Trip2Records = ViewBag.trip2record;//公出資料2
     List<AttendanceManagement.Models.DetailTrip2Record> DetailTrip2Records = ViewBag.detailtrip2record;//公出資料2
 
-   
+
     int review_num = 0;//待審核公出資料編號
     int pass_num = 0;//已審核公出資料編號
+    int num1 = Trip2Records.Count == 0 ? 1 : Trip2Records.Count;
+    int endpage = (num1 / 10) + 1;
+    int endpageint = (num1 / 10);
+    int pagecount = 0;
 }
 
+<script type="text/javascript">
+    window.onload = function () {
+       if (@num1 < 10)
+        {
+           nextOff();
+           preOff();
+        }
+    };
+</script>
 <div class="main-content">
     <section class="section">
         <h3 class="page_name">
@@ -105,33 +118,33 @@
                                     <tr>
                                         <th>編號</th>
                                         @*
-                                        <th>批示狀態</th>
+                <th>批示狀態</th>
                                         *@
                                         <th>申請人</th>
                                         <th>起始時間</th>
                                         <th>結束時間</th>
                                         @*
-                                        <th>公出地點</th>
-                                        <th>申請時間</th>
-                                        <th></th>
+                <th>公出地點</th>
+                <th>申請時間</th>
+                <th></th>
                                         *@
                                     </tr>
 
-                                    <tbody>
+                                    <tbody id="tablePage">
                                         @foreach (var trip2record in Trip2Records)
                                         {
                                             <tr data-toggle="modal" data-target="#exampleModal2.@trip2record.GroupId" id="id" name="id" value="@trip2record.GroupId">
                                                 <td class="rowBorderStart">@trip2record.Num</td>
 
                                                 @*
-                                                @if (pass_triprecord.Review == true)
-                                                {
-                                                    <td><div class="badge badge-info">審核通過</div></td>
-                                                }
-                                                else
-                                                {
-                                                    <td><div class="badge badge-danger">審核拒絕</div></td>
-                                                }
+                        @if (pass_triprecord.Review == true)
+                        {
+                            <td><div class="badge badge-info">審核通過</div></td>
+                        }
+                        else
+                        {
+                            <td><div class="badge badge-danger">審核拒絕</div></td>
+                        }
                                                 *@
 
                                                 <td class="rowBorderMiddle"><a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@trip2record.Name</td>
@@ -139,30 +152,84 @@
                                                 <td class="rowBorderEnd">@trip2record.EndTime</td>
 
                                                 @*
-                                                <td>@pass_triprecord.Location</td>
-                                                <td>@pass_triprecord.CreatedTime</td>
-                                                <td><a href="/TripRecords/Edit?id=@pass_triprecord.TripRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
+                        <td>@pass_triprecord.Location</td>
+                        <td>@pass_triprecord.CreatedTime</td>
+                        <td><a href="/TripRecords/Edit?id=@pass_triprecord.TripRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
                                                 *@
                                             </tr>
                                         }
                                     </tbody>
                                 </table>
                                 <div class="card-footer text-right">
+
                                     <nav class="d-inline-block">
-                                        <ul class="pagination mb-0">
-                                            <li class="page-item">
-                                                <a class="page-link" href="#" tabindex="-1"><i class="bi-chevron-double-left"></i></a>
+                                        <ul class="pagination mb-0 pagination" id="pageList">
+                                            @if (@num1 % 10 == 0)
+                                            {
+                                                <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpageint)">首頁</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpage)">首頁</a></li>
+                                            }
+                                            <li class="page-item disabled " id="spanPre" style="border:0px;padding:0px">
+                                                <a class="page-link" href="javascript:pre();" style="color: #68a3fc;">&laquo;</a>
                                             </li>
-                                            <li class="page-item"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
+
+                                            @if (@num1 % 10 == 0)
+                                            {
+                                                for (var i = 1; i <= @endpageint; i++)
+                                                {
+                                                    pagecount++;
+                                                    if (pagecount <= 3)
+                                                    {
+                                                        <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
+                                                    }
+                                                }
+                                            }
+                                            else if (@num1 < 10)
+                                            {
+
+                                                <li class="active" id="spanpage_1"><a class="page-link" id="spanpage_a_1" href="javascript:nPage(1);nextOff();preOff();">1</a></li>
+
+                                            }
+                                            else
+                                            {
+                                                for (var i = 1; i <= @endpage; i++)
+                                                {
+                                                    pagecount++;
+                                                    if (pagecount <= 3)
+                                                    {
+                                                        <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
+                                                    }
+                                                }
+                                            }
+
+
+                                            <li class="page-item" id="spanNext" style="border:0px;padding:0px">
+                                                <a class="page-link" href="javascript:next()" style="color: #68a3fc;">&raquo;</a>
                                             </li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#"><i class="bi-chevron-double-right"></i></a>
-                                            </li>
+                                            @if (@num1 % 10 == 0)
+                                            {
+                                                <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpageint);nextOff();changepage(@endpageint,@endpageint);">末頁</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpage);nextOff();changepage(@endpage,@endpage);">末頁</a></li>
+                                            }
                                         </ul>
                                     </nav>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -323,6 +390,227 @@
         })
 
 </script>*@
+<script type="text/javascript">
+    var theTable = document.getElementById("tablePage");
+    var spanPre = document.getElementById("spanPre");
+    var spanNext = document.getElementById("spanNext");
+    var pageList = document.getElementById("pageList");
+    var spanPageN = pageList.getElementsByTagName("li");
+
+
+    var numberRowsInTable = theTable.rows.length;
+    var pageSize = 10;
+    var page = 1;
+
+    function changepage(n, end) {
+        if (n > 2 && n < end) {
+            for (var i = 1; i <= end; i++) {
+                var prepage = document.getElementById("spanpage_" + i);
+                prepage.style.display = "none";
+            }
+            var page = document.getElementById("spanpage_" + n);
+            page.style.display = "block"
+            var prepage = document.getElementById("spanpage_" + (n - 1));
+            prepage.style.display = "block";
+            var nextpage = document.getElementById("spanpage_" + (n + 1));
+            nextpage.style.display = "block"
+        } else if (n == end) {
+            for (var i = 1; i < end - 2; i++) {
+                var prepage = document.getElementById("spanpage_" + i);
+                prepage.style.display = "none";
+            }
+            var prepage1 = document.getElementById("spanpage_" + n);
+            prepage1.style.display = "block"
+            var prepage2 = document.getElementById("spanpage_" + (n - 1));
+            prepage2.style.display = "block"
+            var prepage3 = document.getElementById("spanpage_" + (n - 2));
+            prepage3.style.display = "block"
+        } else if (n <= 2) {
+            for (var i = 1; i <= end; i++) {
+                var prepage = document.getElementById("spanpage_" + i);
+                prepage.style.display = "none";
+            }
+            var prepage1 = document.getElementById("spanpage_" + 1);
+            prepage1.style.display = "block"
+            var prepage2 = document.getElementById("spanpage_" + 2);
+            prepage2.style.display = "block"
+            var prepage3 = document.getElementById("spanpage_" + 3);
+            prepage3.style.display = "block"
+        }
+    }
+
+    //清除列表的active樣式
+    function clearActive() {
+        for (var i = 1; i < spanPageN.length - 3; i++) {
+            //console.log(spanPageN[i].id);
+            console.log(i);
+            spanPageN[i].setAttribute("class", "");
+            var spanApage = document.getElementById("spanpage_a_" + i);
+            spanApage.setAttribute("style", "");
+        }
+    }
+    //下一頁
+    function next() {
+
+        hideTable();
+
+        //當前最後一行行數
+        currentRow = pageSize * page;
+        maxRow = currentRow + pageSize;
+        // 判斷是否到了table最後幾行數據
+        if (maxRow > numberRowsInTable) {
+            maxRow = numberRowsInTable;
+
+        }
+        for (var i = currentRow; i < maxRow; i++) {
+            theTable.rows[i].style.display = '';
+        }
+
+        page++;
+
+        if (maxRow == numberRowsInTable) {
+            console.log(maxRow + "=======");
+            nextOff();
+
+        }
+        preOn();
+        showPageActive(page);
+        if (@num1% 10 == 0) {
+            changepage(page,@endpageint);
+        } else
+        {
+            changepage(page,@endpage);
+        }
+
+    }
+
+    //上一頁
+    function pre() {
+
+        hideTable();
+        page--;//4->3
+
+        currentRow = pageSize * page;//30
+
+        maxRow = currentRow - pageSize;//20
+        if (currentRow > numberRowsInTable) currentRow = numberRowsInTable;
+        for (var i = maxRow; i < currentRow; i++) {
+            //清除display樣式，display將使用默認
+            theTable.rows[i].style.display = '';
+        }
+
+        if (maxRow == 0) {
+            preOff();
+
+        }
+        showPageActive(page);
+        nextOn();
+        if (@num1% 10 == 0) {
+            changepage(page,@endpageint);
+        } else
+        {
+            changepage(page,@endpage);
+        }
+
+    }
+
+    //第幾頁
+    function nPage(n) {
+        hideTable();
+        page = n;
+        currentRow = pageSize * (n - 1);
+        maxRow = currentRow + pageSize;
+        maxRow = Math.min(maxRow, numberRowsInTable);
+
+        maxRow1 = currentRow + pageSize;
+        // 判斷是否到了table最後幾行數據
+        if (maxRow1 > numberRowsInTable) {
+            maxRow1 = numberRowsInTable;
+
+        }
+        for (var i = currentRow; i < maxRow; i++) {
+            theTable.rows[i].style.display = '';
+        }
+
+
+        if (n==1 && @num1 <= 10)
+        {
+            nextOff();
+            preOff();
+        }
+        else if (n == 1) {
+            nextOn();
+            preOff();
+        }else if (maxRow1 == numberRowsInTable) {
+            preOn();
+            nextOff();
+        } else {
+            nextOn();
+            preOn();
+        }
+        clearActive();
+
+        showPageActive(n);
+
+    }
+
+    function hideTable() {
+        for (var i = 0; i < numberRowsInTable; i++) {
+            theTable.rows[i].style.display = 'none';
+        }
+    }
+
+    //將當前頁設爲active
+    function showPageActive(p) {
+        clearActive();
+        //清除之前的
+        var nowpage = document.getElementById("spanpage_a_" + p);
+
+        nowpage.setAttribute("style", "background-color:#68a3fc; color:#ffffff;")
+
+    }
+
+    //總共頁數
+    function pageCount() {
+        var count = 0;
+        //判斷是否整除
+        if (numberRowsInTable % pageSize != 0) count = 1;
+        return parseInt(numberRowsInTable / pageSize) + count;
+    }
+
+
+    //上一頁下一頁鏈接的禁用和打開
+    function preOn() {
+        spanPre.innerHTML = " <a class='page-link' href='javascript:pre();'>&laquo;</a>";
+        spanPre.setAttribute("class", "");
+    }
+    function preOff() {
+        //bootstrap設置禁用樣式之後還是可以點擊一次，所以這裏直接修改innerHTML解決這個問題。
+        spanPre.innerHTML = " <a class='page-link' href='javascript:void(0);'>&laquo;</a>";
+        spanPre.setAttribute("class", "disabled");
+    }
+    function nextOn() {
+        spanNext.innerHTML = "<a class='page-link' href='javascript:next()'>&raquo;</a>";
+        spanNext.setAttribute("class", "");
+    }
+    function nextOff() {
+        spanNext.innerHTML = "<a class='page-link' href='javascript:void(0)'>&raquo;</a>";
+        spanNext.setAttribute("class", "disabled");
+    }
+
+
+    //隱藏表格 ,只顯示第一頁的內容
+    function hide() {
+        for (var i = pageSize; i < numberRowsInTable; i++) {
+            theTable.rows[i].style.display = 'none';
+        }
+        showPageActive(1);
+        preOff();
+        nextOn();
+    }
+
+    hide();
+</script>
 <script>
         var itemA = '<%=@foreach (var trip2record in Trip2Records) { @trip2record.GroupId} %>'
 
