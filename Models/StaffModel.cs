@@ -245,6 +245,21 @@ namespace AttendanceManagement.Models
     }//公司上下班時間方法(初版)
     class CompanyManagerModel : HttpResponse
     {
+        public static async Task<string> ForgetPassword_GetManagerHash(string code,string email)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + ManagerForegetPassword + code + "&email=" + email);
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                //取得API回傳的打卡紀錄內容
+                GetResponse = await response.Content.ReadAsStringAsync();
+                //解析打卡紀錄之JSON內容
+                string managerhash = GetResponse.ToString();
+
+                return managerhash;
+            }
+            return "";
+        }//取得ManagerHash
         public static async Task<string> GetManagerKey(string company_hash)
         {
             //連上WebAPI

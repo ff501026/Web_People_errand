@@ -134,7 +134,7 @@ namespace AttendanceManagement.Controllers
 
                 if (result)
                 {
-                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[Index].Email, "差勤打卡公差審核通知", "<h1>差勤打卡公差審核成功</h1><p>請至差勤打卡APP公差紀錄進行確認，如有問題請連繫後台。</p>");
+                    await Models.HttpResponse.sendGmailAsync(passEmployees[Index].Email, "差勤打卡公差審核通知", "<h1>差勤打卡公差審核成功</h1><p>請至差勤打卡APP公差紀錄進行確認，如有問題請連繫後台。</p>");
                     return RedirectToAction("index");
                 }
                 else
@@ -146,7 +146,7 @@ namespace AttendanceManagement.Controllers
 
                 if (result)
                 {
-                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[Index].Email, "差勤打卡公差審核通知", "<h1>差勤打卡公差審核失敗</h1><p>請至差勤打卡APP公差紀錄進行確認，如有問題請連繫後台。</p>");
+                    await Models.HttpResponse.sendGmailAsync(passEmployees[Index].Email, "差勤打卡公差審核通知", "<h1>差勤打卡公差審核失敗</h1><p>請至差勤打卡APP公差紀錄進行確認，如有問題請連繫後台。</p>");
                     return RedirectToAction("index");
                 }
                 else
@@ -174,7 +174,7 @@ namespace AttendanceManagement.Controllers
 
                 if (result)
                 {
-                    AttendanceManagement.Models.HttpResponse.sendGmail(passEmployees[Index].Email, "差勤打卡請假紀錄變更通知", "<h1>您的請假狀態已變更</h1><p>請至差勤打卡APP公差紀錄確認變更內容，如有問題請連繫後台。</p>");
+                    await Models.HttpResponse.sendGmailAsync(passEmployees[Index].Email, "差勤打卡請假紀錄變更通知", "<h1>您的請假狀態已變更</h1><p>請至差勤打卡APP公差紀錄確認變更內容，如有問題請連繫後台。</p>");
                     return RedirectToAction("index");
                 }
                 else

@@ -89,9 +89,10 @@ namespace AttendanceManagement.Models
         public static readonly string ManagerUpdateAgent = "Companies/UpdateManagerAgent"; //編輯職務代理人
         public static readonly string ManageGetBossPermissions = "Companies/GetbossSettingPermissions/"; //職務代理人取得代理對象的設定權限
         public static readonly string ManageBoolAgent = "EmployeeLeaveRecords/BoolAgentReviewLeave/"; //判斷是否可以執行代理權限
+        public static readonly string ManagerForegetPassword = "Companies/Forget_Manager?code="; //找到管理員HASH
 
 
-        public static void sendGmail(string to_email,string email_subject, string email_body)//寄EMAIL
+        public static async System.Threading.Tasks.Task sendGmailAsync(string to_email,string email_subject, string email_body)//寄EMAIL
         {
             try
             {
@@ -124,7 +125,7 @@ namespace AttendanceManagement.Models
                 MySmtp.EnableSsl = true;
 
                 //發送郵件
-                MySmtp.Send(mail);
+                await MySmtp.SendMailAsync(mail);
 
                 //放掉宣告出來的MySmtp
                 MySmtp = null;

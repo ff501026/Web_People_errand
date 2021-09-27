@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "忘記密碼";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+@*<style>
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<script>
+    var map;
+    function initMap() {
+
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0xOKdg7UH0RrFHjydfMhRIz2xvpWkB9E&callback=initMap" async defer></script>*@
+<style>
+
+
+</style>
+<div class="login-brand">
+    <span class="nav_logo-name2">&nbsp;</span>
+    @*<div id="map"></div>*@
+</div>
+
+@using (Html.BeginForm("Submit", "ForgetPassword", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+<div class="card2 card-primary">
+    <div class="card-header"style="padding-bottom:0px;margin-top:5px"><p style="margin-bottom:20px">忘記密碼</p></div>
+    @*<div class="card-header"><nobr id="companytext">忘記密碼</nobr></div>*@
+    <div class="card-header" style="padding-bottom:0px;padding-top:0px"><nobr id="companyhello">點選送出後將寄送重設密碼之連結至您的Email</nobr></div>
+
+    <div class="card-body" style="padding-top:15px;padding-bottom:15px">
+        <form method="POST" action="#" class="needs-validation" novalidate="">
+            <div class="form-group">
+                <input id="code" name="code" type="text" class="form-control" placeholder="請輸入公司ID" tabindex="1" maxlength="30" required autofocus>
+            </div>
+            <div class="form-group">
+                <input id="emaillogin" name="email" type="email" class="form-control" placeholder="請輸入管理員信箱" tabindex="1" autofocus required>
+            </div>
+            @*<div class="form-group">
+                    <input id="manager_password" name="manager_password" type="password" class="form-control" placeholder="請輸入管理員密碼" tabindex="1" maxlength="30" required autofocus>
+                </div>*@
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block" tabindex="4" style="background-image: linear-gradient(to top, #09203f 0%, #537895 100%); opacity: 40%; border: 1px solid #ABB7C3">
+                    送出(Submit)
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+}
+

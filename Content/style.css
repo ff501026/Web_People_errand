@@ -3818,7 +3818,7 @@ input:checked + .slider .off {
     color: #7A7A7A;
 }
 /*登入頁*/
-#code, #email, #manager_password {
+#code, #emaillogin, #manager_password {
     border: 1px solid #C2BFBF;
     background-color: #FFFFFF;
     box-shadow: 3px 3px 3px #D2D3D3;

@@ -247,6 +247,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ForgetPasswordController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttendanceManagementController.cs" />
     <Compile Include="Controllers\AuthoritySettingController.cs" />
@@ -360,6 +361,7 @@
     <Content Include="Views\PasswordSetting\index.cshtml" />
     <Content Include="Views\OrganizationChart\index.cshtml" />
     <Content Include="Views\AuthoritySetting\index.cshtml" />
+    <Content Include="Views\ForgetPassword\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
