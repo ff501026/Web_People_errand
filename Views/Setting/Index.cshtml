@@ -365,9 +365,13 @@
                                                                         {
                                                                             color = generalWorktimes[(generalWorktimes.FindIndex(item => item.GeneralWorktimeId.Equals(employeeWorkTime.WorktimeId)))].Color;
                                                                         }
-                                                                        else if ((flexibleWorktimes.FindIndex(item => item.FlexibleWorktimeId.Equals(employeeWorkTime.WorktimeId)))!=-1)
+                                                                        else if ((flexibleWorktimes.FindIndex(item => item.FlexibleWorktimeId.Equals(employeeWorkTime.WorktimeId))) != -1)
                                                                         {
                                                                             color = flexibleWorktimes[(flexibleWorktimes.FindIndex(item => item.FlexibleWorktimeId.Equals(employeeWorkTime.WorktimeId)))].Color;
+                                                                        }
+                                                                        else 
+                                                                        {
+                                                                            color = "#000000";
                                                                         }
                                                                     <select name="updateworktime" class=" form-select form-select-sm select" aria-label=".form-select-sm example" id="ClassSelectContent_@j_index@d_index" style="color:@color;margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;" onchange="this.className=this.options[this.selectedIndex].className;set();$(this.form).submit()">
                                                                         <option value="" selected></option>
