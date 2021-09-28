@@ -329,7 +329,7 @@ namespace AttendanceManagement.Controllers
                 result = await JobtitleModel.Add_Jobtitle(Session["company_hash"].ToString(), jobtitle_name);
                 if (result)
                 {
-                    return Content($"<script>alert('新增失敗！如有問題請連繫後台!');history.go(-1);</script>");
+                    return RedirectToAction("index");
                 }
                 else
                     return Content($"<script>alert('新增失敗！如有問題請連繫後台!');history.go(-1);</script>");
