@@ -97,7 +97,7 @@
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                            <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search" ></i></button>
                         </div>
                     </div>
                 </div>
@@ -376,7 +376,17 @@
     </div>
 
 }
-
+<div class="modal modal-backdrop-bg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width:100%">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-centered">
+            <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @*<script>
         var itemA = '<%=@foreach (var pass_triprecord in passTripRecords) { @pass_triprecord.TripRecordId} %>'

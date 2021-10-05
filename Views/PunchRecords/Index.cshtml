@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                            <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
 
                                                 </td>
                                                 <td class="rowBorderMiddle">
-                                                    <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
+                                                    <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@work_record[i].Name"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
                                                 </td>
                                                 <td class="rowBorderMiddle">@work_record[i].WorkTime</td>
                                                 <td class="rowBorderMiddle">@work_record[i].RestTime</td>
@@ -378,6 +378,17 @@
 
 
     </section>
+</div>
+<div class="modal modal-backdrop-bg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width:100%">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-centered">
+            <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

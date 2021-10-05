@@ -104,7 +104,7 @@
 
                                 <div class="d-flex justify-content-center flex-row bd-highlight">
                                     <div class="p-2 flex-fill bd-highlight">
-                                        <button id="Button" name="Button" value="RenewButton" class="btn btn-success" type="submit">更新</button>
+                                        <button id="Button" name="Button" value="RenewButton" class="btn btn-success" type="submit" data-toggle="modal" data-target="#exampleModal2.1">更新</button>
                                     </div>
                                     <div class="p-2 flex-fill bd-highlight">
                                         <button id="Button" name="Button" value="BackButton" class="btn btn-info" onclick="javascript:window.history.go(-1);" type="submit" style="background-color: #68A3FC;"><i class="bi-box-arrow-in-left"></i>返回</button>
@@ -119,4 +119,14 @@
         </section>
 </div>
 
-
+<div class="modal modal-backdrop-bg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width:100%">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-centered">
+            <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

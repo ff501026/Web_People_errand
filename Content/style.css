@@ -1,5 +1,12 @@
 ﻿@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
 
+.modal-backdrop {
+    background-color: black;
+    opacity:0.3;
+}
+.model-background {
+    background-color: rgba(0, 0, 0,0.5);
+}
 /*Start-header-sidebar*/
 :root {
     --header-height: 3rem;
@@ -564,7 +571,8 @@ a {
     .btn4-danger:focus,
     .btn4-danger:focus:active,
     .btn4-danger:active {
-        background-color: #FFF !important;
+        color: #fff !important;
+        background-color: #C92929 !important;
     }
 
 .btn4-success {

@@ -157,7 +157,7 @@
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" onclick="set();" name="button" value="search" class="btn" type="submit"><i class="bi-search"></i></button>
+                            <button id="button" onclick="set();" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal4.1"><i class="bi-search"></i></button>
                         </div>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                                         <th>部門</th>
                                         <th>職稱</th>
                                         <th>E-mail</th>
-                                        <th >狀態</th>
+                                        <th>狀態</th>
                                         <th>編輯</th>
                                     </tr>
                                     <tbody id="tablePage">
@@ -190,7 +190,7 @@
                                             <tr>
                                                 <td class="rowBorderStart"></td>
                                                 <td class="rowBorderMiddle">
-                                                    <a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
+                                                    <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@pass_employee.Name"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
                                                 </td>
                                                 <td class="rowBorderMiddle">@pass_employee.Phone</td>
                                                 <td class="rowBorderMiddle">@pass_employee.Department</td>
@@ -211,8 +211,8 @@
                                                 }
 
                                                 @*<td>
-                    <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
-                </td>*@
+                                                        <a href="/EmployeeData/Edit?id=@pass_employee.HashAccount" class="btn2 btn2-primary btn2-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-square"></i></a>
+                                                    </td>*@
                                                 <td class="rowBorderEnd">
                                                     <button type="button" id="editbutton" class="btn2 btn2-primary btn2-action" data-toggle="modal" data-target="#@pass_employee.HashAccount"><i id="editimage" class="bi-pencil-square"></i></button>
                                                 </td>
@@ -247,77 +247,77 @@
                                     </nav>
                                 </div>
                                 }*@
-                    <div class="card-footer text-right">
+                        <div class="card-footer text-right">
 
-                        <nav class="d-inline-block">
-                            <ul class="pagination mb-0 pagination" id="pageList">
-                                @if (@num1 % 10 == 0)
-                                {
-                                    <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpageint)">首頁</a></li>
-                                }
-                                else
-                                {
-                                    <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpage)">首頁</a></li>
-                                }
-                                <li class="page-item disabled " id="spanPre" style="border:0px;padding:0px">
-                                    <a class="page-link" href="javascript:pre();" style="color: #68a3fc;">&laquo;</a>
-                                </li>
-
-                                @if (@num1 % 10 == 0)
-                                {
-                                    for (var i = 1; i <= @endpageint; i++)
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0 pagination" id="pageList">
+                                    @if (@num1 % 10 == 0)
                                     {
-                                        pagecount++;
-                                        if (pagecount <= 3)
+                                        <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpageint)">首頁</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpage)">首頁</a></li>
+                                    }
+                                    <li class="page-item disabled " id="spanPre" style="border:0px;padding:0px">
+                                        <a class="page-link" href="javascript:pre();" style="color: #68a3fc;">&laquo;</a>
+                                    </li>
+
+                                    @if (@num1 % 10 == 0)
+                                    {
+                                        for (var i = 1; i <= @endpageint; i++)
                                         {
-                                            <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
-                                        }
-                                        else
-                                        {
-                                            <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
+                                            pagecount++;
+                                            if (pagecount <= 3)
+                                            {
+                                                <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
+                                            }
                                         }
                                     }
-                                }
-                                else if (@num1 < 10)
-                                {
-
-                                    <li class="active" id="spanpage_1"><a class="page-link" id="spanpage_a_1" href="javascript:nPage(1);nextOff();preOff();">1</a></li>
-
-                                }
-                                else
-                                {
-                                    for (var i = 1; i <= @endpage; i++)
+                                    else if (@num1 < 10)
                                     {
-                                        pagecount++;
-                                        if (pagecount <= 3)
+
+                                        <li class="active" id="spanpage_1"><a class="page-link" id="spanpage_a_1" href="javascript:nPage(1);nextOff();preOff();">1</a></li>
+
+                                    }
+                                    else
+                                    {
+                                        for (var i = 1; i <= @endpage; i++)
                                         {
-                                            <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
-                                        }
-                                        else
-                                        {
-                                            <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
+                                            pagecount++;
+                                            if (pagecount <= 3)
+                                            {
+                                                <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
+                                            }
                                         }
                                     }
-                                }
 
 
-                                <li class="page-item" id="spanNext" style="border:0px;padding:0px">
-                                    <a class="page-link" href="javascript:next()" style="color: #68a3fc;">&raquo;</a>
-                                </li>
-                                @if (@num1 % 10 == 0)
-                                {
-                                    <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpageint);nextOff();changepage(@endpageint,@endpageint);">末頁</a></li>
-                                }
-                                else
-                                {
-                                    <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpage);nextOff();changepage(@endpage,@endpage);">末頁</a></li>
-                                }
-                            </ul>
-                        </nav>
+                                    <li class="page-item" id="spanNext" style="border:0px;padding:0px">
+                                        <a class="page-link" href="javascript:next()" style="color: #68a3fc;">&raquo;</a>
+                                    </li>
+                                    @if (@num1 % 10 == 0)
+                                    {
+                                        <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpageint);nextOff();changepage(@endpageint,@endpageint);">末頁</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpage);nextOff();changepage(@endpage,@endpage);">末頁</a></li>
+                                    }
+                                </ul>
+                            </nav>
 
 
 
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -330,9 +330,9 @@
 
 @foreach (var pass_employee in passEmployees)
 {
-    using (Html.BeginForm("EditEmployee", "EmployeeData", new { name = pass_employee.Name, id = pass_employee.HashAccount, old_email = pass_employee.Email, old_enabled = pass_employee.Enabled }, FormMethod.Post))
+    using (Html.BeginForm("EditEmployee", "EmployeeData", new { name = pass_employee.Name, id = pass_employee.HashAccount, old_email = pass_employee.Email, old_enabled = pass_employee.Enabled }, FormMethod.Post, new { name = "frm_"+pass_employee.HashAccount , id= "frm_" + pass_employee.HashAccount }))
     {
-        <div class="modal fade bd-example-modal-lg" id="@pass_employee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal fade bd-example-modal-lg" id="@pass_employee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog  modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -408,7 +408,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-8 col-sm-6">
-                                            <input type="text" class="form-control" id="email" name="email" value="@pass_employee.Email" required autofocus>
+                                            <input type="email" class="form-control" id="email" name="email" value="@pass_employee.Email" required autofocus>
                                         </div>
 
                                         <div class="col-4 col-sm-6">
@@ -555,8 +555,8 @@
 
                                     <div class="row" style="margin-top:20px">
                                         <div class="col-12 col-lg-12 text-center">
-                                            <button id="Button" onclick="set();" name="Button" type="submit" value="RenewButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
-                                            <button id="Button" name="Button" value="BackButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1" data-dismiss="modal"><i class="bi-x-lg"></i></button>
+                                            <button id="Button" onclick="set();load('frm_@pass_employee.HashAccount','exampleModal2.1');" name="Button" type="submit" value="RenewButton" class="btn3 btn3-primary btn3-action" ><i class="bi-check-lg"></i></button>
+                                            <button id="Button" name="Button" value="BackButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.2" data-dismiss="modal"><i class="bi-x-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -658,8 +658,8 @@
 
                                     <div class="row" style="margin-top:20px">
                                         <div class="col-12 col-lg-12 text-center">
-                                            <button id="Button" onclick="set();" name="Button" type="submit" value="SaveButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
-                                            <button id="Button" onclick="set();" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
+                                            <button id="Button" onclick="set();" name="Button" type="submit" value="SaveButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal3.1"><i class="bi-check-lg"></i></button>
+                                            <button id="Button" onclick="set();" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal3.2"><i class="bi-x-lg"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -674,6 +674,51 @@
     }
 }
 
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width:100%">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin: 0px 0px 0px -9px;">
+            <div class="modal-body" style="padding: 190px 0px 190px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width:100%">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin: 0px 0px 0px -9px;">
+            <div class="modal-body" style="padding: 190px 0px 190px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width:100%">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin: 0px 0px 0px -9px;">
+            <div class="modal-body" style="padding: 190px 0px 190px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-backdrop-bg" id="exampleModal4.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width:100%">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-centered">
+            <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -681,8 +726,19 @@
         sessionStorage.removeItem("toTop");
         sessionStorage.setItem("toTop", $(window).scrollTop());
     }
+    function load(values1,values)
+    {
+        var frm = document.forms[values1];
+        
+        //document.getElementsById("phone123").value = values1;
+        if (frm.elements.email.value != null && frm.elements.email.value != "")//確認email有無填寫
+        {
+            var modal = document.getElementById(values);
+            modal.style.display = "block";
+        }
+    }
 </script>
-<script type="text/javascript">
+<script type="text/javascript">//頁碼
     var theTable = document.getElementById("tablePage");
     var spanPre = document.getElementById("spanPre");
     var spanNext = document.getElementById("spanNext");
@@ -904,7 +960,7 @@
     hide();
 </script>
 <script type="text/javascript">
-    
+
         @*var itemA = '<%=@foreach(var pass_employee in passEmployees) { @pass_employee.HashAccount} %>'*@
 
         $('#exampleModal2.1).on('bs.modal', function(event) {

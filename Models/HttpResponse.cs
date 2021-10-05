@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -90,10 +91,18 @@ namespace AttendanceManagement.Models
         public static readonly string ManageGetBossPermissions = "Companies/GetbossSettingPermissions/"; //職務代理人取得代理對象的設定權限
         public static readonly string ManageBoolAgent = "EmployeeLeaveRecords/BoolAgentReviewLeave/"; //判斷是否可以執行代理權限
         public static readonly string ManagerForegetPassword = "Companies/Forget_Manager?code="; //找到管理員HASH
-
+        //public static readonly string sendGmail = "https://localhost:44311/api/Companies/sendGmailAsync?to_email="; //寄EMAIL
 
         public static async System.Threading.Tasks.Task sendGmailAsync(string to_email,string email_subject, string email_body)//寄EMAIL
         {
+            ////連上WebAPI
+            //response = await client.GetAsync(sendGmail + to_email + "&email_subject=" + email_subject + "&email_body=" + email_body);
+            ////取得API回傳的打卡紀錄內容
+            //GetResponse = await response.Content.ReadAsStringAsync();
+            ////解析打卡紀錄之JSON內容
+            //bool result = JsonConvert.DeserializeObject<bool>(GetResponse);
+
+            //return result;
             try
             {
                 MailMessage mail = new MailMessage();

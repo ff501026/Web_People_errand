@@ -278,7 +278,7 @@
                         </div>
 
                         <div class="card-body">
-                            @using (Html.BeginForm("ChangeCompanyPassword", "Setting", FormMethod.Post))
+                            @using (Html.BeginForm("ChangeCompanyPassword", "Setting", FormMethod.Post,new { name="frm_password",id= "frm_password" }))
                             {
                                 @Html.AntiForgeryToken()
 
@@ -293,7 +293,7 @@
                                         <input id="NewPassword2" required name="NewPassword2" class="form-control" type="password" placeholder="請輸入新密碼" aria-label="Search">
                                     </div>
                                     <div class="col-lg-auto col-md-2 col-12">
-                                        <button onclick="set();" class="btn btn-info" type="submit" style="background-color: #68A3FC;">修改</button>
+                                        <button class="btn btn-info" type="submit" style="background-color: #68A3FC;" data-toggle="modal"  onclick="load2('frm_password', 'NewPassword','NewPassword2', 'exampleModalload')">修改</button>
                                     </div>
                                 </div>}
                         </div>
@@ -373,7 +373,7 @@
                                                                         {
                                                                             color = "#000000";
                                                                         }
-                                                                    <select name="updateworktime" class=" form-select form-select-sm select" aria-label=".form-select-sm example" id="ClassSelectContent_@j_index@d_index" style="color:@color;margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;" onchange="this.className=this.options[this.selectedIndex].className;set();$(this.form).submit()">
+                                                                    <select name="updateworktime" class=" form-select form-select-sm select" aria-label=".form-select-sm example" id="ClassSelectContent_@j_index@d_index" style="color:@color;margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;" onchange="this.className = this.options[this.selectedIndex].className; set(); load3('exampleModalload');$(this.form).submit()">
                                                                         <option value="" selected></option>
                                                                         @foreach (var generalWorktime in generalWorktimes)
                                                                         {
@@ -508,8 +508,8 @@
                                                         <div class="row">
                                                             <div class="col">
                                                                 <div class="row" style="float:right">
-                                                                    <button class="btn btn-danger" type="button" onclick="set();window.location.reload();" id="workonoffbutton" style="opacity:0.9;">取消</button>
-                                                                    <button class="btn btn-info" type="button" onclick="set(); $(this.form).submit()" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                    <button class="btn btn-danger" type="button" onclick="set();window.location.reload();" id="workonoffbutton" style="opacity:0.9;" data-toggle="modal" data-target="#exampleModalload">取消</button>
+                                                                    <button class="btn btn-info" type="button" onclick="set(); $(this.form).submit()" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;" data-toggle="modal" data-target="#exampleModalload">儲存</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -579,8 +579,8 @@
                                                         <div class="row">
                                                             <div class="col">
                                                                 <div class="row" style="float:right">
-                                                                    <button class="btn btn-danger" type="button" onclick="set();window.location.reload();" id="workonoffbutton" style="opacity:0.9;">取消</button>
-                                                                    <button class="btn btn-info" type="button" onclick="set(); $(this.form).submit()" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                    <button class="btn btn-danger" type="button" onclick="set();window.location.reload();" id="workonoffbutton" style="opacity:0.9;" data-toggle="modal" data-target="#exampleModalload">取消</button>
+                                                                    <button class="btn btn-info" type="button" onclick="set(); $(this.form).submit()" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;" data-toggle="modal" data-target="#exampleModalload">儲存</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -680,8 +680,8 @@
                                                         <div class="row">
                                                             <div class="col">
                                                                 <div class="row" style="float:right">
-                                                                    <button class="btn btn-primary" type="button" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" onclick="set(); window.location.reload();">取消</button>
-                                                                    <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                    <button class="btn btn-primary" type="button" id="workonoffbutton" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" onclick="set(); window.location.reload();" data-toggle="modal" data-target="#exampleModalload">取消</button>
+                                                                    <button class="btn btn-primary" type="button" id="workonoffbutton" onclick="set();$(this.form).submit()" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;" data-toggle="modal" data-target="#exampleModalload">儲存</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -725,8 +725,8 @@
                                                         <div class="row">
                                                             <div class="col">
                                                                 <div class="row" style="float:right">
-                                                                    <button class="btn btn-danger" type="button" onclick="set();window.location.reload();" id="workonoffbutton" style="opacity:0.9;">取消</button>
-                                                                    <button class="btn btn-info" type="button" onclick="set(); $(this.form).submit()" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                    <button class="btn btn-danger" type="button" onclick="set();window.location.reload();" id="workonoffbutton" style="opacity:0.9;" data-toggle="modal" data-target="#exampleModalload">取消</button>
+                                                                    <button class="btn btn-info" type="button" onclick="set(); $(this.form).submit()" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;" data-toggle="modal" data-target="#exampleModalload">儲存</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -738,7 +738,7 @@
                                     }
 
                                     @*新增*@
-                                    @using (Html.BeginForm("AddWorktime", "Setting", FormMethod.Post))
+                                    @using (Html.BeginForm("AddWorktime", "Setting", FormMethod.Post,new { name="frm_worktime",id= "frm_worktime" }))
                                     {
                                         <div class="col align-self-center" id="WorkSettingbody" style="margin:0 auto;text-align:center;display:none;">
                                             <div class="p-2">
@@ -768,13 +768,13 @@
                                                         <div class="col">
                                                             <div class="row">
                                                                 <div>開始時間 : </div>
-                                                                <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
+                                                                <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="08:00">
                                                             </div>
                                                         </div>
                                                         <div class="col">
                                                             <div class="row">
                                                                 <div>結束時間 : </div>
-                                                                <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
+                                                                <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="20:00">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -800,8 +800,8 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-info" type="button" id="workonoffbutton" onclick="hideFunction()" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;">取消</button>
-                                                                <button class="btn btn-info" type="submit" id="workonoffbutton" onclick="set();" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                <button class="btn btn-info" type="button" id="workonoffbutton" onclick="hideFunction()" style="opacity: 0.9; background-color: #F24C4C; border: 1px solid #F24C4C;" >取消</button>
+                                                                <button class="btn btn-info" type="submit"  id="workonoffbutton" data-toggle="modal"  onclick="set();load('frm_worktime', 'Name', 'exampleModalload')" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;" >儲存</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -818,13 +818,13 @@
                                                         <div class="col">
                                                             <div class="row">
                                                                 <div>開始時間 : </div>
-                                                                <input class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
+                                                                <input class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="07:00">
                                                             </div>
                                                         </div>
                                                         <div class="col">
                                                             <div class="row">
                                                                 <div>結束時間 : </div>
-                                                                <input class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
+                                                                <input class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="08:00">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -856,13 +856,13 @@
                                                         <div class="col">
                                                             <div class="row">
                                                                 <div>開始時間 : </div>
-                                                                <input class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.WorkTime">
+                                                                <input class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="19:00">
                                                             </div>
                                                         </div>
                                                         <div class="col">
                                                             <div class="row">
                                                                 <div>結束時間 : </div>
-                                                                <input class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="@company_Times.RestTime">
+                                                                <input class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="20:00">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -871,8 +871,8 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="row" style="float:right">
-                                                                <button class="btn btn-danger" type="button" onclick="hideFunction();" id="workonoffbutton" style="opacity:0.9;">取消</button>
-                                                                <button class="btn btn-info" type="submit" onclick="set();" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;">儲存</button>
+                                                                <button class="btn btn-danger" type="button" onclick="hideFunction();" id="workonoffbutton" style="opacity:0.9;" data-toggle="modal" data-target="#exampleModalload">取消</button>
+                                                                <button class="btn btn-info" type="submit" onclick="set();load('frm_worktime', 'Name', 'exampleModalload')" id="workonoffbutton" style="opacity: 0.9; background-color: #68A3FB; border: 1px solid #7298FF;" >儲存</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -939,7 +939,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    @using (Html.BeginForm("AddDepartment", "Setting", FormMethod.Post))
+                    @using (Html.BeginForm("AddDepartment", "Setting", FormMethod.Post,new { name= "frm_department",id= "frm_department" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="modal-body">
@@ -949,7 +949,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                                <button id="Button" name="Button" value="AddButton" type="submit" class="btn btn-success">新增</button>
+                                <button id="Button" name="Button" value="AddButton" type="submit" class="btn btn-success" onclick="load('frm_department', 'department_name', 'exampleModalload')">新增</button>
                             </div>
                         </div>
                     }
@@ -970,7 +970,7 @@
                             </button>
                         </div>
 
-                        @using (Html.BeginForm("EditDepartment", "Setting",new { id=department.DepartmentId}, FormMethod.Post))
+                        @using (Html.BeginForm("EditDepartment", "Setting",new { id=department.DepartmentId}, FormMethod.Post,new { name= "frm_"+@department.DepartmentId,id= "frm_" + @department.DepartmentId }))
                         {
                             @Html.AntiForgeryToken()
                             <div class="modal-body">
@@ -980,7 +980,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                                    <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success">更新</button>
+                                    <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success" onclick="load('frm_@department.DepartmentId', 'department_name', 'exampleModalload')">更新</button>
                                 </div>
                             </div>
                         }
@@ -1005,7 +1005,7 @@
                             <div class="modal-body">
                                 <div class="modal-footer">
                                     <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                    <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger">刪除</button>
+                                    <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalload">刪除</button>
                                 </div>
                             </div>
                         }
@@ -1024,7 +1024,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            @using (Html.BeginForm("AddJobtitle", "Setting", FormMethod.Post))
+                            @using (Html.BeginForm("AddJobtitle", "Setting", FormMethod.Post, new { name = "frm_jobtitle" , id = "frm_jobtitle" }))
                             {
                                 @Html.AntiForgeryToken()
                                 <div class="form-group">
@@ -1033,7 +1033,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                                    <button id="Button" name="Button" value="AddButton" type="submit" class="btn btn-success">新增</button>
+                                    <button id="Button" name="Button" value="AddButton" type="submit" class="btn btn-success" onclick="load('frm_jobtitle','jobtitle_name','exampleModalload')">新增</button>
                                 </div>
                             }
                         </div>
@@ -1053,7 +1053,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                @using (Html.BeginForm("EditJobtitle", "Setting", new { id = jobtitle.JobTitleId }, FormMethod.Post))
+                                @using (Html.BeginForm("EditJobtitle", "Setting", new { id = jobtitle.JobTitleId }, FormMethod.Post,new { name = "frm_" + jobtitle.JobTitleId, id = "frm_"+jobtitle.JobTitleId }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <div class="form-group">
@@ -1062,7 +1062,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                                        <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success">更新</button>
+                                        <button id="Button" name="Button" value="EditButton" type="submit" class="btn btn-success" onclick="load('frm_@jobtitle.JobTitleId','jobtitle_name','exampleModalload')">更新</button>
                                     </div>
                                 }
                             </div>
@@ -1087,7 +1087,7 @@
                                     @Html.AntiForgeryToken()
                                     <div class="modal-footer">
                                         <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                        <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger">刪除</button>
+                                        <button id="Button" name="Button" value="DeleteButton" type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalload">刪除</button>
                                     </div>
                                 }
                             </div>
@@ -1111,7 +1111,7 @@
                                 @Html.AntiForgeryToken()
                                 <div class="modal-footer">
                                     <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                    <button id="DeleteWorkTimeButton" name="DeleteId"  type="submit" class="btn btn-danger">刪除</button>
+                                    <button id="DeleteWorkTimeButton" name="DeleteId"  type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalload">刪除</button>
                                 </div>
                             }
                         </div>
@@ -1129,7 +1129,7 @@
                             </button>
                         </div>
 
-                        @using (Html.BeginForm("EditAddress", "Setting", FormMethod.Post))
+                        @using (Html.BeginForm("EditAddress", "Setting", FormMethod.Post, new { name = "frm_address", id = "frm_address" }))
                         {
                             @Html.AntiForgeryToken()
                             <div class="modal-body">
@@ -1147,15 +1147,25 @@
                             </form>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                                <button type="submit" id="Button" name="Button" value="RenewButton" class="btn btn-success">更新</button>
+                                <button type="submit" id="Button" name="Button" value="RenewButton" class="btn btn-success" onclick="load('frm_address','address','exampleModalload')">更新</button>
                             </div>
                         </div>
                     }
                     </div>
             </div>
         </div>
-
-
+        <div class="modal model-background modal-backdrop-bg" id="exampleModalload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width:100%">
+            <div class="modal-dialog">
+                <div class="modal-content" style="margin: 0px 0px 0px -9px;">
+                    <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+                        <div id="CenterSet">
+                            <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
             <script type="text/javascript">
                 function colorFunction() {
                     var x = document.getElementById("editgeneralcolor3214").value;
@@ -1170,6 +1180,31 @@
 
                         document.getElementById("ClassSelectContent_" + i + values2).options[x].selected = true;
                     }
+                }
+                function load(values1, values2,values) {
+                    var frm = document.forms[values1];
+                    if (frm.elements[values2].value != null && frm.elements[values2].value != "")//確認有無填寫
+                    {
+                        var modal = document.getElementById(values);
+                        modal.style.display = "block";
+                    }
+                }
+                function load2(values1, values2,values3, values) {
+                    var frm = document.forms[values1];
+                    if (frm.elements[values2].value != null && frm.elements[values2].value != "")//確認有無填寫
+                    {
+                        if (frm.elements[values3].value != null && frm.elements[values3].value != "")
+                        {
+                            var modal = document.getElementById(values);
+                            modal.style.display = "block";
+                        }
+                    }
+                }
+            </script>
+            <script>
+                function load3(values) {
+                    var modal = document.getElementById(values);
+                    modal.style.display = "block";
                 }
             </script>
             <script type="text/javascript">
