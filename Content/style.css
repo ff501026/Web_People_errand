@@ -16,7 +16,7 @@
     --white-color: #FFF; /*#5ea7ff #68a3fc*/
     --body-font: 'Nunito', sans-serif;
     --normal-font-size: 1rem;
-    --z-fixed: 100
+    --z-fixed: 100;
 }
 
 *,
@@ -3621,6 +3621,7 @@ table tr:hover .table-links {
 @media (min-width: 576px) and (max-width: 767.98px) {
     .navbar .form-inline .search-element {
         display: block;
+       
     }
 }
 
