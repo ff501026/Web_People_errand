@@ -10,8 +10,8 @@
 /*Start-header-sidebar*/
 :root {
     --header-height: 3rem;
-    --nav-width: 78px;
     --first-color: #808080;
+    --nav-width: 78px;
     --first-color-light: #808080;
     --white-color: #FFF; /*#5ea7ff #68a3fc*/
     --body-font: 'Nunito', sans-serif;
@@ -244,7 +244,7 @@ a {
 
 
     .body-pd {
-        padding-left: calc(var(--nav-width) + 188px)
+        padding-left: calc(var(--nav-width) + 188px);
     }
 }
 
@@ -3807,7 +3807,7 @@ input:checked + .slider .off {
 
 
 /*密碼設定頁*/
-#mpassword {
+#mpassword, #mpassword2 {
     border: 1px solid #C2BFBF;
     background-color: #FFFFFF;
     box-shadow: 3px 3px 3px #D2D3D3;

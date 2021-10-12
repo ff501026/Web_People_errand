@@ -14,6 +14,7 @@
 }
 
 <style>
+
     #editbutton {
         background-color: #E8ECFF;
     }
@@ -332,7 +333,7 @@
 {
     using (Html.BeginForm("EditEmployee", "EmployeeData", new { name = pass_employee.Name, id = pass_employee.HashAccount, old_email = pass_employee.Email, old_enabled = pass_employee.Enabled }, FormMethod.Post, new { name = "frm_"+pass_employee.HashAccount , id= "frm_" + pass_employee.HashAccount }))
     {
-<div class="modal modal-backdrop-bg" id="@pass_employee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;  background-color: rgb(35,35,35,0.7);">
+<div class="modal modal-backdrop-bg" id="@pass_employee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;  background-color: rgb(135,135,135,0.5);">
     <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -557,7 +558,7 @@
     using (Html.BeginForm("SetEmployeeInformation", "EmployeeData", new { id = reviewEmployee.HashAccount, email = reviewEmployee.Email }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-<div class="modal modal-backdrop-bg" id="@reviewEmployee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(35,35,35,0.7); ">
+<div class="modal modal-backdrop-bg" id="@reviewEmployee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
     <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -651,7 +652,7 @@
 </div>
     }
 }
-<div class="modal modal-backdrop-bg" id="DeleteEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(35,35,35,0.6);">
+<div class="modal modal-backdrop-bg" id="DeleteEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
     <div class="modal-dialog" role="document" >
         <div class="modal-content" style="margin-top:150px;">
             <div class="modal-header">
@@ -674,7 +675,7 @@
     </div>
 </div>
 
-<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
             <div class="modal-body" style="padding: 190px 0px 190px 0px; border-radius: 4px;width:100%;">
@@ -685,7 +686,7 @@
         </div>
     </div>
 </div>
-<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
             <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
@@ -696,7 +697,7 @@
         </div>
     </div>
 </div>
-<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
             <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
@@ -707,7 +708,7 @@
         </div>
     </div>
 </div>
-<div class="modal modal-backdrop-bg" id="exampleModal4.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+<div class="modal modal-backdrop-bg" id="exampleModal4.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
     <div class="modal-dialog">
         <div class="modal-content modal-dialog-centered">
             <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">

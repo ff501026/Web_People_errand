@@ -15,6 +15,7 @@
     int endpageint = (num1 / 10);
     int pagecount = 0;
 }
+
 <script type="text/javascript">
     window.onload = function () {
        if (@num1 < 10)
@@ -32,27 +33,51 @@
         @using (Html.BeginForm("SearchWorkRecord", "PunchRecords", FormMethod.Get))
         {
             @Html.AntiForgeryToken()
-            <form class="form-inline mr-auto">
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <label class="form-inline">
-                            姓名(ID)：
-                            <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" aria-label="Search">
-                        </label>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <label class="form-inline">
-                            日期：
-                            <input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
-                        </label>
-                    </div>
-                    <div class="col-lg-1 col-md-1 col-12">
-                        <div>
-                            <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
-                        </div>
-                    </div>
+    <form class="form-inline mr-auto">
+        <div class="row" style="margin-left:10px;">
+            <div class="col-lg-3 col-md-3 col-3" style="padding:0px;">
+                <label class="form-inline">
+                    姓名(ID)：
+                    <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" aria-label="Search">
+                </label>
+            </div>
+            <div class="col-lg-3 col-md-3 col-3">
+                <label class="form-inline">
+                    日期：
+                    <input id="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
+
+                </label>
+
+            </div>
+            <div class="col-lg-2 col-md-2 col-2">
+                <i class="bi bi-alarm form-inline" style="font-weight:bolder;">
+                    <label style="color: #F6F6F6;">--</label>
+                    <select class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <option>是否遲到</option>
+                        <option>正常</option>
+                        <option>遲到</option>
+                    </select>
+                </i>
+            </div>
+            <div class="col-lg-2 col-md-2 col-2">
+                <i class="bi bi-box-arrow-right form-inline" style="font-weight:bolder;"> 
+                    <label style="color: #F6F6F6;">--</label>
+                    <select class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <option>下班狀態</option>
+                        <option>早退</option>
+                        <option>異常</option>
+                        <option>正常</option>
+                    </select>
+                </i>
+            </div>
+            <div class="col-lg-2 col-md-2 col-2">
+                <div>
+                    <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
                 </div>
-            </form>
+            </div>
+        </div>
+      
+    </form>
         }
 
         <div class="section-body" style="margin-top:25px">
@@ -612,4 +637,8 @@
     }
 
     hide();
+</script>
+<script type="text/javascript">
+    
+    
 </script>
