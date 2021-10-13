@@ -55,6 +55,9 @@
 <script type="text/javascript">
     window.onload = function () {
         var _offset = sessionStorage.getItem("toTop");
+        document.getElementById("s_department").options[sessionStorage.getItem("search_department")].selected = true;
+        document.getElementById("s_jobtitle").options[sessionStorage.getItem("search_jobtitle")].selected = true;
+        document.getElementById("s_employee_name").options[sessionStorage.getItem("search_name")].selected = true;
         $(document).scrollTop(_offset);
         sessionStorage.clear();
         if (@num1 < 10)
@@ -122,11 +125,11 @@
                     <div class="col-lg-3 col-md-3 col-12">
                         <label class="form-inline">
                             <i class="bi-sliders"></i> 部門：
-                            <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                            <select id="s_department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
                                 <option>請選擇部門</option>
                                 @foreach (var department in departments)
                                 {
-                                    <option>@department.Name</option>
+                                    <option value="@department.Name">@department.Name</option>
                                 }
                             </select>
                         </label>
@@ -134,30 +137,32 @@
                     <div class="col-lg-3 col-md-3 col-12">
                         <label class="form-inline">
                             <i class="bi-filter-left"></i> 職稱：
-                            <select id="jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                            <select id="s_jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
                                 <option>請選擇職稱</option>
                                 @foreach (var jobtitle in jobTitles)
                                 {
-                                    <option>@jobtitle.Name</option>
+                                    <option value="@jobtitle.Name">@jobtitle.Name</option>
                                 }
                             </select>
                         </label>
                     </div>
                     <div class="col-lg-3 col-md-3 col-12">
                         <label class="form-inline">
+                            @*<i class="bi-person"></i> 姓名：<input id="s_employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" aria-label="Search">*@
+
                             <i class="bi-person"></i> 姓名：
-                            <select id="employee_name" name="employee_name" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                            <select id="s_employee_name" name="employee_name" class="form-control" type="text" placeholder="Search" aria-label="Search">
                                 <option>請選擇姓名</option>
                                 @foreach (var passEmployee in all_passEmployees)
                                 {
-                                    <option>@passEmployee.Name</option>
+                                    <option value="@passEmployee.HashAccount">@passEmployee.Name</option>
                                 }
                             </select>
                         </label>
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" onclick="set();" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal4.1"><i class="bi-search"></i></button>
+                            <button id="button" onclick="set();search_set()" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal4.1"><i class="bi-search"></i></button>
                         </div>
                     </div>
                 </div>
@@ -190,7 +195,7 @@
                                             <tr>
                                                 <td class="rowBorderStart"></td>
                                                 <td class="rowBorderMiddle">
-                                                    <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@pass_employee.Name"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
+                                                    <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@pass_employee.HashAccount"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_employee.Name</a>
                                                 </td>
                                                 <td class="rowBorderMiddle">@pass_employee.Phone</td>
                                                 <td class="rowBorderMiddle">@pass_employee.Department</td>
@@ -330,225 +335,235 @@
 
 @foreach (var pass_employee in passEmployees)
 {
-    using (Html.BeginForm("EditEmployee", "EmployeeData", new { name = pass_employee.Name, id = pass_employee.HashAccount, old_email = pass_employee.Email, old_enabled = pass_employee.Enabled }, FormMethod.Post, new { name = "frm_"+pass_employee.HashAccount , id= "frm_" + pass_employee.HashAccount }))
+    using (Html.BeginForm("EditEmployee", "EmployeeData", new { name = pass_employee.Name, id = pass_employee.HashAccount, old_email = pass_employee.Email, old_enabled = pass_employee.Enabled }, FormMethod.Post, new { name = "frm_" + pass_employee.HashAccount, id = "frm_" + pass_employee.HashAccount }))
     {
-<div class="modal modal-backdrop-bg" id="@pass_employee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;  background-color: rgb(35,35,35,0.7);">
-    <div class="modal-dialog  modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
-                <h5 id="name" name="name" value="@pass_employee.Name" class="modal-title" style="font-size:20px; font-family:Agency FB">@pass_employee.Name</h5>
-                @if (pass_employee.Enabled == true)
-                {
-<div class="badge badge-info" style="margin-left:10px">使用中</div> }
-                    else
-                    {
-<div class="badge badge-danger" style="margin-left:10px">停用</div>}
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <hr size="10" color="#d9d9d9" align="center" width="95%">
-            <div class="modal-body2">
-                <div class="cardA card-primary">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="row" style="margin-top:15px">
-                                <div class="col-12 col-lg-6">
-                                    部門
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    職稱
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8 col-sm-6">
-                                    <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                        @foreach (var department in departments)
-                                        {
-                                            if (department.Name.Equals(pass_employee.Department))
-                                            {
-                    <option selected value="@department.DepartmentId">@department.Name</option> }
-                                            else
-                                            {
-                    <option value="@department.DepartmentId">@department.Name</option>}
-
-                                        }
-                                    </select>
-                                </div>
-
-                                <div class="col-4 col-sm-6">
-                                    <select id="jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                        @foreach (var jobtitle in jobTitles)
-                                        {
-                                            if (jobtitle.Name.Equals(pass_employee.JobTitle))
-                                            {
-                    <option selected value="@jobtitle.JobTitleId">@jobtitle.Name</option> }
-                                            else
-                                            {
-                    <option value="@jobtitle.JobTitleId">@jobtitle.Name</option>}
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin-top:15px">
-                                <div class="col-12 col-lg-6">
-                                    EMAIL
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    電話
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8 col-sm-6">
-                                    <input type="email" class="form-control" id="email" name="email" value="@pass_employee.Email" required autofocus>
-                                </div>
-
-                                <div class="col-4 col-sm-6">
-                                    <input type="text" class="form-control" id="phone" name="phone" value="@pass_employee.Phone">
-                                    <p></p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin-top:15px;margin-bottom:15px">
-                                @if ((managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)) != -1))
-                                {
-                                    if (managers[(managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)))].Enabled == true)
-                                    {
-            <div class="col-12 col-lg-6">
-                <input type="checkbox" id="manager" name="manager" value=true checked>管理者
-            </div> }
-                                    else
-                                    {
-            <div class="col-12 col-lg-6">
-                <input type="checkbox" id="manager" name="manager" value=true>管理者
-            </div> }
-            <div class="col-12 col-lg-6">
-                職務代理人：
-                <select id="agent" name="agent" type="text">
-                    <option value="">請選擇</option>
-                    @foreach (var manager in managers)
-                    {
-                        if (manager.ManagerHash != pass_employee.HashAccount)
+        <div class="modal modal-backdrop-bg" id="@pass_employee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;  background-color: rgb(35,35,35,0.7);">
+            <div class="modal-dialog  modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
+                        <h5 id="name" name="name" value="@pass_employee.Name" class="modal-title" style="font-size:20px; font-family:Agency FB">@pass_employee.Name</h5>
+                        @if (pass_employee.Enabled == true)
                         {
-                            bool isAgent = false;
-                            foreach (var m in managers)
-                            {
-                                if (manager.ManagerHash.Equals(m.AgentHash) && !manager.ManagerHash.Equals(managers[(managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)))].AgentHash))
-                                {
-                                    isAgent = true;
-                                }
-                            }
-                            if (isAgent != true)
-                            {
-                                if (manager.ManagerHash.Equals(managers[(managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)))].AgentHash))
-                                {
-<option value="@manager.ManagerHash" selected>@manager.Name</option> }
-                                    else
-                                    {
-<option value="@manager.ManagerHash">@manager.Name</option>}
-                                }
-                            }
-                        }
-                </select>
-            </div> }
-                                else
-                                {
-            <div class="col-12 col-lg-6">
-                <input type="checkbox" id="manager" name="manager" value=true>管理者
-            </div>
-                                    <div class="col-12 col-lg-6">
-                                        直屬主管：
-                                        <select id="managerhash" name="managerhash" type="text">
-                                            <option value="">請選擇</option>
-                                            @foreach (var pass in all_passEmployees)
-                                            {
-                                                if (pass.HashAccount != pass_employee.HashAccount)
+                            <div class="badge badge-info" style="margin-left:10px">使用中</div> }
+                        else
+                        {
+                            <div class="badge badge-danger" style="margin-left:10px">停用</div>}
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <hr size="10" color="#d9d9d9" align="center" width="95%">
+                    <div class="modal-body2">
+                        <div class="cardA card-primary">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row" style="margin-top:15px">
+                                        <div class="col-12 col-lg-6">
+                                            部門
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            職稱
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-sm-6">
+                                            <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                                                @foreach (var department in departments)
                                                 {
-                                                    if (pass.HashAccount.Equals(pass_employee.ManagerHash))
+                                                    if (department.Name.Equals(pass_employee.Department))
                                                     {
-                    <option value="@pass.HashAccount" selected>@pass.Name</option> }
-                                                    else
-                                                    {
-                    <option value="@pass.HashAccount">@pass.Name</option>}
-
-                                                }
-                                            }
-                                        </select>
-                                    </div>}
-                                @*<div class="col-12 col-lg-6">
-                                        直屬主管：
-                                        <select id="managerhash" name="managerhash" type="text">
-                                            <option value="">請選擇</option>
-                                            @foreach (var pass in all_passEmployees)
-                                            {
-                                                if (pass.HashAccount != pass_employee.HashAccount)
-                                                {
-                                                    if (pass.HashAccount.Equals(pass_employee.ManagerHash))
-                                                    {
-                                                        <option value="@pass.HashAccount" selected>@pass.Name</option>
+                                                        <option selected value="@department.DepartmentId">@department.Name</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@pass.HashAccount">@pass.Name</option>
+                                                        <option value="@department.DepartmentId">@department.Name</option>
                                                     }
 
                                                 }
-                                            }
-                                        </select>
-                                    </div>*@
-                            </div>
-                            <div class="row" style="margin-top:15px;margin-bottom:15px">
-                                @if (pass_employee.Enabled == false)
-                                {
-            <div class="col-12 col-lg-6">
-                <input type="checkbox" id="disable" name="disable" value=true checked>停用帳號
-            </div> }
-                                else
-                                {
-            <div class="col-12 col-lg-6">
-                <input type="checkbox" id="disable" name="disable" value=true>停用帳號
-            </div>}
-                                @if ((managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)) != -1))
-                                {
-            <div class="col-12 col-lg-6">
-                直屬主管：
-                <select id="managerhash" name="managerhash" type="text">
-                    <option value="">請選擇</option>
-                    @foreach (var pass in all_passEmployees)
-                    {
-                        if (pass.HashAccount != pass_employee.HashAccount)
-                        {
-                            if (pass.HashAccount.Equals(pass_employee.ManagerHash))
-                            {
-<option value="@pass.HashAccount" selected>@pass.Name</option> }
-                                else
-                                {
-<option value="@pass.HashAccount">@pass.Name</option>}
+                                            </select>
+                                        </div>
 
-                            }
-                        }
-                </select>
-            </div>}
-                            </div>
+                                        <div class="col-4 col-sm-6">
+                                            <select id="jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                                                @foreach (var jobtitle in jobTitles)
+                                                {
+                                                    if (jobtitle.Name.Equals(pass_employee.JobTitle))
+                                                    {
+                                                        <option selected value="@jobtitle.JobTitleId">@jobtitle.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@jobtitle.JobTitleId">@jobtitle.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top:15px">
+                                        <div class="col-12 col-lg-6">
+                                            EMAIL
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            電話
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-sm-6">
+                                            <input type="email" class="form-control" id="email" name="email" value="@pass_employee.Email" required autofocus>
+                                        </div>
+
+                                        <div class="col-4 col-sm-6">
+                                            <input type="text" class="form-control" id="phone" name="phone" value="@pass_employee.Phone">
+                                            <p></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top:15px;margin-bottom:15px">
+                                        @if ((managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)) != -1))
+                                        {
+                                            if (managers[(managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)))].Enabled == true)
+                                            {
+                                                <div class="col-12 col-lg-6">
+                                                    <input type="checkbox" id="manager" name="manager" value=true checked>管理者
+                                                </div> }
+                                            else
+                                            {
+                                                <div class="col-12 col-lg-6">
+                                                    <input type="checkbox" id="manager" name="manager" value=true>管理者
+                                                </div> }
+                                            <div class="col-12 col-lg-6">
+                                                職務代理人：
+                                                <select id="agent" name="agent" type="text">
+                                                    <option value="">請選擇</option>
+                                                    @foreach (var manager in managers)
+                                                    {
+                                                        if (manager.ManagerHash != pass_employee.HashAccount)
+                                                        {
+                                                            bool isAgent = false;
+                                                            foreach (var m in managers)
+                                                            {
+                                                                if (manager.ManagerHash.Equals(m.AgentHash) && !manager.ManagerHash.Equals(managers[(managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)))].AgentHash))
+                                                                {
+                                                                    isAgent = true;
+                                                                }
+                                                            }
+                                                            if (isAgent != true)
+                                                            {
+                                                                if (manager.ManagerHash.Equals(managers[(managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)))].AgentHash))
+                                                                {
+                                                                    <option value="@manager.ManagerHash" selected>@manager.Name</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@manager.ManagerHash">@manager.Name</option>
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div> }
+                                        else
+                                        {
+                                            <div class="col-12 col-lg-6">
+                                                <input type="checkbox" id="manager" name="manager" value=true>管理者
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                直屬主管：
+                                                <select id="managerhash" name="managerhash" type="text">
+                                                    <option value="">請選擇</option>
+                                                    @foreach (var pass in all_passEmployees)
+                                                    {
+                                                        if (pass.HashAccount != pass_employee.HashAccount)
+                                                        {
+                                                            if (pass.HashAccount.Equals(pass_employee.ManagerHash))
+                                                            {
+                                                                <option value="@pass.HashAccount" selected>@pass.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@pass.HashAccount">@pass.Name</option>
+                                                            }
+
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>}
+                                        @*<div class="col-12 col-lg-6">
+                                                直屬主管：
+                                                <select id="managerhash" name="managerhash" type="text">
+                                                    <option value="">請選擇</option>
+                                                    @foreach (var pass in all_passEmployees)
+                                                    {
+                                                        if (pass.HashAccount != pass_employee.HashAccount)
+                                                        {
+                                                            if (pass.HashAccount.Equals(pass_employee.ManagerHash))
+                                                            {
+                                                                <option value="@pass.HashAccount" selected>@pass.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@pass.HashAccount">@pass.Name</option>
+                                                            }
+
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>*@
+                                    </div>
+                                    <div class="row" style="margin-top:15px;margin-bottom:15px">
+                                        @if (pass_employee.Enabled == false)
+                                        {
+                                            <div class="col-12 col-lg-6">
+                                                <input type="checkbox" id="disable" name="disable" value=true checked>停用帳號
+                                            </div> }
+                                        else
+                                        {
+                                            <div class="col-12 col-lg-6">
+                                                <input type="checkbox" id="disable" name="disable" value=true>停用帳號
+                                            </div>}
+                                        @if ((managers.FindIndex(item => item.ManagerHash.Equals(pass_employee.HashAccount)) != -1))
+                                        {
+                                            <div class="col-12 col-lg-6">
+                                                直屬主管：
+                                                <select id="managerhash" name="managerhash" type="text">
+                                                    <option value="">請選擇</option>
+                                                    @foreach (var pass in all_passEmployees)
+                                                    {
+                                                        if (pass.HashAccount != pass_employee.HashAccount)
+                                                        {
+                                                            if (pass.HashAccount.Equals(pass_employee.ManagerHash))
+                                                            {
+                                                                <option value="@pass.HashAccount" selected>@pass.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@pass.HashAccount">@pass.Name</option>
+                                                            }
+
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>}
+                                    </div>
 
 
-                            <div class="row" style="margin-top:20px">
-                                <div class="col-12 col-lg-12 text-center">
-                                    <button id="Button" onclick="set();load('frm_@pass_employee.HashAccount','exampleModal2.1');" name="Button" type="submit" value="RenewButton" class="btn3 btn3-primary btn3-action"><i class="bi-check-lg"></i></button>
-                                    <button id="Button" name="Button" value="BackButton" type="button" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#DeleteEmployee"><i class="bi-trash-fill"></i></button>
+                                    <div class="row" style="margin-top:20px">
+                                        <div class="col-12 col-lg-12 text-center">
+                                            <button id="btn_@pass_employee.HashAccount" onclick="set();load('#frm_@pass_employee.HashAccount','exampleModal2.1');" name="Button" type="submit" value="RenewButton" class="btn3 btn3-primary btn3-action"><i class="bi-check-lg"></i></button>
+                                            <button id="dbtn_@pass_employee.HashAccount" name="Button" value="BackButton" type="button" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#DeleteEmployee_@pass_employee.HashAccount"><i class="bi-trash-fill"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
                 </div>
             </div>
         </div>
-    </div>
-</div>
     }
 }
 
@@ -557,188 +572,204 @@
     using (Html.BeginForm("SetEmployeeInformation", "EmployeeData", new { id = reviewEmployee.HashAccount, email = reviewEmployee.Email }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-<div class="modal modal-backdrop-bg" id="@reviewEmployee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(35,35,35,0.7); ">
-    <div class="modal-dialog  modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
-                <h5 class="modal-title" id="name" name="name" value="@reviewEmployee.Name" style="font-size:20px; font-family:Agency FB">@reviewEmployee.Name</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <hr size="10" color="#d9d9d9" align="center" width="95%">
-            <div class="modal-body2">
-                <div class="cardA card-primary">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="row" style="margin-top:15px">
-                                <div class="col-12 col-lg-6">
-                                    部門
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    職稱
-                                </div>
-                            </div>
+        <div class="modal modal-backdrop-bg" id="@reviewEmployee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(35,35,35,0.7); ">
+            <div class="modal-dialog  modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
+                        <h5 class="modal-title" id="name" name="name" value="@reviewEmployee.Name" style="font-size:20px; font-family:Agency FB">@reviewEmployee.Name</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <hr size="10" color="#d9d9d9" align="center" width="95%">
+                    <div class="modal-body2">
+                        <div class="cardA card-primary">
                             <div class="row">
-                                <div class="col-8 col-sm-6">
-                                    <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                        @foreach (var department in departments)
-                                        {
-                    <option value="@department.DepartmentId">@department.Name</option>}
-                                    </select>
-                                </div>
+                                <div class="col-12">
+                                    <div class="row" style="margin-top:15px">
+                                        <div class="col-12 col-lg-6">
+                                            部門
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            職稱
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-sm-6">
+                                            <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                                                @foreach (var department in departments)
+                                                {
+                                                    <option value="@department.DepartmentId">@department.Name</option>
+                                                }
+                                            </select>
+                                        </div>
 
-                                <div class="col-4 col-sm-6">
-                                    <select id="jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                        @foreach (var jobtitle in jobTitles)
-                                        {
-                    <option value="@jobtitle.JobTitleId">@jobtitle.Name</option>}
-                                    </select>
-                                </div>
-                            </div>
+                                        <div class="col-4 col-sm-6">
+                                            <select id="jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                                                @foreach (var jobtitle in jobTitles)
+                                                {
+                                                    <option value="@jobtitle.JobTitleId">@jobtitle.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
 
-                            <div class="row" style="margin-top:15px">
-                                <div class="col-12 col-lg-6">
-                                    EMAIL
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    驗證碼(Phone Code)
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8 col-sm-6">
-                                    <input type="text" class="form-control" id="email" name="email" value="@reviewEmployee.Email" readonly="readonly" required autofocus>
-                                </div>
+                                    <div class="row" style="margin-top:15px">
+                                        <div class="col-12 col-lg-6">
+                                            EMAIL
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            驗證碼(Phone Code)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 col-sm-6">
+                                            <input type="text" class="form-control" id="email" name="email" value="@reviewEmployee.Email" readonly="readonly" required autofocus>
+                                        </div>
 
-                                <div class="col-4 col-sm-6">
-                                    <input type="text" class="form-control" id="phone" name="phone" value="@reviewEmployee.PhoneCode " readonly="readonly">
-                                </div>
-                            </div>
-
-
-                            <div class="row" style="margin-top:20px;margin-bottom:20px">
-                                <div class="col-12 col-lg-6">
-                                    <input type="checkbox" id="manager" name="manager" value=true>管理者
-                                </div>
-
-                                <div class="col-12 col-lg-6">
-                                    直屬主管：
-                                    <select id="managerhash" name="managerhash">
-                                        <option value="">請選擇</option>
-                                        @foreach (var pass in passEmployees)
-                                        {
-                    <option value="@pass.HashAccount">@pass.Name</option>}
-                                    </select>
-                                </div>
-                            </div>
+                                        <div class="col-4 col-sm-6">
+                                            <input type="text" class="form-control" id="phone" name="phone" value="@reviewEmployee.PhoneCode " readonly="readonly">
+                                        </div>
+                                    </div>
 
 
-                            <div class="row" style="margin-top:20px">
-                                <div class="col-12 col-lg-12 text-center">
-                                    <button id="Button" onclick="set();" name="Button" type="submit" value="SaveButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal3.1"><i class="bi-check-lg"></i></button>
-                                    <button id="Button" onclick="set();" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal3.2"><i class="bi-x-lg"></i></button>
+                                    <div class="row" style="margin-top:20px;margin-bottom:20px">
+                                        <div class="col-12 col-lg-6">
+                                            <input type="checkbox" id="manager" name="manager" value=true>管理者
+                                        </div>
+
+                                        <div class="col-12 col-lg-6">
+                                            直屬主管：
+                                            <select id="managerhash" name="managerhash">
+                                                <option value="">請選擇</option>
+                                                @foreach (var pass in passEmployees)
+                                                {
+                                                    <option value="@pass.HashAccount">@pass.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row" style="margin-top:20px">
+                                        <div class="col-12 col-lg-12 text-center">
+                                            <button id="Button" onclick="set();" name="Button" type="submit" value="SaveButton" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal3.1"><i class="bi-check-lg"></i></button>
+                                            <button id="Button" onclick="set();" name="Button" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal3.2"><i class="bi-x-lg"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
                 </div>
             </div>
         </div>
-    </div>
-</div>
     }
 }
-<div class="modal modal-backdrop-bg" id="DeleteEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(35,35,35,0.6);">
-    <div class="modal-dialog" role="document" >
-        <div class="modal-content" style="margin-top:150px;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">確定要刪除此帳號?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+
+@foreach (var passEmployee in passEmployees)
+{
+    <div class="modal modal-backdrop-bg" id="DeleteEmployee_@passEmployee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(35,35,35,0.6);">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top:150px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">確定要刪除此帳號?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("DeleteEmployee", "EmployeeData", new { id = passEmployee.HashAccount }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="modal-footer">
+                            <button id="Button" name="Button" value="CloseButton" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <button id="DeleteWorkTimeButton" name="DeleteId" type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal2.1">刪除</button>
+                        </div>
+                    }
+                </div>
             </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("DeleteEmployee", "EmployeeData", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="modal-footer">
-                        <button id="Button" name="Button" value="CloseButton" type="submit" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                        <button id="DeleteWorkTimeButton" name="DeleteId" type="submit" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalload">刪除</button>
+        </div>
+    </div>
+}
+
+    <div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
+                <div class="modal-body" style="padding: 190px 0px 190px 0px; border-radius: 4px;width:100%;">
+                    <div id="CenterSet">
+                        <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
                     </div>
-                }
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
+                <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
+                    <div id="CenterSet">
+                        <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
+                <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
+                    <div id="CenterSet">
+                        <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-backdrop-bg" id="exampleModal4.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+        <div class="modal-dialog">
+            <div class="modal-content modal-dialog-centered">
+                <div class="modal-body" style="padding:
+    100px 0px 100px 0px; border-radius: 4px;width:100%;">
+                    <div id="CenterSet">
+                        <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
-            <div class="modal-body" style="padding: 190px 0px 190px 0px; border-radius: 4px;width:100%;">
-                <div id="CenterSet">
-                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
-            <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
-                <div id="CenterSet">
-                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
-            <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
-                <div id="CenterSet">
-                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal modal-backdrop-bg" id="exampleModal4.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
-    <div class="modal-dialog">
-        <div class="modal-content modal-dialog-centered">
-            <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
-                <div id="CenterSet">
-                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    function set() {
-        sessionStorage.removeItem("toTop");
-        sessionStorage.setItem("toTop", $(window).scrollTop());
-    }
-    function load(values1,values)
-    {
-        var frm = document.forms[values1];
-        
-        //document.getElementsById("phone123").value = values1;
-        if (frm.elements.email.value != null && frm.elements.email.value != "")//確認email有無填寫
-        {
-            var modal = document.getElementById(values);
-            modal.style.display = "block";
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function set() {
+            sessionStorage.removeItem("toTop");
+            sessionStorage.setItem("toTop", $(window).scrollTop());
         }
-    }
-</script>
-<script type="text/javascript">//頁碼
+        function search_set() {
+            var d = document.getElementById("s_department").selectedIndex;
+            var j = document.getElementById("s_jobtitle").selectedIndex;
+            var n = document.getElementById("s_employee_name").selectedIndex;
+            
+            sessionStorage.removeItem("search_department");
+            sessionStorage.setItem("search_department", d);
+            sessionStorage.removeItem("search_jobtitle");
+            sessionStorage.setItem("search_jobtitle", j);
+            sessionStorage.removeItem("search_name");
+            sessionStorage.setItem("search_name", n);
+        }
+        function load(values1, values) {
+            $(values1).submit(function () {
+                var modal = document.getElementById(values);
+                modal.style.display = "block";
+            });
+        }
+    </script>
+    <script type="text/javascript">
+//頁碼
     var theTable = document.getElementById("tablePage");
     var spanPre = document.getElementById("spanPre");
     var spanNext = document.getElementById("spanNext");
@@ -958,8 +989,8 @@
     }
 
     hide();
-</script>
-<script type="text/javascript">
+    </script>
+    <script type="text/javascript">
 
         @*var itemA = '<%=@foreach(var pass_employee in passEmployees) { @pass_employee.HashAccount} %>'*@
 
@@ -971,4 +1002,4 @@
             modal.find('.modal-body input').val(recipient)
         })
 
-</script>
+    </script>

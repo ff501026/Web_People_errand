@@ -10,6 +10,8 @@
 }
 <script type="text/javascript">
     window.onload = function () {
+        document.getElementById("date").value = sessionStorage.getItem("search_date");
+        document.getElementById("employee_name").value = sessionStorage.getItem("search_name");
         var _offset = sessionStorage.getItem("toTop");
         $(document).scrollTop(_offset);
         sessionStorage.clear();
@@ -73,7 +75,7 @@
                                                                     <div class="row" style="margin-top:10px">
                                                                         <div class="col-12">
                                                                             <nobr style="margin:0px 20px 0px 0px;">申請人</nobr>
-                                                                            <img src="~/Content/images/avatar.png"  style="margin:0px 0px 0px 10px;" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name
+                                                                            <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@review_leaverecord.HashAccount"><img src="~/Content/images/avatar.png" style="margin:0px 0px 0px 10px;" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name</a>
                                                                         </div>
                                                                     </div>
 
@@ -145,7 +147,7 @@
                                                                     
                         <div class="search-element" style="margin:22px 0px 0px 0px;">
                                                                     
-                            <button id="button" name="button" onclick="set();" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
+                            <button id="button" name="button" onclick="set(); search_set();" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
                                                                     
                         </div>
                                                                     
@@ -180,7 +182,7 @@
                                         {
                                             <tr>
                                                 <td class="rowBorderStart">
-                                                    <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@pass_leaverecord.Name"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_leaverecord.Name</a>
+                                                    <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@pass_leaverecord.HashAccount"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@pass_leaverecord.Name</a>
                                                 </td>
                                                 <td class="rowBorderMiddle">@pass_leaverecord.LeaveType</td>
                                                 <td class="rowBorderMiddle">@pass_leaverecord.StartDate</td>
@@ -304,6 +306,17 @@
     function set() {
         sessionStorage.removeItem("toTop");
         sessionStorage.setItem("toTop", $(window).scrollTop());
+    }
+</script>
+<script type="text/javascript">
+    function search_set() {
+        var d = document.getElementById("date").value;
+        var n = document.getElementById("employee_name").value;
+
+        sessionStorage.removeItem("search_date");
+        sessionStorage.setItem("search_date", d);
+        sessionStorage.removeItem("search_name");
+        sessionStorage.setItem("search_name", n);
     }
 </script>
 <script type="text/javascript">

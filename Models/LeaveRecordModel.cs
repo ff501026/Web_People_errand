@@ -69,10 +69,8 @@ namespace AttendanceManagement.Models
 
             return pass_leaverecord;
         }
-        public static async Task<List<LeaveRecord>> Search_LeaveRecord2(string company_hash, DateTime? date, string name)//兩條件篩選
+        public static async Task<List<LeaveRecord>> Search_LeaveRecord2(List<LeaveRecord> all_pass_leaverecord, string company_hash, DateTime? date, string name)//兩條件篩選
         {
-            //輸入公司代碼取得已審核公出申請紀錄
-            List<LeaveRecord> all_pass_leaverecord = await Get_PassLeaveRecord(company_hash);
             List<LeaveRecord> search_LeaveRecord = new List<LeaveRecord>();
             for (int index = 0; index < all_pass_leaverecord.Count; index++)
             {
@@ -82,10 +80,8 @@ namespace AttendanceManagement.Models
 
             return search_LeaveRecord;
         }//兩條件篩選
-        public static async Task<List<LeaveRecord>> Search_LeaveRecord1(string company_hash, DateTime? date, string name)//一條件篩選
+        public static async Task<List<LeaveRecord>> Search_LeaveRecord1(List<LeaveRecord> all_pass_leaverecord, string company_hash, DateTime? date, string name)//一條件篩選
         {
-            //輸入公司代碼取得已審核公出申請紀錄
-            List<LeaveRecord> all_pass_leaverecord = await PassLeaveRecordModel.Get_PassLeaveRecord(company_hash);
             List<LeaveRecord> search_LeaveRecord = new List<LeaveRecord>();
             for (int index = 0; index < all_pass_leaverecord.Count; index++)
             {

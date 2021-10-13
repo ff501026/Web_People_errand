@@ -17,6 +17,11 @@
 }
 <script type="text/javascript">
     window.onload = function () {
+        document.getElementById("date").value = sessionStorage.getItem("search_date");
+        document.getElementById("employee_name").value = sessionStorage.getItem("search_name");
+        var _offset = sessionStorage.getItem("toTop");
+        $(document).scrollTop(_offset);
+        sessionStorage.clear();
        if (@num1 < 10)
         {
            nextOff();
@@ -48,7 +53,7 @@
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
+                            <button id="button" onclick="search_set();set();" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
                         </div>
                     </div>
                 </div>
@@ -125,7 +130,7 @@
 
                                                 </td>
                                                 <td class="rowBorderMiddle">
-                                                    <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@work_record[i].Name"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
+                                                    <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@work_record[i].HashAccount"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
                                                 </td>
                                                 <td class="rowBorderMiddle">@work_record[i].WorkTime</td>
                                                 <td class="rowBorderMiddle">@work_record[i].RestTime</td>
@@ -392,6 +397,17 @@
 </div>
 <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function search_set() {
+        var d = document.getElementById("date").value;
+        var n = document.getElementById("employee_name").value;
+
+        sessionStorage.removeItem("search_date");
+        sessionStorage.setItem("search_date", d);
+        sessionStorage.removeItem("search_name");
+        sessionStorage.setItem("search_name", n);
+    }
+</script>
 <script type="text/javascript">
     var theTable = document.getElementById("tablePage");
     var spanPre = document.getElementById("spanPre");

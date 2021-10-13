@@ -129,44 +129,38 @@ namespace AttendanceManagement.Models
 
             return false;
         }
-        public static async Task<List<PassEmployee>> SearchEmployees3(string company_hash,string department,string jobtitle ,string name)//三條件篩選
+        public static async Task<List<PassEmployee>> SearchEmployees3(List<PassEmployee> passEmployees, string company_hash,string department,string jobtitle ,string name)//三條件篩選
         {
-            //輸入公司代碼取得已審核資料
-            List<PassEmployee> passEmployees = await PassEmployees(company_hash);
             List<PassEmployee> searchEmployee = new List<PassEmployee>();
             for(int index = 0;index < passEmployees.Count; index++) 
             {
-                if (passEmployees[index].Name.Equals(name) && passEmployees[index].Department.Equals(department) && passEmployees[index].JobTitle.Equals(jobtitle))
+                if (passEmployees[index].HashAccount.Equals(name) && passEmployees[index].Department.Equals(department) && passEmployees[index].JobTitle.Equals(jobtitle))
                     searchEmployee.Add(ListAddSearch(passEmployees,index));
             }
            
             return searchEmployee;
         }//三條件篩選
-        public static async Task<List<PassEmployee>> SearchEmployees2(string company_hash, string department, string jobtitle, string name)//兩條件篩選
+        public static async Task<List<PassEmployee>> SearchEmployees2(List<PassEmployee> passEmployees, string company_hash, string department, string jobtitle, string name)//兩條件篩選
         {
-            //輸入公司代碼取得已審核資料
-            List<PassEmployee> passEmployees = await PassEmployees(company_hash);
             List<PassEmployee> searchEmployee = new List<PassEmployee>();
             for (int index = 0; index < passEmployees.Count; index++)
             {
-                if (passEmployees[index].Name.Equals(name) && passEmployees[index].Department.Equals(department))
+                if (passEmployees[index].HashAccount.Equals(name) && passEmployees[index].Department.Equals(department))
                     searchEmployee.Add(ListAddSearch(passEmployees, index));
                 else if (passEmployees[index].Department.Equals(department) && passEmployees[index].JobTitle.Equals(jobtitle))
                     searchEmployee.Add(ListAddSearch(passEmployees, index));
-                else if (passEmployees[index].Name.Equals(name) && passEmployees[index].JobTitle.Equals(jobtitle))
+                else if (passEmployees[index].HashAccount.Equals(name) && passEmployees[index].JobTitle.Equals(jobtitle))
                     searchEmployee.Add(ListAddSearch(passEmployees, index));
             }
 
             return searchEmployee;
         }//兩條件篩選
-        public static async Task<List<PassEmployee>> SearchEmployees1(string company_hash, string department, string jobtitle, string name)//一條件篩選
+        public static async Task<List<PassEmployee>> SearchEmployees1(List<PassEmployee> passEmployees,string company_hash, string department, string jobtitle, string name)//一條件篩選
         {
-            //輸入公司代碼取得已審核資料
-            List<PassEmployee> passEmployees = await PassEmployees(company_hash);
             List<PassEmployee> searchEmployee = new List<PassEmployee>();
             for (int index = 0; index < passEmployees.Count; index++)
             {
-                    if (passEmployees[index].Name.Equals(name) || passEmployees[index].Department.Equals(department) || passEmployees[index].JobTitle.Equals(jobtitle))
+                    if (passEmployees[index].HashAccount.Equals(name) || passEmployees[index].Department.Equals(department) || passEmployees[index].JobTitle.Equals(jobtitle))
                     searchEmployee.Add(ListAddSearch(passEmployees, index));
             }
 

@@ -27,7 +27,7 @@
                             "<li class='root id='OrganizationContent'>" +
                               $"<div id='O_top' class='d-flex' data-toggle='collapse' data-target='.multi-collapse' aria-expanded='false' aria-controls='{aria_controls(organization.HashAccount)}' >" +
                                     "<div class='mr-auto p-2' style='text-align:center'>" +
-                                        $"<p>{organization.Name}</p>" +
+                                        $"<a href='/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name={organization.HashAccount}'><p>{organization.Name}</p></a>" +
                                     "</div>" +
                                     "<div class='p-2'>" +
                                         $"<p>{organization.Department}</p>" +
@@ -53,7 +53,7 @@
                                         $"<div data-toggle='collapse' data-target='.multi - collapse' aria-expanded='false' aria-controls='{aria_controls(organization.HashAccount)}'>" +
                                             "<div class='d-flex' id='O_member'>" +
                                                     "<div class='mr-auto p-2'>" +
-                                                        $"<p>{organization.Name}</p>" +
+                                                        $"<a href='/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name={organization.HashAccount}'><p>{organization.Name}</p></a>" +
                                                     "</div>" +
                                                     "<div class='p-2'>" +
                                                         $"<p>{organization.Department}</p>" +
@@ -73,6 +73,9 @@
 <style>
     p{
         font-size:16px;
+    }
+    a {
+        color: #212529;
     }
 </style>
 <div class="main-content">

@@ -5,7 +5,6 @@
     List<AttendanceManagement.Models.Trip2Record> Trip2Records = ViewBag.trip2record;//公出資料2
     List<AttendanceManagement.Models.DetailTrip2Record> DetailTrip2Records = ViewBag.detailtrip2record;//公出資料2
 
-
     int review_num = 0;//待審核公出資料編號
     int pass_num = 0;//已審核公出資料編號
     int num1 = Trip2Records.Count == 0 ? 1 : Trip2Records.Count;
@@ -16,6 +15,9 @@
 
 <script type="text/javascript">
     window.onload = function () {
+        document.getElementById("date").value = sessionStorage.getItem("search_date");
+        document.getElementById("employee_name").value = sessionStorage.getItem("search_name");
+        sessionStorage.clear();
        if (@num1 < 10)
         {
            nextOff();
@@ -97,7 +99,7 @@
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search" ></i></button>
+                            <button id="button" name="button" onclick="search_set();" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search" ></i></button>
                         </div>
                     </div>
                 </div>
@@ -147,7 +149,7 @@
                         }
                                                 *@
 
-                                                <td class="rowBorderMiddle"><a href="#"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@trip2record.Name</td>
+                                                <td class="rowBorderMiddle"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@trip2record.Name</td>
                                                 <td class="rowBorderMiddle">@trip2record.StartTime</td>
                                                 <td class="rowBorderEnd">@trip2record.EndTime</td>
 
@@ -256,7 +258,7 @@
                 <div class="modal-body2">
                     @foreach (var detailtrip2record in DetailTrip2Records)
                     {
-                        if (trip2record.GroupId == @detailtrip2record.GroupId)
+                        if (trip2record.GroupId == detailtrip2record.GroupId)
                         {
                             <div class="cardA card-primary">
                                 <div class="row">
@@ -400,6 +402,17 @@
         })
 
 </script>*@
+<script type="text/javascript">
+    function search_set() {
+        var d = document.getElementById("date").value;
+        var n = document.getElementById("employee_name").value;
+
+        sessionStorage.removeItem("search_date");
+        sessionStorage.setItem("search_date", d);
+        sessionStorage.removeItem("search_name");
+        sessionStorage.setItem("search_name", n);
+    }
+</script>
 <script type="text/javascript">
     var theTable = document.getElementById("tablePage");
     var spanPre = document.getElementById("spanPre");

@@ -177,10 +177,8 @@ namespace AttendanceManagement.Models
             return detailtrip2record;
         }
 
-        public static async Task<List<Trip2Record>> Search_Trip2Record2(string company_hash, DateTime? date, string name)//兩條件篩選
+        public static async Task<List<Trip2Record>> Search_Trip2Record2(List<Trip2Record> all_trip2record, string company_hash, DateTime? date, string name)//兩條件篩選
         {
-            //輸入公司代碼取得已審核公出申請紀錄
-            List<Trip2Record> all_trip2record = await Get_Trip2Record(company_hash);
             List<Trip2Record> search_Trip2Record = new List<Trip2Record>();
             for (int index = 0; index < all_trip2record.Count; index++)
             {
@@ -190,10 +188,8 @@ namespace AttendanceManagement.Models
 
             return search_Trip2Record;
         }//兩條件篩選
-        public static async Task<List<Trip2Record>> Search_Trip2Record1(string company_hash, DateTime? date, string name)//一條件篩選
+        public static async Task<List<Trip2Record>> Search_Trip2Record1(List<Trip2Record> all_trip2record, string company_hash, DateTime? date, string name)//一條件篩選
         {
-            //輸入公司代碼取得已審核公出申請紀錄
-            List<Trip2Record> all_trip2record = await Get_Trip2Record(company_hash);
             List<Trip2Record> search_Trip2Record = new List<Trip2Record>();
             for (int index = 0; index < all_trip2record.Count; index++)
             {

@@ -45,10 +45,8 @@ namespace AttendanceManagement.Models
             List<Work_Record> employee_workrecrd = JsonConvert.DeserializeObject<List<Work_Record>>(GetResponse);
             return employee_workrecrd;
         }
-        public static async Task<List<Work_Record>> Search_WorkRecord2(string company_hash, DateTime? date, string name)//兩條件篩選
+        public static async Task<List<Work_Record>> Search_WorkRecord2(List<Work_Record> all_work_Records, string company_hash, DateTime? date, string name)//兩條件篩選
         {
-            //輸入公司代碼取得打卡紀錄
-            List<Work_Record> all_work_Records = await StaffModel.Get_WorkRecordAsync(company_hash);
             List<Work_Record> searchWork_Record = new List<Work_Record>();
             for (int index = 0; index < all_work_Records.Count; index++)
             {
@@ -58,10 +56,8 @@ namespace AttendanceManagement.Models
 
             return searchWork_Record;
         }//兩條件篩選
-        public static async Task<List<Work_Record>> Search_WorkRecord1(string company_hash, DateTime? date, string name)//一條件篩選
+        public static async Task<List<Work_Record>> Search_WorkRecord1(List<Work_Record> all_work_Records, string company_hash, DateTime? date, string name)//一條件篩選
         {
-            //輸入公司代碼取得打卡紀錄
-            List<Work_Record> all_work_Records = await StaffModel.Get_WorkRecordAsync(company_hash);
             List<Work_Record> searchWork_Record = new List<Work_Record>();
             for (int index = 0; index < all_work_Records.Count; index++)
             {
@@ -76,6 +72,7 @@ namespace AttendanceManagement.Models
         {
             Work_Record search = new Work_Record()
             {
+                HashAccount = work_Records[index].HashAccount,
                 Num = work_Records[index].Num,//編號
                 Name = work_Records[index].Name,//員工姓名
                 WorkTime = work_Records[index].WorkTime,//上班紀錄

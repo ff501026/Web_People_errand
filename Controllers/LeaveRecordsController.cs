@@ -198,12 +198,63 @@ namespace AttendanceManagement.Controllers
             List<LeaveRecord> pass_leaverecord = await PassLeaveRecordModel.Get_PassLeaveRecord(Session["company_hash"].ToString());
             //放入篩選後的已審核資料
             List<LeaveRecord> search_leaverecord = new List<LeaveRecord>();
+            //取得權限
+            List<ManagerPermissions> managerPermissions = await CompanyManagerPermissionsModel.Get_ManagerPermissions(Session["company_hash"].ToString());
 
+            if (Session["hash_account"] != null)
+            {
+                //輸入公司取得全部的管理員
+                List<Manager> managers = await CompanyManagerModel.GetAllManager(Session["company_hash"].ToString());
+                int index = managers.FindIndex(item => item.ManagerHash.Equals(Session["hash_account"].ToString()));
+
+                review_leaverecord = await ReviewLeaveRecordModel.Manager_Get_ReviewLeaveRecord(Session["company_hash"].ToString(), Session["hash_account"].ToString());
+
+                if (managers[index].PermissionsId == null) { }
+                else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[index].PermissionsId)].EmployeeDisplay == 1) { }
+                else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[index].PermissionsId)].EmployeeDisplay == 2)
+                {
+                    pass_leaverecord = await PassLeaveRecordModel.Manager_Get_PassLeaveRecord2(Session["hash_account"].ToString());
+                }
+                else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[index].PermissionsId)].EmployeeDisplay == 3)
+                {
+                    pass_leaverecord = await PassLeaveRecordModel.Manager_Get_PassLeaveRecord3(Session["hash_account"].ToString());
+                }
+                else
+                {
+                    if (await CompanyManagerPermissionsModel.Manager_Bool_Agent(Session["hash_account"].ToString()))
+                    {
+                        int bossindex = managers.FindIndex(item => item.AgentHash.Equals(Session["hash_account"].ToString()));
+
+                        review_leaverecord = await ReviewLeaveRecordModel.Manager_Get_ReviewLeaveRecord(Session["company_hash"].ToString(), managers[bossindex].ManagerHash);
+
+                        if (managers[bossindex].PermissionsId == null) { }
+                        else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[bossindex].PermissionsId)].EmployeeDisplay == 1) { }
+                        else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[bossindex].PermissionsId)].EmployeeDisplay == 2)
+                        {
+                            pass_leaverecord = await PassLeaveRecordModel.Manager_Get_PassLeaveRecord2(managers[bossindex].ManagerHash);
+                        }
+                        else if (managerPermissions[managerPermissions.FindIndex(item => item.PermissionsId == managers[bossindex].PermissionsId)].EmployeeDisplay == 3)
+                        {
+                            pass_leaverecord = await PassLeaveRecordModel.Manager_Get_PassLeaveRecord3(managers[bossindex].ManagerHash);
+                        }
+                        else
+                        {
+                            pass_leaverecord = await PassLeaveRecordModel.Get_PassLeaveRecord("n");
+                        }
+                    }
+                    else
+                    {
+                        pass_leaverecord = await PassLeaveRecordModel.Get_PassLeaveRecord("n");
+                    }
+
+                }
+
+            }
             if (date.Equals(null) && employee_name.Equals(""))//沒有輸入篩選條件就按搜尋，顯示全部資料
                 return RedirectToAction("index");
             else if (!date.Equals(null) && !employee_name.Equals(""))//兩個篩選條件都輸入
-                search_leaverecord = await PassLeaveRecordModel.Search_LeaveRecord2(Session["company_hash"].ToString(), date, employee_name);
-            else search_leaverecord = await PassLeaveRecordModel.Search_LeaveRecord1(Session["company_hash"].ToString(), date, employee_name);//只輸入一個篩選條件
+                search_leaverecord = await PassLeaveRecordModel.Search_LeaveRecord2(pass_leaverecord, Session["company_hash"].ToString(), date, employee_name);
+            else search_leaverecord = await PassLeaveRecordModel.Search_LeaveRecord1(pass_leaverecord, Session["company_hash"].ToString(), date, employee_name);//只輸入一個篩選條件
 
             ViewBag.review_leaverecord = review_leaverecord;//待審核請假申請紀錄
             ViewBag.pass_leaverecord = search_leaverecord;//待審核請假申請紀錄

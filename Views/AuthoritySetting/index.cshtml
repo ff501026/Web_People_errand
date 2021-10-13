@@ -206,6 +206,107 @@
                                                 <div class="live__scroll">
                                                     <div class="row">
                                                         <div class="row d-flex flex-row flex-nowrap">
+                                                            <div class="col-md-6 mb-4">
+                                                                <div class="card-body " style="padding-right:0px">
+                                                                    <div class="col-12">
+
+                                                                        <div class="card col-12" style="border: 2px solid #CCC; border-radius: 4px;box-shadow:none;display:inline-block;">
+                                                                                <div class="card-header" style="padding:0px 35px 0px 35px">
+                                                                                    <div class="row" style="padding:0px 0px 0px 0px">
+                                                                                        <div class="col-10" style="padding-top:10px;padding-right:0px">
+                                                                                            <div class="form-group">
+                                                                                                <div class="row align-items-center">
+                                                                                                    <div class="col-md-2" style="padding:0;display:inline-block;" id="CenterSet">
+                                                                                                        <h4 id="Content" style="margin-right:5px">群組名 : </h4>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-9" style="padding-left: 0;padding-right:0; display: inline-block;" id="CenterSet">
+                                                                                                        <input value="預設" type="text" class="show" id="department_name" name="name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px;" disabled readonly="readonly">
+                                                                                                    </div>
+                                                                                                    <div class="col-2 " style="display: inline-block;" id="CenterSet">
+                                                                                                    </div>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <hr style="margin: 0px 35px 5px 35px" />
+                                                                                <div style="height: 320px; overflow-y: auto;overflow-x:hidden;">
+                                                                                    <div class="card-body" style="margin: 0 auto;">
+                                                                                        <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                                                                            <div class="row">
+                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
+                                                                                                    <h5 style="font-size:14px;text-align:start;">資料顯示對象</h5>
+                                                                                                </div>
+                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" disabled  style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
+                                                                                                                <option selected value="1">全部</option>
+                                                                                                                <option value="2">直屬員工</option>
+                                                                                                                <option value="3">自訂</option>
+                                                                                                                <option value="4">無</option>
+
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            
+                                                                                            <div class="row">
+                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
+                                                                                                    <h5 id="Content" style="font-size:14px;text-align:start;">可審核對象</h5>
+                                                                                                </div>
+                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" disabled  name="employee_review" style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
+                                                                                                                <option selected value="1">全部</option>
+                                                                                                                <option value="2">直屬員工</option>
+                                                                                                                <option value="3">自訂</option>
+                                                                                                                <option value="4">無</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            
+                                                                                            <div class="row">
+                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
+                                                                                                    <h5 style="font-size:14px;text-align: start;">上下班時間設定</h5>
+                                                                                                </div>
+                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_worktime" disabled >
+                                                                                                            <option selected value="true">可編輯</option>
+                                                                                                            <option value="false">不可編輯</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row">
+                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
+                                                                                                    <h5 style="font-size: 14px; text-align: start;">部門與職稱設定</h5>
+                                                                                                </div>
+                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_department_jobtitle" disabled >
+                                                                                                            <option selected value="true">可編輯</option>
+                                                                                                            <option value="false">不可編輯</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="row">
+                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
+                                                                                                    <h5 id="Content" style="font-size: 14px; text-align: start;">打卡位置設定</h5>
+                                                                                                </div>
+                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_location" disabled >
+                                                                                                            <option selected value="true">可編輯</option>
+                                                                                                            <option value="false">不可編輯</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <hr style="margin: 15px 0px 15px 0px" />
+                                                                                            <div class="col align-self-center" style="margin:0 auto;text-align:center">
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             @foreach (var managerPermission in managerPermissions)
                                                             {
                                                                 <div class="col-md-6 mb-4">

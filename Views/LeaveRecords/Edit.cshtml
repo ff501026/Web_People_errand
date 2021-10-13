@@ -22,7 +22,7 @@
                                 <div class="row" style="margin-bottom:20px">
                                     <div class="col-lg-auto col-md-6 col-12">
                                         <label for="#">申請人：</label>
-                                        <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@leaveRecords[num].Name">@leaveRecords[num].Name</a>
+                                        <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@leaveRecords[num].HashAccount">@leaveRecords[num].Name</a>
                                     </div>
                                     @*
                                     <div class="col-lg-auto col-md-6 col-12">
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <label for="#">事由</label>
-                                        <input id="reason" type="email" class="form-control" name="reason" value=@leaveRecords[num].Reason tabindex="1" placeholder="請輸入事由" required autofocus disabled="disabled">
+                                        <input id="reason" type="email" class="form-control" name="reason" value="@leaveRecords[num].Reason" tabindex="1" placeholder="請輸入事由" required autofocus disabled="disabled">
                                     </div>
                                 </div>
 
