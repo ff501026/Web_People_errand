@@ -13,7 +13,7 @@ namespace AttendanceManagement.Models
 {
     class StaffModel : HttpResponse
     {
-        public static async Task<List<Work_Record>> Get_WorkRecordAsync(string company_hash)
+        public static async Task<List<Detail_WorkRecord>> Get_WorkRecordAsync(string company_hash)
         {
             //連上WebAPI
             response = await client.GetAsync(url + CompanyGetWorkRecord + company_hash);
@@ -21,10 +21,132 @@ namespace AttendanceManagement.Models
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
             List<Work_Record> employee_workrecrd = JsonConvert.DeserializeObject<List<Work_Record>>(GetResponse);
-            return employee_workrecrd;
+
+            //取得公司一般上下班時間(新版)
+            List<EmployeeGeneralWorktime> GeneralWorktime = await CompanyWorkTimeModel.Get_GeneralWorktime(company_hash);
+            //取得公司彈性上下班時間(新版)
+            List<EmployeeFlexibleWorktime> FlexibleWorktime = await CompanyWorkTimeModel.Get_FlexibleWorktime(company_hash);
+            //輸入公司代碼取得全部的已審核資料
+            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);
+            List<Detail_WorkRecord> detail_WorkRecords = new List<Detail_WorkRecord>();
+            int num = 0;
+            foreach (var work in employee_workrecrd)
+            {
+                num++;
+            }
+
+            for (int i = 0; i < num; i++)
+            {
+                string islate = "";
+                string state = "";
+                int index = passEmployees.FindIndex(t => t.HashAccount.Equals(employee_workrecrd[i].HashAccount));
+                if (passEmployees[index].WorktimeId != null && passEmployees[index].WorktimeId != "0")
+                {
+                    int g_index = GeneralWorktime.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));
+                    int f_index = FlexibleWorktime.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));
+                    if (passEmployees[index].WorktimeId.Substring(0, 1) == "G")
+                    {
+                        TimeSpan dt2 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        TimeSpan dt = TimeSpan.Parse(employee_workrecrd[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
+                        TimeSpan hour = new TimeSpan();//公司規定的上班時數
+                        if (GeneralWorktime[g_index].RestTime > GeneralWorktime[g_index].WorkTime)
+                        {
+                            hour = GeneralWorktime[g_index].RestTime - GeneralWorktime[g_index].WorkTime; //公司規定的上班時數
+                        }
+                        else
+                        {
+                            hour = GeneralWorktime[g_index].WorkTime - GeneralWorktime[g_index].RestTime; //公司規定的上班時數
+                        }
+                        TimeSpan ts = employee_workrecrd[i].RestTime.Subtract(employee_workrecrd[i].WorkTime); //員工打卡的上班時數
+                        TimeSpan time = new TimeSpan(1, 0, 0);//一小時
+
+
+                        if (ts > hour + time)//員工的上班時數大於規定的上班時數
+                        {
+                            state = "異常";
+                        }
+                        else if (dt < GeneralWorktime[g_index].RestTime)//員工的下班時間比規定的下班時間早
+                        {
+                            state = "早退";
+                        }
+                        else if (ts < hour)//員工的上班時數比規定的上班時數小
+                        {
+                            state = "早退";
+                        }
+                        else
+                        {
+                            state = "正常";
+                        }
+                        TimeSpan dt3 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        if (TimeSpan.Compare(GeneralWorktime[g_index].WorkTime, dt3) > 0)
+                        {
+                            islate = "準時";
+                        }
+                        else
+                        {
+                            islate = "遲到";
+                        }
+                    }
+                    else if (passEmployees[index].WorktimeId.Substring(0, 1) == "F")
+                    {
+                        TimeSpan dt3 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        TimeSpan dt = TimeSpan.Parse(employee_workrecrd[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
+                        if (dt > FlexibleWorktime[f_index].RestTimeEnd)//員工的下班時間比規定的下班時間晚
+                        {
+                            state = "異常";
+                        }
+                        else if (dt < FlexibleWorktime[f_index].RestTimeStart)//員工的下班時間比規定的下班時間早
+                        {
+                            state = "早退";
+                        }
+                        else
+                        {
+                            state = "正常";
+                        }
+                        TimeSpan dt4 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        if (TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeStart, FlexibleWorktime[f_index].WorkTimeEnd) > 0)
+                        {
+                            if (TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeStart, dt4) < 0 || TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeEnd, dt3) > 0)
+                            {
+                                islate = "準時";
+                            }
+                            else
+                            {
+                                islate = "遲到";
+                            }
+                        }
+                        else
+                        {
+                            if (TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeStart, dt4) < 0 && TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeEnd, dt3) > 0)
+                            {
+                                islate = "準時";
+                            }
+                            else
+                            {
+                                islate = "遲到";
+                            }
+                        }
+
+                    }
+                }
+                Detail_WorkRecord search = new Detail_WorkRecord()
+                {
+                    HashAccount = employee_workrecrd[i].HashAccount,
+                    Num = employee_workrecrd[i].Num,//編號
+                    Name = employee_workrecrd[i].Name,//員工姓名
+                    WorkTime = employee_workrecrd[i].WorkTime,//上班紀錄
+                    RestTime = employee_workrecrd[i].RestTime,//下班紀錄
+                    isLate = islate,//是否遲到
+                    state = state//下班狀態
+
+                };
+                detail_WorkRecords.Add(search);
+            }
+
+            return detail_WorkRecords;
         }
 
-        public static async Task<List<Work_Record>> Manager_Get_WorkRecordAsync2(string hash_account)
+        public static async Task<List<Detail_WorkRecord>> Manager_Get_WorkRecordAsync2(string hash_account, string company_hash)
         {
             //連上WebAPI
             response = await client.GetAsync(url + ManagerGetWorkRecord2 + hash_account);
@@ -32,10 +154,131 @@ namespace AttendanceManagement.Models
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
             List<Work_Record> employee_workrecrd = JsonConvert.DeserializeObject<List<Work_Record>>(GetResponse);
-            return employee_workrecrd;
+            //取得公司一般上下班時間(新版)
+            List<EmployeeGeneralWorktime> GeneralWorktime = await CompanyWorkTimeModel.Get_GeneralWorktime(company_hash);
+            //取得公司彈性上下班時間(新版)
+            List<EmployeeFlexibleWorktime> FlexibleWorktime = await CompanyWorkTimeModel.Get_FlexibleWorktime(company_hash);
+            //輸入公司代碼取得全部的已審核資料
+            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);
+            List<Detail_WorkRecord> detail_WorkRecords = new List<Detail_WorkRecord>();
+            int num = 0;
+            foreach (var work in employee_workrecrd)
+            {
+                num++;
+            }
+
+            for (int i = 0; i < num; i++)
+            {
+                string islate = "";
+                string state = "";
+                int index = passEmployees.FindIndex(t => t.HashAccount.Equals(employee_workrecrd[i].HashAccount));
+                if (passEmployees[index].WorktimeId != null && passEmployees[index].WorktimeId != "0")
+                {
+                    int g_index = GeneralWorktime.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));
+                    int f_index = FlexibleWorktime.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));
+                    if (passEmployees[index].WorktimeId.Substring(0, 1) == "G")
+                    {
+                        TimeSpan dt2 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        TimeSpan dt = TimeSpan.Parse(employee_workrecrd[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
+                        TimeSpan hour = new TimeSpan();//公司規定的上班時數
+                        if (GeneralWorktime[g_index].RestTime > GeneralWorktime[g_index].WorkTime)
+                        {
+                            hour = GeneralWorktime[g_index].RestTime - GeneralWorktime[g_index].WorkTime; //公司規定的上班時數
+                        }
+                        else
+                        {
+                            hour = GeneralWorktime[g_index].WorkTime - GeneralWorktime[g_index].RestTime; //公司規定的上班時數
+                        }
+                        TimeSpan ts = employee_workrecrd[i].RestTime.Subtract(employee_workrecrd[i].WorkTime); //員工打卡的上班時數
+                        TimeSpan time = new TimeSpan(1, 0, 0);//一小時
+
+
+                        if (ts > hour + time)//員工的上班時數大於規定的上班時數
+                        {
+                            state = "異常";
+                        }
+                        else if (dt < GeneralWorktime[g_index].RestTime)//員工的下班時間比規定的下班時間早
+                        {
+                            state = "早退";
+                        }
+                        else if (ts < hour)//員工的上班時數比規定的上班時數小
+                        {
+                            state = "早退";
+                        }
+                        else
+                        {
+                            state = "正常";
+                        }
+                        TimeSpan dt3 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        if (TimeSpan.Compare(GeneralWorktime[g_index].WorkTime, dt3) > 0)
+                        {
+                            islate = "準時";
+                        }
+                        else
+                        {
+                            islate = "遲到";
+                        }
+                    }
+                    else if (passEmployees[index].WorktimeId.Substring(0, 1) == "F")
+                    {
+                        TimeSpan dt3 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        TimeSpan dt = TimeSpan.Parse(employee_workrecrd[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
+                        if (dt > FlexibleWorktime[f_index].RestTimeEnd)//員工的下班時間比規定的下班時間晚
+                        {
+                            state = "異常";
+                        }
+                        else if (dt < FlexibleWorktime[f_index].RestTimeStart)//員工的下班時間比規定的下班時間早
+                        {
+                            state = "早退";
+                        }
+                        else
+                        {
+                            state = "正常";
+                        }
+                        TimeSpan dt4 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        if (TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeStart, FlexibleWorktime[f_index].WorkTimeEnd) > 0)
+                        {
+                            if (TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeStart, dt4) < 0 || TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeEnd, dt3) > 0)
+                            {
+                                islate = "準時";
+                            }
+                            else
+                            {
+                                islate = "遲到";
+                            }
+                        }
+                        else
+                        {
+                            if (TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeStart, dt4) < 0 && TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeEnd, dt3) > 0)
+                            {
+                                islate = "準時";
+                            }
+                            else
+                            {
+                                islate = "遲到";
+                            }
+                        }
+
+                    }
+                }
+                Detail_WorkRecord search = new Detail_WorkRecord()
+                {
+                    HashAccount = employee_workrecrd[i].HashAccount,
+                    Num = employee_workrecrd[i].Num,//編號
+                    Name = employee_workrecrd[i].Name,//員工姓名
+                    WorkTime = employee_workrecrd[i].WorkTime,//上班紀錄
+                    RestTime = employee_workrecrd[i].RestTime,//下班紀錄
+                    isLate = islate,//是否遲到
+                    state = state//下班狀態
+
+                };
+                detail_WorkRecords.Add(search);
+            }
+
+            return detail_WorkRecords;
         }
 
-        public static async Task<List<Work_Record>> Manager_Get_WorkRecordAsync3(string hash_account)
+        public static async Task<List<Detail_WorkRecord>> Manager_Get_WorkRecordAsync3(string hash_account,string company_hash)
         {
             //連上WebAPI
             response = await client.GetAsync(url + ManagerGetWorkRecord3 + hash_account);
@@ -43,40 +286,196 @@ namespace AttendanceManagement.Models
             GetResponse = await response.Content.ReadAsStringAsync();
             //解析打卡紀錄之JSON內容
             List<Work_Record> employee_workrecrd = JsonConvert.DeserializeObject<List<Work_Record>>(GetResponse);
-            return employee_workrecrd;
+
+            //取得公司一般上下班時間(新版)
+            List<EmployeeGeneralWorktime> GeneralWorktime = await CompanyWorkTimeModel.Get_GeneralWorktime(company_hash);
+            //取得公司彈性上下班時間(新版)
+            List<EmployeeFlexibleWorktime> FlexibleWorktime = await CompanyWorkTimeModel.Get_FlexibleWorktime(company_hash);
+            //輸入公司代碼取得全部的已審核資料
+            List<PassEmployee> passEmployees = await PassEmployeeModel.PassEmployees(company_hash);
+            List<Detail_WorkRecord> detail_WorkRecords = new List<Detail_WorkRecord>();
+            int num = 0;
+            foreach (var work in employee_workrecrd)
+            {
+                num++;
+            }
+
+            for (int i = 0; i < num; i++)
+            {
+                string islate = "";
+                string state = "";
+                int index = passEmployees.FindIndex(t => t.HashAccount.Equals(employee_workrecrd[i].HashAccount));
+                if (passEmployees[index].WorktimeId != null && passEmployees[index].WorktimeId != "0")
+                {
+                    int g_index = GeneralWorktime.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));
+                    int f_index = FlexibleWorktime.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));
+                    if (passEmployees[index].WorktimeId.Substring(0, 1) == "G")
+                    {
+                        TimeSpan dt2 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        TimeSpan dt = TimeSpan.Parse(employee_workrecrd[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
+                        TimeSpan hour = new TimeSpan();//公司規定的上班時數
+                        if (GeneralWorktime[g_index].RestTime > GeneralWorktime[g_index].WorkTime)
+                        {
+                            hour = GeneralWorktime[g_index].RestTime - GeneralWorktime[g_index].WorkTime; //公司規定的上班時數
+                        }
+                        else
+                        {
+                            hour = GeneralWorktime[g_index].WorkTime - GeneralWorktime[g_index].RestTime; //公司規定的上班時數
+                        }
+                        TimeSpan ts = employee_workrecrd[i].RestTime.Subtract(employee_workrecrd[i].WorkTime); //員工打卡的上班時數
+                        TimeSpan time = new TimeSpan(1, 0, 0);//一小時
+
+
+                        if (ts > hour + time)//員工的上班時數大於規定的上班時數
+                        {
+                            state = "異常";
+                        }
+                        else if (dt < GeneralWorktime[g_index].RestTime)//員工的下班時間比規定的下班時間早
+                        {
+                            state = "早退";
+                        }
+                        else if (ts < hour)//員工的上班時數比規定的上班時數小
+                        {
+                            state = "早退";
+                        }
+                        else
+                        {
+                            state = "正常";
+                        }
+                        TimeSpan dt3 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        if (TimeSpan.Compare(GeneralWorktime[g_index].WorkTime, dt3) > 0)
+                        {
+                            islate = "準時";
+                        }
+                        else
+                        {
+                            islate = "遲到";
+                        }
+                    }
+                    else if (passEmployees[index].WorktimeId.Substring(0, 1) == "F")
+                    {
+                        TimeSpan dt3 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        TimeSpan dt = TimeSpan.Parse(employee_workrecrd[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
+                        if (dt > FlexibleWorktime[f_index].RestTimeEnd)//員工的下班時間比規定的下班時間晚
+                        {
+                            state = "異常";
+                        }
+                        else if (dt < FlexibleWorktime[f_index].RestTimeStart)//員工的下班時間比規定的下班時間早
+                        {
+                            state = "早退";
+                        }
+                        else
+                        {
+                            state = "正常";
+                        }
+                        TimeSpan dt4 = TimeSpan.Parse(employee_workrecrd[i].WorkTime.ToString("HH:mm"));
+                        if (TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeStart, FlexibleWorktime[f_index].WorkTimeEnd) > 0)
+                        {
+                            if (TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeStart, dt4) < 0 || TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeEnd, dt3) > 0)
+                            {
+                                islate = "準時";
+                            }
+                            else
+                            {
+                                islate = "遲到";
+                            }
+                        }
+                        else
+                        {
+                            if (TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeStart, dt4) < 0 && TimeSpan.Compare(FlexibleWorktime[f_index].WorkTimeEnd, dt3) > 0)
+                            {
+                                islate = "準時";
+                            }
+                            else
+                            {
+                                islate = "遲到";
+                            }
+                        }
+
+                    }
+                }
+                Detail_WorkRecord search = new Detail_WorkRecord()
+                {
+                    HashAccount = employee_workrecrd[i].HashAccount,
+                    Num = employee_workrecrd[i].Num,//編號
+                    Name = employee_workrecrd[i].Name,//員工姓名
+                    WorkTime = employee_workrecrd[i].WorkTime,//上班紀錄
+                    RestTime = employee_workrecrd[i].RestTime,//下班紀錄
+                    isLate = islate,//是否遲到
+                    state = state//下班狀態
+
+                };
+                detail_WorkRecords.Add(search);
+            }
+
+            return detail_WorkRecords;
         }
-        public static async Task<List<Work_Record>> Search_WorkRecord2(List<Work_Record> all_work_Records, string company_hash, DateTime? date, string name)//兩條件篩選
+        public static async Task<List<Detail_WorkRecord>> Search_WorkRecord4(List<Detail_WorkRecord> all_work_Records, string company_hash, DateTime? date, string name, string islate, string state)//兩條件篩選
         {
-            List<Work_Record> searchWork_Record = new List<Work_Record>();
+            List<Detail_WorkRecord> searchWork_Record = new List<Detail_WorkRecord>();
             for (int index = 0; index < all_work_Records.Count; index++)
             {
-                if (all_work_Records[index].Name.Equals(name) && all_work_Records[index].WorkTime.Date.Equals(date))
+                if (all_work_Records[index].Name.Equals(name) && all_work_Records[index].WorkTime.Date.Equals(date) && all_work_Records[index].isLate.Equals(islate) && all_work_Records[index].state.Equals(state))
                     searchWork_Record.Add(ListAddSearch(all_work_Records, index));
             }
 
             return searchWork_Record;
         }//兩條件篩選
-        public static async Task<List<Work_Record>> Search_WorkRecord1(List<Work_Record> all_work_Records, string company_hash, DateTime? date, string name)//一條件篩選
+        public static async Task<List<Detail_WorkRecord>> Search_WorkRecord3(List<Detail_WorkRecord> all_work_Records, string company_hash, DateTime? date, string name, string islate, string state)//兩條件篩選
         {
-            List<Work_Record> searchWork_Record = new List<Work_Record>();
+            List<Detail_WorkRecord> searchWork_Record = new List<Detail_WorkRecord>();
             for (int index = 0; index < all_work_Records.Count; index++)
             {
-                if (all_work_Records[index].Name.Equals(name) || all_work_Records[index].WorkTime.Date.Equals(date))
+                if (all_work_Records[index].Name.Equals(name) && all_work_Records[index].WorkTime.Date.Equals(date) && all_work_Records[index].isLate.Equals(islate) ||
+                    all_work_Records[index].Name.Equals(name) && all_work_Records[index].isLate.Equals(islate) && all_work_Records[index].state.Equals(state) ||
+                    all_work_Records[index].Name.Equals(name) && all_work_Records[index].WorkTime.Date.Equals(date) && all_work_Records[index].state.Equals(state) ||
+                    all_work_Records[index].WorkTime.Date.Equals(date) && all_work_Records[index].isLate.Equals(islate) && all_work_Records[index].state.Equals(state) 
+                    )
+                    searchWork_Record.Add(ListAddSearch(all_work_Records, index));
+            }
+
+            return searchWork_Record;
+        }//兩條件篩選
+        public static async Task<List<Detail_WorkRecord>> Search_WorkRecord2(List<Detail_WorkRecord> all_work_Records, string company_hash, DateTime? date, string name, string islate, string state)//兩條件篩選
+        {
+            List<Detail_WorkRecord> searchWork_Record = new List<Detail_WorkRecord>();
+            for (int index = 0; index < all_work_Records.Count; index++)
+            {
+                if (all_work_Records[index].Name.Equals(name) && all_work_Records[index].WorkTime.Date.Equals(date)||
+                    all_work_Records[index].Name.Equals(name) && all_work_Records[index].isLate.Equals(islate) ||
+                    all_work_Records[index].Name.Equals(name) && all_work_Records[index].state.Equals(state) ||
+                    all_work_Records[index].WorkTime.Date.Equals(date) && all_work_Records[index].isLate.Equals(islate) ||
+                    all_work_Records[index].WorkTime.Date.Equals(date) && all_work_Records[index].state.Equals(state) ||
+                    all_work_Records[index].isLate.Equals(islate) && all_work_Records[index].state.Equals(state) 
+                    )
+                    searchWork_Record.Add(ListAddSearch(all_work_Records, index));
+            }
+
+            return searchWork_Record;
+        }//兩條件篩選
+        public static async Task<List<Detail_WorkRecord>> Search_WorkRecord1(List<Detail_WorkRecord> all_work_Records, string company_hash, DateTime? date, string name,string islate,string state)//一條件篩選
+        {
+            List<Detail_WorkRecord> searchWork_Record = new List<Detail_WorkRecord>();
+            for (int index = 0; index < all_work_Records.Count; index++)
+            {
+                if (all_work_Records[index].Name.Equals(name) || all_work_Records[index].WorkTime.Date.Equals(date) || all_work_Records[index].isLate.Equals(islate) || all_work_Records[index].state.Equals(state))
                     searchWork_Record.Add(ListAddSearch(all_work_Records, index));
             }
 
             return searchWork_Record;
         }//一條件篩選
 
-        public static Work_Record ListAddSearch(List<Work_Record> work_Records, int index)
+        public static Detail_WorkRecord ListAddSearch(List<Detail_WorkRecord> work_Records, int index)
         {
-            Work_Record search = new Work_Record()
+            Detail_WorkRecord search = new Detail_WorkRecord()
             {
                 HashAccount = work_Records[index].HashAccount,
                 Num = work_Records[index].Num,//編號
                 Name = work_Records[index].Name,//員工姓名
                 WorkTime = work_Records[index].WorkTime,//上班紀錄
-                RestTime = work_Records[index].RestTime//下班紀錄
+                RestTime = work_Records[index].RestTime,//下班紀錄
+                isLate = work_Records[index].isLate,//是否遲到
+                state = work_Records[index].state//下班狀態
             };
             return search;
         }
@@ -973,6 +1372,16 @@ namespace AttendanceManagement.Models
         public string Name { get; set; }//員工姓名
         public DateTime WorkTime { get; set; }//上班紀錄
         public DateTime RestTime { get; set; }//下班紀錄
+    }//打卡
+    public class Detail_WorkRecord
+    {
+        public string HashAccount { get; set; }
+        public int Num { get; set; }//編號
+        public string Name { get; set; }//員工姓名
+        public DateTime WorkTime { get; set; }//上班紀錄
+        public DateTime RestTime { get; set; }//下班紀錄
+        public string isLate { get; set; }//是否遲到
+        public string state { get; set; }//下班狀態
     }//打卡
     public class Department
     {

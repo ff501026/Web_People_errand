@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "打卡紀錄";
-    List<AttendanceManagement.Models.Work_Record> work_record = ViewBag.workrecord;
+    List<AttendanceManagement.Models.Detail_WorkRecord> work_record = ViewBag.workrecord;
     AttendanceManagement.Models.Company_Time company_Times = ViewBag.company_time;
     List<AttendanceManagement.Models.EmployeeGeneralWorktime> generalWorktimes = ViewBag.general_worktime;
     List<AttendanceManagement.Models.EmployeeFlexibleWorktime> flexibleWorktimes = ViewBag.flexible_worktime;
@@ -10,23 +10,29 @@
 
     int num = ViewBag.Num;//打卡記錄總共有幾筆
     int number = 0;//編號
-    int num1 = work_record.Count == 0 ? 1: work_record.Count;
+    int num1 = work_record.Count == 0 ? 1 : work_record.Count;
     int endpage = (num1 / 10) + 1;
     int endpageint = (num1 / 10);
     int pagecount = 0;
 }
+
 <script type="text/javascript">
     window.onload = function () {
+
+        document.getElementById("rest").options[sessionStorage.getItem("search_restindex")].selected = true;
+        document.getElementById("clock").options[sessionStorage.getItem("search_clockindex")].selected = true;
         document.getElementById("date").value = sessionStorage.getItem("search_date");
         document.getElementById("employee_name").value = sessionStorage.getItem("search_name");
+
         var _offset = sessionStorage.getItem("toTop");
         $(document).scrollTop(_offset);
         sessionStorage.clear();
-       if (@num1 < 10)
+       if (@num1 <= 10)
         {
            nextOff();
            preOff();
-        }
+       }
+        okORdanger();
     };
 </script>
 <div class="main-content">
@@ -37,27 +43,51 @@
         @using (Html.BeginForm("SearchWorkRecord", "PunchRecords", FormMethod.Get))
         {
             @Html.AntiForgeryToken()
-            <form class="form-inline mr-auto">
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <label class="form-inline">
-                            姓名(ID)：
-                            <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" aria-label="Search">
-                        </label>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <label class="form-inline">
-                            日期：
-                            <input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
-                        </label>
-                    </div>
-                    <div class="col-lg-1 col-md-1 col-12">
-                        <div>
-                            <button id="button" onclick="search_set();set();" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
-                        </div>
-                    </div>
+    <form class="form-inline mr-auto">
+        <div class="row" style="margin-left:10px;">
+            <div class="col-lg-3 col-md-3 col-3" style="padding:0px;">
+                <label class="form-inline">
+                    姓名(ID)：
+                    <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" aria-label="Search">
+                </label>
+            </div>
+            <div class="col-lg-3 col-md-3 col-3">
+                <label class="form-inline">
+                    日期：
+                    <input id="date"  name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
+
+                </label>
+
+            </div>
+            <div class="col-lg-2 col-md-2 col-2">
+                <i class="bi bi-alarm form-inline" style="font-weight:bolder;">
+                    <label style="color: #F6F6F6;">--</label>
+                    <select id="clock" name="islate"class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <option value="是否遲到">是否遲到</option>
+                        <option value="準時">準時</option>
+                        <option value="遲到">遲到</option>
+                    </select>
+                </i>
+            </div>
+            <div class="col-lg-2 col-md-2 col-2">
+                <i class="bi bi-box-arrow-right form-inline" style="font-weight:bolder;"> 
+                    <label style="color: #F6F6F6;">--</label>
+                    <select id="rest" name="state" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <option value="下班狀態">下班狀態</option>
+                        <option value="早退">早退</option>
+                        <option value="異常">異常</option>
+                        <option value="正常">正常</option>
+                    </select>
+                </i>
+            </div>
+            <div class="col-lg-2 col-md-2 col-2">
+                <div>
+                    <button id="button" onclick="search_set(); set(); " name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
                 </div>
-            </form>
+            </div>
+        </div>
+      
+    </form>
         }
 
         <div class="section-body" style="margin-top:25px">
@@ -69,8 +99,8 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table">
-                                    <tr>
+                                <table class="table" id="punch">
+                                    <tr id="title">
                                         <th style="text-align: center;">編號</th>
                                         <th>是否遲到</th>
                                         <th>員工姓名</th>
@@ -80,129 +110,40 @@
                                     </tr>
 
                                     <tbody id="tablePage">
+
                                         @for (int i = num - 1; i >= 0; i--)
                                         {
-                                            int index = passEmployees.FindIndex(t => t.HashAccount.Equals(work_record[i].HashAccount));
                                             number++;
-                                            <tr>
-                                                <td class="rowBorderStart" style="text-align: center;">@number</td>
-                                                <td class="rowBorderMiddle" style="width:100px;">
-                                                    @if (passEmployees[index].WorktimeId != null && passEmployees[index].WorktimeId != "0")
-                                                    {
-                                                        int g_index = generalWorktimes.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));
-                                                        int f_index = flexibleWorktimes.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));
-                                                        if (passEmployees[index].WorktimeId.Substring(0, 1) == "G")
-                                                        {
-                                                            TimeSpan dt2 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
-
-                                                            if (TimeSpan.Compare(generalWorktimes[g_index].WorkTime, dt2) > 0)
-                                                            {
-                                                                <div class="badge badge-info" style="background-color: white; font-weight: bold;">準時</div> }
-                                                            else
-                                                            {
-                                                                <div class="badge badge-danger" style="background-color: white; font-weight: bold;">遲到</div> }
-                                                        }
-                                                        else if (passEmployees[index].WorktimeId.Substring(0, 1) == "F")
-                                                        {
-                                                            TimeSpan dt3 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
-
-                                                            if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, flexibleWorktimes[f_index].WorkTimeEnd) > 0)
-                                                            {
-                                                                if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, dt3) < 0 || TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeEnd, dt3) > 0)
-                                                                {
-                                                                    <div class="badge badge-info" style="background-color: white; font-weight: bold;">準時</div> }
-                                                                else
-                                                                {
-                                                                    <div class="badge badge-danger" style="background-color: white; font-weight: bold;">遲到</div> }
-                                                            }
-                                                            else
-                                                            {
-                                                                if (TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeStart, dt3) < 0 && TimeSpan.Compare(flexibleWorktimes[f_index].WorkTimeEnd, dt3) > 0)
-                                                                {
-                                                                    <div class="badge badge-info" style="background-color: white; font-weight: bold;">準時</div>}
-                                                                else
-                                                                {
-                                                                    <div class="badge badge-danger" style="background-color: white; font-weight: bold;">遲到</div>}
-                                                            }
-                                                        }
-
-                                                    }
-
-                                                </td>
-                                                <td class="rowBorderMiddle">
-                                                    <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@work_record[i].HashAccount"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
-                                                </td>
-                                                <td class="rowBorderMiddle">@work_record[i].WorkTime</td>
-                                                <td class="rowBorderMiddle">@work_record[i].RestTime</td>
-                                                @if (passEmployees[index].WorktimeId != null)
+                                        <tr id="@work_record[i].HashAccount">
+                                            <td class="rowBorderStart" style="text-align: center;">@number</td>
+                                            <td class="rowBorderMiddle" style="width:100px;">
+                                                @if (work_record[i].isLate.Equals("準時"))
                                                 {
-                                                    int g_index = generalWorktimes.FindIndex(t => t.GeneralWorktimeId.Equals(passEmployees[index].WorktimeId));
-                                                    int f_index = flexibleWorktimes.FindIndex(t => t.FlexibleWorktimeId.Equals(passEmployees[index].WorktimeId));
-                                                    if (passEmployees[index].WorktimeId.Substring(0, 1) == "G")
-                                                    {
-                                                        TimeSpan dt2 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
-                                                        TimeSpan dt = TimeSpan.Parse(work_record[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
-                                                        TimeSpan hour = new TimeSpan();//公司規定的上班時數
-                                                        if (generalWorktimes[g_index].RestTime > generalWorktimes[g_index].WorkTime)
-                                                        {
-                                                            hour = generalWorktimes[g_index].RestTime - generalWorktimes[g_index].WorkTime; //公司規定的上班時數
-                                                        }
-                                                        else
-                                                        {
-                                                            hour = generalWorktimes[g_index].WorkTime - generalWorktimes[g_index].RestTime; //公司規定的上班時數
-
-                                                        }
-                                                        TimeSpan ts = work_record[i].RestTime.Subtract(work_record[i].WorkTime); //員工打卡的上班時數
-                                                        TimeSpan time = new TimeSpan(1, 0, 0);//一小時
-
-
-                                                        if (ts > hour + time)//員工的上班時數大於規定的上班時數
-                                                        {
-                                                            <td class="rowBorderEnd"> <div class="badge badge-success" style="background-color: #E0F9D9; color: #40D03A; font-weight: bold; ">異常</div></td>
-                                                        }
-                                                        else if (dt < generalWorktimes[g_index].RestTime)//員工的下班時間比規定的下班時間早
-                                                        {
-                                                            <td class="rowBorderEnd"> <div class="badge badge-warning" style="background-color: #FEF7CB; color: #F0BF58;font-weight:bold;">早退</div></td>
-                                                        }
-                                                        else if (ts < hour)//員工的上班時數比規定的上班時數小
-                                                        {
-                                                            <td class="rowBorderEnd"> <div class="badge badge-warning" style="background-color: #FEF7CB; color: #F0BF58;font-weight:bold;">早退</div></td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td class="rowBorderEnd"> <div class="badge badge-info" style="background-color: #CAE1FF; color: #869DE9; font-weight: bold; ">正常</div></td>
-                                                        }
-                                                    }
-                                                    else if (passEmployees[index].WorktimeId.Substring(0, 1) == "F")
-                                                    {
-                                                        TimeSpan dt3 = TimeSpan.Parse(work_record[i].WorkTime.ToString("HH:mm"));
-                                                        TimeSpan dt = TimeSpan.Parse(work_record[i].RestTime.ToString("HH:mm"));//員工打卡紀錄的下班時間
-                                                        if (dt > flexibleWorktimes[f_index].RestTimeEnd)//員工的下班時間比規定的下班時間晚
-                                                        {
-                                                            <td class="rowBorderEnd"> <div class="badge badge-success" style="background-color: #E0F9D9; color: #40D03A; font-weight: bold; ">異常</div></td>
-                                                        }
-                                                        else if (dt < flexibleWorktimes[f_index].RestTimeStart)//員工的下班時間比規定的下班時間早
-                                                        {
-                                                            <td class="rowBorderEnd"> <div class="badge badge-warning" style="background-color: #FEF7CB; color: #F0BF58;font-weight:bold;">早退</div></td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td class="rowBorderEnd"> <div class="badge badge-info" style="background-color: #CAE1FF; color: #869DE9; font-weight: bold; ">正常</div></td>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="rowBorderEnd"></td>
-                                                    }
-
+                                                    <div class="badge badge-info ok" style="background-color: white; font-weight: bold;">準時</div> 
                                                 }
-                                                @if (passEmployees[index].WorktimeId == null)
+                                                else if (work_record[i].isLate.Equals("遲到"))
                                                 {
-                                                    <td class="rowBorderEnd"></td>
+                                                    <div class="badge badge-danger " style="background-color: white; font-weight: bold;">遲到</div>
                                                 }
-
-
-                                            </tr>
+                                            </td>
+                                            <td class="rowBorderMiddle">
+                                                <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@work_record[i].HashAccount"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
+                                            </td>
+                                            <td class="rowBorderMiddle">@work_record[i].WorkTime</td>
+                                            <td class="rowBorderMiddle">@work_record[i].RestTime</td>
+                                            @if (work_record[i].state.Equals("異常"))
+                                            {
+                                                <td class="rowBorderEnd"> <div class="badge badge-success" style="background-color: #E0F9D9; color: #40D03A; font-weight: bold; ">異常</div></td>
+                                            }
+                                            else if (work_record[i].state.Equals("早退"))
+                                            {
+                                                <td class="rowBorderEnd"> <div class="badge badge-warning" style="background-color: #FEF7CB; color: #F0BF58;font-weight:bold;">早退</div></td>
+                                            }
+                                            else 
+                                            {
+                                                <td class="rowBorderEnd"></td>
+                                            }
+                                        </tr>
                                         }
                                     </tbody>
 
@@ -227,7 +168,7 @@
                 </ul>
             </nav>
         </div>*@
-                        <div class="card-footer text-right">
+                        <div id="pagenumber" class="card-footer text-right">
 
                             <nav class="d-inline-block">
                                 <ul class="pagination mb-0 pagination" id="pageList">
@@ -384,9 +325,9 @@
 
     </section>
 </div>
-<div class="modal modal-backdrop-bg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width:100%">
+<div class="modal model-background modal-backdrop-bg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
     <div class="modal-dialog">
-        <div class="modal-content modal-dialog-centered">
+        <div class="modal-content" style="margin: 0px 0px 0px -9px;">
             <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
                 <div id="CenterSet">
                     <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
@@ -395,18 +336,130 @@
         </div>
     </div>
 </div>
+
 <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     function search_set() {
         var d = document.getElementById("date").value;
         var n = document.getElementById("employee_name").value;
-
+        var c = document.getElementById("clock").selectedIndex;
+        var r = document.getElementById("rest").selectedIndex;
+        sessionStorage.removeItem("search_clockindex");
+        sessionStorage.setItem("search_clockindex", c);
+        sessionStorage.removeItem("search_restindex");
+        sessionStorage.setItem("search_restindex", r);
         sessionStorage.removeItem("search_date");
         sessionStorage.setItem("search_date", d);
         sessionStorage.removeItem("search_name");
         sessionStorage.setItem("search_name", n);
     }
+    //function okORdanger()
+    //{
+    //    var clockselect = document.getElementById("clock").value;
+    //    if (clockselect == 0) {
+    //        $(".ok").css("display", "block");
+    //        $(".badge-danger").css("display", "block");
+    //    }
+    //    else if (clockselect == 1) {
+    //        $(".ok").css("display", "block");
+    //        $(".badge-danger").css("display", "none");
+    //    }
+    //    else if (clockselect == 2) {
+    //        $(".ok").css("display", "none");
+    //        $(".badge-danger").css("display", "block");
+    //    }
+        
+    //}
+
+</script>
+<script>
+
+    //function getRows(override, value) {
+    //    var filter = "table tbody tr td";
+    //    $("#clock").each(function () {
+    //        var test = this === override ? value : $(this).val();
+    //        if (test !== "是否遲到") {
+    //            filter += ":contains(" + test + ")";
+    //        }
+    //    });
+    //    $('#title').show();
+    //    $('#pagenumber').hide();
+        
+    //    return $(filter).parent();
+    //}
+    
+    //$('#clock').on('change', function () {
+    //    //$('table tbody tr').hide();
+    //    //var filter = "table tbody tr td";
+    //    //var test = '準時';
+    //    //$("#clock").each(function () {
+
+    //    //    if (test !== "是否遲到") {
+    //    //        filter += ":contains(" + test + ")";
+    //    //    }
+    //    //});
+    //    //$('#title').show();
+    //    //$('#pagenumber').hide();
+
+    //    //return $(filter).parent();
+    //    if ($('#clock').val() == "是否遲到")
+    //    {
+    //        var modal = document.getElementById("exampleModal2.1");
+    //        modal.style.display = "block";
+    //        return window.location = '/PunchRecords/index';
+    //    }
+    //    $('table tbody tr').hide();
+    //    getRows().show();
+    //    $('#clock').each(function (i, select) {
+    //        $('option', this).each(function () {
+    //            $(this).toggle(getRows(select, $(this).text()).length > 0);
+    //        });
+    //    });
+    //});
+    //function restgetRows(override, value) {
+    //    var filter = "table tbody tr td";
+    //    $("#rest").each(function () {
+    //        var test = this === override ? value : $(this).val();
+    //        if (test !== "下班狀態") {
+    //            filter += ":contains(" + test + ")";
+    //        }
+    //    });
+    //    $('#title').show();
+    //    $('#pagenumber').hide();
+    //    return $(filter).parent();
+    //}
+    //$('#rest').on('change', function () {
+    //    if ($('#rest').val() == "下班狀態") {
+    //        var modal = document.getElementById("exampleModal2.1");
+    //        modal.style.display = "block";
+    //        return window.location = '/PunchRecords/index';
+    //    }
+    //    $('table tbody tr').hide();
+    //    restgetRows().show();
+    //    $('#rest').each(function (i, select) {
+    //        $('option', this).each(function () {
+    //            $(this).toggle(restgetRows(select, $(this).text()).length > 0);
+    //        });
+    //    });
+    //});
+    //function change() {
+    //    var storeId = document.getElementById('punch');//獲取table的id標識  
+    //    var rowsLength = storeId.rows.length;//表格總共有多少行  
+    //    var key = $('#clock').val();//獲取輸入框的值  
+
+    //    var searchCol = 0;//要搜尋的哪一列，這裡是第一列，從0開始數起  
+
+    //    for (var i = 1; i < rowsLength; i++) {//按表的行數進行迴圈，本例第一行是標題，所以i=1，從第二行開始篩選（從0數起）  
+    //        var searchText = storeId.rows[i].cells[searchCol].innerHTML;//取得table行，列的值  
+
+    //        if (searchText.match("準時")) {//用match函式進行篩選，如果input的值，即變數 key的值為空，返回的是ture，  
+    //            storeId.rows[i].style.display = 'block';//顯示行操作，  
+    //        } else {
+    //            storeId.rows[i].style.display = 'none';//隱藏行操作  
+    //        }
+    //    }  
+    //}
 </script>
 <script type="text/javascript">
     var theTable = document.getElementById("tablePage");
@@ -629,3 +682,4 @@
 
     hide();
 </script>
+

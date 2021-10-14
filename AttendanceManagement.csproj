@@ -285,6 +285,7 @@
     <Content Include="Content\images\edit-button.png" />
     <Content Include="Content\images\edit.png" />
     <Content Include="Content\images\file.png" />
+    <Content Include="Content\images\hide.png" />
     <Content Include="Content\images\LoginBack.jpg" />
     <Content Include="Content\images\loupe.png" />
     <Content Include="Content\images\organization.png" />
@@ -298,6 +299,7 @@
     <Content Include="Content\images\tick.png" />
     <Content Include="Content\images\user.png" />
     <Content Include="Content\images\user2.png" />
+    <Content Include="Content\images\vision.png" />
     <Content Include="Content\images\差勤打卡LOGO2.png" />
     <Content Include="Content\style.css" />
     <Content Include="Content\bootstrap-icons.css" />

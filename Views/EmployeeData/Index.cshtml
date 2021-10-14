@@ -14,6 +14,7 @@
 }
 
 <style>
+
     #editbutton {
         background-color: #E8ECFF;
     }
@@ -337,48 +338,46 @@
 {
     using (Html.BeginForm("EditEmployee", "EmployeeData", new { name = pass_employee.Name, id = pass_employee.HashAccount, old_email = pass_employee.Email, old_enabled = pass_employee.Enabled }, FormMethod.Post, new { name = "frm_" + pass_employee.HashAccount, id = "frm_" + pass_employee.HashAccount }))
     {
-        <div class="modal modal-backdrop-bg" id="@pass_employee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;  background-color: rgb(35,35,35,0.7);">
-            <div class="modal-dialog  modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
-                        <h5 id="name" name="name" value="@pass_employee.Name" class="modal-title" style="font-size:20px; font-family:Agency FB">@pass_employee.Name</h5>
-                        @if (pass_employee.Enabled == true)
-                        {
-                            <div class="badge badge-info" style="margin-left:10px">使用中</div> }
-                        else
-                        {
-                            <div class="badge badge-danger" style="margin-left:10px">停用</div>}
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <hr size="10" color="#d9d9d9" align="center" width="95%">
-                    <div class="modal-body2">
-                        <div class="cardA card-primary">
+<div class="modal modal-backdrop-bg" id="@pass_employee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;  background-color: rgb(135,135,135,0.5);">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
+                <h5 id="name" name="name" value="@pass_employee.Name" class="modal-title" style="font-size:20px; font-family:Agency FB">@pass_employee.Name</h5>
+                @if (pass_employee.Enabled == true)
+                {
+<div class="badge badge-info" style="margin-left:10px">使用中</div> }
+                    else
+                    {
+<div class="badge badge-danger" style="margin-left:10px">停用</div>}
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <hr size="10" color="#d9d9d9" align="center" width="95%">
+            <div class="modal-body2">
+                <div class="cardA card-primary">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row" style="margin-top:15px">
+                                <div class="col-12 col-lg-6">
+                                    部門
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    職稱
+                                </div>
+                            </div>
                             <div class="row">
-                                <div class="col-12">
-                                    <div class="row" style="margin-top:15px">
-                                        <div class="col-12 col-lg-6">
-                                            部門
-                                        </div>
-                                        <div class="col-12 col-lg-6">
-                                            職稱
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-8 col-sm-6">
-                                            <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                                @foreach (var department in departments)
-                                                {
-                                                    if (department.Name.Equals(pass_employee.Department))
-                                                    {
-                                                        <option selected value="@department.DepartmentId">@department.Name</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@department.DepartmentId">@department.Name</option>
-                                                    }
+                                <div class="col-8 col-sm-6">
+                                    <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                                        @foreach (var department in departments)
+                                        {
+                                            if (department.Name.Equals(pass_employee.Department))
+                                            {
+                    <option selected value="@department.DepartmentId">@department.Name</option> }
+                                            else
+                                            {
+                    <option value="@department.DepartmentId">@department.Name</option>}
 
                                                 }
                                             </select>
@@ -572,38 +571,37 @@
     using (Html.BeginForm("SetEmployeeInformation", "EmployeeData", new { id = reviewEmployee.HashAccount, email = reviewEmployee.Email }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <div class="modal modal-backdrop-bg" id="@reviewEmployee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(35,35,35,0.7); ">
-            <div class="modal-dialog  modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
-                        <h5 class="modal-title" id="name" name="name" value="@reviewEmployee.Name" style="font-size:20px; font-family:Agency FB">@reviewEmployee.Name</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <hr size="10" color="#d9d9d9" align="center" width="95%">
-                    <div class="modal-body2">
-                        <div class="cardA card-primary">
+<div class="modal modal-backdrop-bg" id="@reviewEmployee.HashAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：</h5>
+                <h5 class="modal-title" id="name" name="name" value="@reviewEmployee.Name" style="font-size:20px; font-family:Agency FB">@reviewEmployee.Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <hr size="10" color="#d9d9d9" align="center" width="95%">
+            <div class="modal-body2">
+                <div class="cardA card-primary">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row" style="margin-top:15px">
+                                <div class="col-12 col-lg-6">
+                                    部門
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    職稱
+                                </div>
+                            </div>
                             <div class="row">
-                                <div class="col-12">
-                                    <div class="row" style="margin-top:15px">
-                                        <div class="col-12 col-lg-6">
-                                            部門
-                                        </div>
-                                        <div class="col-12 col-lg-6">
-                                            職稱
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-8 col-sm-6">
-                                            <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                                @foreach (var department in departments)
-                                                {
-                                                    <option value="@department.DepartmentId">@department.Name</option>
-                                                }
-                                            </select>
-                                        </div>
+                                <div class="col-8 col-sm-6">
+                                    <select id="department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                                        @foreach (var department in departments)
+                                        {
+                    <option value="@department.DepartmentId">@department.Name</option>}
+                                    </select>
+                                </div>
 
                                         <div class="col-4 col-sm-6">
                                             <select id="jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
@@ -696,51 +694,50 @@
     </div>
 }
 
-    <div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
-                <div class="modal-body" style="padding: 190px 0px 190px 0px; border-radius: 4px;width:100%;">
-                    <div id="CenterSet">
-                        <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
-                    </div>
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
+            <div class="modal-body" style="padding: 190px 0px 190px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
-                <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
-                    <div id="CenterSet">
-                        <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
-                    </div>
+</div>
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
+            <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
-                <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
-                    <div id="CenterSet">
-                        <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
-                    </div>
+</div>
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModal3.2" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin: 0px 0px 0px -9px;opacity:0.7">
+            <div class="modal-body" style="padding: 169px 0px 169px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal modal-backdrop-bg" id="exampleModal4.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
-        <div class="modal-dialog">
-            <div class="modal-content modal-dialog-centered">
-                <div class="modal-body" style="padding:
-    100px 0px 100px 0px; border-radius: 4px;width:100%;">
-                    <div id="CenterSet">
-                        <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
-                    </div>
+</div>
+<div class="modal modal-backdrop-bg" id="exampleModal4.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-centered">
+            <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+                <div id="CenterSet">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

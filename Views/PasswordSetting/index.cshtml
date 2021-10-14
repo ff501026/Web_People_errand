@@ -47,10 +47,26 @@ else
                 <form method="POST" action="#" class="needs-validation" novalidate="">
                     <div class="form-group">
                         <label for="mpassword" style="font-size:medium;">Password</label>
-                        <input id="mpassword" name="manager_password" type="password" class="form-control" placeholder="Enter password" tabindex="1">
+                        <div class="input-group">
+                            <input id="mpassword" name="manager_password" type="password" class="form-control" placeholder="Enter password" tabindex="1">
+                            <div class="input-group-append">
+                                <div class="input-group-text" style="border: 1px solid #C2BFBF; background-color: #FFFFFF; box-shadow: 3px 3px 3px #D2D3D3; margin-top: -30px;">
+                                    <i id="hide1" class="bi bi-eye-slash" onclick="showPsw()" style="display:inline-block;"></i>
+                                    <i id="show1" class="bi bi-eye" onclick="showPsw()" style="display:none;"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <input id="mpassword" name="manager_password2" type="password" class="form-control" placeholder="Confirm password" tabindex="1" maxlength="30">
+                        <div class="input-group">
+                            <input id="mpassword2" name="manager_password2" type="password" class="form-control" placeholder="Confirm password" tabindex="1" maxlength="30">
+                            <div class="input-group-append">
+                                <div class="input-group-text" style="border: 1px solid #C2BFBF; background-color: #FFFFFF; box-shadow: 3px 3px 3px #D2D3D3; margin-top: -30px;" onclick="showPsw2()">
+                                    <i id="hide2" class="bi bi-eye-slash"  style="display:inline-block;"></i>
+                                    <i id="show2" class="bi bi-eye"  style="display:none;"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block" tabindex="4" style="background-image: linear-gradient(to top, #09203f 0%, #537895 100%); opacity: 40%; border: 1px solid #ABB7C3">
@@ -62,4 +78,30 @@ else
         </div>
     }
 }
+<script>
+    var x1 = document.getElementById("mpassword");
+    var x2 = document.getElementById("mpassword2");
+    function showPsw() {
+        if (x1.type === "password") {
+            x1.type = "text";
+            document.getElementById('show1').style.display = "inline-block";
+            document.getElementById('hide1').style.display = "none";
+        } else {
+            x1.type = "password";
+            document.getElementById('hide1').style.display = "inline-block";
+            document.getElementById('show1').style.display = "none";
+        }
+    }
+    function showPsw2() {
+        if (x2.type === "password") {
+            x1.type = "text";
+            document.getElementById('show2').style.display = "inline-block";
+            document.getElementById('hide2').style.display = "none";
+        } else {
+            x2.type = "password";
+            document.getElementById('hide2').style.display = "inline-block";
+            document.getElementById('show2').style.display = "none";
+        }
+    }
+</script>
 
