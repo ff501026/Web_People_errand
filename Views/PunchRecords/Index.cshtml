@@ -119,12 +119,10 @@
                                             <td class="rowBorderMiddle" style="width:100px;">
                                                 @if (work_record[i].isLate.Equals("準時"))
                                                 {
-                                                    <div class="badge badge-info ok" style="background-color: white; font-weight: bold;">準時</div> 
-                                                }
-                                                else if (work_record[i].isLate.Equals("遲到"))
-                                                {
-                                                    <div class="badge badge-danger " style="background-color: white; font-weight: bold;">遲到</div>
-                                                }
+                                        <div class="badge badge-info ok" style="background-color: white; font-weight: bold;">準時</div> }
+                                    else if (work_record[i].isLate.Equals("遲到"))
+                                    {
+                                        <div class="badge badge-danger " style="background-color: white; font-weight: bold;">遲到</div>}
                                             </td>
                                             <td class="rowBorderMiddle">
                                                 <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@work_record[i].HashAccount"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@work_record[i].Name</a>
@@ -137,9 +135,11 @@
                                             }
                                             else if (work_record[i].state.Equals("早退"))
                                             {
-                                                <td class="rowBorderEnd"> <div class="badge badge-warning" style="background-color: #FEF7CB; color: #F0BF58;font-weight:bold;">早退</div></td>
-                                            }
-                                            else 
+                                                <td class="rowBorderEnd"> <div class="badge badge-warning" style="background-color: #FEF7CB; color: #F0BF58;font-weight:bold;">早退</div></td> }
+                                            else if (work_record[i].state.Equals("正常"))
+                                            {
+                                                <td class="rowBorderEnd"> <div class="badge badge-info" style="background-color: #CAE1FF; color: #869DE9; font-weight: bold; ">正常</div></td> }
+                                            else
                                             {
                                                 <td class="rowBorderEnd"></td>
                                             }
