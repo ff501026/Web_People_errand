@@ -289,9 +289,9 @@
                                             <div class="col-8 col-sm-6">
                                                 <input type="text" class="form-control" id="trip2record_StartDate" name="trip2record_StartDate" value="@detailtrip2record.CreatedTime" readonly="readonly">
                                             </div>
-                                            @{string location = AttendanceManagement.Models.GoogleMapApiModel.latLngToChineseAddress(detailtrip2record.CoordinateX,detailtrip2record.CoordinateY); }
+                                            @*@{string location = AttendanceManagement.Models.GoogleMapApiModel.latLngToChineseAddress(detailtrip2record.CoordinateX,detailtrip2record.CoordinateY); }*@
                                             <div class="col-4 col-sm-6">
-                                                <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@location" readonly="readonly">
+                                                <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@detailtrip2record.Address" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>

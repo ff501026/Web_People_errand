@@ -255,6 +255,7 @@ namespace AttendanceManagement.Models
         public int Trip2Type{ get; set; }
         public double CoordinateX { get; set; }
         public double CoordinateY { get; set; }
+        public string Address { get; set; }
         public DateTime CreatedTime { get; set; }
     }
 }

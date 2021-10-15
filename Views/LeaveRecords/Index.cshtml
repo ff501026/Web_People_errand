@@ -205,16 +205,18 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th>員工姓名</th>
-                                        <th>假別</th>
-                                        <th>開始時間</th>
-                                        <th>結束時間</th>
-                                        <th>申請時間</th>
-                                        <th>狀態</th>
-                                        <th>編輯</th>
-                                    </tr>
+                                <table class="table table-striped" id="tableSort" style="background-color:white;">
+                                    <thead style="background-color:white;">
+                                        <tr>
+                                            <th>員工姓名</th>
+                                            <th data-type="string" style="cursor:pointer;">假別<i class="bi bi-arrow-down-up"></i></th>
+                                            <th>開始時間</th>
+                                            <th>結束時間</th>
+                                            <th>申請時間</th>
+                                            <th data-type="string" style="cursor:pointer;">狀態<i class="bi bi-arrow-down-up"></i></th>
+                                            <th>編輯</th>
+                                        </tr>
+                                    </thead>
                                     <tbody id="tablePage">
                                         @foreach (var pass_leaverecord in passleaveRecords)
                                         {
@@ -577,4 +579,50 @@
     }
 
     hide();
+    ; (function () {
+
+        var tbody = document.querySelector('#tableSort').tBodies[0];
+        var th = document.querySelector('#tableSort').tHead.rows[0].cells;
+        var td = tbody.rows;
+        for (var i = 0; i < th.length; i++) {
+            th[i].flag = 1;
+            th[i].onclick = function () {
+
+                sort(this.getAttribute('data-type'), this.flag, this.cellIndex);
+                this.flag = -this.flag;
+            };
+        };
+        function sort(str, flag, n) {
+
+            var arr = [];
+            for (var i = 0; i < td.length; i++) {
+                arr.push(td[i]);
+            };
+            arr.sort(function (a, b) {
+
+                return method(str, a.cells[n].innerHTML, b.cells[n].innerHTML) * flag;
+            });
+            for (var i = 0; i < arr.length; i++) {
+                tbody.appendChild(arr[i]);
+            };
+              nPage(1);
+        changepage(1,@endpage);
+        };
+        function method(str, a, b) {
+
+            switch (str) {
+                case 'num':
+                    return a - b;
+                    break;
+                case 'string':
+                    return a.localeCompare(b);
+                    break;
+                default:
+                    return new Date(a.split('-').join('/')).getTime() - new Date(b.split('-').join('/')).getTime();
+            };
+
+        };
+
+
+    })();
 </script>

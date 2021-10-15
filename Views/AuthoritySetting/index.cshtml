@@ -34,12 +34,17 @@
 <script type="text/javascript">
     window.onload = function () {
 
-        @*var check =@select;*@
+        @foreach (var managerPermissions1 in managerPermissions)
+        {
+            foreach (var department in departments)
+            {
+                @: mycheckF("C1_@department.DepartmentId@managerPermissions1.PermissionsId","1_@department.DepartmentId@managerPermissions1.PermissionsId", @jobTitles.Count);
+                @: mycheckF("C2_@department.DepartmentId@managerPermissions1.PermissionsId", "2_@department.DepartmentId@managerPermissions1.PermissionsId", @jobTitles.Count);
+            }
+        }
+
         var length = @j;
-        //for (var i = 1; i <= check.length; i++)
-        //{
-        //    document.getElementById(check[i]).checked = true;
-        //}
+
         for(var i = 1; i <= length; i++)
         {
             show("select1_" + i, "#custom_" + i);
@@ -220,7 +225,7 @@
                                                                                                         <h4 id="Content" style="margin-right:5px">群組名 : </h4>
                                                                                                     </div>
                                                                                                     <div class="col-md-9" style="padding-left: 0;padding-right:0; display: inline-block;" id="CenterSet">
-                                                                                                        <input value="預設" type="text" class="show" id="department_name" name="name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px;" disabled readonly="readonly">
+                                                                                                        <input value="預設" type="text" class="show" id="department_name123" name="name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px;" disabled readonly="readonly">
                                                                                                     </div>
                                                                                                     <div class="col-2 " style="display: inline-block;" id="CenterSet">
                                                                                                     </div>
@@ -410,14 +415,14 @@
                                                                                                                                 <div class="form-check">
                                                                                                                                     @if ((display_select.FindIndex(item => item.Equals("1_" + @department.DepartmentId + @managerPermission.PermissionsId + @index))) != -1)
                                                                                                                                     {
-                                                                                                                                        <input class="form-check-input" type="checkbox" name="check1" value="@department.DepartmentId @jobtitle.JobTitleId" id="1_@department.DepartmentId@managerPermission.PermissionsId@index" checked>
+                                                                                                                                        <input class="form-check-input" type="checkbox" name="check1" value="@department.DepartmentId @jobtitle.JobTitleId" id="1_@department.DepartmentId@managerPermission.PermissionsId@index" checked onchange="mycheckF('C1_@department.DepartmentId@managerPermission.PermissionsId','1_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
                                                                                                                                         <label class="form-check-label">
                                                                                                                                             @jobtitle.Name
                                                                                                                                         </label>
                                                                                                                                     }
                                                                                                                                     else
                                                                                                                                     {
-                                                                                                                                        <input class="form-check-input" type="checkbox" name="check1" value="@department.DepartmentId @jobtitle.JobTitleId" id="1_@department.DepartmentId@managerPermission.PermissionsId@index">
+                                                                                                                                        <input class="form-check-input" type="checkbox" name="check1" value="@department.DepartmentId @jobtitle.JobTitleId" id="1_@department.DepartmentId@managerPermission.PermissionsId@index" onchange="mycheckF('C1_@department.DepartmentId@managerPermission.PermissionsId','1_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
                                                                                                                                         <label class="form-check-label">
                                                                                                                                             @jobtitle.Name
                                                                                                                                         </label>
@@ -504,14 +509,14 @@
                                                                                                                                 <div class="form-check">
                                                                                                                                     @if ((review_select.FindIndex(item => item.Equals("2_" + @department.DepartmentId + @managerPermission.PermissionsId + @index))) != -1)
                                                                                                                                     {
-                                                                                                                                        <input class="form-check-input" type="checkbox" name="check2" value="@department.DepartmentId @jobtitle.JobTitleId" id="2_@department.DepartmentId@managerPermission.PermissionsId@index" checked>
+                                                                                                                                        <input class="form-check-input" type="checkbox" name="check2" value="@department.DepartmentId @jobtitle.JobTitleId" id="2_@department.DepartmentId@managerPermission.PermissionsId@index" checked onchange="mycheckF('C2_@department.DepartmentId@managerPermission.PermissionsId','2_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
                                                                                                                                         <label class="form-check-label">
                                                                                                                                             @jobtitle.Name
                                                                                                                                         </label>
                                                                                                                                     }
                                                                                                                                     else
                                                                                                                                     {
-                                                                                                                                        <input class="form-check-input" type="checkbox" name="check2" value="@department.DepartmentId @jobtitle.JobTitleId" id="2_@department.DepartmentId@managerPermission.PermissionsId@index">
+                                                                                                                                        <input class="form-check-input" type="checkbox" name="check2" value="@department.DepartmentId @jobtitle.JobTitleId" id="2_@department.DepartmentId@managerPermission.PermissionsId@index" onchange="mycheckF('C2_@department.DepartmentId@managerPermission.PermissionsId','2_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
                                                                                                                                         <label class="form-check-label">
                                                                                                                                             @jobtitle.Name
                                                                                                                                         </label>
@@ -716,7 +721,7 @@
                                                                 <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
                                                                     <div class="col" id="CenterSet" style="font-size:14px">
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="check3" value="@department.DepartmentId @jobtitle.JobTitleId" id="3_@department.DepartmentId@index">
+                                                                            <input class="form-check-input" type="checkbox" name="check3" value="@department.DepartmentId @jobtitle.JobTitleId" id="3_@department.DepartmentId@index" onchange="mycheckF('C3_@department.DepartmentId','3_@department.DepartmentId', @jobTitles.Count)">
                                                                             <label class="form-check-label">
                                                                                 @jobtitle.Name
                                                                             </label>
@@ -774,7 +779,7 @@
                                                                 <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
                                                                     <div class="col" id="CenterSet" style="font-size:14px">
                                                                         <div class="form-check">
-                                                                            <input class="form-check-input" type="checkbox" name="check4" value="@department.DepartmentId @jobtitle.JobTitleId" id="4_@department.DepartmentId@index">
+                                                                            <input class="form-check-input" type="checkbox" name="check4" value="@department.DepartmentId @jobtitle.JobTitleId" id="4_@department.DepartmentId@index" onchange="mycheckF('C4_@department.DepartmentId','4_@department.DepartmentId', @jobTitles.Count)">
                                                                             <label class="form-check-label">
                                                                                 @jobtitle.Name
                                                                             </label>
@@ -848,11 +853,33 @@
     </div>
 </div>
 <script type="text/javascript">
+    function mycheckF(values1,values2,value3) {
+        var len = @jobTitles.Count;
+        var x = 0;
+
+        for (var i = 1; i <= len; i++) {
+            var index = document.getElementById(values2+i);
+            if (index.checked == true) {
+                x++;
+            }
+        }
+
+        if (x == value3) {
+            var check = document.getElementById(values1);
+            check.checked = true;
+        }
+        else
+        {
+            var check = document.getElementById(values1);
+            check.checked = false;
+        }
+        
+    }
     function set() {
         sessionStorage.removeItem("toTop");
         sessionStorage.setItem("toTop", $(window).scrollTop());
     }
-    function load(values1, values2, values) {
+    function load(values1, values) {
         var frm = document.forms[values1];
         if (frm.elements[values2].value != null && frm.elements[values2].value != "")//確認有無填寫
         {
