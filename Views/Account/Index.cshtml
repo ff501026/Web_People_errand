@@ -27,7 +27,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.main.js"></script>
 <script src="bootstrap-show-password.main.js"></script>
 <style>
-/*     html {
+   
+    html {
         height: 100%;
     }
 
@@ -35,19 +36,11 @@
         background-image: url(background.jpg);
         background-repeat: no-repeat;
         background-attachment: fixed;
-        background-position: center;
+        background-position: left;
         background-size: cover;
-    }*/
-    :root {
-        --header-height: 3rem;
-        --first-color: #808080;
-        --nav-width: 78px;
-        --first-color-light: #808080;
-        --white-color: #FFF; /*#5ea7ff #68a3fc*/
-        --body-font: 'Nunito', sans-serif;
-        --normal-font-size: 1rem;
-        --z-fixed: 100;
     }
+
+   
 </style>
 <div class="login-brand">
     <span class="nav_logo-name2">&nbsp;</span>
@@ -72,8 +65,8 @@
             <div class="form-group">
                 <div class="input-group" >
                     <input id="manager_password" name="manager_password" type="password" class="form-control" data-toggle="password" placeholder="請輸入管理員密碼" maxlength="30" required>
-                    <div class="input-group-append">
-                        <div class="input-group-text" id="pswimg" style="border: 1px solid #C2BFBF; background-color: #FFFFFF; box-shadow: 3px 3px 3px #D2D3D3;" onclick="showPsw()">
+                    <div class="input-group-append" >
+                        <div class="input-group-text" onclick="showPsw()" id="pswimg" style="border: 1px solid #C2BFBF; background-color: #FFFFFF; box-shadow: 3px 3px 3px #D2D3D3;cursor:pointer;">
                             <i id="hide" class="bi bi-eye-slash" style="display:inline-block;"></i>
                             <i id="show" class="bi bi-eye"  style="display:none;"></i>
                         </div>

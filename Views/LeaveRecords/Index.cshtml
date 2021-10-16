@@ -10,16 +10,28 @@
 }
 <script type="text/javascript">
     window.onload = function () {
+
         document.getElementById("date").value = sessionStorage.getItem("search_date");
         document.getElementById("employee_name").value = sessionStorage.getItem("search_name");
+
+        if (sessionStorage.getItem("search")) {
+            document.getElementById('cancelbutton').style.display = "inline-block";
+        } else {
+            document.getElementById('cancelbutton').style.display = "none";
+        }
+
         var _offset = sessionStorage.getItem("toTop");
         $(document).scrollTop(_offset);
         sessionStorage.clear();
         if (@num1 < 10)
         {
            nextOff();
-           preOff();
+            preOff();
+
         }
+      
+        
+      
     };
 </script>
 <style>
@@ -43,14 +55,15 @@
         background-color: white;
     }
     th {
-        background-color: white;
+        background-color: white !important;
     }
 </style>
 <div class="main-content">
     <section class="section">
-        <h1 class="section-header">
+        <div class="section-header">
             <div>請假紀錄</div>
-        </h1>
+            <p id="demo"></p>
+        </div>
 
         <div class="section-body" style="margin-top:25px">
             <div class="row">
@@ -127,34 +140,24 @@
         @using (Html.BeginForm("SearchLeaveRecord", "LeaveRecords", FormMethod.Get))
         {
             @Html.AntiForgeryToken()
-            <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">
-                                                                    
+            <form asp-controller="EmployeeTripRecords" asp-action="Index" class="form-inline mr-auto">                                                                
                 <div class="row">
-
-                    <div class="col-lg-6 col-md-6 col-12">
-
-                        <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
-
-                    </div>
-
-
                     <div class="col-lg-5 col-md-5 col-12">
-
+                        <i class="bi-person"></i> 姓名(ID)：<input id="employee_name" name="employee_name" class="form-control" type="text" name="SearchString" placeholder="請輸入員工姓名" aria-label="Search">
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-12">
                         <i class="bi-calendar"></i> 日期：<input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
-
                     </div>
-
                     <div class="col-lg-1 col-md-1 col-12">
-
                         <div class="search-element" style="margin:22px 0px 0px 0px;">
-
-                            <button id="button" name="button" onclick="set(); search_set();" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
-
+                            <button id="button" name="button" onclick="set(); search_set(); search();" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
                         </div>
-
                     </div>
-
-
+                    <div class="col-lg-1 col-md-1 col-12">
+                        <div class="search-element" style="margin:22px 0px 0px 0px;">
+                            <button id="cancelbutton" name="button" value="search" type="button"class="btn" style="display:none;" onclick="cancel(); set();"><i class="bi bi-x-circle"></i></button>
+                        </div>
+                    </div>
                 </div>
                 @*<div class="row" style="margin-top:10px;">
                     <div class="col-lg-6 col-md-6 col-12">
@@ -171,26 +174,15 @@
                             <option>產前假</option>
                             <option>陪產假</option>
                         </select>
-
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-12">
-                        <i class="bi bi-sliders"></i>
-                        狀態 :
-                        <select class="form-control" type="text" placeholder="Search" aria-label="Search">
-                            <option>請選擇狀態</option>
-                            <option>核准</option>
-                            <option>拒絕</option>
-                        </select>
-
+                    <div class="col-lg-1 col-md-1 col-12">
+                        <div class="search-element" style="margin:22px 0px 0px 0px;">
+                            <button id="button" name="button" onclick="set();search();" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
+                        </div>
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
-
-                        <div class="search-element" style="margin:22px 0px 0px 0px;">
-                                                                    
-                            <button id="button" name="button" onclick="set(); search_set();" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
-                                                                    
+                        <div class="search-element" style="margin:22px 0px 0px 0px;">                                       
+                            <button id="button" name="button" onclick="set(); search_set();" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>                                       
                         </div>
-
                     </div>
                 </div>*@                                            
             </form>
@@ -207,13 +199,13 @@
                             <div class="table-responsive">
                                 <table class="table table-striped" id="tableSort" style="background-color:white;">
                                     <thead style="background-color:white;">
-                                        <tr>
+                                        <tr style="background-color:white;">
                                             <th>員工姓名</th>
-                                            <th data-type="string" style="cursor:pointer;">假別<i class="bi bi-arrow-down-up"></i></th>
+                                                <th data-type="string" style="cursor:pointer;">假別<i class="bi bi-arrow-down-up"></i></th>
                                             <th>開始時間</th>
                                             <th>結束時間</th>
                                             <th>申請時間</th>
-                                            <th data-type="string" style="cursor:pointer;">狀態<i class="bi bi-arrow-down-up"></i></th>
+                                                <th data-type="string" style="cursor:pointer;">狀態<i class="bi bi-arrow-down-up" ></i></th>
                                             <th>編輯</th>
                                         </tr>
                                     </thead>
@@ -245,6 +237,7 @@
                                                     @*<button class="btn btn-danger btn-action" type="submit"><i class="bi-trash"></i></button>*@
                                                 </td>
                                             </tr>
+
                                         }
                                     </tbody>
                                 </table>
@@ -346,6 +339,7 @@
     function set() {
         sessionStorage.removeItem("toTop");
         sessionStorage.setItem("toTop", $(window).scrollTop());
+       
     }
 </script>
 <script type="text/javascript">
@@ -509,6 +503,7 @@
         }
         else if (n == 1) {
             nextOn();
+
             preOff();
         }else if (maxRow1 == numberRowsInTable) {
             preOn();
@@ -626,3 +621,16 @@
 
     })();
 </script>
+<script>
+    function search() {
+        sessionStorage.removeItem("search");
+        sessionStorage.setItem("search", true);
+    }
+
+    function cancel() {
+        sessionStorage.clear();
+        window.location = '/LeaveRecords/index';
+        
+    }
+</script>
+

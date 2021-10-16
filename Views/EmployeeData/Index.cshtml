@@ -55,6 +55,11 @@
 </style>
 <script type="text/javascript">
     window.onload = function () {
+        //if (sessionStorage.getItem("search")) {
+        //    document.getElementById('cancelbutton').style.display = "inline-block";
+        //} else {
+        //    document.getElementById('cancelbutton').style.display = "none";
+        //}
         var _offset = sessionStorage.getItem("toTop");
         document.getElementById("s_department").options[sessionStorage.getItem("search_department")].selected = true;
         document.getElementById("s_jobtitle").options[sessionStorage.getItem("search_jobtitle")].selected = true;
@@ -66,6 +71,8 @@
            nextOff();
            preOff();
         }
+       
+      
     };
 </script>
 <div class="main-content">
@@ -127,7 +134,7 @@
                         <label class="form-inline">
                             <i class="bi-sliders"></i> 部門：
                             <select id="s_department" name="department" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                <option>請選擇部門</option>
+                                <option>全部</option>
                                 @foreach (var department in departments)
                                 {
                                     <option value="@department.Name">@department.Name</option>
@@ -139,7 +146,7 @@
                         <label class="form-inline">
                             <i class="bi-filter-left"></i> 職稱：
                             <select id="s_jobtitle" name="jobtitle" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                <option>請選擇職稱</option>
+                                <option>全部</option>
                                 @foreach (var jobtitle in jobTitles)
                                 {
                                     <option value="@jobtitle.Name">@jobtitle.Name</option>
@@ -153,7 +160,7 @@
 
                             <i class="bi-person"></i> 姓名：
                             <select id="s_employee_name" name="employee_name" class="form-control" type="text" placeholder="Search" aria-label="Search">
-                                <option>請選擇姓名</option>
+                                <option>全部</option>
                                 @foreach (var passEmployee in all_passEmployees)
                                 {
                                     <option value="@passEmployee.HashAccount">@passEmployee.Name</option>
@@ -163,9 +170,14 @@
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" onclick="set();search_set()" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal4.1"><i class="bi-search"></i></button>
+                            <button id="button" onclick="set();search();search_set();" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal4.1"><i class="bi-search"></i></button>
                         </div>
                     </div>
+                    @*<div class="col-lg-1 col-md-1 col-12">
+                        <div>
+                            <button id="cancelbutton" name="button" value="search" class="btn" style="display:none;" onclick="cancel();"><i class="bi bi-x-circle"></i></button>
+                        </div>
+                    </div>*@
                 </div>
             </form>
         }
@@ -986,8 +998,26 @@
     }
 
     hide();
-    </script>
-    <script type="text/javascript">
+</script>
+<script>
+    function search() {
+        var d = document.getElementById("s_department").selectedIndex;
+        var j = document.getElementById("s_jobtitle").selectedIndex;
+        var n = document.getElementById("s_employee_name").selectedIndex;
+        if (d != 0 || j != 0 || n != 0)
+        {
+            sessionStorage.removeItem("search");
+            sessionStorage.setItem("search", true);
+        }
+        
+    }
+    //function cancel() {
+    //    sessionStorage.clear();
+    //    window.location = '/EmployeeData/index';
+
+    //}
+</script>
+<script type="text/javascript">
 
         @*var itemA = '<%=@foreach(var pass_employee in passEmployees) { @pass_employee.HashAccount} %>'*@
 

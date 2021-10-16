@@ -24,6 +24,11 @@
         document.getElementById("date").value = sessionStorage.getItem("search_date");
         document.getElementById("employee_name").value = sessionStorage.getItem("search_name");
 
+        if (sessionStorage.getItem("search")) {
+            document.getElementById('cancelbutton').style.display = "inline-block";
+        } else {
+            document.getElementById('cancelbutton').style.display = "none";
+        }
         var _offset = sessionStorage.getItem("toTop");
         $(document).scrollTop(_offset);
         sessionStorage.clear();
@@ -32,7 +37,9 @@
            nextOff();
            preOff();
        }
-        okORdanger();
+   
+       
+       
     };
 </script>
 <div class="main-content">
@@ -42,16 +49,15 @@
         </h3>
         @using (Html.BeginForm("SearchWorkRecord", "PunchRecords", FormMethod.Get))
         {
-            @Html.AntiForgeryToken()
     <form class="form-inline mr-auto">
-        <div class="row" style="margin-left:10px;">
-            <div class="col-lg-3 col-md-3 col-3" style="padding:0px;">
+        <div class="row" style="margin-left:-5px;">
+            <div class="col-md-3  col-12  col-lg-3">
                 <label class="form-inline">
                     姓名(ID)：
-                    <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" aria-label="Search">
+                    <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" style="width:70%;" aria-label="Search">
                 </label>
             </div>
-            <div class="col-lg-3 col-md-3 col-3">
+            <div class="col-md-3  col-12  col-lg-3">
                 <label class="form-inline">
                     日期：
                     <input id="date"  name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
@@ -59,7 +65,7 @@
                 </label>
 
             </div>
-            <div class="col-lg-2 col-md-2 col-2">
+            <div class="col-md-2  col-12 col-lg-2">
                 <i class="bi bi-alarm form-inline" style="font-weight:bolder;">
                     <label style="color: #F6F6F6;">--</label>
                     <select id="clock" name="islate"class="form-control" type="text" placeholder="Search" aria-label="Search">
@@ -69,8 +75,8 @@
                     </select>
                 </i>
             </div>
-            <div class="col-lg-2 col-md-2 col-2">
-                <i class="bi bi-box-arrow-right form-inline" style="font-weight:bolder;"> 
+            <div class="col-md-2  col-12 col-lg-2">
+                <i class="bi bi-box-arrow-right form-inline" style="font-weight:bolder;">
                     <label style="color: #F6F6F6;">--</label>
                     <select id="rest" name="state" class="form-control" type="text" placeholder="Search" aria-label="Search">
                         <option value="下班狀態">下班狀態</option>
@@ -80,9 +86,16 @@
                     </select>
                 </i>
             </div>
-            <div class="col-lg-2 col-md-2 col-2">
+            <div class="col-md-1  col-12 col-lg-1">
                 <div>
-                    <button id="button" onclick="search_set(); set(); " name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
+                    <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1" onclick="search();search_set();"><i class="bi-search"></i></button>
+                </div>
+            </div>
+            <div class="col-md-1  col-12 col-lg-1">
+                <div>
+                    <button id="cancelbutton" name="button" type="button" value="search" class="btn" style="display:none;" onclick="cancel();window.location='/PunchRecords/index';">
+                        <i class="bi bi-x-circle"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -354,112 +367,7 @@
         sessionStorage.removeItem("search_name");
         sessionStorage.setItem("search_name", n);
     }
-    //function okORdanger()
-    //{
-    //    var clockselect = document.getElementById("clock").value;
-    //    if (clockselect == 0) {
-    //        $(".ok").css("display", "block");
-    //        $(".badge-danger").css("display", "block");
-    //    }
-    //    else if (clockselect == 1) {
-    //        $(".ok").css("display", "block");
-    //        $(".badge-danger").css("display", "none");
-    //    }
-    //    else if (clockselect == 2) {
-    //        $(".ok").css("display", "none");
-    //        $(".badge-danger").css("display", "block");
-    //    }
-        
-    //}
-
-</script>
-<script>
-
-    //function getRows(override, value) {
-    //    var filter = "table tbody tr td";
-    //    $("#clock").each(function () {
-    //        var test = this === override ? value : $(this).val();
-    //        if (test !== "是否遲到") {
-    //            filter += ":contains(" + test + ")";
-    //        }
-    //    });
-    //    $('#title').show();
-    //    $('#pagenumber').hide();
-        
-    //    return $(filter).parent();
-    //}
     
-    //$('#clock').on('change', function () {
-    //    //$('table tbody tr').hide();
-    //    //var filter = "table tbody tr td";
-    //    //var test = '準時';
-    //    //$("#clock").each(function () {
-
-    //    //    if (test !== "是否遲到") {
-    //    //        filter += ":contains(" + test + ")";
-    //    //    }
-    //    //});
-    //    //$('#title').show();
-    //    //$('#pagenumber').hide();
-
-    //    //return $(filter).parent();
-    //    if ($('#clock').val() == "是否遲到")
-    //    {
-    //        var modal = document.getElementById("exampleModal2.1");
-    //        modal.style.display = "block";
-    //        return window.location = '/PunchRecords/index';
-    //    }
-    //    $('table tbody tr').hide();
-    //    getRows().show();
-    //    $('#clock').each(function (i, select) {
-    //        $('option', this).each(function () {
-    //            $(this).toggle(getRows(select, $(this).text()).length > 0);
-    //        });
-    //    });
-    //});
-    //function restgetRows(override, value) {
-    //    var filter = "table tbody tr td";
-    //    $("#rest").each(function () {
-    //        var test = this === override ? value : $(this).val();
-    //        if (test !== "下班狀態") {
-    //            filter += ":contains(" + test + ")";
-    //        }
-    //    });
-    //    $('#title').show();
-    //    $('#pagenumber').hide();
-    //    return $(filter).parent();
-    //}
-    //$('#rest').on('change', function () {
-    //    if ($('#rest').val() == "下班狀態") {
-    //        var modal = document.getElementById("exampleModal2.1");
-    //        modal.style.display = "block";
-    //        return window.location = '/PunchRecords/index';
-    //    }
-    //    $('table tbody tr').hide();
-    //    restgetRows().show();
-    //    $('#rest').each(function (i, select) {
-    //        $('option', this).each(function () {
-    //            $(this).toggle(restgetRows(select, $(this).text()).length > 0);
-    //        });
-    //    });
-    //});
-    //function change() {
-    //    var storeId = document.getElementById('punch');//獲取table的id標識  
-    //    var rowsLength = storeId.rows.length;//表格總共有多少行  
-    //    var key = $('#clock').val();//獲取輸入框的值  
-
-    //    var searchCol = 0;//要搜尋的哪一列，這裡是第一列，從0開始數起  
-
-    //    for (var i = 1; i < rowsLength; i++) {//按表的行數進行迴圈，本例第一行是標題，所以i=1，從第二行開始篩選（從0數起）  
-    //        var searchText = storeId.rows[i].cells[searchCol].innerHTML;//取得table行，列的值  
-
-    //        if (searchText.match("準時")) {//用match函式進行篩選，如果input的值，即變數 key的值為空，返回的是ture，  
-    //            storeId.rows[i].style.display = 'block';//顯示行操作，  
-    //        } else {
-    //            storeId.rows[i].style.display = 'none';//隱藏行操作  
-    //        }
-    //    }  
-    //}
 </script>
 <script type="text/javascript">
     var theTable = document.getElementById("tablePage");
@@ -682,4 +590,23 @@
 
     hide();
 </script>
+<script type="text/javascript">
+    function search() {
+        var d = document.getElementById("date").value;
+        var n = document.getElementById("employee_name").value;
+        var c = document.getElementById("clock").selectedIndex;
+        var r = document.getElementById("rest").selectedIndex;
 
+        //if (d != "" || n != "" || c!=0 || r!=0)
+        //{
+            
+        //}
+
+        sessionStorage.removeItem("search");
+        sessionStorage.setItem("search", true);
+        
+    }
+    function cancel() {
+        sessionStorage.clear();
+    }
+</script>

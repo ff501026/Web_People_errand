@@ -15,6 +15,11 @@
 
 <script type="text/javascript">
     window.onload = function () {
+        if (sessionStorage.getItem("search")) {
+            document.getElementById('cancelbutton').style.display = "inline-block";
+        } else {
+            document.getElementById('cancelbutton').style.display = "none";
+        }
         document.getElementById("date").value = sessionStorage.getItem("search_date");
         document.getElementById("employee_name").value = sessionStorage.getItem("search_name");
         sessionStorage.clear();
@@ -22,7 +27,10 @@
         {
            nextOff();
            preOff();
-        }
+       }
+       
+       
+      
     };
 </script>
 <div class="main-content">
@@ -99,7 +107,12 @@
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" name="button" onclick="search_set();" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search" ></i></button>
+                            <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" onclick="search();search_set();" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-12">
+                        <div>
+                            <button id="cancelbutton" name="button" value="search" type="button" class="btn" style="display:none;" onclick="cancel();"><i class="bi bi-x-circle"></i></button>
                         </div>
                     </div>
                 </div>
@@ -412,10 +425,6 @@
         sessionStorage.removeItem("search_name");
         sessionStorage.setItem("search_name", n);
     }
-    function cancel()
-    {
-        window.location = '/PunchRecords/index';
-    }
 </script>
 <script type="text/javascript">
     var theTable = document.getElementById("tablePage");
@@ -649,4 +658,16 @@
             modal.find('.modal-body input').val(recipient)
         })
 
+</script>
+<script>
+    function search() {
+
+        sessionStorage.removeItem("search");
+        sessionStorage.setItem("search", true);
+    }
+    function cancel() {
+        sessionStorage.clear();
+        window.location = '/TripRecords/index';
+       
+    }
 </script>
