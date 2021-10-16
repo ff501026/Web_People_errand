@@ -55,6 +55,11 @@
 </style>
 <script type="text/javascript">
     window.onload = function () {
+        if (sessionStorage.getItem("search")) {
+            document.getElementById('cancelbutton').style.display = "inline-block";
+        } else {
+            document.getElementById('cancelbutton').style.display = "none";
+        }
         var _offset = sessionStorage.getItem("toTop");
         $(document).scrollTop(_offset);
         sessionStorage.clear();
@@ -63,6 +68,8 @@
            nextOff();
            preOff();
         }
+       
+      
     };
 </script>
 <div class="main-content">
@@ -127,8 +134,7 @@
                                 <option>請選擇部門</option>
                                 @foreach (var department in departments)
                                 {
-                                    <option>@department.Name</option>
-                                }
+                <option>@department.Name</option>}
                             </select>
                         </label>
                     </div>
@@ -139,8 +145,7 @@
                                 <option>請選擇職稱</option>
                                 @foreach (var jobtitle in jobTitles)
                                 {
-                                    <option>@jobtitle.Name</option>
-                                }
+                <option>@jobtitle.Name</option>}
                             </select>
                         </label>
                     </div>
@@ -151,14 +156,18 @@
                                 <option>請選擇姓名</option>
                                 @foreach (var passEmployee in all_passEmployees)
                                 {
-                                    <option>@passEmployee.Name</option>
-                                }
+                <option>@passEmployee.Name</option>}
                             </select>
                         </label>
                     </div>
                     <div class="col-lg-1 col-md-1 col-12">
                         <div>
-                            <button id="button" onclick="set();" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal4.1"><i class="bi-search"></i></button>
+                            <button id="button" onclick="set();search();" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal4.1"><i class="bi-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-12">
+                        <div>
+                            <button id="cancelbutton" name="button" value="search" class="btn" style="display:none;" onclick="cancel();">取消搜尋</button>
                         </div>
                     </div>
                 </div>
@@ -959,6 +968,18 @@
     }
 
     hide();
+</script>
+<script>
+    function search() {
+
+        sessionStorage.removeItem("search");
+        sessionStorage.setItem("search", true);
+    }
+    function cancel() {
+        sessionStorage.clear();
+        window.location = '/EmployeeData/index';
+
+    }
 </script>
 <script type="text/javascript">
 

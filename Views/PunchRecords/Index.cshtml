@@ -18,11 +18,19 @@
 
 <script type="text/javascript">
     window.onload = function () {
+        if (sessionStorage.getItem("search")) {
+            document.getElementById('cancelbutton').style.display = "inline-block";
+        } else {
+            document.getElementById('cancelbutton').style.display = "none";
+        }
        if (@num1 < 10)
         {
            nextOff();
            preOff();
-        }
+       }
+   
+       
+       
     };
 </script>
 <div class="main-content">
@@ -34,14 +42,14 @@
         {
             @Html.AntiForgeryToken()
     <form class="form-inline mr-auto">
-        <div class="row" style="margin-left:10px;">
-            <div class="col-lg-3 col-md-3 col-3" style="padding:0px;">
+        <div class="row" style="margin-left:-5px;">
+            <div class="col-md-3  col-12  col-lg-3">
                 <label class="form-inline">
                     姓名(ID)：
-                    <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" aria-label="Search">
+                    <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" style="width:70%;" aria-label="Search">
                 </label>
             </div>
-            <div class="col-lg-3 col-md-3 col-3">
+            <div class="col-md-3  col-12  col-lg-3">
                 <label class="form-inline">
                     日期：
                     <input id="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
@@ -49,7 +57,7 @@
                 </label>
 
             </div>
-            <div class="col-lg-2 col-md-2 col-2">
+            <div class="col-md-2  col-12 col-lg-2">
                 <i class="bi bi-alarm form-inline" style="font-weight:bolder;">
                     <label style="color: #F6F6F6;">--</label>
                     <select class="form-control" type="text" placeholder="Search" aria-label="Search">
@@ -59,8 +67,8 @@
                     </select>
                 </i>
             </div>
-            <div class="col-lg-2 col-md-2 col-2">
-                <i class="bi bi-box-arrow-right form-inline" style="font-weight:bolder;"> 
+            <div class="col-md-2  col-12 col-lg-2">
+                <i class="bi bi-box-arrow-right form-inline" style="font-weight:bolder;">
                     <label style="color: #F6F6F6;">--</label>
                     <select class="form-control" type="text" placeholder="Search" aria-label="Search">
                         <option>下班狀態</option>
@@ -70,9 +78,14 @@
                     </select>
                 </i>
             </div>
-            <div class="col-lg-2 col-md-2 col-2">
+            <div class="col-md-1  col-12 col-lg-1">
                 <div>
-                    <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
+                    <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" data-target="#exampleModal2.1" onclick="search();"><i class="bi-search"></i></button>
+                </div>
+            </div>
+            <div class="col-md-1  col-12 col-lg-1">
+                <div>
+                    <button id="cancelbutton" name="button" value="search" class="btn" style="display:none;" onclick="cancel();">取消搜尋</button>
                 </div>
             </div>
         </div>
@@ -639,6 +652,14 @@
     hide();
 </script>
 <script type="text/javascript">
-    
-    
+    function search() {
+
+        sessionStorage.removeItem("search");
+        sessionStorage.setItem("search", true);
+    }
+    function cancel() {
+        sessionStorage.clear();
+        window.location = '/PunchRecords/index';
+       
+    }
 </script>
