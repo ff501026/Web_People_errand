@@ -1,17 +1,15 @@
-﻿@{
-    ViewData["Title"] = "公出管理";
-    List<AttendanceManagement.Models.TripRecord> reviewTripRecords = ViewBag.review_triprecord;//待審核公出資料
-    List<AttendanceManagement.Models.TripRecord> passTripRecords = ViewBag.pass_triprecord;//已審核公出資料
-    List<AttendanceManagement.Models.Trip2Record> Trip2Records = ViewBag.trip2record;//公出資料2
-    List<AttendanceManagement.Models.DetailTrip2Record> DetailTrip2Records = ViewBag.detailtrip2record;//公出資料2
+﻿@{ ViewData["Title"] = "公出管理";
+                List<AttendanceManagement.Models.TripRecord> reviewTripRecords = ViewBag.review_triprecord;//待審核公出資料
+                List<AttendanceManagement.Models.TripRecord> passTripRecords = ViewBag.pass_triprecord;//已審核公出資料
+                List<AttendanceManagement.Models.Trip2Record> Trip2Records = ViewBag.trip2record;//公出資料2
+                List<AttendanceManagement.Models.DetailTrip2Record> DetailTrip2Records = ViewBag.detailtrip2record;//公出資料2
 
-    int review_num = 0;//待審核公出資料編號
-    int pass_num = 0;//已審核公出資料編號
-    int num1 = Trip2Records.Count == 0 ? 1 : Trip2Records.Count;
-    int endpage = (num1 / 10) + 1;
-    int endpageint = (num1 / 10);
-    int pagecount = 0;
-}
+                int review_num = 0;//待審核公出資料編號
+                int pass_num = 0;//已審核公出資料編號
+                int num1 = Trip2Records.Count == 0 ? 1 : Trip2Records.Count;
+                int endpage = (num1 / 10) + 1;
+                int endpageint = (num1 / 10);
+                int pagecount = 0; }
 
 <script type="text/javascript">
     window.onload = function () {
@@ -28,9 +26,9 @@
            nextOff();
            preOff();
        }
-       
-       
-      
+
+
+
     };
 </script>
 <div class="main-content">
@@ -40,84 +38,83 @@
         </h3>
 
         @*
-        <div class="section-body" style="margin-top:25px">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>待審核-公出申請</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>編號</th>
-                                            <th>批示狀態</th>
-                                            <th>申請人</th>
-                                            <th>起始時間</th>
-                                            <th>結束時間</th>
-                                            <th>公出地點</th>
-                                            <th>申請時間</th>
-                                            <th>審核</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var review_triprecord in reviewTripRecords)
-                                        {
-                                            review_num++;
+            <div class="section-body" style="margin-top:25px">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>待審核-公出申請</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
                                             <tr>
-                                                <td>@review_num</td>
-                                                <td><div class="badge badge-warning">待審核</div></td>
-                                                <td>@review_triprecord.Name</td>
-                                                <td>@review_triprecord.StartDate</td>
-                                                <td>@review_triprecord.EndDate</td>
-                                                <td>@review_triprecord.Location</td>
-                                                <td>@review_triprecord.CreatedTime</td>
-                                                <td><a href="/TripRecords/Check?id=@review_triprecord.TripRecordId" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a></td>
+                                                <th>編號</th>
+                                                <th>批示狀態</th>
+                                                <th>申請人</th>
+                                                <th>起始時間</th>
+                                                <th>結束時間</th>
+                                                <th>公出地點</th>
+                                                <th>申請時間</th>
+                                                <th>審核</th>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var review_triprecord in reviewTripRecords)
+                                            {
+                                                review_num++;
+                                                <tr>
+                                                    <td>@review_num</td>
+                                                    <td><div class="badge badge-warning">待審核</div></td>
+                                                    <td>@review_triprecord.Name</td>
+                                                    <td>@review_triprecord.StartDate</td>
+                                                    <td>@review_triprecord.EndDate</td>
+                                                    <td>@review_triprecord.Location</td>
+                                                    <td>@review_triprecord.CreatedTime</td>
+                                                    <td><a href="/TripRecords/Check?id=@review_triprecord.TripRecordId" class="btn btn-danger btn-action" data-toggle="tooltip" title="Edit"><i class="bi-check2-circle"></i></a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         *@
 
 
         @using (Html.BeginForm("SearchTripRecord", "TripRecords", FormMethod.Get))
         {
-            @Html.AntiForgeryToken()
-            <form class="form-inline mr-auto">
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <label class="form-inline">
-                            姓名(ID)：
-                            <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" aria-label="Search">
-                        </label>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <label class="form-inline">
-                            日期：
-                            <input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
-                        </label>
-                    </div>
-                    <div class="col-lg-1 col-md-1 col-12">
-                        <div>
-                            <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" onclick="search();search_set();" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
+@Html.AntiForgeryToken()
+                <form class="form-inline mr-auto">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <label class="form-inline">
+                                姓名(ID)：
+                                <input id="employee_name" name="employee_name" class="form-control" type="text" placeholder="請輸入員工姓名" aria-label="Search">
+                            </label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <label class="form-inline">
+                                日期：
+                                <input id="date" name="date" class="form-control" type="date" placeholder="Search" aria-label="Search" max="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            </label>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-12">
+                            <div>
+                                <button id="button" name="button" value="search" class="btn" type="submit" data-toggle="modal" onclick="search();search_set();" data-target="#exampleModal2.1"><i class="bi-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-12">
+                            <div>
+                                <button id="cancelbutton" name="button" value="search" type="button" class="btn" style="display:none;" onclick="cancel();"><i class="bi bi-x-circle"></i></button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-1 col-md-1 col-12">
-                        <div>
-                            <button id="cancelbutton" name="button" value="search" type="button" class="btn" style="display:none;" onclick="cancel();"><i class="bi bi-x-circle"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        }
+                </form>}
 
         <div class="section-body" style="margin-top:25px">
             <div class="row">
@@ -133,46 +130,45 @@
                                     <tr>
                                         <th>編號</th>
                                         @*
-                <th>批示狀態</th>
+                                            <th>批示狀態</th>
                                         *@
                                         <th>申請人</th>
                                         <th>起始時間</th>
                                         <th>結束時間</th>
                                         @*
-                <th>公出地點</th>
-                <th>申請時間</th>
-                <th></th>
+                                            <th>公出地點</th>
+                                            <th>申請時間</th>
+                                            <th></th>
                                         *@
                                     </tr>
 
                                     <tbody id="tablePage">
                                         @foreach (var trip2record in Trip2Records)
                                         {
-                                            <tr data-toggle="modal" data-target="#exampleModal2.@trip2record.GroupId" id="id" name="id" value="@trip2record.GroupId" style="cursor:pointer;">
-                                                <td class="rowBorderStart">@trip2record.Num</td>
+                            <tr data-toggle="modal" data-target="#exampleModal2.@trip2record.GroupId" id="id" name="id" value="@trip2record.GroupId" style="cursor:pointer;">
+                                <td class="rowBorderStart">@trip2record.Num</td>
 
-                                                @*
-                        @if (pass_triprecord.Review == true)
-                        {
-                            <td><div class="badge badge-info">審核通過</div></td>
-                        }
-                        else
-                        {
-                            <td><div class="badge badge-danger">審核拒絕</div></td>
-                        }
-                                                *@
+                                @*
+                                    @if (pass_triprecord.Review == true)
+                                    {
+                                        <td><div class="badge badge-info">審核通過</div></td>
+                                    }
+                                    else
+                                    {
+                                        <td><div class="badge badge-danger">審核拒絕</div></td>
+                                    }
+                                *@
 
-                                                <td class="rowBorderMiddle"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@trip2record.Name</td>
-                                                <td class="rowBorderMiddle">@trip2record.StartTime</td>
-                                                <td class="rowBorderEnd">@trip2record.EndTime</td>
+                                <td class="rowBorderMiddle"><img src="~/Content/images/avatar.png" alt="avatar" width="30" class="rounded-circle mr-1">@trip2record.Name</td>
+                                <td class="rowBorderMiddle">@trip2record.StartTime</td>
+                                <td class="rowBorderEnd">@trip2record.EndTime</td>
 
-                                                @*
-                        <td>@pass_triprecord.Location</td>
-                        <td>@pass_triprecord.CreatedTime</td>
-                        <td><a href="/TripRecords/Edit?id=@pass_triprecord.TripRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
-                                                *@
-                                            </tr>
-                                        }
+                                @*
+                                    <td>@pass_triprecord.Location</td>
+                                    <td>@pass_triprecord.CreatedTime</td>
+                                    <td><a href="/TripRecords/Edit?id=@pass_triprecord.TripRecordId" class="btn btn-primary btn-action" data-toggle="tooltip" title="Edit"><i class="bi-pencil-fill"></i></a></td>
+                                *@
+                            </tr>}
                                     </tbody>
                                 </table>
                                 <div class="card-footer text-right">
@@ -181,12 +177,10 @@
                                         <ul class="pagination mb-0 pagination" id="pageList">
                                             @if (@num1 % 10 == 0)
                                             {
-                                                <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpageint)">首頁</a></li>
-                                            }
+                                <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpageint)">首頁</a></li> }
                                             else
                                             {
-                                                <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpage)">首頁</a></li>
-                                            }
+                                <li class="page-item" id="spanpage_first"><a class="page-link" href="javascript:nPage(1);changepage(1,@endpage)">首頁</a></li>}
                                             <li class="page-item disabled " id="spanPre" style="border:0px;padding:0px">
                                                 <a class="page-link" href="javascript:pre();" style="color: #68a3fc;">&laquo;</a>
                                             </li>
@@ -198,20 +192,16 @@
                                                     pagecount++;
                                                     if (pagecount <= 3)
                                                     {
-                                                        <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
-                                                    }
+                                <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li> }
                                                     else
                                                     {
-                                                        <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li>
-                                                    }
+                                <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpageint);">@i</a></li> }
                                                 }
                                             }
                                             else if (@num1 < 10)
                                             {
 
-                                                <li class="active" id="spanpage_1"><a class="page-link" id="spanpage_a_1" href="javascript:nPage(1);nextOff();preOff();">1</a></li>
-
-                                            }
+                                <li class="active" id="spanpage_1"><a class="page-link" id="spanpage_a_1" href="javascript:nPage(1);nextOff();preOff();">1</a></li> }
                                             else
                                             {
                                                 for (var i = 1; i <= @endpage; i++)
@@ -219,12 +209,10 @@
                                                     pagecount++;
                                                     if (pagecount <= 3)
                                                     {
-                                                        <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
-                                                    }
+                                <li class="active" id="spanpage_@i"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li> }
                                                     else
                                                     {
-                                                        <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>
-                                                    }
+                                <li class="active" id="spanpage_@i" style="display:none"><a class="page-link" id="spanpage_a_@i" href="javascript:nPage(@i);changepage(@i,@endpage)">@i</a></li>}
                                                 }
                                             }
 
@@ -234,12 +222,10 @@
                                             </li>
                                             @if (@num1 % 10 == 0)
                                             {
-                                                <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpageint);nextOff();changepage(@endpageint,@endpageint);">末頁</a></li>
-                                            }
+                                <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpageint);nextOff();changepage(@endpageint,@endpageint);">末頁</a></li> }
                                             else
                                             {
-                                                <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpage);nextOff();changepage(@endpage,@endpage);">末頁</a></li>
-                                            }
+                                <li class="page-item" id="spanpage_end"><a class="page-link" href="javascript:nPage(@endpage);nextOff();changepage(@endpage,@endpage);">末頁</a></li>}
                                         </ul>
                                     </nav>
 
@@ -258,143 +244,135 @@
 
 @foreach (var trip2record in Trip2Records)
 {
-    <div class="modal fade bd-example-modal-lg" id="exampleModal2.@trip2record.GroupId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
-        <div class="modal-dialog  modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：@trip2record.Name</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <hr size="10" color="#d9d9d9" align="center" width="95%">
-                <div class="modal-body2">
-                    @foreach (var detailtrip2record in DetailTrip2Records)
+<div class="modal fade bd-example-modal-lg" id="exampleModal2.@trip2record.GroupId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="font-size:20px; font-family:Agency FB">員工姓名：@trip2record.Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <hr size="10" color="#d9d9d9" align="center" width="95%">
+            <div class="modal-body2">
+                @foreach (var detailtrip2record in DetailTrip2Records)
+                {
+                    if (trip2record.GroupId == detailtrip2record.GroupId)
                     {
-                        if (trip2record.GroupId == detailtrip2record.GroupId)
-                        {
-                            <div class="cardA card-primary">
-                                <div class="row">
-                                    <div class="col-12">
-                                        @switch (detailtrip2record.Trip2Type)
-                                        {
-                                            case 1:
-                                                <div class="badge badge-danger">出勤</div>
-                                                break;
+<div class="cardA card-primary">
+    <div class="row">
+        <div class="col-12">
+            @switch (detailtrip2record.Trip2Type)
+            {
+                case 1:
+<div class="badge badge-danger">出勤</div> break;
 
-                                            case 2:
-                                                <div class="badge badge-info">到站</div>
-                                                break;
+                            case 2:
+<div class="badge badge-info">到站</div> break;
 
-                                            case 3:
-                                                <div class="badge badge-warning">結束</div>
-                                                break;
-                                        }
-                                        <div class="row" style="margin-top:10px">
-                                            <div class="col-12 col-lg-6">
-                                                打卡時間
-                                            </div>
-                                            <div class="col-12 col-lg-6">
-                                                地點
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-8 col-sm-6">
-                                                <input type="text" class="form-control" id="trip2record_StartDate" name="trip2record_StartDate" value="@detailtrip2record.CreatedTime" readonly="readonly">
-                                            </div>
-                                            @*@{string location = AttendanceManagement.Models.GoogleMapApiModel.latLngToChineseAddress(detailtrip2record.CoordinateX,detailtrip2record.CoordinateY); }*@
-                                            <div class="col-4 col-sm-6">
-                                                <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@detailtrip2record.Address" readonly="readonly">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            case 3:
+<div class="badge badge-warning">結束</div>break;
                         }
-                        @*<div class="cardA card-primary" style="margin-top:-18px">
+            <div class="row" style="margin-top:10px">
+                <div class="col-12 col-lg-6">
+                    打卡時間
+                </div>
+                <div class="col-12 col-lg-6">
+                    地點
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+                    <input type="text" class="form-control" id="trip2record_StartDate" name="trip2record_StartDate" value="@detailtrip2record.CreatedTime" readonly="readonly">
+                </div>
+                @*@{string location = AttendanceManagement.Models.GoogleMapApiModel.latLngToChineseAddress(detailtrip2record.CoordinateX,detailtrip2record.CoordinateY); }*@
+                <div class="col-12 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+                    <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@detailtrip2record.Address" readonly="readonly">
+                </div>
+            </div>
+        </div>
+    </div>
+</div> } @*<div class="cardA card-primary" style="margin-top:-18px">
+        <div class="row">
+            <div class="col-12">
+                <div class="badge badge-danger">出勤</div>
+                <div class="row" style="margin-top:10px">
+                    <div class="col-12 col-lg-6">
+                        打卡時間
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        地點
+                    </div>
+                </div>
                 <div class="row">
-                    <div class="col-12">
-                        <div class="badge badge-danger">出勤</div>
-                        <div class="row" style="margin-top:10px">
-                            <div class="col-12 col-lg-6">
-                                打卡時間
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                地點
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8 col-sm-6">
-                                <input type="text" class="form-control" id="pass_triprecord_StartDate" name="pass_triprecord_StartDate" value="@trip2record.StartTime">
-                            </div>
-                            <div class="col-4 col-sm-6">
-                                <input type="text" class="form-control" id="pass_triprecord_Location" name="pass_triprecord_Location" value="@trip2record.EndTime">
-                            </div>
-                        </div>
+                    <div class="col-8 col-sm-6">
+                        <input type="text" class="form-control" id="pass_triprecord_StartDate" name="pass_triprecord_StartDate" value="@trip2record.StartTime">
+                    </div>
+                    <div class="col-4 col-sm-6">
+                        <input type="text" class="form-control" id="pass_triprecord_Location" name="pass_triprecord_Location" value="@trip2record.EndTime">
                     </div>
                 </div>
             </div>
-            <div class="cardA card-primary">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="badge badge-info">到站</div>
-                        <div class="row" style="margin-top:10px">
-                            <div class="col-12 col-lg-6">
-                                打卡時間
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                地點
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8 col-sm-6">
-                                <input type="text" class="form-control" id="trip2record_StartTime" name="trip2record_StartTime" value="@trip2record.StartTime">
-                            </div>
-                            <div class="col-4 col-sm-6">
-                                <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@trip2record.EndTime">
-                            </div>
-                        </div>
+        </div>
+    </div>
+    <div class="cardA card-primary">
+        <div class="row">
+            <div class="col-12">
+                <div class="badge badge-info">到站</div>
+                <div class="row" style="margin-top:10px">
+                    <div class="col-12 col-lg-6">
+                        打卡時間
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        地點
                     </div>
                 </div>
-            </div>
-
-            <div class="cardA card-primary">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="badge badge-warning">結束</div>
-                        <div class="row" style="margin-top:10px">
-                            <div class="col-12 col-lg-6">
-                                打卡時間
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                地點
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8 col-sm-6">
-                                <input type="text" class="form-control" id="pass_triprecord_EndDate" name="pass_triprecord_EndDate" value="@trip2record.EndTime">
-                            </div>
-                            <div class="col-4 col-sm-6">
-                                <input type="text" class="form-control" id="pass_triprecord_Location" name="pass_triprecord_Location" value="@trip2record.StartTime">
-                            </div>
-                        </div>
+                    <div class="col-8 col-sm-6">
+                        <input type="text" class="form-control" id="trip2record_StartTime" name="trip2record_StartTime" value="@trip2record.StartTime">
                     </div>
-                </div>
-            </div>*@
-
-                    }
-                    <div class="modal-footer">
+                    <div class="col-4 col-sm-6">
+                        <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@trip2record.EndTime">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-}
-<div class="modal modal-backdrop-bg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
-    <div class="modal-dialog">
-        <div class="modal-content modal-dialog-centered">
-            <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+    <div class="cardA card-primary">
+        <div class="row">
+            <div class="col-12">
+                <div class="badge badge-warning">結束</div>
+                <div class="row" style="margin-top:10px">
+                    <div class="col-12 col-lg-6">
+                        打卡時間
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        地點
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8 col-sm-6">
+                        <input type="text" class="form-control" id="pass_triprecord_EndDate" name="pass_triprecord_EndDate" value="@trip2record.EndTime">
+                    </div>
+                    <div class="col-4 col-sm-6">
+                        <input type="text" class="form-control" id="pass_triprecord_Location" name="pass_triprecord_Location" value="@trip2record.StartTime">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@}
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>}
+
+<div class="modal modal-backdrop-bg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dialog-centered" style="width: 120px; height: 120px; display: block; margin: auto; ">
+            <div class="modal-body">
                 <div id="CenterSet">
                     <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
                 </div>
@@ -402,19 +380,18 @@
         </div>
     </div>
 </div>
-
 @*<script>
-        var itemA = '<%=@foreach (var pass_triprecord in passTripRecords) { @pass_triprecord.TripRecordId} %>'
+            var itemA = '<%=@foreach (var pass_triprecord in passTripRecords) { @pass_triprecord.TripRecordId} %>'
 
-        $('#exampleModal2.itemA).on('bs.modal', function(event) {
-                var button = $(event.relatedTarget)
-            var recipient = button.data('whatever')
-            var modal = $(this)
-            modal.find('.modal-title').text('New message to ' + recipient)
-            modal.find('.modal-body input').val(recipient)
-        })
+            $('#exampleModal2.itemA).on('bs.modal', function(event) {
+                    var button = $(event.relatedTarget)
+                var recipient = button.data('whatever')
+                var modal = $(this)
+                modal.find('.modal-title').text('New message to ' + recipient)
+                modal.find('.modal-body input').val(recipient)
+            })
 
-</script>*@
+    </script>*@
 <script type="text/javascript">
     function search_set() {
         var d = document.getElementById("date").value;
@@ -668,6 +645,6 @@
     function cancel() {
         sessionStorage.clear();
         window.location = '/TripRecords/index';
-       
+
     }
 </script>

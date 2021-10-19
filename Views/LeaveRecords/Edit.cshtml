@@ -33,7 +33,7 @@
                                 </div>
 
                                 <div class="row" style="margin-top: 20px ; margin-bottom:20px">
-                                    <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <label for="#">假別</label>
                                         <select id="leavetype" name="leavetype" class="form-control" disabled="disabled">
                                             <option>請選擇假別</option>
@@ -50,18 +50,18 @@
                                             }
                                         </select>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <label for="#">事由</label>
                                         <input id="reason" type="email" class="form-control" name="reason" value="@leaveRecords[num].Reason" tabindex="1" placeholder="請輸入事由" required autofocus disabled="disabled">
                                     </div>
                                 </div>
 
                                 <div class="row" style="margin-bottom:20px">
-                                    <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <label for="#">開始時間</label>
                                         <input id="startdate" type="datetime-local" class="form-control" name="startdate" value=@leaveRecords[num].StartDate.ToString("yyyy-MM-ddTHH:mm:ss") disabled="disabled">
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                         <label for="#">結束時間</label>
                                         <input id="enddate" type="datetime-local" class="form-control" name="enddate" value=@leaveRecords[num].EndDate.ToString("yyyy-MM-ddTHH:mm:ss") disabled="disabled">
                                     </div>

@@ -451,7 +451,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row" style="margin:0px 10px 0px 0px;">
-                                    <div class="col-8" id="CenterSet">
+                                    <div class="col-8 align-self-center" id="CenterSet">
 
                                         <select class=" form-select form-select-sm" id="worktimeselect" onchange="this.className=this.options[this.selectedIndex].className;showvalue(this[selectedIndex].value);this.size=1;" this.blur();" aria-label=".form-select-sm example" onfocus='this.size=4;' onblur='this.size=1;'>
                                             <option value="0"></option>
@@ -472,8 +472,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr style="margin: 10px 20px 0px 20px" />
-                                <div class="card-body">
+                                <hr style="margin: 10px 20px 10px 20px" />
+                                <div class="card-body float-left" style="width:100%;padding:0px;">
                                     @*編輯一般*@
                                     @foreach (var generalWorktime in generalWorktimes)
                                     {
@@ -485,17 +485,22 @@
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div>群組名稱 : </div>
-                                                                <input name="Name" value="@generalWorktime.Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;">
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <input name="Name" value="@generalWorktime.Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;">
+                                                                </div>
+                                                               
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div>模式設定 : </div>
-
-                                                                <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
-                                                                    <option selected value="tab2_@generalWorktime.GeneralWorktimeId">一般</option>
-                                                                    <option value="tab2_editelasticity_@generalWorktime.GeneralWorktimeId">彈性</option>
-                                                                </select>
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;height:100%;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
+                                                                        <option selected value="tab2_@generalWorktime.GeneralWorktimeId">一般</option>
+                                                                        <option value="tab2_editelasticity_@generalWorktime.GeneralWorktimeId">彈性</option>
+                                                                    </select>
+                                                                </div>
+                                                             
 
                                                             </div>
                                                         </div>
@@ -507,13 +512,19 @@
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>開始時間 : </div>
-                                                                    <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                    
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>結束時間 : </div>
-                                                                    <input value="@generalWorktime.RestTime" class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@generalWorktime.RestTime" class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -523,14 +534,21 @@
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>休息時間設定 : </div>
-                                                                    <input name="BreakTime" value="@generalWorktime.BreakTime" oninput="value=value.replace(/[^\d]/g,'')" id="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                                    <div>分鐘</div>
+                                                                    <div class="col-8 col-md-6" style="padding:0px;">
+                                                                        <input name="BreakTime" value="@generalWorktime.BreakTime" oninput="value=value.replace(/[^\d]/g,'')" id="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px;  margin: 0px 5px 0px 5px">
+                                                                    </div>
+                                                                   
+                                                                    <div style="margin:0px 0px 0px 5px;">分鐘</div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div id="colorVal">選擇顏色 : </div>
-                                                                    <input name="color" type="color" value="@generalWorktime.Color" id="editgeneralcolor3214" style="width: 25%; border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                                    <div class="col-4 col-md-2" style="padding:0px;">
+
+                                                                        <input name="color" type="color" value="@generalWorktime.Color" id="editgeneralcolor3214" style="border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -557,13 +575,19 @@
                                                             <div class="col-12 col-md-6 col-lg-6 ">
                                                                 <div class="row">
                                                                     <div>開始時間 : </div>
-                                                                    <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>結束時間 : </div>
-                                                                    <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@generalWorktime.WorkTime" class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -573,14 +597,21 @@
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>休息時間設定 : </div>
-                                                                    <input name="BreakTime2" class="form-control" type="text" oninput="value=value.replace(/[^\d]/g,'')" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                                    <div>分鐘</div>
+                                                                    <div class="col-8 col-md-6" style="padding:0px;">
+                                                                        <input name="BreakTime2" class="form-control" type="text" oninput="value=value.replace(/[^\d]/g,'')" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; margin: 0px 5px 0px 5px">
+                                                                    </div>
+
+                                                                    <div style="margin:0px 0px 0px 5px;">分鐘</div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div id="colorVal">選擇顏色 : </div>
-                                                                    <input name="color2"type="color" value="@generalWorktime.Color" id="editelasticitycolor" style="width: 25%; border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                                    <div  class="col-4 col-md-2"style="padding:0px;">
+                                                                        <input name="color2" type="color" value="@generalWorktime.Color" id="editelasticitycolor" style="border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                                    </div>
+
+                                                                 
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -595,13 +626,19 @@
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>開始時間 : </div>
-                                                                    <input value="@generalWorktime.RestTime" class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@generalWorktime.RestTime" class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>結束時間 : </div>
-                                                                    <input value="@generalWorktime.RestTime" class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@generalWorktime.RestTime" class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -631,17 +668,22 @@
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div>群組名稱 : </div>
-                                                                <input name="Name" value="@flexibleWorktime.Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;">
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <input name="Name" value="@flexibleWorktime.Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;">
+                                                                </div>
+                                                              
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div>模式設定 : </div>
-
-                                                                <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF; border-radius: 4px;padding:0px 0px 0px 12px;">
-                                                                    <option value="tab2_editgeneral_@flexibleWorktime.FlexibleWorktimeId">一般</option>
-                                                                    <option selected value="tab2_@flexibleWorktime.FlexibleWorktimeId">彈性</option>
-                                                                </select>
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <select name="auditstate" onchange="showinfo2(this[selectedIndex].value)" id="inputsetting" style="font-size:14px;border: 1px solid #EDEEEF;height:100%; border-radius: 4px;padding:0px 0px 0px 12px;">
+                                                                        <option value="tab2_editgeneral_@flexibleWorktime.FlexibleWorktimeId">一般</option>
+                                                                        <option selected value="tab2_@flexibleWorktime.FlexibleWorktimeId">彈性</option>
+                                                                    </select>
+                                                                </div>
+                                                               
 
                                                             </div>
                                                         </div>
@@ -658,13 +700,19 @@
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>開始時間 : </div>
-                                                                    <input value="@flexibleWorktime.WorkTimeStart" class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@flexibleWorktime.WorkTimeStart" class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                 
                                                                 </div>
                                                             </div>
                                                             <div class="col">
                                                                 <div class="row">
                                                                     <div>結束時間 : </div>
-                                                                    <input value="@flexibleWorktime.WorkTimeEnd" class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@flexibleWorktime.WorkTimeEnd" class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                 
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -674,14 +722,20 @@
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>休息時間設定 : </div>
-                                                                    <input name="BreakTime2" value="@flexibleWorktime.BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                                    <div>分鐘</div>
+                                                                    <div class="col-8 col-md-6" style="padding:0px;">
+                                                                        <input name="BreakTime2" value="@flexibleWorktime.BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; margin: 0px 5px 0px 5px">
+                                                                    </div>
+                                                                  
+                                                                    <div style="margin:0px 0px 0px 5px;">分鐘</div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div id="colorVal">選擇顏色 : </div>
-                                                                    <input name="color2" type="color" id="editelasticitycolor" value="@flexibleWorktime.Color" style="width: 25%; border: 1px solid #EDEEEF;margin:0px 0px 0px 10px;border-radius:4px;">
+                                                                    <div  class="col-4 col-md-2" style="padding:0px;">
+                                                                        <input name="color2" type="color" id="editelasticitycolor" value="@flexibleWorktime.Color" style="border: 1px solid #EDEEEF;margin:0px 0px 0px 10px;border-radius:4px;">
+                                                                    </div>
+                                                                 
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -696,13 +750,19 @@
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>開始時間 : </div>
-                                                                    <input value="@flexibleWorktime.RestTimeStart" class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@flexibleWorktime.RestTimeStart" class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>結束時間 : </div>
-                                                                    <input value="@flexibleWorktime.RestTimeEnd" class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@flexibleWorktime.RestTimeEnd" class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -724,13 +784,19 @@
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>開始時間 : </div>
-                                                                    <input value="@flexibleWorktime.WorkTimeStart" class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@flexibleWorktime.WorkTimeStart" class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>結束時間 : </div>
-                                                                    <input value="@flexibleWorktime.RestTimeStart" class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    <div class="col-12 col-md-8" style="padding:0px;">
+                                                                        <input value="@flexibleWorktime.RestTimeStart" class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search">
+                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -740,14 +806,20 @@
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div>休息時間設定 : </div>
-                                                                    <input name="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                                    <div>分鐘</div>
+                                                                    <div class="col-8 col-md-6" style="padding:0px;">
+                                                                        <input name="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                                    </div>
+                                                                  
+                                                                    <div style="margin:0px 0px 0px 5px;">分鐘</div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6 col-lg-6">
                                                                 <div class="row">
                                                                     <div id="colorVal">選擇顏色 : </div>
-                                                                    <input name="color" type="color" id="editgeneralcolor" value="@flexibleWorktime.Color" style="width: 25%; border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                                    <div  class="col-4 col-md-2" style="padding:0px;">
+                                                                        <input name="color" type="color" id="editgeneralcolor" value="@flexibleWorktime.Color" style=" border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                                    </div>
+                                                                  
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -776,19 +848,25 @@
                                                 <div class="row">
                                                     <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                                         <div class="row">
-                                                            <div>群組名稱 : </div>
-                                                            <input name="Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;" required>
+                                                            <div>
+                                                               群組名稱:
+                                                            </div>
+                                                            <div class="col-12 col-md-8" style="padding:0px;">
+                                                                <input name="Name" class="form-control" type="text" placeholder="請輸入群組名稱" aria-label="Search" id="inputsetting" style="font-size: 14px;" required>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                        </div>
                                                     <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                                         <div class="row">
-                                                            <div>模式設定 : </div>
-
-                                                            <select name="auditstate" onchange="showinfo(this[selectedIndex].value)" id="inputsetting" style="font-size: 14px; border: 1px solid #EDEEEF; border-radius: 4px; padding: 0px 0px 0px 12px;">
-                                                                <option selected value="1">一般</option>
-                                                                <option value="2">彈性</option>
-                                                            </select>
-
+                                                            <div>
+                                                               樣式設定:
+                                                            </div>
+                                                            <div class="col-12 col-md-8" style="padding:0px;">
+                                                                <select name="auditstate" onchange="showinfo(this[selectedIndex].value)" id="inputsetting" style="font-size: 14px; border: 1px solid #EDEEEF;  border-radius: 4px;height:100%; padding: 0px 0px 0px 12px;">
+                                                                    <option selected value="1">一般</option>
+                                                                    <option value="2">彈性</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -799,13 +877,17 @@
                                                         <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                                             <div class="row">
                                                                 <div>開始時間 : </div>
-                                                                <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="08:00">
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <input class="form-control" id="WorkTime" name="WorkTime" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search" value="08:00">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                                             <div class="row">
                                                                 <div>結束時間 : </div>
-                                                                <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="20:00">
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <input class="form-control" id="RestTime" name="RestTime" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search" value="20:00">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -815,14 +897,19 @@
                                                         <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                                             <div class="row">
                                                                 <div>休息時間設定 : </div>
-                                                                <input name="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                                <div>分鐘</div>
+                                                                <div class="col-8 col-md-6" style="padding:0px;">
+                                                                    <input name="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; margin: 0px 5px 0px 5px">
+                                                                </div>
+                                                                <div style="margin:0px 0px 0px 5px;">分鐘</div>
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                                                             <div class="row">
                                                                 <div>選擇顏色 : </div>
-                                                                <input name="color" type="color" id="newgeneralcolor" value="#68A3FB" style="width: 25%; border: 1px solid #EDEEEF;margin:0px 0px 0px 10px;border-radius:4px;">
+                                                                <div class="col-4 col-md-2" style="padding:0px;">
+                                                                    <input name="color" type="color" id="newgeneralcolor" value="#68A3FB" style=" border: 1px solid #EDEEEF;margin:0px 0px 0px 10px;border-radius:4px;">
+                                                                </div>
+                                                              
                                                             </div>
                                                         </div>
                                                     </div>
@@ -849,13 +936,17 @@
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div>開始時間 : </div>
-                                                                <input class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="07:00">
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <input class="form-control" id="WorkTimeStart" name="WorkTimeStart" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search" value="07:00">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div>結束時間 : </div>
-                                                                <input class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="08:00">
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <input class="form-control" id="WorkTimeEnd" name="WorkTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search" value="08:00">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -865,14 +956,18 @@
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div>休息時間設定 : </div>
-                                                                <input name="BreakTime2" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
-                                                                <div>分鐘</div>
+                                                                <div class="col-8 col-md-6" style="padding:0px;">
+                                                                    <input name="BreakTime2" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px;  margin: 0px 5px 0px 5px">
+                                                                </div>
+                                                                <div style="margin:0px 0px 0px 5px;">分鐘</div>
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div id="colorVal">選擇顏色 : </div>
-                                                                <input name="color2" type="color" id="newflexiblecolor" value="#68A3FB" style="width: 25%; border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                                <div  class="col-4 col-md-2" style="padding:0px;">
+                                                                    <input name="color2" type="color" id="newflexiblecolor" value="#68A3FB" style=" border: 1px solid #EDEEEF; margin: 0px 0px 0px 10px; border-radius: 4px; ">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -887,13 +982,18 @@
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div>開始時間 : </div>
-                                                                <input class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="19:00">
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <input class="form-control" id="RestTimeStart" name="RestTimeStart" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search" value="19:00">
+                                                                </div>
+                                                             
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-6 col-lg-6">
                                                             <div class="row">
                                                                 <div>結束時間 : </div>
-                                                                <input class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 72%; margin: 0px 0px 0px 10px;" aria-label="Search" value="20:00">
+                                                                <div class="col-12 col-md-8" style="padding:0px;">
+                                                                    <input class="form-control" id="RestTimeEnd" name="RestTimeEnd" type="time" placeholder="" style="font-size: 14px; width: 100%; margin: 0px 0px 0px 10px;" aria-label="Search" value="20:00">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -961,7 +1061,7 @@
     </section>
     </div>
 
-        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -991,7 +1091,7 @@
 
         @foreach (var department in departments)
         {
-            <div class="modal fade" id="exampleModal2.@department.DepartmentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+            <div class="modal fade" id="exampleModal2.@department.DepartmentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;  ">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1021,7 +1121,7 @@
         }
         @foreach (var department in departments)
         {
-            <div class="modal fade" id="exampleModal3.@department.DepartmentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+            <div class="modal fade" id="exampleModal3.@department.DepartmentId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; ">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1045,7 +1145,7 @@
             </div>
         }
 
-            <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+            <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; ">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1074,7 +1174,7 @@
 
             @foreach (var jobtitle in jobTitles)
             {
-                <div class="modal fade" id="exampleModal5.@jobtitle.JobTitleId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+                <div class="modal fade" id="exampleModal5.@jobtitle.JobTitleId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; ">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -1103,7 +1203,7 @@
             }
             @foreach (var jobtitle in jobTitles)
             {
-                <div class="modal fade" id="exampleModal6.@jobtitle.JobTitleId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+                <div class="modal fade" id="exampleModal6.@jobtitle.JobTitleId" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -1127,7 +1227,7 @@
                 </div>
             }
 
-            <div class="modal fade" id="DeleteWorkTime" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+            <div class="modal fade" id="DeleteWorkTime" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; ">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1150,7 +1250,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
+            <div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;  ">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -1185,10 +1285,10 @@
                     </div>
             </div>
         </div>
-        <div class="modal model-background modal-backdrop-bg" id="exampleModalload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
-            <div class="modal-dialog">
-                <div class="modal-content" style="margin: 0px 0px 0px -9px;">
-                    <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+        <div class="modal modal-backdrop-bg" id="exampleModalload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content modal-dialog-centered" style="width: 120px; height: 120px; display: block; margin: auto; ">
+                    <div class="modal-body">
                         <div id="CenterSet">
                             <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
                         </div>
@@ -1196,7 +1296,6 @@
                 </div>
             </div>
         </div>
-            
             <script type="text/javascript">
                 function colorFunction() {
                     var x = document.getElementById("editgeneralcolor3214").value;

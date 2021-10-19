@@ -57,6 +57,10 @@
     th {
         background-color: white !important;
     }
+    div.scrollmenu {
+        overflow: auto;
+        white-space: nowrap;
+    }
 </style>
 <div class="main-content">
     <section class="section">
@@ -74,65 +78,58 @@
                         </div>
 
                         <div class="col-12">
-                            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <div class="live__scroll">
-                                            <div class="row">
-                                                <div class="row d-flex flex-row flex-nowrap">
+                            <div class="scrollmenu">
+                                <div class="row">
+                                    <div class="row d-flex flex-row flex-nowrap">
 
-                                                    @foreach (var review_leaverecord in reviewleaveRecords)
-                                                    {
-                                                       
-                                                        <div class="col-xl-auto col-sm-6 col-md-8" style="width">
-                                                            <div class="card">
-                                                                <div class="card-body" style="color:gray;">
-                                                                    <div class="badge badge-warning">@review_leaverecord.LeaveType</div>
-                                                                    <div  style="margin-top:10px;margin-left:-5px;">
-                                                                        <div class="col-12">
-                                                                            <nobr style="margin:0px 20px 0px 0px;">申請人</nobr>
-                                                                            <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@review_leaverecord.HashAccount"><img src="~/Content/images/avatar.png" style="margin:0px 0px 0px 10px;" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name</a>
-                                                                        </div>
-                                                                    </div>
+                                        @foreach (var review_leaverecord in reviewleaveRecords)
+                                        {
 
-                                                                    <div style="margin-top: 10px; margin-left: -5px;">
-                                                                        <div class="col-12">
-                                                                            <nobr style="margin:0px 20px 0px 0px;">請假時間</nobr>
-                                                                            <nobr style="margin-left:-5px"> @review_leaverecord.StartDate.ToString("yyyy-MM-dd HH:mm") 至 @review_leaverecord.EndDate.ToString("yyyy-MM-dd HH:mm")</nobr>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div style="margin-top: 10px; padding: 0px 10px 0px 0px; margin-left: -5px;">
-                                                                        <div class="col-12">
-                                                                            <nobr style="margin:0px 20px 0px 0px;">申請時間</nobr>
-                                                                            <nobr style=" margin-left: -5px"> @review_leaverecord.CreatedTime.ToString("yyyy-MM-dd HH:mm")</nobr>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div style="margin-top: 10px; margin-left: -5px;">
-                                                                        <div class="col-12 col-lg-4" style="margin-bottom:5px">
-                                                                            請假事由
-                                                                        </div>
-                                                                        <textarea id="reason" name="reason" rows="4" class="col-11" style="padding:5px; border: 2px #d4cbcb solid; border-radius:5px; margin-left:2.5%;" readonly="readonly">@review_leaverecord.Reason</textarea>
-                                                                    </div>
-                                                                    @using (Html.BeginForm("ReviewLeaveRecord", "LeaveRecords", new { id = review_leaverecord.HashAccount, leave_id = review_leaverecord.LeaveRecordId }, FormMethod.Post))
-                                                                    {
-                                                                        <div class="row" style="margin-top:20px">
-                                                                            <div class="col-12 col-lg-12 text-center">
-                                                                                <button id="Button" name="Button" onclick="set();" value="SaveButton" type="submit" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
-                                                                                <button id="Button" name="Button" onclick="set();" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
-                                                                            </div>
-                                                                        </div>}
-                                                                </div>
+                                            <div class="col-xl-auto col-sm-6 col-md-8" style="width">
+                                                <div class="card">
+                                                    <div class="card-body" style="color:gray;">
+                                                        <div class="badge badge-warning">@review_leaverecord.LeaveType</div>
+                                                        <div style="margin-top:10px;margin-left:-5px;">
+                                                            <div class="col-12">
+                                                                <nobr style="margin:0px 20px 0px 0px;">申請人</nobr>
+                                                                <a href="/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name=@review_leaverecord.HashAccount"><img src="~/Content/images/avatar.png" style="margin:0px 0px 0px 10px;" alt="avatar" width="30" class="rounded-circle mr-1">@review_leaverecord.Name</a>
                                                             </div>
-                                                        </div>}
+                                                        </div>
+
+                                                        <div style="margin-top: 10px; margin-left: -5px;">
+                                                            <div class="col-12">
+                                                                <nobr style="margin:0px 20px 0px 0px;">請假時間</nobr>
+                                                                <nobr style="margin-left:-5px"> @review_leaverecord.StartDate.ToString("yyyy-MM-dd HH:mm") 至 @review_leaverecord.EndDate.ToString("yyyy-MM-dd HH:mm")</nobr>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="margin-top: 10px; padding: 0px 10px 0px 0px; margin-left: -5px;">
+                                                            <div class="col-12">
+                                                                <nobr style="margin:0px 20px 0px 0px;">申請時間</nobr>
+                                                                <nobr style=" margin-left: -5px"> @review_leaverecord.CreatedTime.ToString("yyyy-MM-dd HH:mm")</nobr>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="margin-top: 10px; margin-left: -5px;">
+                                                            <div class="col-12 col-lg-4" style="margin-bottom:5px">
+                                                                請假事由
+                                                            </div>
+                                                            <textarea id="reason" name="reason" rows="4" class="col-11" style="padding:5px; border: 2px #d4cbcb solid; border-radius:5px; margin-left:2.5%;" readonly="readonly">@review_leaverecord.Reason</textarea>
+                                                        </div>
+                                                        @using (Html.BeginForm("ReviewLeaveRecord", "LeaveRecords", new { id = review_leaverecord.HashAccount, leave_id = review_leaverecord.LeaveRecordId }, FormMethod.Post))
+                                                        {
+                                                            <div class="row" style="margin-top:20px">
+                                                                <div class="col-12 col-lg-12 text-center">
+                                                                    <button id="Button" name="Button" onclick="set();" value="SaveButton" type="submit" class="btn3 btn3-primary btn3-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-check-lg"></i></button>
+                                                                    <button id="Button" name="Button" onclick="set();" value="RejectButton" type="submit" class="btn4 btn4-danger btn4-action" data-toggle="modal" data-target="#exampleModal2.1"><i class="bi-x-lg"></i></button>
+                                                                </div>
+                                                            </div>}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </div>}
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -323,10 +320,11 @@
     </section>
 </div>
 
-<div class="modal modal-backdrop-bg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
-    <div class="modal-dialog">
-        <div class="modal-content modal-dialog-centered">
-            <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+
+<div class="modal modal-backdrop-bg" id="exampleModal2.1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dialog-centered" style="width: 120px; height: 120px; display: block; margin: auto; ">
+            <div class="modal-body">
                 <div id="CenterSet">
                     <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
                 </div>
@@ -334,7 +332,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     function set() {
         sessionStorage.removeItem("toTop");

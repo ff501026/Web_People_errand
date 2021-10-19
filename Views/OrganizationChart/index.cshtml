@@ -25,7 +25,7 @@
             {
                 result += "<ul id='OrganizationTop'>" +
                             "<li class='root id='OrganizationContent'>" +
-                              $"<div id='O_top' class='d-flex' data-toggle='collapse' data-target='.multi-collapse' aria-expanded='false' aria-controls='{aria_controls(organization.HashAccount)}' >" +
+                              $"<div id='O_top' class='d-flex col-12' data-toggle='collapse' data-target='.multi-collapse' aria-expanded='false' aria-controls='{aria_controls(organization.HashAccount)}' >" +
                                     "<div class='mr-auto p-2' style='text-align:center'>" +
                                         $"<a href='/EmployeeData/SearchEmployee?department=請選擇部門&jobtitle=請選擇職稱&employee_name={organization.HashAccount}'><p>{organization.Name}</p></a>" +
                                     "</div>" +
@@ -77,25 +77,16 @@
     a {
         color: #212529;
     }
-    :root {
-        --header-height: 3rem;
-        --first-color: #808080;
-        --nav-width: 78px;
-        --first-color-light: #808080;
-        --white-color: #FFF; /*#5ea7ff #68a3fc*/
-        --body-font: 'Nunito', sans-serif;
-        --normal-font-size: 1rem;
-        --z-fixed: 100;
-    }
+
 </style>
 <div class="main-content">
     <section class="section">
         <h3 class="page_name">
             組織圖
         </h3>
-        <div class="section-body" style="margin-top:25px">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12">
+        <div class="section-body" style="margin-top:25px;width:1050px">
+            <div class="row" >
+                <div class="col-12">
                     <div class="card" style="border:2px solid #D1C7C7; border-radius:4px; padding:30px">
                         @Html.Raw(OrganizationChart(""))
 

@@ -88,13 +88,14 @@
         font-size: 14px;
     }
 
-    .active::before {
-        color: #ffffff;
-        background-color: #ffffff;
-    }
+ 
 
     label {
         color: black;
+    }
+    div.scrollmenu {
+        overflow: auto;
+        white-space: nowrap;
     }
 </style>
 
@@ -105,7 +106,7 @@
         </h3>
         <div class="section-body" style="margin-top:25px">
             <div class="row">
-                <div class="col-6">
+                <div class="col-12 col-sm-5 col-lg-6">
                     <div class="card" id="BigBorder" style="border:1px solid #CCC;box-shadow:0px 0px 1px;">
                         <div class="card-header">
                             <h4 id="BigTitle">權限套用對象設定</h4>
@@ -116,13 +117,13 @@
                             <div id="SmallContentBorder" style="margin-left:0 ;border:1px solid #FFFFFF">
                                 <div class="col align-self-center" style="margin:0 auto;text-align:center">
                                     <div class="row">
-                                        <div class="col-4" id="CenterSet" style="text-align: center;">
+                                        <div class="col-6 col-md-4" id="CenterSet" style="text-align: center;">
                                             <h5 id="textcenter">部門</h5>
                                         </div>
-                                        <div class="col-4" id="CenterSet" style="text-align: center;">
+                                        <div class="col-6 col-md-4" id="CenterSet" style="text-align: center;">
                                             <h5 id="textcenter">職稱</h5>
                                         </div>
-                                        <div class="col-4" id="CenterSet" style="text-align: center;">
+                                        <div class="col-6 col-md-4" id="CenterSet" style="text-align: center;">
                                             <h5 id="textcenter">套用群組</h5>
                                         </div>
 
@@ -143,17 +144,17 @@
                                             {
                                                 @Html.AntiForgeryToken()
                                                 <div class="row">
-                                                    <div class="col" id="CenterSet">
+                                                    <div class="col-6 col-md-4" id="CenterSet">
                                                         <h5 id="textcenter">
                                                             @departments[(departments.FindIndex(item => item.DepartmentId.Equals(manager.DepartmentId)))].Name
                                                         </h5>
                                                     </div>
-                                                    <div class="col" id="CenterSet">
+                                                    <div class="col-6 col-md-4" id="CenterSet">
                                                         <h5 id="textcenter">
                                                             @jobTitles[(jobTitles.FindIndex(item => item.JobTitleId.Equals(manager.JobtitleId)))].Name
                                                         </h5>
                                                     </div>
-                                                    <div class="col" id="CenterSet">
+                                                    <div class="col-6 col-md-4" id="CenterSet">
                                                         <select class="form-select form-select-sm" name="permission_id" aria-label=".form-select-sm example" style="margin:0px auto;" id="select" onchange="set(); load3('exampleModalload');$(this.form).submit()">
                                                             <option selected value="null">預設</option>
                                                             @foreach (var managerPermission in managerPermissions)
@@ -205,413 +206,407 @@
                                 </div>
                                 <hr style="margin: 10px 20px 0px 20px" />
                                 <div class="col-12">
-                                    <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <div class="live__scroll">
-                                                    <div class="row">
-                                                        <div class="row d-flex flex-row flex-nowrap">
-                                                            <div class="col-md-6 mb-4">
-                                                                <div class="card-body " style="padding-right:0px">
-                                                                    <div class="col-12">
+                                    <div class="scrollmenu">
+                                        <div class="row">
+                                            <div class="row d-flex flex-row flex-nowrap">
+                                                <div class="col-md-6 mb-4">
+                                                    <div class="card-body " style="padding-right:0px">
+                                                        <div class="col-12">
 
-                                                                        <div class="card col-12" style="border: 2px solid #CCC; border-radius: 4px;box-shadow:none;display:inline-block;">
-                                                                                <div class="card-header" style="padding:0px 35px 0px 35px">
-                                                                                    <div class="row" style="padding:0px 0px 0px 0px">
-                                                                                        <div class="col-10" style="padding-top:10px;padding-right:0px">
-                                                                                            <div class="form-group">
-                                                                                                <div class="row align-items-center">
-                                                                                                    <div class="col-md-2" style="padding:0;display:inline-block;" id="CenterSet">
-                                                                                                        <h4 id="Content" style="margin-right:5px">群組名 : </h4>
-                                                                                                    </div>
-                                                                                                    <div class="col-md-9" style="padding-left: 0;padding-right:0; display: inline-block;" id="CenterSet">
-                                                                                                        <input value="預設" type="text" class="show" id="department_name123" name="name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px;" disabled readonly="readonly">
-                                                                                                    </div>
-                                                                                                    <div class="col-2 " style="display: inline-block;" id="CenterSet">
-                                                                                                    </div>
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
+                                                            <div class="card col-12" style="border: 2px solid #CCC; border-radius: 4px;box-shadow:none;display:inline-block;">
+                                                                <div class="card-header" style="padding:0px 35px 0px 35px">
+                                                                    <div class="row" style="padding:0px 0px 0px 0px">
+                                                                        <div class="col-10" style="padding-top:10px;padding-right:0px">
+                                                                            <div class="form-group">
+                                                                                <div class="row align-items-center">
+                                                                                    <div class="col-md-2" style="padding:0;display:inline-block;" id="CenterSet">
+                                                                                        <h4 id="Content" style="margin-right:5px">群組名 : </h4>
                                                                                     </div>
+                                                                                    <div class="col-md-8" style="padding-left: 0;padding-right:0; display: inline-block;" id="CenterSet">
+                                                                                        <input value="預設" type="text" class="show" id="department_name123" name="name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px;" disabled readonly="readonly">
+                                                                                    </div>
+                                                                                    <div class="col-2 " style="display: inline-block;" id="CenterSet">
+                                                                                    </div>
+
                                                                                 </div>
-                                                                                <hr style="margin: 0px 35px 5px 35px" />
-                                                                                <div style="height: 320px; overflow-y: auto;overflow-x:hidden;">
-                                                                                    <div class="card-body" style="margin: 0 auto;">
-                                                                                        <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                                                                                            <div class="row">
-                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                    <h5 style="font-size:14px;text-align:start;">資料顯示對象</h5>
-                                                                                                </div>
-                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" disabled  style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
-                                                                                                                <option selected value="1">全部</option>
-                                                                                                                <option value="2">直屬員工</option>
-                                                                                                                <option value="3">自訂</option>
-                                                                                                                <option value="4">無</option>
-
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            
-                                                                                            <div class="row">
-                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                    <h5 id="Content" style="font-size:14px;text-align:start;">可審核對象</h5>
-                                                                                                </div>
-                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" disabled  name="employee_review" style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
-                                                                                                                <option selected value="1">全部</option>
-                                                                                                                <option value="2">直屬員工</option>
-                                                                                                                <option value="3">自訂</option>
-                                                                                                                <option value="4">無</option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            
-                                                                                            <div class="row">
-                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                    <h5 style="font-size:14px;text-align: start;">上下班時間設定</h5>
-                                                                                                </div>
-                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_worktime" disabled >
-                                                                                                            <option selected value="true">可編輯</option>
-                                                                                                            <option value="false">不可編輯</option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row">
-                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                    <h5 style="font-size: 14px; text-align: start;">部門與職稱設定</h5>
-                                                                                                </div>
-                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_department_jobtitle" disabled >
-                                                                                                            <option selected value="true">可編輯</option>
-                                                                                                            <option value="false">不可編輯</option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="row">
-                                                                                                <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                    <h5 id="Content" style="font-size: 14px; text-align: start;">打卡位置設定</h5>
-                                                                                                </div>
-                                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_location" disabled >
-                                                                                                            <option selected value="true">可編輯</option>
-                                                                                                            <option value="false">不可編輯</option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <hr style="margin: 15px 0px 15px 0px" />
-                                                                                            <div class="col align-self-center" style="margin:0 auto;text-align:center">
-
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            @foreach (var managerPermission in managerPermissions)
-                                                            {
-                                                                <div class="col-md-6 mb-4">
-                                                                    <div class="card-body " style="padding-right:0px">
-                                                                        <div class="col-12">
-
-                                                                            <div class="card col-12" style="border: 2px solid #CCC; border-radius: 4px;box-shadow:none;display:inline-block;">
-                                                                                @using (Html.BeginForm("UpdateManagerPermissions", "AuthoritySetting", new { id = managerPermission.PermissionsId, old_display = managerPermission.CustomizationDisplay, old_review = managerPermission.CustomizationReview }, FormMethod.Post, new { name = "frm_" + managerPermission.PermissionsId, id = "frm_" + managerPermission.PermissionsId }))
-                                                                                {
-                                                                                    @Html.AntiForgeryToken()
-                                                                                    <div class="card-header" style="padding:0px 35px 0px 35px">
-                                                                                        <div class="row" style="padding:0px 0px 0px 0px">
-                                                                                            <div class="col-10" style="padding-top:10px;padding-right:0px">
-                                                                                                <div class="form-group">
-                                                                                                    <div class="row align-items-center">
-                                                                                                        <div class="col-md-2" style="padding:0;display:inline-block;" id="CenterSet">
-                                                                                                            <h4 id="Content" style="margin-right:5px">群組名 : </h4>
-                                                                                                        </div>
-                                                                                                        <div class="col-md-9" style="padding-left: 0;padding-right:0; display: inline-block;" id="CenterSet">
-                                                                                                            <input value="@managerPermission.Name" type="text" class="show" id="department_name" name="name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px;" required>
-                                                                                                        </div>
-                                                                                                        <div class="col-2 " style="display: inline-block;" id="CenterSet">
-                                                                                                            <button class="btn btn-info" type="button" id="smallbutton" style="background-color: #FFCCD1;float:right;   border: 1px solid #FFCCD1; margin:-10px" data-toggle="modal" data-target="#exampleModal6.@managerPermission.PermissionsId" onclick="set();"><img src="~/Content/images/delete.png" id="smallbuttonimg" /></button>
-                                                                                                        </div>
-
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <hr style="margin: 0px 35px 5px 35px" />
-                                                                                    <div style="height: 320px; overflow-y: auto;overflow-x:hidden;">
-                                                                                        <div class="card-body" style="margin: 0 auto;">
-                                                                                            <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                                                                                                <div class="row">
-                                                                                                    <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                        <h5 style="font-size:14px;text-align:start;">資料顯示對象</h5>
-                                                                                                    </div>
-                                                                                                    <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select1_@P_index" name="employee_display" onchange="showinfo(this[selectedIndex].value,'#custom_@P_index')" style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
-                                                                                                            @switch (managerPermission.EmployeeDisplay)
-                                                                                                            {
-                                                                                                                case 1:
-                                                                                                                    <option selected value="1">全部</option>
-                                                                                                                    <option value="2">直屬員工</option>
-                                                                                                                    <option value="3">自訂</option>
-                                                                                                                    <option value="4">無</option>
-                                                                                                                    break;
-                                                                                                                case 2:
-                                                                                                                    <option value="1">全部</option>
-                                                                                                                    <option selected value="2">直屬員工</option>
-                                                                                                                    <option value="3">自訂</option>
-                                                                                                                    <option value="4">無</option>
-                                                                                                                    break;
-                                                                                                                case 3:
-                                                                                                                    <option value="1">全部</option>
-                                                                                                                    <option value="2">直屬員工</option>
-                                                                                                                    <option selected value="3">自訂</option>
-                                                                                                                    <option value="4">無</option>
-                                                                                                                    break;
-                                                                                                                case 4:
-                                                                                                                    <option value="1">全部</option>
-                                                                                                                    <option value="2">直屬員工</option>
-                                                                                                                    <option value="3">自訂</option>
-                                                                                                                    <option value="4" selected>無</option>
-                                                                                                                    break;
-                                                                                                            }
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div id="custom_@P_index" style="display:none;border:1px solid #dbdbdb;border-radius:4px;margin:0px 0px 10px 0px;">
-                                                                                                    @foreach (var department in departments)
-                                                                                                    {
-                                                                                                        <div class="col-12" id="CenterSet" style="width: 100%;">
-                                                                                                            <div class="col-12">
-                                                                                                                <div class="row align-items-center" id="topborder" style="display:inline-block;width:100%;">
-                                                                                                                    <div class="col" id="CenterSet" style="font-size:14px;display:inline-block;">
-                                                                                                                        <div class="form-check" id="CenterSet" style="display:inline-block;float:left;margin:10px 0px 0px 0px;">
-                                                                                                                            <input class="form-check-input" type="checkbox" value="" id="C1_@department.DepartmentId@managerPermission.PermissionsId" onclick="checkAll('C1_@department.DepartmentId@managerPermission.PermissionsId', '1_@department.DepartmentId@managerPermission.PermissionsId','@jobTitles.Count');">
-                                                                                                                            <label class="form-check-label">
-                                                                                                                                @department.Name
-                                                                                                                            </label>
-                                                                                                                        </div>
-
-                                                                                                                        <div class="float-right" style="display:inline-block;">
-                                                                                                                            <button type="button" class="btn  btn-sm" data-toggle="collapse" data-target="#1 @department.DepartmentId@managerPermission.PermissionsId" aria-expanded="false" aria-controls="1 @department.DepartmentId@managerPermission.PermissionsId" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-
-                                                                                                        <div class="col-12" id="CenterSet" style="width: 100%;">
-                                                                                                            <div class="col-12">
-                                                                                                                <div class="collapse show" id="1 @department.DepartmentId@managerPermission.PermissionsId">
-                                                                                                                    @{index = 1;}
-                                                                                                                    @foreach (var jobtitle in jobTitles)
-                                                                                                                    {
-                                                                                                                        <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
-                                                                                                                            <div class="col" id="CenterSet" style="font-size:14px">
-                                                                                                                                <div class="form-check">
-                                                                                                                                    @if ((display_select.FindIndex(item => item.Equals("1_" + @department.DepartmentId + @managerPermission.PermissionsId + @index))) != -1)
-                                                                                                                                    {
-                                                                                                                                        <input class="form-check-input" type="checkbox" name="check1" value="@department.DepartmentId @jobtitle.JobTitleId" id="1_@department.DepartmentId@managerPermission.PermissionsId@index" checked onchange="mycheckF('C1_@department.DepartmentId@managerPermission.PermissionsId','1_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
-                                                                                                                                        <label class="form-check-label">
-                                                                                                                                            @jobtitle.Name
-                                                                                                                                        </label>
-                                                                                                                                    }
-                                                                                                                                    else
-                                                                                                                                    {
-                                                                                                                                        <input class="form-check-input" type="checkbox" name="check1" value="@department.DepartmentId @jobtitle.JobTitleId" id="1_@department.DepartmentId@managerPermission.PermissionsId@index" onchange="mycheckF('C1_@department.DepartmentId@managerPermission.PermissionsId','1_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
-                                                                                                                                        <label class="form-check-label">
-                                                                                                                                            @jobtitle.Name
-                                                                                                                                        </label>
-                                                                                                                                    }
-
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        index++;
-                                                                                                                    }
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-
-                                                                                                    }
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                        <h5 id="Content" style="font-size:14px;text-align:start;">可審核對象</h5>
-                                                                                                    </div>
-                                                                                                    <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select2_@P_index" name="employee_review" onchange="showinfo(this[selectedIndex].value,'#custom2_@P_index')" style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
-                                                                                                            @switch (managerPermission.EmployeeReview)
-                                                                                                            {
-                                                                                                                case 1:
-                                                                                                                    <option selected value="1">全部</option>
-                                                                                                                    <option value="2">直屬員工</option>
-                                                                                                                    <option value="3">自訂</option>
-                                                                                                                    <option value="4">無</option>
-                                                                                                                    break;
-                                                                                                                case 2:
-                                                                                                                    <option value="1">全部</option>
-                                                                                                                    <option selected value="2">直屬員工</option>
-                                                                                                                    <option value="3">自訂</option>
-                                                                                                                    <option value="4">無</option>
-                                                                                                                    break;
-                                                                                                                case 3:
-                                                                                                                    <option value="1">全部</option>
-                                                                                                                    <option value="2">直屬員工</option>
-                                                                                                                    <option selected value="3">自訂</option>
-                                                                                                                    <option value="4">無</option>
-                                                                                                                    break;
-                                                                                                                case 4:
-                                                                                                                    <option value="1">全部</option>
-                                                                                                                    <option value="2">直屬員工</option>
-                                                                                                                    <option value="3">自訂</option>
-                                                                                                                    <option value="4" selected>無</option>
-                                                                                                                    break;
-                                                                                                            }
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div id="custom2_@P_index" style="display: none;border: 1px solid #dbdbdb; border-radius: 4px; margin; margin: 0px 0px 10px 0px;">
-                                                                                                    @foreach (var department in departments)
-                                                                                                    {
-                                                                                                        <div class="col-12" id="CenterSet" style="width: 100%;">
-                                                                                                            <div class="col-12">
-                                                                                                                <div class="row align-items-center" id="topborder" style="display:inline-block;width:100%;">
-                                                                                                                    <div class="col" id="CenterSet" style="font-size:14px; display: inline-block;">
-                                                                                                                        <div class="form-check" id="CenterSet" style="display:inline-block;float:left;margin:10px 0px 0px 0px;">
-                                                                                                                            <input class="form-check-input" style="display:inline-block;" type="checkbox" id="C2_@department.DepartmentId@managerPermission.PermissionsId" onclick="checkAll('C2_@department.DepartmentId@managerPermission.PermissionsId','2_@department.DepartmentId@managerPermission.PermissionsId','@jobTitles.Count');">
-                                                                                                                            <label class="form-check-label" style="display:inline-block;">
-                                                                                                                                @department.Name
-                                                                                                                            </label>
-                                                                                                                        </div>
-
-
-                                                                                                                        <div class="float-right" id="CenterSet" style="display:inline-block;">
-                                                                                                                            <button type="button" class="btn btn-sm" data-toggle="collapse" data-target="#2 @department.DepartmentId@managerPermission.PermissionsId" aria-expanded="false" aria-controls="2 @department.DepartmentId@managerPermission.PermissionsId" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
-                                                                                                                        </div>
-
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <div class="col-12" id="CenterSet" style="width: 100%;">
-                                                                                                            <div class="col-12">
-                                                                                                                <div class="collapse show" id="2 @department.DepartmentId@managerPermission.PermissionsId">
-                                                                                                                    @{index = 1;}
-                                                                                                                    @foreach (var jobtitle in jobTitles)
-                                                                                                                    {
-                                                                                                                        <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
-                                                                                                                            <div class="col" id="CenterSet" style="font-size:14px">
-                                                                                                                                <div class="form-check">
-                                                                                                                                    @if ((review_select.FindIndex(item => item.Equals("2_" + @department.DepartmentId + @managerPermission.PermissionsId + @index))) != -1)
-                                                                                                                                    {
-                                                                                                                                        <input class="form-check-input" type="checkbox" name="check2" value="@department.DepartmentId @jobtitle.JobTitleId" id="2_@department.DepartmentId@managerPermission.PermissionsId@index" checked onchange="mycheckF('C2_@department.DepartmentId@managerPermission.PermissionsId','2_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
-                                                                                                                                        <label class="form-check-label">
-                                                                                                                                            @jobtitle.Name
-                                                                                                                                        </label>
-                                                                                                                                    }
-                                                                                                                                    else
-                                                                                                                                    {
-                                                                                                                                        <input class="form-check-input" type="checkbox" name="check2" value="@department.DepartmentId @jobtitle.JobTitleId" id="2_@department.DepartmentId@managerPermission.PermissionsId@index" onchange="mycheckF('C2_@department.DepartmentId@managerPermission.PermissionsId','2_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
-                                                                                                                                        <label class="form-check-label">
-                                                                                                                                            @jobtitle.Name
-                                                                                                                                        </label>
-                                                                                                                                    }
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                        index++;
-                                                                                                                    }
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    }
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                        <h5 style="font-size:14px;text-align: start;">上下班時間設定</h5>
-                                                                                                    </div>
-                                                                                                    <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_worktime">
-                                                                                                            @if (managerPermission.SettingWorktime)
-                                                                                                            {
-                                                                                                                <option selected value="true">可編輯</option>
-                                                                                                                <option value="false">不可編輯</option>
-                                                                                                            }
-                                                                                                            else
-                                                                                                            {
-                                                                                                                <option value="true">可編輯</option>
-                                                                                                                <option selected value="false">不可編輯</option>
-                                                                                                            }
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                        <h5 style="font-size: 14px; text-align: start;">部門與職稱設定</h5>
-                                                                                                    </div>
-                                                                                                    <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_department_jobtitle">
-                                                                                                            @if (managerPermission.SettingDepartmentJobtitle)
-                                                                                                            {
-                                                                                                                <option selected value="true">可編輯</option>
-                                                                                                                <option value="false">不可編輯</option>
-                                                                                                            }
-                                                                                                            else
-                                                                                                            {
-                                                                                                                <option value="true">可編輯</option>
-                                                                                                                <option selected value="false">不可編輯</option>
-                                                                                                            }
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-8" id="CenterSet" style="display:inline-block;">
-                                                                                                        <h5 id="Content" style="font-size: 14px; text-align: start;">打卡位置設定</h5>
-                                                                                                    </div>
-                                                                                                    <div class="col-4" id="CenterSet" style="display:inline-block;">
-                                                                                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_location">
-                                                                                                            @if (managerPermission.SettingLocation)
-                                                                                                            {
-                                                                                                                <option selected value="true">可編輯</option>
-                                                                                                                <option value="false">不可編輯</option>
-                                                                                                            }
-                                                                                                            else
-                                                                                                            {
-                                                                                                                <option value="true">可編輯</option>
-                                                                                                                <option selected value="false">不可編輯</option>
-                                                                                                            }
-                                                                                                        </select>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <hr style="margin: 15px 0px 15px 0px" />
-                                                                                                <div class="col align-self-center" style="margin:0 auto;text-align:center">
-                                                                                                    <button class="btn btn-info" type="button" style="background-color: #DF5B57; border: 1px solid #DF5B57; border-radius: 4px; margin: 5px; " onclick="set(); load('frm_@managerPermission.PermissionsId', 'name', 'exampleModalload'); window.location.reload();">取消</button>
-                                                                                                    <button class="btn btn-info" type="submit" style="background-color: #6CA7ED; border: 1px solid #6CA7ED; border-radius: 4px; margin: 5px; " onclick="set();load('frm_@managerPermission.PermissionsId','name','exampleModalload')">儲存</button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                }
-                                                                                @{P_index++;}
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            }
+                                                                <hr style="margin: 0px 35px 5px 35px" />
+                                                                <div style="height: 320px; overflow-y: auto;overflow-x:hidden;">
+                                                                    <div class="card-body" style="margin: 0 auto;">
+                                                                        <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                                                            <div class="row">
+                                                                                <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                    <h5 style="font-size:14px;text-align:start;">資料顯示對象</h5>
+                                                                                </div>
+                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" disabled style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
+                                                                                        <option selected value="1">全部</option>
+                                                                                        <option value="2">直屬員工</option>
+                                                                                        <option value="3">自訂</option>
+                                                                                        <option value="4">無</option>
+
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="row">
+                                                                                <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                    <h5 id="Content" style="font-size:14px;text-align:start;">可審核對象</h5>
+                                                                                </div>
+                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" disabled name="employee_review" style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
+                                                                                        <option selected value="1">全部</option>
+                                                                                        <option value="2">直屬員工</option>
+                                                                                        <option value="3">自訂</option>
+                                                                                        <option value="4">無</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="row">
+                                                                                <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                    <h5 style="font-size:14px;text-align: start;">上下班時間設定</h5>
+                                                                                </div>
+                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_worktime" disabled>
+                                                                                        <option selected value="true">可編輯</option>
+                                                                                        <option value="false">不可編輯</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                    <h5 style="font-size: 14px; text-align: start;">部門與職稱設定</h5>
+                                                                                </div>
+                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_department_jobtitle" disabled>
+                                                                                        <option selected value="true">可編輯</option>
+                                                                                        <option value="false">不可編輯</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                    <h5 id="Content" style="font-size: 14px; text-align: start;">打卡位置設定</h5>
+                                                                                </div>
+                                                                                <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_location" disabled>
+                                                                                        <option selected value="true">可編輯</option>
+                                                                                        <option value="false">不可編輯</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr style="margin: 15px 0px 15px 0px" />
+                                                                            <div class="col align-self-center" style="margin:0 auto;text-align:center">
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @foreach (var managerPermission in managerPermissions)
+                                                {
+                                                    <div class="col-md-6 mb-4">
+                                                        <div class="card-body " style="padding-right:0px">
+                                                            <div class="col-12">
+
+                                                                <div class="card col-12" style="border: 2px solid #CCC; border-radius: 4px;box-shadow:none;display:inline-block;">
+                                                                    @using (Html.BeginForm("UpdateManagerPermissions", "AuthoritySetting", new { id = managerPermission.PermissionsId, old_display = managerPermission.CustomizationDisplay, old_review = managerPermission.CustomizationReview }, FormMethod.Post, new { name = "frm_" + managerPermission.PermissionsId, id = "frm_" + managerPermission.PermissionsId }))
+                                                                    {
+                                                                        @Html.AntiForgeryToken()
+                                                                        <div class="card-header" style="padding:0px 35px 0px 35px">
+                                                                            <div class="row" style="padding:0px 0px 0px 0px">
+                                                                                <div class="col-10" style="padding-top:10px;padding-right:0px">
+                                                                                    <div class="form-group">
+                                                                                        <div class="row align-items-center">
+                                                                                            <div class="col-md-2" style="padding:0;display:inline-block;" id="CenterSet">
+                                                                                                <h4 id="Content" style="margin-right:5px">群組名 : </h4>
+                                                                                            </div>
+                                                                                            <div class="col-md-8" style="padding-left: 0;padding-right:0; display: inline-block;" id="CenterSet">
+                                                                                                <input value="@managerPermission.Name" type="text" class="show" id="department_name" name="name" style=" width: 100%;border:none;outline:medium; border-bottom: 1px solid #ccc;font-size: 16px;" required>
+                                                                                            </div>
+                                                                                            <div class="col-2 float-right" style="display: inline-block;" id="CenterSet">
+                                                                                                <button class="btn btn-info" type="button" id="smallbutton" style="background-color: #FFCCD1;float:right;   border: 1px solid #FFCCD1; margin:-10px" data-toggle="modal" data-target="#exampleModal6.@managerPermission.PermissionsId" onclick="set();"><img src="~/Content/images/delete.png" id="smallbuttonimg" /></button>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <hr style="margin: 0px 35px 5px 35px" />
+                                                                        <div style="height: 320px; overflow-y: auto;overflow-x:hidden;">
+                                                                            <div class="card-body" style="margin: 0 auto;">
+                                                                                <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                                                                    <div class="row">
+                                                                                        <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                            <h5 style="font-size:14px;text-align:start;">資料顯示對象</h5>
+                                                                                        </div>
+                                                                                        <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select1_@P_index" name="employee_display" onchange="showinfo(this[selectedIndex].value,'#custom_@P_index')" style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
+                                                                                                @switch (managerPermission.EmployeeDisplay)
+                                                                                                {
+                                                                                                    case 1:
+                                                                                                        <option selected value="1">全部</option>
+                                                                                                        <option value="2">直屬員工</option>
+                                                                                                        <option value="3">自訂</option>
+                                                                                                        <option value="4">無</option>
+                                                                                                        break;
+                                                                                                    case 2:
+                                                                                                        <option value="1">全部</option>
+                                                                                                        <option selected value="2">直屬員工</option>
+                                                                                                        <option value="3">自訂</option>
+                                                                                                        <option value="4">無</option>
+                                                                                                        break;
+                                                                                                    case 3:
+                                                                                                        <option value="1">全部</option>
+                                                                                                        <option value="2">直屬員工</option>
+                                                                                                        <option selected value="3">自訂</option>
+                                                                                                        <option value="4">無</option>
+                                                                                                        break;
+                                                                                                    case 4:
+                                                                                                        <option value="1">全部</option>
+                                                                                                        <option value="2">直屬員工</option>
+                                                                                                        <option value="3">自訂</option>
+                                                                                                        <option value="4" selected>無</option>
+                                                                                                        break;
+                                                                                                }
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div id="custom_@P_index" style="display:none;border:1px solid #dbdbdb;border-radius:4px;margin:0px 0px 10px 0px;">
+                                                                                        @foreach (var department in departments)
+                                                                                        {
+                                                                                            <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                                                                <div class="col-12">
+                                                                                                    <div class="row align-items-center" id="topborder" style="display:inline-block;width:100%;">
+                                                                                                        <div class="col" id="CenterSet" style="font-size:14px;display:inline-block;">
+                                                                                                            <div class="form-check" id="CenterSet" style="display:inline-block;float:left;margin:10px 0px 0px 0px;">
+                                                                                                                <input class="form-check-input" type="checkbox" value="" id="C1_@department.DepartmentId@managerPermission.PermissionsId" onclick="checkAll('C1_@department.DepartmentId@managerPermission.PermissionsId', '1_@department.DepartmentId@managerPermission.PermissionsId','@jobTitles.Count');">
+                                                                                                                <label class="form-check-label" for="C1_@department.DepartmentId@managerPermission.PermissionsId">
+                                                                                                                    @department.Name
+                                                                                                                </label>
+                                                                                                            </div>
+
+                                                                                                            <div class="float-right" style="display:inline-block;">
+                                                                                                                <button type="button" class="btn  btn-sm" data-toggle="collapse" data-target="#1 @department.DepartmentId@managerPermission.PermissionsId" aria-expanded="false" aria-controls="1 @department.DepartmentId@managerPermission.PermissionsId" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                                                                <div class="col-12">
+                                                                                                    <div class="collapse show" id="1 @department.DepartmentId@managerPermission.PermissionsId">
+                                                                                                        @{index = 1;}
+                                                                                                        @foreach (var jobtitle in jobTitles)
+                                                                                                        {
+                                                                                                            <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
+                                                                                                                <div class="col" id="CenterSet" style="font-size:14px">
+                                                                                                                    <div class="form-check">
+                                                                                                                        @if ((display_select.FindIndex(item => item.Equals("1_" + @department.DepartmentId + @managerPermission.PermissionsId + @index))) != -1)
+                                                                                                                        {
+                                                                                                                            <input class="form-check-input" type="checkbox" name="check1" value="@department.DepartmentId @jobtitle.JobTitleId" id="1_@department.DepartmentId@managerPermission.PermissionsId@index" checked onchange="mycheckF('C1_@department.DepartmentId@managerPermission.PermissionsId','1_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
+                                                                                                                            <label class="form-check-label" for="1_@department.DepartmentId@managerPermission.PermissionsId@index">
+                                                                                                                                @jobtitle.Name
+                                                                                                                            </label>
+                                                                                                                        }
+                                                                                                                        else
+                                                                                                                        {
+                                                                                                                            <input class="form-check-input" type="checkbox" name="check1" value="@department.DepartmentId @jobtitle.JobTitleId" id="1_@department.DepartmentId@managerPermission.PermissionsId@index" onchange="mycheckF('C1_@department.DepartmentId@managerPermission.PermissionsId','1_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
+                                                                                                                            <label class="form-check-label" for="1_@department.DepartmentId@managerPermission.PermissionsId@index">
+                                                                                                                                @jobtitle.Name
+                                                                                                                            </label>
+                                                                                                                        }
+
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            index++;
+                                                                                                        }
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                            <h5 id="Content" style="font-size:14px;text-align:start;">可審核對象</h5>
+                                                                                        </div>
+                                                                                        <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select2_@P_index" name="employee_review" onchange="showinfo(this[selectedIndex].value,'#custom2_@P_index')" style=" margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
+                                                                                                @switch (managerPermission.EmployeeReview)
+                                                                                                {
+                                                                                                    case 1:
+                                                                                                        <option selected value="1">全部</option>
+                                                                                                        <option value="2">直屬員工</option>
+                                                                                                        <option value="3">自訂</option>
+                                                                                                        <option value="4">無</option>
+                                                                                                        break;
+                                                                                                    case 2:
+                                                                                                        <option value="1">全部</option>
+                                                                                                        <option selected value="2">直屬員工</option>
+                                                                                                        <option value="3">自訂</option>
+                                                                                                        <option value="4">無</option>
+                                                                                                        break;
+                                                                                                    case 3:
+                                                                                                        <option value="1">全部</option>
+                                                                                                        <option value="2">直屬員工</option>
+                                                                                                        <option selected value="3">自訂</option>
+                                                                                                        <option value="4">無</option>
+                                                                                                        break;
+                                                                                                    case 4:
+                                                                                                        <option value="1">全部</option>
+                                                                                                        <option value="2">直屬員工</option>
+                                                                                                        <option value="3">自訂</option>
+                                                                                                        <option value="4" selected>無</option>
+                                                                                                        break;
+                                                                                                }
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div id="custom2_@P_index" style="display: none;border: 1px solid #dbdbdb; border-radius: 4px; margin; margin: 0px 0px 10px 0px;">
+                                                                                        @foreach (var department in departments)
+                                                                                        {
+                                                                                            <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                                                                <div class="col-12">
+                                                                                                    <div class="row align-items-center" id="topborder" style="display:inline-block;width:100%;">
+                                                                                                        <div class="col" id="CenterSet" style="font-size:14px; display: inline-block;">
+                                                                                                            <div class="form-check" id="CenterSet" style="display:inline-block;float:left;margin:10px 0px 0px 0px;">
+                                                                                                                <input class="form-check-input" style="display:inline-block;" type="checkbox" id="C2_@department.DepartmentId@managerPermission.PermissionsId" onclick="checkAll('C2_@department.DepartmentId@managerPermission.PermissionsId','2_@department.DepartmentId@managerPermission.PermissionsId','@jobTitles.Count');">
+                                                                                                                <label class="form-check-label" style="display:inline-block;" for="C2_@department.DepartmentId@managerPermission.PermissionsId">
+                                                                                                                    @department.Name
+                                                                                                                </label>
+                                                                                                            </div>
+
+
+                                                                                                            <div class="float-right" id="CenterSet" style="display:inline-block;">
+                                                                                                                <button type="button" class="btn btn-sm" data-toggle="collapse" data-target="#2 @department.DepartmentId@managerPermission.PermissionsId" aria-expanded="false" aria-controls="2 @department.DepartmentId@managerPermission.PermissionsId" id="smallbutton" style="background-color: #d0d0d0; border: 1px solid #d0d0d0; padding:2px;"><i class="bi bi-caret-down-fill" style="color: #555555;"></i></button>
+                                                                                                            </div>
+
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12" id="CenterSet" style="width: 100%;">
+                                                                                                <div class="col-12">
+                                                                                                    <div class="collapse show" id="2 @department.DepartmentId@managerPermission.PermissionsId">
+                                                                                                        @{index = 1;}
+                                                                                                        @foreach (var jobtitle in jobTitles)
+                                                                                                        {
+                                                                                                            <div class="row align-items-center" id="contentborder" style="padding:8px 0px 8px 0px;">
+                                                                                                                <div class="col" id="CenterSet" style="font-size:14px">
+                                                                                                                    <div class="form-check">
+                                                                                                                        @if ((review_select.FindIndex(item => item.Equals("2_" + @department.DepartmentId + @managerPermission.PermissionsId + @index))) != -1)
+                                                                                                                        {
+                                                                                                                            <input class="form-check-input" type="checkbox" name="check2" value="@department.DepartmentId @jobtitle.JobTitleId" id="2_@department.DepartmentId@managerPermission.PermissionsId@index" checked onchange="mycheckF('C2_@department.DepartmentId@managerPermission.PermissionsId','2_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
+                                                                                                                            <label class="form-check-label" for="2_@department.DepartmentId@managerPermission.PermissionsId@index">
+                                                                                                                                @jobtitle.Name
+                                                                                                                            </label>
+                                                                                                                        }
+                                                                                                                        else
+                                                                                                                        {
+                                                                                                                            <input class="form-check-input" type="checkbox" name="check2" value="@department.DepartmentId @jobtitle.JobTitleId" id="2_@department.DepartmentId@managerPermission.PermissionsId@index" onchange="mycheckF('C2_@department.DepartmentId@managerPermission.PermissionsId','2_@department.DepartmentId@managerPermission.PermissionsId', @jobTitles.Count)">
+                                                                                                                            <label class="form-check-label" for="2_@department.DepartmentId@managerPermission.PermissionsId@index">
+                                                                                                                                @jobtitle.Name
+                                                                                                                            </label>
+                                                                                                                        }
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            index++;
+                                                                                                        }
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                            <h5 style="font-size:14px;text-align: start;">上下班時間設定</h5>
+                                                                                        </div>
+                                                                                        <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_worktime">
+                                                                                                @if (managerPermission.SettingWorktime)
+                                                                                                {
+                                                                                                    <option selected value="true">可編輯</option>
+                                                                                                    <option value="false">不可編輯</option>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <option value="true">可編輯</option>
+                                                                                                    <option selected value="false">不可編輯</option>
+                                                                                                }
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                            <h5 style="font-size: 14px; text-align: start;">部門與職稱設定</h5>
+                                                                                        </div>
+                                                                                        <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_department_jobtitle">
+                                                                                                @if (managerPermission.SettingDepartmentJobtitle)
+                                                                                                {
+                                                                                                    <option selected value="true">可編輯</option>
+                                                                                                    <option value="false">不可編輯</option>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <option value="true">可編輯</option>
+                                                                                                    <option selected value="false">不可編輯</option>
+                                                                                                }
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-8 align-self-center" id="CenterSet" style="display:inline-block;">
+                                                                                            <h5 id="Content" style="font-size: 14px; text-align: start;">打卡位置設定</h5>
+                                                                                        </div>
+                                                                                        <div class="col-4" id="CenterSet" style="display:inline-block;">
+                                                                                            <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="select" name="setting_location">
+                                                                                                @if (managerPermission.SettingLocation)
+                                                                                                {
+                                                                                                    <option selected value="true">可編輯</option>
+                                                                                                    <option value="false">不可編輯</option>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <option value="true">可編輯</option>
+                                                                                                    <option selected value="false">不可編輯</option>
+                                                                                                }
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr style="margin: 15px 0px 15px 0px" />
+                                                                                    <div class="col align-self-center" style="margin:0 auto;text-align:center">
+                                                                                        <button class="btn btn-info" type="button" style="background-color: #DF5B57; border: 1px solid #DF5B57; border-radius: 4px; margin: 5px; " onclick="set(); load('frm_@managerPermission.PermissionsId', 'name', 'exampleModalload'); window.location.reload();">取消</button>
+                                                                                        <button class="btn btn-info" type="submit" style="background-color: #6CA7ED; border: 1px solid #6CA7ED; border-radius: 4px; margin: 5px; " onclick="set();load('frm_@managerPermission.PermissionsId','name','exampleModalload')">儲存</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    }
+                                                                    @{P_index++;}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -700,7 +695,7 @@
                                                             <div class="col" id="CenterSet" style="font-size:14px">
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="" id="C3_@department.DepartmentId" onclick="checkAll('C3_@department.DepartmentId', '3_@department.DepartmentId','@jobTitles.Count');">
-                                                                    <label class="form-check-label">
+                                                                    <label class="form-check-label" for="C3_@department.DepartmentId">
                                                                         @department.Name
                                                                     </label>
                                                                 </div>
@@ -722,7 +717,7 @@
                                                                     <div class="col" id="CenterSet" style="font-size:14px">
                                                                         <div class="form-check">
                                                                             <input class="form-check-input" type="checkbox" name="check3" value="@department.DepartmentId @jobtitle.JobTitleId" id="3_@department.DepartmentId@index" onchange="mycheckF('C3_@department.DepartmentId','3_@department.DepartmentId', @jobTitles.Count)">
-                                                                            <label class="form-check-label">
+                                                                            <label class="form-check-label" for="3_@department.DepartmentId@index">
                                                                                 @jobtitle.Name
                                                                             </label>
                                                                         </div>
@@ -758,7 +753,7 @@
                                                             <div class="col" id="CenterSet" style="font-size:14px">
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" id="C4_@department.DepartmentId" onclick="checkAll('C4_@department.DepartmentId','4_@department.DepartmentId','@jobTitles.Count');">
-                                                                    <label class="form-check-label">
+                                                                    <label class="form-check-label" for="C4_@department.DepartmentId">
                                                                         @department.Name
                                                                     </label>
                                                                 </div>
@@ -780,7 +775,7 @@
                                                                     <div class="col" id="CenterSet" style="font-size:14px">
                                                                         <div class="form-check">
                                                                             <input class="form-check-input" type="checkbox" name="check4" value="@department.DepartmentId @jobtitle.JobTitleId" id="4_@department.DepartmentId@index" onchange="mycheckF('C4_@department.DepartmentId','4_@department.DepartmentId', @jobTitles.Count)">
-                                                                            <label class="form-check-label">
+                                                                            <label class="form-check-label" for="4_@department.DepartmentId@index">
                                                                                 @jobtitle.Name
                                                                             </label>
                                                                         </div>
@@ -841,10 +836,11 @@
         </div>
     </div>
 </div>
-<div class="modal model-background modal-backdrop-bg" id="exampleModalload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(135,135,135,0.5); ">
-    <div class="modal-dialog">
-        <div class="modal-content" style="margin: 0px 0px 0px -9px;">
-            <div class="modal-body" style="padding: 100px 0px 100px 0px; border-radius: 4px;width:100%;">
+
+<div class="modal modal-backdrop-bg" id="exampleModalload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; ">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dialog-centered" style="width: 120px; height: 120px; display: block; margin: auto; ">
+            <div class="modal-body">
                 <div id="CenterSet">
                     <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
                 </div>
