@@ -259,40 +259,45 @@
                 {
                     if (trip2record.GroupId == detailtrip2record.GroupId)
                     {
-<div class="cardA card-primary">
-    <div class="row">
-        <div class="col-12">
-            @switch (detailtrip2record.Trip2Type)
-            {
-                case 1:
-<div class="badge badge-danger">出勤</div> break;
+                        <div class="cardA card-primary">
+                            <div class="row">
+                                <div class="col-12">
+                                    @switch (detailtrip2record.Trip2Type)
+                                    {
+                                        case 1:
+                                             <div class="badge badge-danger">出勤</div> 
+                                             break;
 
-                            case 2:
-<div class="badge badge-info">到站</div> break;
+                                        case 2:
+                                            <div class="badge badge-info">到站</div>
+                                            break;
 
-                            case 3:
-<div class="badge badge-warning">結束</div>break;
-                        }
-            <div class="row" style="margin-top:10px">
-                <div class="col-12 col-lg-6">
-                    打卡時間
-                </div>
-                <div class="col-12 col-lg-6">
-                    地點
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-sm-6 col-lg-6 col-md-6 col-xl-6">
-                    <input type="text" class="form-control" id="trip2record_StartDate" name="trip2record_StartDate" value="@detailtrip2record.CreatedTime" readonly="readonly">
-                </div>
-                @*@{string location = AttendanceManagement.Models.GoogleMapApiModel.latLngToChineseAddress(detailtrip2record.CoordinateX,detailtrip2record.CoordinateY); }*@
-                <div class="col-12 col-sm-6 col-lg-6 col-md-6 col-xl-6">
-                    <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@detailtrip2record.Address" readonly="readonly">
-                </div>
-            </div>
-        </div>
-    </div>
-</div> } @*<div class="cardA card-primary" style="margin-top:-18px">
+                                        case 3:
+                                            <div class="badge badge-warning">結束</div>
+                                            break;
+                                     }
+                                    <div class="row" style="margin-top:10px">
+                                        <div class="col-12 col-lg-6">
+                                            打卡時間
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            地點
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+                                            <input type="text" class="form-control" id="trip2record_StartDate" name="trip2record_StartDate" value="@detailtrip2record.CreatedTime" readonly="readonly">
+                                        </div>
+                                        @*@{string location = AttendanceManagement.Models.GoogleMapApiModel.latLngToChineseAddress(detailtrip2record.CoordinateX,detailtrip2record.CoordinateY); }*@
+                                        <div class="col-12 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+                                            <input type="text" class="form-control" id="trip2record_Location" name="trip2record_Location" value="@detailtrip2record.Address" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        
+                    } @*<div class="cardA card-primary" style="margin-top:-18px">
         <div class="row">
             <div class="col-12">
                 <div class="badge badge-danger">出勤</div>

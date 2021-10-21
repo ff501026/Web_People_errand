@@ -1,33 +1,45 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "忘記密碼";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 @*<style>
-    html, body {
-        width: 100%;
-        height: 100%;
-    }
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
 
-    #map {
-        width: 100%;
-        height: 100%;
-    }
-</style>
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 
-<script>
-    var map;
-    function initMap() {
+    <script>
+        var map;
+        function initMap() {
 
-    }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0xOKdg7UH0RrFHjydfMhRIz2xvpWkB9E&callback=initMap" async defer></script>*@
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0xOKdg7UH0RrFHjydfMhRIz2xvpWkB9E&callback=initMap" async defer></script>*@
+
 <style>
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        background-image: url(background.jpg);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: left;
+        background-size: cover;
+    }
 
     :root {
         --header-height: 3rem;
         --first-color: #808080;
-        --nav-width: 78px
+        --nav-width: 78px;
         --first-color-light: #808080;
         --white-color: #FFF; /*#5ea7ff #68a3fc*/
         --body-font: 'Nunito', sans-serif;
@@ -40,32 +52,52 @@
     @*<div id="map"></div>*@
 </div>
 
-@using (Html.BeginForm("Submit", "ForgetPassword", FormMethod.Post))
+@using (Html.BeginForm("Submit", "ForgetPassword", FormMethod.Post, new { name = "frm_forget", id = "frm_forget" }))
 {
     @Html.AntiForgeryToken()
-<div class="card2 card-primary">
-    <div class="card-header"style="padding-bottom:0px;margin-top:5px"><p style="margin-bottom:20px">忘記密碼</p></div>
-    @*<div class="card-header"><nobr id="companytext">忘記密碼</nobr></div>*@
-    <div class="card-header" style="padding-bottom:0px;padding-top:0px"><nobr id="companyhello">點選送出後將寄送重設密碼之連結至您的Email</nobr></div>
+    <div class="card2 card-primary" style="width:370px;margin-left:-15px;">
+        <div class="card-header" style="padding-bottom:0px;margin-top:5px"><p style="margin-bottom:20px">忘記密碼</p></div>
+        @*<div class="card-header"><nobr id="companytext">忘記密碼</nobr></div>*@
+        <div class="card-header" style="padding-bottom:0px;padding-top:0px"><nobr id="companyhello">點選送出後將寄送重設密碼之連結至您的Email</nobr></div>
 
-    <div class="card-body" style="padding-top:15px;padding-bottom:15px">
-        <form method="POST" action="#" class="needs-validation" novalidate="">
-            <div class="form-group">
-                <input id="code" name="code" type="text" class="form-control" placeholder="請輸入公司ID" tabindex="1" maxlength="30" required autofocus>
-            </div>
-            <div class="form-group">
-                <input id="emaillogin" name="email" type="email" class="form-control" placeholder="請輸入管理員信箱" tabindex="1" autofocus required>
-            </div>
-            @*<div class="form-group">
-                    <input id="manager_password" name="manager_password" type="password" class="form-control" placeholder="請輸入管理員密碼" tabindex="1" maxlength="30" required autofocus>
-                </div>*@
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block" tabindex="4" style="background-image: linear-gradient(to top, #09203f 0%, #537895 100%); opacity: 40%; border: 1px solid #ABB7C3">
-                    送出(Submit)
-                </button>
-            </div>
-        </form>
+        <div class="card-body" style="padding-top:15px;padding-bottom:15px">
+            <form method="POST" action="#" class="needs-validation" novalidate="">
+                <div class="form-group">
+                    <input id="code" name="code" type="text" class="form-control" placeholder="請輸入公司ID" tabindex="1" maxlength="30" required autofocus>
+                </div>
+                <div class="form-group">
+                    <input id="emaillogin" name="email" type="email" class="form-control" placeholder="請輸入管理員信箱" tabindex="1" autofocus required>
+                </div>
+                @*<div class="form-group">
+                        <input id="manager_password" name="manager_password" type="password" class="form-control" placeholder="請輸入管理員密碼" tabindex="1" maxlength="30" required autofocus>
+                    </div>*@
+                <div class="form-group">
+                    <button type="submit" onclick="load('#frm_forget','exampleModalload');" class="btn btn-primary btn-block" tabindex="4" style="background-image: linear-gradient(to top, #09203f 0%, #537895 100%); opacity: 40%; border: 1px solid #ABB7C3">
+                        送出(Submit)
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 }
 
+<div class="modal modal-backdrop-bg bd-example-modal-lg" id="exampleModalload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="width: 100%; background-color: rgb(90,90,90,0.5);">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="width: 120px; height: 120px; display: block; margin: auto; margin-top: 205px; ">
+            <div class="modal-body">
+                <div id="CenterSet" class="align-self-center">
+                    <img src="~/Content/images/loading.gif" id="shape-ex6-img" style="width: 100px; height: 100px; display: block; margin: auto; ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function load(values1, values) {
+        $(values1).submit(function () {
+            var modal = document.getElementById(values);
+            modal.style.display = "block";
+        });
+    }
+</script>

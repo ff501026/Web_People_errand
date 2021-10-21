@@ -597,8 +597,18 @@
             for (var i = 0; i < arr.length; i++) {
                 tbody.appendChild(arr[i]);
             };
-              nPage(1);
-        changepage(1,@endpage);
+            nPage(1);
+            if (@num1 % 10 == 0)
+            {
+                changepage(1,@endpageint);
+            }
+            else if (@num1 < 10)
+            {
+            }
+             else
+            {
+                changepage(1,@endpage);
+            }
         };
         function method(str, a, b) {
 
