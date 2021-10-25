@@ -17,6 +17,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyReviewLeaveRecord + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyReviewLeaveRecord + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<LeaveRecord> review_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
 
@@ -28,6 +30,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + ManagerGetReviewLeaveRecord + company_hash+ "&hash_account="+hash_account);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + ManagerGetReviewLeaveRecord + company_hash + "&hash_account=" + hash_account}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<LeaveRecord> review_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
 
@@ -42,6 +46,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyPassLeaveRecord + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyPassLeaveRecord + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<LeaveRecord> pass_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
 
@@ -53,6 +59,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + ManagerGetPassLeaveRecord2 + hash_account);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + ManagerGetPassLeaveRecord2 + hash_account}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<LeaveRecord> pass_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
 
@@ -64,6 +72,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + ManagerGetPassLeaveRecord3 + hash_account);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + ManagerGetPassLeaveRecord3 + hash_account}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<LeaveRecord> pass_leaverecord = JsonConvert.DeserializeObject<List<LeaveRecord>>(GetResponse);
 
@@ -125,6 +135,10 @@ namespace AttendanceManagement.Models
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             response = await client.PutAsync(url + EmployeeReviewLeaveRecord, content);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + EmployeeReviewLeaveRecord}", $"{jsonData}", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -142,6 +156,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyLeaveType);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyLeaveType}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<LeaveType> leaveTypes = JsonConvert.DeserializeObject<List<LeaveType>>(GetResponse);
 

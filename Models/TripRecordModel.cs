@@ -17,6 +17,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyReviewTripRecord + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyReviewTripRecord + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<TripRecord> review_triprecord = JsonConvert.DeserializeObject<List<TripRecord>>(GetResponse);
 
@@ -31,6 +33,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyPassTripRecord + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyPassTripRecord + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<TripRecord> pass_triprecord = JsonConvert.DeserializeObject<List<TripRecord>>(GetResponse);
 
@@ -54,6 +58,10 @@ namespace AttendanceManagement.Models
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             response = await client.PutAsync(url + EmployeeEditTripRecord, content);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + EmployeeEditTripRecord}", $"{jsonData}", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -121,6 +129,10 @@ namespace AttendanceManagement.Models
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             response = await client.PutAsync(url + EmployeeReviewTripRecord, content);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + EmployeeReviewTripRecord}", $"{jsonData}", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -138,6 +150,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyGetTrip2Record + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyGetTrip2Record + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<Trip2Record> trip2record = JsonConvert.DeserializeObject<List<Trip2Record>>(GetResponse);
 
@@ -149,6 +163,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + ManagerGetTrip2Record2 + hash_account);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + ManagerGetTrip2Record2 + hash_account}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<Trip2Record> trip2record = JsonConvert.DeserializeObject<List<Trip2Record>>(GetResponse);
 
@@ -160,6 +176,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + ManagerGetTrip2Record3 + hash_account);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + ManagerGetTrip2Record3 + hash_account}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<Trip2Record> trip2record = JsonConvert.DeserializeObject<List<Trip2Record>>(GetResponse);
 
@@ -171,6 +189,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyDetailTrip2Record + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyDetailTrip2Record + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<DetailTrip2Record> detailtrip2record = JsonConvert.DeserializeObject<List<DetailTrip2Record>>(GetResponse);
 

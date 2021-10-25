@@ -91,8 +91,10 @@ namespace AttendanceManagement.Models
         public static readonly string ManageGetBossPermissions = "Companies/GetbossSettingPermissions/"; //職務代理人取得代理對象的設定權限
         public static readonly string ManageBoolAgent = "EmployeeLeaveRecords/BoolAgentReviewLeave/"; //判斷是否可以執行代理權限
         public static readonly string ManagerForegetPassword = "Companies/Forget_Manager?code="; //找到管理員HASH
-        //public static readonly string sendGmail = "https://localhost:44311/api/Companies/sendGmailAsync?to_email="; //寄EMAIL
+        public static readonly string AddLog = "Companies/AddLog"; //新增LOG
 
+        //public static readonly string sendGmail = "https://localhost:44311/api/Companies/sendGmailAsync?to_email="; //寄EMAIL
+        
         public static async System.Threading.Tasks.Task sendGmailAsync(string to_email,string email_subject, string email_body)//寄EMAIL
         {
             ////連上WebAPI

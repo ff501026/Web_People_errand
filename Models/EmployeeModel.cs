@@ -18,6 +18,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyGetOrganization + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyGetOrganization + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<OrganizationChart> organization = JsonConvert.DeserializeObject<List<OrganizationChart>>(GetResponse);
 
@@ -32,8 +34,10 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyReviewEmployee + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyReviewEmployee + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
-            List < ReviewEmployee > review_employee= JsonConvert.DeserializeObject<List<ReviewEmployee>>(GetResponse);
+            List< ReviewEmployee > review_employee= JsonConvert.DeserializeObject<List<ReviewEmployee>>(GetResponse);
 
             return review_employee;
         }
@@ -46,6 +50,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + CompanyPassEmployee + company_hash);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyPassEmployee + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<PassEmployee> pass_employee = JsonConvert.DeserializeObject<List<PassEmployee>>(GetResponse);
 
@@ -57,6 +63,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + ManagerGetPassEmployee2 + hash_account);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + ManagerGetPassEmployee2 + hash_account}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<PassEmployee> pass_employee = JsonConvert.DeserializeObject<List<PassEmployee>>(GetResponse);
 
@@ -68,6 +76,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + ManagerGetPassEmployee3 + hash_account);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + ManagerGetPassEmployee3 + hash_account}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             List<PassEmployee> pass_employee = JsonConvert.DeserializeObject<List<PassEmployee>>(GetResponse);
 
@@ -79,6 +89,8 @@ namespace AttendanceManagement.Models
             response = await client.GetAsync(url + EmployeeBoolRepeatEmail + "hash_company="+company_hash+ "&email="+email);
             //取得API回傳的打卡紀錄內容
             GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + EmployeeBoolRepeatEmail + "hash_company=" + company_hash + "&email=" + email}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             //解析打卡紀錄之JSON內容
             bool result = JsonConvert.DeserializeObject<bool>(GetResponse);
 
@@ -97,6 +109,10 @@ namespace AttendanceManagement.Models
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             response = await client.PutAsync(url + EmployeeEnabled, content);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + EmployeeEnabled}", $"{jsonData}", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -122,6 +138,10 @@ namespace AttendanceManagement.Models
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             response = await client.PutAsync(url + EmployeeEditInformation, content);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + EmployeeEditInformation}", $"{jsonData}", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -203,6 +223,10 @@ namespace AttendanceManagement.Models
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             response = await client.PutAsync(url + EmployeeSetInformation, content);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + EmployeeSetInformation}", $"{jsonData}", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
@@ -214,6 +238,10 @@ namespace AttendanceManagement.Models
         {
 
             response = await client.DeleteAsync(url + EmployeeRejectInformation + hashaccount);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + EmployeeRejectInformation + hashaccount}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
