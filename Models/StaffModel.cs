@@ -703,7 +703,6 @@ namespace AttendanceManagement.Models
                 //取得API回傳的打卡紀錄內容
                 GetResponse = await response.Content.ReadAsStringAsync();
 
-
                 //解析打卡紀錄之JSON內容
                 string managerhash = GetResponse.ToString();
 
@@ -1467,14 +1466,145 @@ namespace AttendanceManagement.Models
             logs.Add(log);
             string jsonData = JsonConvert.SerializeObject(logs);//序列化成JSON
             HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            HttpResponseMessage logresponse = new HttpResponseMessage();
+            logresponse = await client.PostAsync(url + AddLog, content);
+            if (logresponse.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 
-            response = await client.PostAsync(url + AddLog, content);
+    class CompanySettingModel : HttpResponse
+    {
+        public static async Task<int> Get_CompanyPositionDifference(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetPositionDifference + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyGetPositionDifference + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
+
+            //解析打卡紀錄之JSON內容
+            int PositionDifference = JsonConvert.DeserializeObject<int>(GetResponse);
+            return PositionDifference;
+        }
+
+        public static async Task<bool> Edit_CompanyPositionDifference(string company_hash, int position_difference)
+        {
+
+            List<CompanySetting> companySettings = new List<CompanySetting>();
+            CompanySetting companySetting = new CompanySetting
+            {
+               CompanyHash = company_hash,
+               PositionDifference = position_difference
+            };
+            companySettings.Add(companySetting);
+            string jsonData = JsonConvert.SerializeObject(companySettings);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyUpdatePositionDifference, content);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyUpdatePositionDifference}", $"{jsonData}", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
             if (response.StatusCode.ToString().Equals("OK"))
             {
                 return true;
             }
             return false;
         }
+
+        public static async Task<bool> Get_CompanySettingTrip2Enabled(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetSettingTrip2Enabled + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyGetSettingTrip2Enabled + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
+
+            //解析打卡紀錄之JSON內容
+            bool SettingTrip2Enabled = JsonConvert.DeserializeObject<bool>(GetResponse);
+            return SettingTrip2Enabled;
+        }
+
+        public static async Task<bool> Edit_CompanySettingTrip2Enabled(string company_hash, bool setting_trip2_enabled)
+        {
+
+            List<CompanySetting> companySettings = new List<CompanySetting>();
+            CompanySetting companySetting = new CompanySetting
+            {
+                CompanyHash = company_hash,
+                SettingTrip2Enabled = setting_trip2_enabled
+            };
+            companySettings.Add(companySetting);
+            string jsonData = JsonConvert.SerializeObject(companySettings);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyUpdateSettingTrip2Enabled, content);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyUpdateSettingTrip2Enabled}", $"{jsonData}", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static async Task<bool> Get_CompanySettingWorkRecordEnabled(string company_hash)
+        {
+            //連上WebAPI
+            response = await client.GetAsync(url + CompanyGetSettingWorkRecordEnabled + company_hash);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyGetSettingWorkRecordEnabled + company_hash}", $"", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
+
+            //解析打卡紀錄之JSON內容
+            bool SettingWorkRecordEnabled = JsonConvert.DeserializeObject<bool>(GetResponse);
+            return SettingWorkRecordEnabled;
+        }
+
+        public static async Task<bool> Edit_CompanySettingWorkRecordEnabled(string company_hash, bool setting_workrecord_enabled)
+        {
+
+            List<CompanySetting> companySettings = new List<CompanySetting>();
+            CompanySetting companySetting = new CompanySetting
+            {
+                CompanyHash = company_hash,
+                SettingWorkrecordEnabled = setting_workrecord_enabled
+            };
+            companySettings.Add(companySetting);
+            string jsonData = JsonConvert.SerializeObject(companySettings);//序列化成JSON
+            HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            response = await client.PutAsync(url + CompanyUpdateSettingWorkRecordEnabled, content);
+            //取得API回傳的打卡紀錄內容
+            GetResponse = await response.Content.ReadAsStringAsync();
+            bool resultlog = await LogModel.Add_Log($"{url + CompanyUpdateSettingWorkRecordEnabled}", $"{jsonData}", $"{ response.StatusCode.ToString()}", $"{GetResponse}");
+
+            if (response.StatusCode.ToString().Equals("OK"))
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public class CompanySetting
+    {
+        public string CompanyHash { get; set; }
+        public int PositionDifference { get; set; }//誤差值
+        public bool SettingTrip2Enabled { get; set; }//是否開啟到站
+        public bool SettingWorkrecordEnabled { get; set; }//是否開啟定位
     }
 
     public partial class Log

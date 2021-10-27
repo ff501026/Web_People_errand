@@ -1,6 +1,9 @@
 ﻿
 
 @{ ViewBag.Title = "系統設定";
+    int position_difference = ViewBag.positionDifference;//定位誤差值
+    bool setting_trip2_enabled = ViewBag.settingTrip2Enabled;//是否開啟到站
+    bool setting_workrecord_enabled = ViewBag.settingWorkRecordEnabled;//是否開啟定位打卡
     List<AttendanceManagement.Models.Department> departments = ViewBag.departments;
     List<AttendanceManagement.Models.JobTitle> jobTitles = ViewBag.jobtitles;
     AttendanceManagement.Models.Company_Time company_Times = ViewBag.company_time;
@@ -20,8 +23,30 @@
         var _offset = sessionStorage.getItem("toTop");
         $(document).scrollTop(_offset);
         sessionStorage.clear();
-    };
 
+        @if (setting_trip2_enabled == true)
+        {
+            @: settingcheckboxloading(true, "trip2enabled");
+        }
+        else
+        {
+            @: settingcheckboxloading(false, "trip2enabled");
+        }
+
+        @if (setting_workrecord_enabled == true)
+        {
+            @: settingcheckboxloading(true, "workRecordenabled");
+        }
+        else
+        {
+            @: settingcheckboxloading(false, "workRecordenabled");
+        }
+    };
+    function settingcheckboxloading(values,values2)
+    {
+        var settingcheckbox = document.getElementById(values2);
+        settingcheckbox.checked = values;
+    }
 </script>
 <style>
     #NewPassword {
@@ -124,9 +149,16 @@
                                                     <div class="mr-auto p-2">公司地址</div>
                                                     <div class="p-2">
                                                         <div class="p-2">
-                                                            緯度：@companyAddresses[0].CoordinateX
-                                                            、
-                                                            經度：@companyAddresses[0].CoordinateY
+                                                            <div>
+                                                                <nobr>誤差值：</nobr>
+                                                                <nobr>@position_difference</nobr>
+                                                                <nobr>公尺、</nobr>
+                                                                <nobr>
+                                                                    緯度：@companyAddresses[0].CoordinateX
+                                                                    、
+                                                                    經度：@companyAddresses[0].CoordinateY
+                                                                </nobr>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -250,9 +282,16 @@
                                                         <div class="mr-auto p-2">公司地址</div>
                                                         <div class="p-2">
                                                             <div class="p-2">
-                                                                緯度：@companyAddresses[0].CoordinateX
-                                                                、
-                                                                經度：@companyAddresses[0].CoordinateY
+                                                                <div>
+                                                                    <nobr>誤差值：</nobr>
+                                                                    <nobr>@position_difference</nobr>
+                                                                    <nobr>公尺、</nobr>
+                                                                    <nobr>
+                                                                        緯度：@companyAddresses[0].CoordinateX
+                                                                        、
+                                                                        經度：@companyAddresses[0].CoordinateY
+                                                                    </nobr>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -324,13 +363,65 @@
 
                                     </div>
                                     <div class="col-lg-auto col-md-2 col-12">
-                                        <button class="btn btn-info" type="submit" style="background-color: #68A3FC;" data-toggle="modal" onclick="load2('frm_password', 'NewPassword','NewPassword2', 'exampleModalload')">修改</button>
+                                        <button class="btn btn-info" type="submit" style="background-color: #68A3FC;" data-toggle="modal" onclick="set();load2('frm_password', 'NewPassword','NewPassword2', 'exampleModalload')">修改</button>
                                     </div>
 
                                 </div>}
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-lg-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4>其他設定</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="row col-lg-auto col-md-10 col-12">
+                                    <div class="col-lg-auto col-md-3 col-sm-3  col-12">
+                                        公出到站是否開啟：
+                                    </div>
+                                    <div class="col-lg-auto col-md-1 col-sm-1 col-12">
+                                        @using (Html.BeginForm("UpdateCompanySettingTrip2Enabled", "Setting", FormMethod.Post))
+                                        {
+                                            <label class="switch">
+                                                <input type="checkbox" id="trip2enabled" name="trip2enabled" value="true" onchange="set();load3('exampleModalload');$(this.form).submit()">
+                                                <div class="slider round">
+                                                    <span class="on">是</span>
+                                                    <span class="off">否</span>
+                                                </div>
+                                            </label>
+                                        }
+                                        </div>
+                                </div>
+                                <div class="row col-lg-auto col-md-10 col-12">
+                                    <div class="col-lg-auto col-md-3 col-12">
+                                        上下班打卡定位關閉：
+                                    </div>
+                                    <div class="col-lg-auto col-md-1 col-1">
+                                        @using (Html.BeginForm("UpdateCompanySettingWorkRecordEnabled", "Setting", FormMethod.Post))
+                                        { 
+                                            <label class="switch">
+                                                <input type="checkbox" id="workRecordenabled" name="workRecordenabled" value="true"  onchange="set();load3('exampleModalload');$(this.form).submit()">
+                                                <div class="slider round">
+                                                    <span class="on">是</span>
+                                                    <span class="off">否</span>
+                                                </div>
+                                            </label>
+                                         }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -365,16 +456,16 @@
 
                                                 <div class="float-right" id="CenterSet" style="height:35px">
                                                     @*<select class="form-select form-select-sm" aria-label=".form-select-sm example" onchange="SelectClass('ClassSelectTop_@d_index',@jobTitles.Count(),@d_index);" id="ClassSelectTop_@d_index" style="margin: 5px; border: 1px solid #EDEEEF; border-radius: 4px;">
-                                                            <option value="" selected></option>
-                                                            @foreach (var generalWorktime in generalWorktimes)
-                                                            {
-                                                                <option value="@generalWorktime.GeneralWorktimeId">@generalWorktime.Name</option>
-                                                            }
-                                                            @foreach (var flexibleWorktime in flexibleWorktimes)
-                                                            {
-                                                                <option value="@flexibleWorktime.FlexibleWorktimeId">@flexibleWorktime.Name</option>
-                                                            }
-                                                        </select>*@
+                                                        <option value="" selected></option>
+                                                        @foreach (var generalWorktime in generalWorktimes)
+                                                        {
+                                                            <option value="@generalWorktime.GeneralWorktimeId">@generalWorktime.Name</option>
+                                                        }
+                                                        @foreach (var flexibleWorktime in flexibleWorktimes)
+                                                        {
+                                                            <option value="@flexibleWorktime.FlexibleWorktimeId">@flexibleWorktime.Name</option>
+                                                        }
+                                                    </select>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -724,7 +815,7 @@
                                                                 <div class="row">
                                                                     <div>休息時間設定 : </div>
                                                                     <div class="col-8 col-md-6" style="padding:0px;">
-                                                                        <input name="BreakTime2" value="@flexibleWorktime.BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; margin: 0px 5px 0px 5px">
+                                                                        <input name="BreakTime2" value="@flexibleWorktime.BreakTime" oninput="value=value.replace(/[^\d]/g,'')" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; margin: 0px 5px 0px 5px">
                                                                     </div>
 
                                                                     <div style="margin:0px 0px 0px 5px;">分鐘</div>
@@ -808,7 +899,7 @@
                                                                 <div class="row">
                                                                     <div>休息時間設定 : </div>
                                                                     <div class="col-8 col-md-6" style="padding:0px;">
-                                                                        <input name="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
+                                                                        <input name="BreakTime" class="form-control" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; width: 50%; margin: 0px 5px 0px 5px">
                                                                     </div>
 
                                                                     <div style="margin:0px 0px 0px 5px;">分鐘</div>
@@ -899,7 +990,7 @@
                                                             <div class="row">
                                                                 <div>休息時間設定 : </div>
                                                                 <div class="col-8 col-md-6" style="padding:0px;">
-                                                                    <input name="BreakTime" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; margin: 0px 5px 0px 5px">
+                                                                    <input name="BreakTime" class="form-control" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px; margin: 0px 5px 0px 5px">
                                                                 </div>
                                                                 <div style="margin:0px 0px 0px 5px;">分鐘</div>
                                                             </div>
@@ -958,7 +1049,7 @@
                                                             <div class="row">
                                                                 <div>休息時間設定 : </div>
                                                                 <div class="col-8 col-md-6" style="padding:0px;">
-                                                                    <input name="BreakTime2" class="form-control" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px;  margin: 0px 5px 0px 5px">
+                                                                    <input name="BreakTime2" class="form-control" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="請輸入休息時間" aria-label="Search" style="font-size: 14px;  margin: 0px 5px 0px 5px">
                                                                 </div>
                                                                 <div style="margin:0px 0px 0px 5px;">分鐘</div>
                                                             </div>
@@ -1023,41 +1114,41 @@
 
 
 
-        @*
-            <div class="col-12 col-sm-12 col-lg-12">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h4>下上班逾時打卡設定</h4>
-                    </div>
 
-                    <div class="card-body">
+        @*<div class="col-12 col-sm-12 col-lg-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h4>下上班逾時打卡設定</h4>
+                </div>
 
-                        <form class="form-inline mr-auto">
-                            <div class="row">
-                                <div class="col-lg-auto col-md-3 col-3">
-                                    上下班逾時禁止打卡：
-                                </div>
-                                <div class="col-lg-auto col-md-2 col-12">
-                                    <label class="switch">
-                                        <input type="checkbox" id="togBtn">
-                                        <div class="slider round">
-                                            <span class="on">是</span>
-                                            <span class="off">否</span>
-                                        </div>
-                                    </label>
-                                </div>
-                                <div class="col-lg-auto col-md-5 col-12" style="color: grey;">
-                                    *若開啟，上下班30分後打卡，需要後台許可app顯示該筆紀錄。
-                                </div>
-                                <div class="col-lg-auto col-md-1 col-12">
-                                    <button class="btn btn-primary" type="submit">修改</button>
-                                </div>
+                <div class="card-body">
+
+                    <form class="form-inline mr-auto">
+                        <div class="row">
+                            <div class="col-lg-auto col-md-3 col-3">
+                                上下班逾時禁止打卡：
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-lg-auto col-md-2 col-12">
+                                <label class="switch">
+                                    <input type="checkbox" id="togBtn">
+                                    <div class="slider round">
+                                        <span class="on">是</span>
+                                        <span class="off">否</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-lg-auto col-md-5 col-12" style="color: grey;">
+                                *若開啟，上下班30分後打卡，需要後台許可app顯示該筆紀錄。
+                            </div>
+                            <div class="col-lg-auto col-md-1 col-12">
+                                <button class="btn btn-primary" type="submit">修改</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        *@
+        </div>*@
+
 
     </section>
 </div>
@@ -1250,7 +1341,7 @@
             </div>
         </div>
     </div>
-s
+
     <div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%;  ">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -1264,24 +1355,27 @@ s
                 @using (Html.BeginForm("EditAddress", "Setting", FormMethod.Post, new { name = "frm_address", id = "frm_address" }))
                 {
                     @Html.AntiForgeryToken()
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">公司地址：</label>
-                                <input type="text" class="form-control" id="address" name="address" required autofocus value="@companyAddresses[0].Address">
-                            </div>
-
-                            @*<div class="form-group">
-                                    <label for="message-text" class="col-form-label">半徑(公尺)：</label>
-                                    <input type="text" class="form-control" id="message-text">
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">公司地址：</label>
+                                    <input type="text" class="form-control" id="address" name="address" required autofocus value="@companyAddresses[0].Address">
                                 </div>
-                            *@
-                        </form>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                            <button type="submit" id="Button" name="Button" value="RenewButton" class="btn btn-success" onclick="load('frm_address','address','exampleModalload')">更新</button>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">誤差值(公尺)：</label>
+                                    <input type="text" class="form-control" id="position_difference" name="position_difference" oninput="value=value.replace(/[^\d]/g,'')" required autofocus value="@position_difference">
+                                </div>
+                                @*<div class="form-group">
+                            <label for="message-text" class="col-form-label">半徑(公尺)：</label>
+                            <input type="text" class="form-control" id="message-text">
                         </div>
-                    </div>
+                                *@
+                            </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                <button type="submit" id="Button" name="Button" value="RenewButton" class="btn btn-success" onclick="load2('frm_address','address','position_difference','exampleModalload')">更新</button>
+                            </div>
+                        </div>
                 }
             </div>
         </div>
@@ -1338,6 +1432,7 @@ s
                 }
             }
         }
+
     </script>
     <script>
         function load3(values) {

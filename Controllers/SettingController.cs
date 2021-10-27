@@ -18,6 +18,9 @@ namespace AttendanceManagement.Controllers
             {
                 return RedirectToAction("Index", "Account", null);
             }
+            int position_difference = await CompanySettingModel.Get_CompanyPositionDifference(Session["company_hash"].ToString());
+            bool setting_trip2_enabled = await CompanySettingModel.Get_CompanySettingTrip2Enabled(Session["company_hash"].ToString());
+            bool setting_workrecord_enabled = await CompanySettingModel.Get_CompanySettingWorkRecordEnabled(Session["company_hash"].ToString());
             //輸入公司代碼取得部門資料
             List<Department> department = await DepartmentModel.Get_DepartmentAsync(Session["company_hash"].ToString());
             //輸入公司代碼取得職稱資料
@@ -41,6 +44,9 @@ namespace AttendanceManagement.Controllers
                 managerPermissions = await CompanyManagerPermissionsModel.Get_ManagerRolePermissions(Session["hash_account"].ToString());
             }
 
+            ViewBag.positionDifference = position_difference;//定位誤差值
+            ViewBag.settingTrip2Enabled = setting_trip2_enabled;//是否開啟到站
+            ViewBag.settingWorkRecordEnabled = setting_workrecord_enabled;//是否開啟定位打卡
             ViewBag.bossSettingPermissions = bossSettingPermissions;//職務代理人取得代理對象的設定權限
             ViewBag.managerPermissions = managerPermissions;//目前登入的管理員的權限設定
             ViewBag.departments = department;//部門名稱
@@ -87,8 +93,59 @@ namespace AttendanceManagement.Controllers
         }
 
         [HttpPost]
+        public async Task<ActionResult> UpdateCompanySettingTrip2Enabled(bool? trip2enabled)
+        {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
+            bool result = false;
+            if (trip2enabled != null)
+            {
+                result = await CompanySettingModel.Edit_CompanySettingTrip2Enabled(Session["company_hash"].ToString(), true);
+
+            }
+            else 
+            {
+                result = await CompanySettingModel.Edit_CompanySettingTrip2Enabled(Session["company_hash"].ToString(), false);
+            }
+            if (result)
+                return Content($"<script>window.location='/Setting/index';</script>");
+            else
+                return Content($"<script>alert('更新失敗！請重新再試！{trip2enabled}');history.go(-1);</script>");
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateCompanySettingWorkRecordEnabled(bool? workRecordenabled)
+        {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
+            bool result = false;
+            if (workRecordenabled != null)
+            {
+                result = await CompanySettingModel.Edit_CompanySettingWorkRecordEnabled(Session["company_hash"].ToString(), true);
+            }
+            else 
+            {
+                result = await CompanySettingModel.Edit_CompanySettingWorkRecordEnabled(Session["company_hash"].ToString(), false);
+            }
+            if (result)
+                return Content($"<script>window.location='/Setting/index';</script>");
+            else
+                return Content($"<script>alert('更新失敗！請重新再試！{workRecordenabled}');history.go(-1);</script>");
+
+        }
+
+        [HttpPost]
         public async Task<ActionResult> UpdateEmployeeWorkTime(int n_department, int n_jobtitle, string updateworktime)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             bool result = await CompanyWorkTimeModel.Update_EmployeeWorkTime(n_department, n_jobtitle, updateworktime);
             if(result)
                 return Content($"<script>window.location='/Setting/index';</script>");
@@ -100,6 +157,10 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> DeleteWorktime(string DeleteId)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             if (DeleteId.Substring(0, 1) == "G")
             {
                 bool result3 = await CompanyWorkTimeModel.Renew_EmployeeWorkTime(DeleteId, "");
@@ -277,24 +338,33 @@ namespace AttendanceManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditAddress(string address) 
+        public async Task<ActionResult> EditAddress(string address,int position_difference) 
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             if (!address.Equals(""))
             {
+                bool resultposition = await CompanySettingModel.Edit_CompanyPositionDifference(Session["company_hash"].ToString(), position_difference);
                 bool result = await CompanyAddressModel.EditCompanyAddress(Session["company_hash"].ToString(), address);
-                if (result)
+                if (result && resultposition)
                     return Content($"<script>alert('更新成功！');window.location='index';</script>");
                 else
-                    return Content($"<script>alert('更新失敗！如有問題請連繫後台!{address}');history.go(-1);</script>");
+                    return Content($"<script>alert('更新失敗！如有問題請連繫後台!{address}{position_difference}');history.go(-1);</script>");
             }
             else
-                return Content($"<script>alert('密碼輸入錯誤！請重新再試！');history.go(-1);</script>");
+                return Content($"<script>alert('地址輸入錯誤！請重新再試！');history.go(-1);</script>");
 
         }
 
         [HttpPost]
         public async Task<ActionResult> UpdateCompanyTime(TimeSpan? WorkTime, TimeSpan? RestTime) 
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             bool result = await CompanyTimeModel.Edit_CompanyTime(Session["company_hash"].ToString(), WorkTime, RestTime);
             if (result)
                 return Content($"<script>alert('更新成功！');window.location='index';</script>");
@@ -305,6 +375,10 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> AddDepartment(string department_name, string Button)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             bool result = false;
             if (Button.Equals("AddButton"))
             {
@@ -323,6 +397,10 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> AddJobtitle(string jobtitle_name, string Button)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             bool result = false;
             if (Button.Equals("AddButton"))
             {
@@ -342,6 +420,10 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> EditDepartment(int id,string department_name, string Button)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             bool result = false;
             if (Button.Equals("EditButton"))
             {
@@ -362,6 +444,10 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> EditJobtitle( int id,string jobtitle_name, string Button)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             bool result = false;
             if (Button.Equals("EditButton"))
             {
@@ -379,6 +465,10 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> DeleteJobtitle(int id,string Button)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             bool result = false;
             if (Button.Equals("DeleteButton"))
             {
@@ -396,6 +486,10 @@ namespace AttendanceManagement.Controllers
         [HttpPost]
         public async Task<ActionResult> DeleteDepartment(int id, string Button)
         {
+            if (Session["company_hash"] == null)
+            {
+                return RedirectToAction("Index", "Account", null);
+            }
             bool result = false;
             if (Button.Equals("DeleteButton"))
             {

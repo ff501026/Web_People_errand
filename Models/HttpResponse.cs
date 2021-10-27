@@ -92,9 +92,16 @@ namespace AttendanceManagement.Models
         public static readonly string ManageBoolAgent = "EmployeeLeaveRecords/BoolAgentReviewLeave/"; //判斷是否可以執行代理權限
         public static readonly string ManagerForegetPassword = "Companies/Forget_Manager?code="; //找到管理員HASH
         public static readonly string AddLog = "Companies/AddLog"; //新增LOG
+        public static readonly string CompanyGetPositionDifference = "Companies/GetCompanyPositionDifference/"; //打卡誤差值
+        public static readonly string CompanyGetSettingTrip2Enabled = "Companies/GetCompanySettingTrip2Enabled/"; //是否開啟到站
+        public static readonly string CompanyGetSettingWorkRecordEnabled = "Companies/GetCompanySettingWorkRecordEnabled/"; //是否開啟定位打卡
+        public static readonly string CompanyUpdatePositionDifference = "Companies/UpdateCompanyPositionDifference"; //更新公司打卡誤差值
+        public static readonly string CompanyUpdateSettingTrip2Enabled = "Companies/UpdateCompanySettingTrip2Enabled"; //更新公司是否開啟到站
+        public static readonly string CompanyUpdateSettingWorkRecordEnabled = "Companies/UpdateCompanySettingWorkRecordEnabled"; //更新是否開啟定位打卡
+
 
         //public static readonly string sendGmail = "https://localhost:44311/api/Companies/sendGmailAsync?to_email="; //寄EMAIL
-        
+
         public static async System.Threading.Tasks.Task sendGmailAsync(string to_email,string email_subject, string email_body)//寄EMAIL
         {
             ////連上WebAPI
