@@ -40,6 +40,7 @@
         background-position: left;
         background-size: cover;
     }
+
     :root {
         --header-height: 3rem;
         --first-color: #808080;
@@ -54,18 +55,21 @@
 @if (managerKeyDatas.Count == 0 || managerKeyDatas[0].ManagerKeyOverDate < DateTime.Now)
 {
 
-    <div class="card2 card-primary">
+    <div class="card2 card-primary" style="width:350px;margin-left:-15px;">
         <div class="card-header"><p>OOPS!抱歉您的連結已過時</p><p></p><h5>請重新發送請求</h5></div>
+        <div class="card-body" style="padding-top:15px;padding-bottom:15px">
+          
+        </div>
     </div>
 }
 else
 {
-    using (Html.BeginForm("ManagerPassword", "PasswordSetting", new { id = managerKeyDatas[0].HashAccount }, FormMethod.Post, new { name = "frm_password" , id = "frm_password" }))
+    using (Html.BeginForm("ManagerPassword", "PasswordSetting", new { id = managerKeyDatas[0].HashAccount }, FormMethod.Post, new { name = "frm_password", id = "frm_password" }))
     {
         @Html.AntiForgeryToken()
         <div class="card2 card-primary" style="width:350px;margin-left:-15px;">
             <div class="card-header" style="padding-bottom:0px;margin-top:5px"><nobr id="companytext">您的公司代碼 : </nobr><nobr id="companytext">@managerKeyDatas[0].Code</nobr></div>
-            <div class="card-header"style="padding-bottom:0px;margin-top:5px"><nobr id="companyhello">@managerKeyDatas[0].Name</nobr><nobr id="companyhello">你好 ! 請設定您的新密碼 : </nobr></div>
+            <div class="card-header" style="padding-bottom:0px;margin-top:5px"><nobr id="companyhello">@managerKeyDatas[0].Name</nobr><nobr id="companyhello">你好 ! 請設定您的新密碼 : </nobr></div>
             <div class="card-body" style="padding-top:15px;padding-bottom:15px">
                 <form method="POST" action="#" class="needs-validation" novalidate="">
                     <div class="form-group" style="margin:0px">
@@ -74,8 +78,8 @@ else
                             <input id="mpassword" name="manager_password" type="password" class="form-control" placeholder="Enter password" tabindex="1" required>
                             <div class="input-group-append">
                                 <div class="input-group-text" style="cursor:pointer;border: 1px solid #C2BFBF; background-color: #FFFFFF; box-shadow: 3px 3px 3px #D2D3D3; margin-top: -30px;" onclick="showPsw()">
-                                    <i id="hide1" class="bi bi-eye-slash"  style="display:inline-block;"></i>
-                                    <i id="show1" class="bi bi-eye"  style="display:none;"></i>
+                                    <i id="hide1" class="bi bi-eye-slash" style="display:inline-block;"></i>
+                                    <i id="show1" class="bi bi-eye" style="display:none;"></i>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +118,7 @@ else
     </div>
 </div>
 <script>
-    
+
     var x1 = document.getElementById("mpassword");
     var x2 = document.getElementById("mpassword2");
     function showPsw() {
