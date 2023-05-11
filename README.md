@@ -5,7 +5,7 @@
 ![image](https://github.com/ff501026/Web_People_errand/assets/103199969/0258d153-fd58-4cbb-8528-53b04f2e9e7b)
 ## 功能分解圖
 ![image](https://github.com/ff501026/Web_People_errand/assets/103199969/764f0f56-c8dd-4c2a-a31b-00e9a24973d2)
-## 功能畫面(詳細說明請參閱使用說明書)
+## 功能畫面(詳細操作說明請參閱[使用說明書](https://github.com/ff501026/Web_People_errand/blob/main/Punch%20%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8A.pdf))
 * 登入
 ![image](https://github.com/ff501026/Web_People_errand/assets/103199969/12f4bc8b-d4e3-484a-8696-c1d9f9b90f69)
 * 打卡紀錄
