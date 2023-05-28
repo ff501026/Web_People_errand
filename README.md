@@ -1,6 +1,6 @@
 # ![差勤打卡LOGO2](https://github.com/ff501026/Web_People_errand/assets/103199969/6da95dc8-6554-4f26-821f-1708694d2ecb)DiDa!準備上班–雲端差勤打卡系統Web端
+* 說明影片：https://youtu.be/mmGpWfFDDxw
 ## 摘要
-說明影片：https://youtu.be/mmGpWfFDDxw
 本計畫採用敏捷式開發，目的為使用雲端線上打卡取代傳統打卡機，自動化管理「人事出缺勤」。使用此系統只要填寫基本資料供後台審核，審核通過後，開啟GPS定位，就能一鍵輕鬆上下班。每位人員都能在APP上檢視自己的打卡、請假及公出的紀錄，管理人員也可透過網頁後台查看員工的出勤狀況與審核員工提出的申請。
 ## 使用案例圖
 ![image](https://github.com/ff501026/Web_People_errand/assets/103199969/0258d153-fd58-4cbb-8528-53b04f2e9e7b)
